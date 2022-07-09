@@ -99,6 +99,31 @@
 			path = DetailEditView;
 			sourceTree = "<group>";
 		};
+		F53C2D8B287A4BD80066D2F9 /* MeetingView */ = {
+			isa = PBXGroup;
+			children = (
+				F5E917CC287114DC00AE8421 /* MeetingView.swift */,
+			);
+			path = MeetingView;
+			sourceTree = "<group>";
+		};
+		F53C2D8C287A4C100066D2F9 /* TopView */ = {
+			isa = PBXGroup;
+			children = (
+				F5E91802287387B100AE8421 /* ScrumsView.swift */,
+				F5E917FD28711FF100AE8421 /* CardView.swift */,
+			);
+			path = TopView;
+			sourceTree = "<group>";
+		};
+		F53C2D8D287A4C510066D2F9 /* DetailView */ = {
+			isa = PBXGroup;
+			children = (
+				F5E9180428738BDA00AE8421 /* DetailView.swift */,
+			);
+			path = DetailView;
+			sourceTree = "<group>";
+		};
 		F5E917BE287114DC00AE8421 = {
 			isa = PBXGroup;
 			children = (
@@ -184,12 +209,11 @@
 		F5E9180628738C5C00AE8421 /* ScrumsView */ = {
 			isa = PBXGroup;
 			children = (
-				F53C2D8A287A3EAD0066D2F9 /* DetailEditView */,
 				F5E917FF2871228300AE8421 /* Components */,
-				F5E917FD28711FF100AE8421 /* CardView.swift */,
-				F5E9180428738BDA00AE8421 /* DetailView.swift */,
-				F5E917CC287114DC00AE8421 /* MeetingView.swift */,
-				F5E91802287387B100AE8421 /* ScrumsView.swift */,
+				F53C2D8C287A4C100066D2F9 /* TopView */,
+				F53C2D8D287A4C510066D2F9 /* DetailView */,
+				F53C2D8A287A3EAD0066D2F9 /* DetailEditView */,
+				F53C2D8B287A4BD80066D2F9 /* MeetingView */,
 			);
 			path = ScrumsView;
 			sourceTree = "<group>";
