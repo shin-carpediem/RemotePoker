@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F53C2D852879C2FA0066D2F9 /* DetailEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53C2D842879C2FA0066D2F9 /* DetailEditView.swift */; };
+		F53C2D87287A3A140066D2F9 /* ThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53C2D86287A3A140066D2F9 /* ThemeView.swift */; };
 		F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */; };
 		F5E917CD287114DC00AE8421 /* MeetingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917CC287114DC00AE8421 /* MeetingView.swift */; };
 		F5E917CF287114E900AE8421 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5E917CE287114E900AE8421 /* Assets.xcassets */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		F53C2D842879C2FA0066D2F9 /* DetailEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditView.swift; sourceTree = "<group>"; };
+		F53C2D86287A3A140066D2F9 /* ThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeView.swift; sourceTree = "<group>"; };
 		F5E917C7287114DC00AE8421 /* Scrumdinger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrumdinger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrumdingerApp.swift; sourceTree = "<group>"; };
 		F5E917CC287114DC00AE8421 /* MeetingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingView.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				F53C2D842879C2FA0066D2F9 /* DetailEditView.swift */,
 				F5E917CC287114DC00AE8421 /* MeetingView.swift */,
 				F5E91802287387B100AE8421 /* ScrumsView.swift */,
+				F53C2D86287A3A140066D2F9 /* ThemeView.swift */,
 			);
 			path = ScrumsView;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 				F5E91803287387B100AE8421 /* ScrumsView.swift in Sources */,
 				F5E917CD287114DC00AE8421 /* MeetingView.swift in Sources */,
 				F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */,
+				F53C2D87287A3A140066D2F9 /* ThemeView.swift in Sources */,
 				F5E917FE28711FF100AE8421 /* CardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
