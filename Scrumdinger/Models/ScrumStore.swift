@@ -12,6 +12,19 @@ class ScrumStore: ObservableObject {
         .appendingPathComponent("scrums.data")
     }
     
+    static func load() async throws -> [DailyScrum] {
+        try await withCheckedContinuation { continuation in
+            load { result in
+                switch result {
+                case .failure(let error):
+                    continuation.resume(throwing: error as! Never)
+                case .success(let scrums):
+                    continuation.resume(returning: scrums)
+                }
+            }
+        }
+    }
+    
     static func load(completion: @escaping (Result<[DailyScrum], Error>) -> Void) {
         DispatchQueue.global(qos: .background).async {
             do {
@@ -32,6 +45,21 @@ class ScrumStore: ObservableObject {
             } catch {
                 DispatchQueue.main.async {
                     completion(.failure(error))
+                }
+            }
+        }
+    }
+    
+    // 戻り値を無視
+    @discardableResult
+    static func save(scrums: [DailyScrum]) async throws -> Int {
+        try await withCheckedContinuation { continuation in
+            save(scrums: scrums) { result in
+                switch result {
+                case .failure(let error):
+                    continuation.resume(throwing: error as! Never)
+                case .success(let scrums):
+                    continuation.resume(returning: scrums)
                 }
             }
         }
