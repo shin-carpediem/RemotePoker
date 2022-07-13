@@ -17,6 +17,8 @@
 		F53C2D97287A56650066D2F9 /* AVPlayer+Ding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53C2D96287A56650066D2F9 /* AVPlayer+Ding.swift */; };
 		F53C2D99287A5BCF0066D2F9 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53C2D98287A5BCF0066D2F9 /* History.swift */; };
 		F53C2D9B287A6F660066D2F9 /* ScrumStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53C2D9A287A6F660066D2F9 /* ScrumStore.swift */; };
+		F5D21DE4287F7C16000C34E1 /* ErrorWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D21DE3287F7C16000C34E1 /* ErrorWrapper.swift */; };
+		F5D21DE6287F7CA9000C34E1 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D21DE5287F7CA9000C34E1 /* ErrorView.swift */; };
 		F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */; };
 		F5E917CD287114DC00AE8421 /* MeetingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917CC287114DC00AE8421 /* MeetingView.swift */; };
 		F5E917CF287114E900AE8421 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5E917CE287114E900AE8421 /* Assets.xcassets */; };
@@ -60,6 +62,8 @@
 		F53C2D96287A56650066D2F9 /* AVPlayer+Ding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayer+Ding.swift"; sourceTree = "<group>"; };
 		F53C2D98287A5BCF0066D2F9 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		F53C2D9A287A6F660066D2F9 /* ScrumStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrumStore.swift; sourceTree = "<group>"; };
+		F5D21DE3287F7C16000C34E1 /* ErrorWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorWrapper.swift; sourceTree = "<group>"; };
+		F5D21DE5287F7CA9000C34E1 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		F5E917C7287114DC00AE8421 /* Scrumdinger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrumdinger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrumdingerApp.swift; sourceTree = "<group>"; };
 		F5E917CC287114DC00AE8421 /* MeetingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingView.swift; sourceTree = "<group>"; };
@@ -207,6 +211,7 @@
 				F53C2D98287A5BCF0066D2F9 /* History.swift */,
 				F53C2D96287A56650066D2F9 /* AVPlayer+Ding.swift */,
 				F53C2D9A287A6F660066D2F9 /* ScrumStore.swift */,
+				F5D21DE3287F7C16000C34E1 /* ErrorWrapper.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -235,6 +240,7 @@
 				F53C2D8D287A4C510066D2F9 /* DetailView */,
 				F53C2D8A287A3EAD0066D2F9 /* DetailEditView */,
 				F53C2D8B287A4BD80066D2F9 /* MeetingView */,
+				F5D21DE5287F7CA9000C34E1 /* ErrorView.swift */,
 			);
 			path = ScrumsView;
 			sourceTree = "<group>";
@@ -379,10 +385,12 @@
 				F5E9180528738BDA00AE8421 /* DetailView.swift in Sources */,
 				F53C2D8F287A4C9D0066D2F9 /* MeetingHeaderView.swift in Sources */,
 				F53C2D852879C2FA0066D2F9 /* DetailEditView.swift in Sources */,
+				F5D21DE4287F7C16000C34E1 /* ErrorWrapper.swift in Sources */,
 				F5E918012871229500AE8421 /* TrailingIconLabelStyle.swift in Sources */,
 				F5E917F628711E0C00AE8421 /* Theme.swift in Sources */,
 				F5E91803287387B100AE8421 /* ScrumsView.swift in Sources */,
 				F5E917CD287114DC00AE8421 /* MeetingView.swift in Sources */,
+				F5D21DE6287F7CA9000C34E1 /* ErrorView.swift in Sources */,
 				F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */,
 				F53C2D87287A3A140066D2F9 /* ThemeView.swift in Sources */,
 				F5E917FE28711FF100AE8421 /* CardView.swift in Sources */,
@@ -473,7 +481,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -527,7 +535,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
