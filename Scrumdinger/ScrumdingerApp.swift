@@ -26,9 +26,9 @@ struct ScrumdingerApp: App {
                     errorWrapper = ErrorWrapper(error: error, guidance: "Scrumdinger will load sample data and continue.")
                 }
             }
-            .sheet(item: $errorWrapper) {
+            .sheet(item: $errorWrapper, onDismiss: {
                 store.scrums = DailyScrum.sampleData
-            } content: { wrapper in
+            }) { wrapper in
                 ErrorView(errorWrapper: wrapper)
             }
         }
