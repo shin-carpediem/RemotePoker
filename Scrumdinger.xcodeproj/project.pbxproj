@@ -199,6 +199,18 @@
 			path = Resurces;
 			sourceTree = "<group>";
 		};
+		F5D21DF728829A3D000C34E1 /* ScrumsModel */ = {
+			isa = PBXGroup;
+			children = (
+				F5D21DF328829790000C34E1 /* DetailEditModel */,
+				F5D21DEB28803B71000C34E1 /* MeetingModel */,
+				F5D21DF028829153000C34E1 /* HistoryModel */,
+				F5E917F728711EE200AE8421 /* DailyScrum.swift */,
+				F53C2D9A287A6F660066D2F9 /* ScrumStore.swift */,
+			);
+			path = ScrumsModel;
+			sourceTree = "<group>";
+		};
 		F5E917BE287114DC00AE8421 = {
 			isa = PBXGroup;
 			children = (
@@ -260,11 +272,7 @@
 		F5E917F428711DF100AE8421 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F5D21DF328829790000C34E1 /* DetailEditModel */,
-				F5D21DEB28803B71000C34E1 /* MeetingModel */,
-				F5D21DF028829153000C34E1 /* HistoryModel */,
-				F5E917F728711EE200AE8421 /* DailyScrum.swift */,
-				F53C2D9A287A6F660066D2F9 /* ScrumStore.swift */,
+				F5D21DF728829A3D000C34E1 /* ScrumsModel */,
 				F5D21DE3287F7C16000C34E1 /* ErrorWrapper.swift */,
 			);
 			path = Models;
@@ -274,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				F5E9180628738C5C00AE8421 /* ScrumsView */,
+				F5D21DE5287F7CA9000C34E1 /* ErrorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -295,7 +304,6 @@
 				F53C2D8A287A3EAD0066D2F9 /* DetailEditView */,
 				F53C2D8B287A4BD80066D2F9 /* MeetingView */,
 				F5D21DEF28829134000C34E1 /* HistoryView */,
-				F5D21DE5287F7CA9000C34E1 /* ErrorView.swift */,
 			);
 			path = ScrumsView;
 			sourceTree = "<group>";
