@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F523669A2891E837005B1F65 /* VelocitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52366992891E837005B1F65 /* VelocitiesView.swift */; };
+		F523669C2891E8D8005B1F65 /* IndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F523669B2891E8D8005B1F65 /* IndexView.swift */; };
 		F53C2D852879C2FA0066D2F9 /* DetailEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53C2D842879C2FA0066D2F9 /* DetailEditView.swift */; };
 		F53C2D87287A3A140066D2F9 /* ThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53C2D86287A3A140066D2F9 /* ThemeView.swift */; };
 		F53C2D89287A3CD00066D2F9 /* ThemePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53C2D88287A3CD00066D2F9 /* ThemePicker.swift */; };
@@ -56,6 +58,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F52366992891E837005B1F65 /* VelocitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VelocitiesView.swift; sourceTree = "<group>"; };
+		F523669B2891E8D8005B1F65 /* IndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexView.swift; sourceTree = "<group>"; };
 		F53C2D842879C2FA0066D2F9 /* DetailEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditView.swift; sourceTree = "<group>"; };
 		F53C2D86287A3A140066D2F9 /* ThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeView.swift; sourceTree = "<group>"; };
 		F53C2D88287A3CD00066D2F9 /* ThemePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePicker.swift; sourceTree = "<group>"; };
@@ -115,6 +119,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F52366972891E7E6005B1F65 /* VelocitiesView */ = {
+			isa = PBXGroup;
+			children = (
+				F52366992891E837005B1F65 /* VelocitiesView.swift */,
+			);
+			path = VelocitiesView;
+			sourceTree = "<group>";
+		};
+		F52366982891E803005B1F65 /* VelocitiesModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = VelocitiesModel;
+			sourceTree = "<group>";
+		};
 		F53C2D8A287A3EAD0066D2F9 /* DetailEditView */ = {
 			isa = PBXGroup;
 			children = (
@@ -269,6 +288,7 @@
 		F5E917F428711DF100AE8421 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				F52366982891E803005B1F65 /* VelocitiesModel */,
 				F5D21DF728829A3D000C34E1 /* ScrumsModel */,
 				F5D21DE3287F7C16000C34E1 /* ErrorWrapper.swift */,
 			);
@@ -278,7 +298,9 @@
 		F5E917FA28711FAE00AE8421 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F52366972891E7E6005B1F65 /* VelocitiesView */,
 				F5E9180628738C5C00AE8421 /* ScrumsView */,
+				F523669B2891E8D8005B1F65 /* IndexView.swift */,
 				F5D21DE5287F7CA9000C34E1 /* ErrorView.swift */,
 			);
 			path = Views;
@@ -446,12 +468,14 @@
 				F5E9180528738BDA00AE8421 /* DetailView.swift in Sources */,
 				F53C2D8F287A4C9D0066D2F9 /* MeetingHeaderView.swift in Sources */,
 				F5D21DE828803426000C34E1 /* MeetingTimerView.swift in Sources */,
+				F523669C2891E8D8005B1F65 /* IndexView.swift in Sources */,
 				F53C2D852879C2FA0066D2F9 /* DetailEditView.swift in Sources */,
 				F5D21DE4287F7C16000C34E1 /* ErrorWrapper.swift in Sources */,
 				F5E918012871229500AE8421 /* TrailingIconLabelStyle.swift in Sources */,
 				F5E917F628711E0C00AE8421 /* Theme.swift in Sources */,
 				F5E91803287387B100AE8421 /* ScrumsView.swift in Sources */,
 				F5E917CD287114DC00AE8421 /* MeetingView.swift in Sources */,
+				F523669A2891E837005B1F65 /* VelocitiesView.swift in Sources */,
 				F5D21DED28828D3E000C34E1 /* SpeechRecognizer.swift in Sources */,
 				F5D21DE6287F7CA9000C34E1 /* ErrorView.swift in Sources */,
 				F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */,

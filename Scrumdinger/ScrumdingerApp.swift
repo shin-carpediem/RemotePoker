@@ -8,7 +8,7 @@ struct ScrumdingerApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                ScrumsView(scrums: $store.scrums) {
+                IndexView(scrums: $store.scrums) {
                     Task {
                         do {
                             // discardableResultsave属性を関数に付したので、戻り値は無視できる。
