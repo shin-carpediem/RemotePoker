@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CardView: View {
     let scrum: DailyScrum
+
     var body: some View {
         VStack(alignment: .leading) {
             Text(scrum.title)
@@ -25,6 +26,7 @@ struct CardView: View {
 
 struct CardView_Previews: PreviewProvider {
     static var scrum = DailyScrum.sampleData[0]
+
     static var previews: some View {
         CardView(scrum: scrum)
             .background(scrum.theme.mainColor)

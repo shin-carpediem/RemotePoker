@@ -16,7 +16,7 @@ struct ScrumsView: View {
                 .listRowBackground(scrum.theme.mainColor)
             }
         }
-        .navigationTitle("Daily Scrums")
+        .navigationTitle("Scrum Meeting")
         .toolbar {
             Button(action: {
                 isPresentingNewScrumView = true
@@ -30,7 +30,7 @@ struct ScrumsView: View {
                 DetailEditView(data: $newScrumData)
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
-                            Button("Dismiss") {
+                            Button("Cancel") {
                                 isPresentingNewScrumView = false
                                 newScrumData = DailyScrum.Data()
                             }
