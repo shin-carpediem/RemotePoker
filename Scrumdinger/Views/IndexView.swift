@@ -6,7 +6,7 @@ struct IndexView: View {
 
     var body: some View {
         TabView {
-            VelocitiesView()
+            PlanningPokerView()
                 .tabItem {
                     VStack {
                         Image(systemName: "person.3")
