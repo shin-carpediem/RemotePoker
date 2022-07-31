@@ -143,13 +143,6 @@
 			path = PlanningPokerModel;
 			sourceTree = "<group>";
 		};
-		F523669D28960AA2005B1F65 /* LoginView */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = LoginView;
-			sourceTree = "<group>";
-		};
 		F523669E28960AAC005B1F65 /* LoginModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -322,7 +315,6 @@
 		F5E917FA28711FAE00AE8421 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F523669D28960AA2005B1F65 /* LoginView */,
 				F52366972891E7E6005B1F65 /* PlanningPokerView */,
 				F5E9180628738C5C00AE8421 /* ScrumsView */,
 				F523669B2891E8D8005B1F65 /* IndexView.swift */,
