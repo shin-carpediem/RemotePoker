@@ -45,6 +45,7 @@
 		F571FA532896CA2D003531CE /* BoringSSL-GRPC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA282896CA2C003531CE /* BoringSSL-GRPC.xcframework */; };
 		F571FA562896CA3B003531CE /* FirebaseAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA1A2896CA2C003531CE /* FirebaseAuth.xcframework */; };
 		F571FA5D2896CC03003531CE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F571FA5C2896CC03003531CE /* GoogleService-Info.plist */; };
+		F571FA5F2896CCA5003531CE /* gRPCCertificates-Cpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F571FA5E2896CCA5003531CE /* gRPCCertificates-Cpp.bundle */; };
 		F5D21DE4287F7C16000C34E1 /* ErrorWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D21DE3287F7C16000C34E1 /* ErrorWrapper.swift */; };
 		F5D21DE6287F7CA9000C34E1 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D21DE5287F7CA9000C34E1 /* ErrorView.swift */; };
 		F5D21DE828803426000C34E1 /* MeetingTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D21DE728803426000C34E1 /* MeetingTimerView.swift */; };
@@ -122,6 +123,7 @@
 		F571FA272896CA2C003531CE /* PromisesObjC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = PromisesObjC.xcframework; path = Carthage/Build/PromisesObjC.xcframework; sourceTree = "<group>"; };
 		F571FA282896CA2C003531CE /* BoringSSL-GRPC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "BoringSSL-GRPC.xcframework"; path = "Carthage/Build/BoringSSL-GRPC.xcframework"; sourceTree = "<group>"; };
 		F571FA5C2896CC03003531CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F571FA5E2896CCA5003531CE /* gRPCCertificates-Cpp.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "gRPCCertificates-Cpp.bundle"; path = "Carthage/Build/gRPC-C++.xcframework/ios-arm64/gRPC-C++.framework/Resources/gRPCCertificates-Cpp.bundle"; sourceTree = "<group>"; };
 		F5D21DE3287F7C16000C34E1 /* ErrorWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorWrapper.swift; sourceTree = "<group>"; };
 		F5D21DE5287F7CA9000C34E1 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		F5D21DE728803426000C34E1 /* MeetingTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingTimerView.swift; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 		F5E917BE287114DC00AE8421 = {
 			isa = PBXGroup;
 			children = (
+				F571FA5E2896CCA5003531CE /* gRPCCertificates-Cpp.bundle */,
 				F5E917C9287114DC00AE8421 /* Scrumdinger */,
 				F5E917DA287114EA00AE8421 /* ScrumdingerTests */,
 				F5E917E4287114EA00AE8421 /* ScrumdingerUITests */,
@@ -453,6 +456,7 @@
 				F5E917C3287114DC00AE8421 /* Sources */,
 				F5E917C4287114DC00AE8421 /* Frameworks */,
 				F5E917C5287114DC00AE8421 /* Resources */,
+				F571FA602896CCC5003531CE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -547,6 +551,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F571FA5F2896CCA5003531CE /* gRPCCertificates-Cpp.bundle in Resources */,
 				F5E917D2287114E900AE8421 /* Preview Assets.xcassets in Resources */,
 				F5E917CF287114E900AE8421 /* Assets.xcassets in Resources */,
 				F571FA5D2896CC03003531CE /* GoogleService-Info.plist in Resources */,
@@ -568,6 +573,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F571FA602896CCC5003531CE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F5E917C3287114DC00AE8421 /* Sources */ = {
