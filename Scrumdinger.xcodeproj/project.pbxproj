@@ -22,6 +22,30 @@
 		F53C2D97287A56650066D2F9 /* AVPlayer+Ding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53C2D96287A56650066D2F9 /* AVPlayer+Ding.swift */; };
 		F53C2D99287A5BCF0066D2F9 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53C2D98287A5BCF0066D2F9 /* History.swift */; };
 		F53C2D9B287A6F660066D2F9 /* ScrumStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53C2D9A287A6F660066D2F9 /* ScrumStore.swift */; };
+		F571FA292896CA2C003531CE /* FirebaseFirestore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */; };
+		F571FA2B2896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */; };
+		F571FA2D2896CA2C003531CE /* GoogleDataTransport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA152896CA2C003531CE /* GoogleDataTransport.xcframework */; };
+		F571FA2F2896CA2C003531CE /* abseil.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA162896CA2C003531CE /* abseil.xcframework */; };
+		F571FA312896CA2C003531CE /* FirebaseCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA172896CA2C003531CE /* FirebaseCore.xcframework */; };
+		F571FA332896CA2C003531CE /* FirebaseAnalytics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA182896CA2C003531CE /* FirebaseAnalytics.xcframework */; };
+		F571FA352896CA2C003531CE /* GoogleUtilities.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA192896CA2C003531CE /* GoogleUtilities.xcframework */; };
+		F571FA392896CA2C003531CE /* gRPC-C++.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA1B2896CA2C003531CE /* gRPC-C++.xcframework */; };
+		F571FA3B2896CA2C003531CE /* GTMSessionFetcher.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA1C2896CA2C003531CE /* GTMSessionFetcher.xcframework */; };
+		F571FA3D2896CA2C003531CE /* FirebaseCoreDiagnostics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA1D2896CA2C003531CE /* FirebaseCoreDiagnostics.xcframework */; };
+		F571FA3F2896CA2C003531CE /* FirebaseFirestoreSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA1E2896CA2C003531CE /* FirebaseFirestoreSwift.xcframework */; };
+		F571FA412896CA2C003531CE /* FirebaseInstallations.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA1F2896CA2C003531CE /* FirebaseInstallations.xcframework */; };
+		F571FA432896CA2C003531CE /* leveldb-library.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA202896CA2C003531CE /* leveldb-library.xcframework */; };
+		F571FA452896CA2C003531CE /* FirebaseAnalyticsSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA212896CA2C003531CE /* FirebaseAnalyticsSwift.xcframework */; };
+		F571FA472896CA2C003531CE /* FirebaseCoreInternal.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA222896CA2C003531CE /* FirebaseCoreInternal.xcframework */; };
+		F571FA492896CA2C003531CE /* Libuv-gRPC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA232896CA2C003531CE /* Libuv-gRPC.xcframework */; };
+		F571FA4B2896CA2D003531CE /* gRPC-Core.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA242896CA2C003531CE /* gRPC-Core.xcframework */; };
+		F571FA4D2896CA2D003531CE /* GoogleAppMeasurement.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA252896CA2C003531CE /* GoogleAppMeasurement.xcframework */; };
+		F571FA4F2896CA2D003531CE /* nanopb.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA262896CA2C003531CE /* nanopb.xcframework */; };
+		F571FA512896CA2D003531CE /* PromisesObjC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA272896CA2C003531CE /* PromisesObjC.xcframework */; };
+		F571FA532896CA2D003531CE /* BoringSSL-GRPC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA282896CA2C003531CE /* BoringSSL-GRPC.xcframework */; };
+		F571FA562896CA3B003531CE /* FirebaseAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA1A2896CA2C003531CE /* FirebaseAuth.xcframework */; };
+		F571FA5F2896CCA5003531CE /* gRPCCertificates-Cpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F571FA5E2896CCA5003531CE /* gRPCCertificates-Cpp.bundle */; };
+		F571FA682896D137003531CE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F571FA672896D137003531CE /* GoogleService-Info.plist */; };
 		F5D21DE4287F7C16000C34E1 /* ErrorWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D21DE3287F7C16000C34E1 /* ErrorWrapper.swift */; };
 		F5D21DE6287F7CA9000C34E1 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D21DE5287F7CA9000C34E1 /* ErrorView.swift */; };
 		F5D21DE828803426000C34E1 /* MeetingTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D21DE728803426000C34E1 /* MeetingTimerView.swift */; };
@@ -76,6 +100,30 @@
 		F53C2D96287A56650066D2F9 /* AVPlayer+Ding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayer+Ding.swift"; sourceTree = "<group>"; };
 		F53C2D98287A5BCF0066D2F9 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		F53C2D9A287A6F660066D2F9 /* ScrumStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrumStore.swift; sourceTree = "<group>"; };
+		F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestore.xcframework; path = Carthage/Build/FirebaseFirestore.xcframework; sourceTree = "<group>"; };
+		F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurementIdentitySupport.xcframework; path = Carthage/Build/GoogleAppMeasurementIdentitySupport.xcframework; sourceTree = "<group>"; };
+		F571FA152896CA2C003531CE /* GoogleDataTransport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleDataTransport.xcframework; path = Carthage/Build/GoogleDataTransport.xcframework; sourceTree = "<group>"; };
+		F571FA162896CA2C003531CE /* abseil.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = abseil.xcframework; path = Carthage/Build/abseil.xcframework; sourceTree = "<group>"; };
+		F571FA172896CA2C003531CE /* FirebaseCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseCore.xcframework; path = Carthage/Build/FirebaseCore.xcframework; sourceTree = "<group>"; };
+		F571FA182896CA2C003531CE /* FirebaseAnalytics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAnalytics.xcframework; path = Carthage/Build/FirebaseAnalytics.xcframework; sourceTree = "<group>"; };
+		F571FA192896CA2C003531CE /* GoogleUtilities.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleUtilities.xcframework; path = Carthage/Build/GoogleUtilities.xcframework; sourceTree = "<group>"; };
+		F571FA1A2896CA2C003531CE /* FirebaseAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAuth.xcframework; path = Carthage/Build/FirebaseAuth.xcframework; sourceTree = "<group>"; };
+		F571FA1B2896CA2C003531CE /* gRPC-C++.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "gRPC-C++.xcframework"; path = "Carthage/Build/gRPC-C++.xcframework"; sourceTree = "<group>"; };
+		F571FA1C2896CA2C003531CE /* GTMSessionFetcher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GTMSessionFetcher.xcframework; path = Carthage/Build/GTMSessionFetcher.xcframework; sourceTree = "<group>"; };
+		F571FA1D2896CA2C003531CE /* FirebaseCoreDiagnostics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseCoreDiagnostics.xcframework; path = Carthage/Build/FirebaseCoreDiagnostics.xcframework; sourceTree = "<group>"; };
+		F571FA1E2896CA2C003531CE /* FirebaseFirestoreSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestoreSwift.xcframework; path = Carthage/Build/FirebaseFirestoreSwift.xcframework; sourceTree = "<group>"; };
+		F571FA1F2896CA2C003531CE /* FirebaseInstallations.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseInstallations.xcframework; path = Carthage/Build/FirebaseInstallations.xcframework; sourceTree = "<group>"; };
+		F571FA202896CA2C003531CE /* leveldb-library.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "leveldb-library.xcframework"; path = "Carthage/Build/leveldb-library.xcframework"; sourceTree = "<group>"; };
+		F571FA212896CA2C003531CE /* FirebaseAnalyticsSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAnalyticsSwift.xcframework; path = Carthage/Build/FirebaseAnalyticsSwift.xcframework; sourceTree = "<group>"; };
+		F571FA222896CA2C003531CE /* FirebaseCoreInternal.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseCoreInternal.xcframework; path = Carthage/Build/FirebaseCoreInternal.xcframework; sourceTree = "<group>"; };
+		F571FA232896CA2C003531CE /* Libuv-gRPC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "Libuv-gRPC.xcframework"; path = "Carthage/Build/Libuv-gRPC.xcframework"; sourceTree = "<group>"; };
+		F571FA242896CA2C003531CE /* gRPC-Core.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "gRPC-Core.xcframework"; path = "Carthage/Build/gRPC-Core.xcframework"; sourceTree = "<group>"; };
+		F571FA252896CA2C003531CE /* GoogleAppMeasurement.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurement.xcframework; path = Carthage/Build/GoogleAppMeasurement.xcframework; sourceTree = "<group>"; };
+		F571FA262896CA2C003531CE /* nanopb.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = nanopb.xcframework; path = Carthage/Build/nanopb.xcframework; sourceTree = "<group>"; };
+		F571FA272896CA2C003531CE /* PromisesObjC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = PromisesObjC.xcframework; path = Carthage/Build/PromisesObjC.xcframework; sourceTree = "<group>"; };
+		F571FA282896CA2C003531CE /* BoringSSL-GRPC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "BoringSSL-GRPC.xcframework"; path = "Carthage/Build/BoringSSL-GRPC.xcframework"; sourceTree = "<group>"; };
+		F571FA5E2896CCA5003531CE /* gRPCCertificates-Cpp.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "gRPCCertificates-Cpp.bundle"; path = "Carthage/Build/gRPC-C++.xcframework/ios-arm64/gRPC-C++.framework/Resources/gRPCCertificates-Cpp.bundle"; sourceTree = "<group>"; };
+		F571FA672896D137003531CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F5D21DE3287F7C16000C34E1 /* ErrorWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorWrapper.swift; sourceTree = "<group>"; };
 		F5D21DE5287F7CA9000C34E1 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		F5D21DE728803426000C34E1 /* MeetingTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingTimerView.swift; sourceTree = "<group>"; };
@@ -105,6 +153,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F571FA4D2896CA2D003531CE /* GoogleAppMeasurement.xcframework in Frameworks */,
+				F571FA2D2896CA2C003531CE /* GoogleDataTransport.xcframework in Frameworks */,
+				F571FA2F2896CA2C003531CE /* abseil.xcframework in Frameworks */,
+				F571FA512896CA2D003531CE /* PromisesObjC.xcframework in Frameworks */,
+				F571FA4F2896CA2D003531CE /* nanopb.xcframework in Frameworks */,
+				F571FA432896CA2C003531CE /* leveldb-library.xcframework in Frameworks */,
+				F571FA492896CA2C003531CE /* Libuv-gRPC.xcframework in Frameworks */,
+				F571FA392896CA2C003531CE /* gRPC-C++.xcframework in Frameworks */,
+				F571FA412896CA2C003531CE /* FirebaseInstallations.xcframework in Frameworks */,
+				F571FA452896CA2C003531CE /* FirebaseAnalyticsSwift.xcframework in Frameworks */,
+				F571FA4B2896CA2D003531CE /* gRPC-Core.xcframework in Frameworks */,
+				F571FA352896CA2C003531CE /* GoogleUtilities.xcframework in Frameworks */,
+				F571FA562896CA3B003531CE /* FirebaseAuth.xcframework in Frameworks */,
+				F571FA3D2896CA2C003531CE /* FirebaseCoreDiagnostics.xcframework in Frameworks */,
+				F571FA3F2896CA2C003531CE /* FirebaseFirestoreSwift.xcframework in Frameworks */,
+				F571FA312896CA2C003531CE /* FirebaseCore.xcframework in Frameworks */,
+				F571FA292896CA2C003531CE /* FirebaseFirestore.xcframework in Frameworks */,
+				F571FA532896CA2D003531CE /* BoringSSL-GRPC.xcframework in Frameworks */,
+				F571FA472896CA2C003531CE /* FirebaseCoreInternal.xcframework in Frameworks */,
+				F571FA3B2896CA2C003531CE /* GTMSessionFetcher.xcframework in Frameworks */,
+				F571FA2B2896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */,
+				F571FA332896CA2C003531CE /* FirebaseAnalytics.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,6 +259,35 @@
 			path = DetailView;
 			sourceTree = "<group>";
 		};
+		F571FA122896CA2B003531CE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F571FA162896CA2C003531CE /* abseil.xcframework */,
+				F571FA282896CA2C003531CE /* BoringSSL-GRPC.xcframework */,
+				F571FA182896CA2C003531CE /* FirebaseAnalytics.xcframework */,
+				F571FA212896CA2C003531CE /* FirebaseAnalyticsSwift.xcframework */,
+				F571FA1A2896CA2C003531CE /* FirebaseAuth.xcframework */,
+				F571FA172896CA2C003531CE /* FirebaseCore.xcframework */,
+				F571FA1D2896CA2C003531CE /* FirebaseCoreDiagnostics.xcframework */,
+				F571FA222896CA2C003531CE /* FirebaseCoreInternal.xcframework */,
+				F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */,
+				F571FA1E2896CA2C003531CE /* FirebaseFirestoreSwift.xcframework */,
+				F571FA1F2896CA2C003531CE /* FirebaseInstallations.xcframework */,
+				F571FA252896CA2C003531CE /* GoogleAppMeasurement.xcframework */,
+				F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */,
+				F571FA152896CA2C003531CE /* GoogleDataTransport.xcframework */,
+				F571FA192896CA2C003531CE /* GoogleUtilities.xcframework */,
+				F571FA1B2896CA2C003531CE /* gRPC-C++.xcframework */,
+				F571FA242896CA2C003531CE /* gRPC-Core.xcframework */,
+				F571FA1C2896CA2C003531CE /* GTMSessionFetcher.xcframework */,
+				F571FA202896CA2C003531CE /* leveldb-library.xcframework */,
+				F571FA232896CA2C003531CE /* Libuv-gRPC.xcframework */,
+				F571FA262896CA2C003531CE /* nanopb.xcframework */,
+				F571FA272896CA2C003531CE /* PromisesObjC.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F5D21DEB28803B71000C34E1 /* MeetingModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -247,10 +346,12 @@
 		F5E917BE287114DC00AE8421 = {
 			isa = PBXGroup;
 			children = (
+				F571FA5E2896CCA5003531CE /* gRPCCertificates-Cpp.bundle */,
+				F571FA122896CA2B003531CE /* Frameworks */,
+				F5E917C8287114DC00AE8421 /* Products */,
 				F5E917C9287114DC00AE8421 /* Scrumdinger */,
 				F5E917DA287114EA00AE8421 /* ScrumdingerTests */,
 				F5E917E4287114EA00AE8421 /* ScrumdingerUITests */,
-				F5E917C8287114DC00AE8421 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -271,6 +372,7 @@
 				F5E917F428711DF100AE8421 /* Models */,
 				F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */,
 				F5E917CE287114E900AE8421 /* Assets.xcassets */,
+				F571FA672896D137003531CE /* GoogleService-Info.plist */,
 				F5E917D0287114E900AE8421 /* Preview Content */,
 			);
 			path = Scrumdinger;
@@ -354,6 +456,7 @@
 				F5E917C3287114DC00AE8421 /* Sources */,
 				F5E917C4287114DC00AE8421 /* Frameworks */,
 				F5E917C5287114DC00AE8421 /* Resources */,
+				F571FA602896CCC5003531CE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -448,6 +551,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F571FA5F2896CCA5003531CE /* gRPCCertificates-Cpp.bundle in Resources */,
+				F571FA682896D137003531CE /* GoogleService-Info.plist in Resources */,
 				F5E917D2287114E900AE8421 /* Preview Assets.xcassets in Resources */,
 				F5E917CF287114E900AE8421 /* Assets.xcassets in Resources */,
 			);
@@ -468,6 +573,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F571FA602896CCC5003531CE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F5E917C3287114DC00AE8421 /* Sources */ = {
@@ -677,6 +802,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.scrum.scrumdinger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -709,6 +838,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.scrum.scrumdinger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
