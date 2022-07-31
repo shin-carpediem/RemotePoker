@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct PokerCardView: View {
-    @State var isPresentedModal = false
+    @State private var isPresentedModal = false
     let cardNumber: EstimateNumber
 
     var body: some View {
