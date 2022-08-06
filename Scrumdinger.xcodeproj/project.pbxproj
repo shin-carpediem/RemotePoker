@@ -213,13 +213,6 @@
 			path = PlanningPokerModel;
 			sourceTree = "<group>";
 		};
-		F523669E28960AAC005B1F65 /* LoginModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = LoginModel;
-			sourceTree = "<group>";
-		};
 		F53C2D8A287A3EAD0066D2F9 /* DetailEditView */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,7 +399,6 @@
 		F5E917F428711DF100AE8421 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				F523669E28960AAC005B1F65 /* LoginModel */,
 				F52366982891E803005B1F65 /* PlanningPokerModel */,
 				F5D21DF728829A3D000C34E1 /* ScrumsModel */,
 				F5D21DE3287F7C16000C34E1 /* ErrorWrapper.swift */,

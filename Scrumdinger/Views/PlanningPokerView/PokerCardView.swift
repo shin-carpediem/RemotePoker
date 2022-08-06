@@ -40,6 +40,7 @@ struct PokerCardView_Previews: PreviewProvider {
 
     static var previews: some View {
         PokerCardView(cardNumber: cardNumbr)
-            .previewLayout(.fixed(width: 400, height: 60))
+            .padding()
+            .previewLayout(.sizeThatFits)
     }
 }
