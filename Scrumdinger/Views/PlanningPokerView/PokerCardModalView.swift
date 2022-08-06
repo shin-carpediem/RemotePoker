@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PokerCardModalView: View {
     let cardNumberSet: EstimateNumberSet
-    let cardNumber: EstimateNumber
+    let cardNumber: EstimateNumberSet.EstimateNumber
     let cardIndex: Int
 
     private func outputOpacity(_ cardIndex: Int) -> Double {

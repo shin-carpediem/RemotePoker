@@ -1,10 +1,8 @@
 import SwiftUI
 
 struct PlanningPokerView: View {
-    var estimateNumberSet = EstimateNumberSet.sampleData
-    var numberSet: [EstimateNumber] {
-        get { estimateNumberSet.numberSet }
-    }
+    let estimateNumberSet = EstimateNumberSet.sampleData
+    let numberSet = EstimateNumberSet.numberSetSampleData
     
     var body: some View {
         ScrollView {

@@ -3,7 +3,7 @@ import SwiftUI
 struct PokerCardView: View {
     @State private var isPresentedModal = false
     let cardNumberSet: EstimateNumberSet
-    let cardNumber: EstimateNumber
+    let cardNumber: EstimateNumberSet.EstimateNumber
     let cardIndex: Int
     
     private func outputOpacity(_ cardIndex: Int) -> Double {
@@ -55,9 +55,9 @@ struct PokerCardView: View {
 
 struct PokerCardView_Previews: PreviewProvider {
     static var estimateNumberSet = EstimateNumberSet.sampleData
-    static var cardNumber0 = EstimateNumber.sampleData[0]
-    static var cardNumber1 = EstimateNumber.sampleData[1]
-    static var cardNumber2 = EstimateNumber.sampleData[2]
+    static var cardNumber0 = EstimateNumberSet.numberSetSampleData[0]
+    static var cardNumber1 = EstimateNumberSet.numberSetSampleData[1]
+    static var cardNumber2 = EstimateNumberSet.numberSetSampleData[2]
     
     static var previews: some View {
         Group {

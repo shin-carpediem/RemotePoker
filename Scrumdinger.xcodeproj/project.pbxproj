@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		F523669A2891E837005B1F65 /* PlanningPokerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52366992891E837005B1F65 /* PlanningPokerView.swift */; };
 		F523669C2891E8D8005B1F65 /* IndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F523669B2891E8D8005B1F65 /* IndexView.swift */; };
-		F52366A0289633E5005B1F65 /* EstimateNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = F523669F289633E5005B1F65 /* EstimateNumber.swift */; };
 		F52366A22896382F005B1F65 /* PokerCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52366A12896382F005B1F65 /* PokerCardView.swift */; };
 		F52366A428963E62005B1F65 /* PokerCardModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52366A328963E62005B1F65 /* PokerCardModalView.swift */; };
 		F53C2D852879C2FA0066D2F9 /* DetailEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53C2D842879C2FA0066D2F9 /* DetailEditView.swift */; };
@@ -88,7 +87,6 @@
 /* Begin PBXFileReference section */
 		F52366992891E837005B1F65 /* PlanningPokerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanningPokerView.swift; sourceTree = "<group>"; };
 		F523669B2891E8D8005B1F65 /* IndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexView.swift; sourceTree = "<group>"; };
-		F523669F289633E5005B1F65 /* EstimateNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimateNumber.swift; sourceTree = "<group>"; };
 		F52366A12896382F005B1F65 /* PokerCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokerCardView.swift; sourceTree = "<group>"; };
 		F52366A328963E62005B1F65 /* PokerCardModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokerCardModalView.swift; sourceTree = "<group>"; };
 		F53C2D842879C2FA0066D2F9 /* DetailEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailEditView.swift; sourceTree = "<group>"; };
@@ -210,7 +208,6 @@
 		F52366982891E803005B1F65 /* PlanningPokerModel */ = {
 			isa = PBXGroup;
 			children = (
-				F523669F289633E5005B1F65 /* EstimateNumber.swift */,
 				F5C397D9289E9342008AEFF2 /* EstimateNumberSet.swift */,
 			);
 			path = PlanningPokerModel;
@@ -612,7 +609,6 @@
 				F5E918012871229500AE8421 /* TrailingIconLabelStyle.swift in Sources */,
 				F5E917F628711E0C00AE8421 /* Theme.swift in Sources */,
 				F5E91803287387B100AE8421 /* ScrumsView.swift in Sources */,
-				F52366A0289633E5005B1F65 /* EstimateNumber.swift in Sources */,
 				F5E917CD287114DC00AE8421 /* MeetingView.swift in Sources */,
 				F523669A2891E837005B1F65 /* PlanningPokerView.swift in Sources */,
 				F52366A428963E62005B1F65 /* PokerCardModalView.swift in Sources */,
