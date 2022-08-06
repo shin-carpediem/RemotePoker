@@ -1,6 +1,6 @@
 import Foundation
 
-struct EstimateNumber: Identifiable {
+struct EstimateNumber: Identifiable, Equatable {
     let id: UUID
     var number: String
     

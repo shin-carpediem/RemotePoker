@@ -2,7 +2,22 @@ import SwiftUI
 
 struct PokerCardView: View {
     @State private var isPresentedModal = false
+    let cardNumberSet: EstimateNumberSet
     let cardNumber: EstimateNumber
+    let cardIndex: Int
+    
+    private func outputOpacity(_ cardIndex: Int) -> Double {
+        let number: Int = cardIndex >= 10 ? 9 : cardIndex
+        return Double("0.\(number)") ?? 1.0
+    }
+    
+    private func outputCardColor(_ opacity: Double) -> Color {
+        cardNumberSet.color.opacity(opacity)
+    }
+    
+    private func outputForegroundColor(_ opacity: Double) -> Color {
+        opacity >= 5.0 ? .white : .gray
+    }
 
     var body: some View {
         Button(action: {
@@ -11,14 +26,17 @@ struct PokerCardView: View {
             Text("\(cardNumber.number)")
                 .frame(width: 160, height: 120)
                 .font(.system(size: 40, weight: .bold))
-                .foregroundColor(.white)
-                .background(.yellow)
+                .foregroundColor(outputForegroundColor(outputOpacity(cardIndex)))
+                .background(outputCardColor(outputOpacity(cardIndex)))
                 // cornerRadiusはframeやforegroundColor/backgroundの後に指定しないと適用されない
                 .cornerRadius(10)
         }
         .sheet(isPresented: $isPresentedModal) {
             NavigationView {
-                PokerCardModalView(cardNumber: cardNumber)
+                PokerCardModalView(
+                    cardNumberSet: cardNumberSet,
+                    cardNumber: cardNumber,
+                    cardIndex: cardIndex)
                     .toolbar {
                         ToolbarItem(placement: .confirmationAction) {
                             Button(action: {
@@ -36,10 +54,18 @@ struct PokerCardView: View {
 }
 
 struct PokerCardView_Previews: PreviewProvider {
-    static var cardNumbr = EstimateNumber.sampleData[0]
-
+    static var estimateNumberSet = EstimateNumberSet.sampleData
+    static var cardNumber0 = EstimateNumber.sampleData[0]
+    static var cardNumber1 = EstimateNumber.sampleData[1]
+    static var cardNumber2 = EstimateNumber.sampleData[2]
+    
     static var previews: some View {
-        PokerCardView(cardNumber: cardNumbr)
-            .previewLayout(.fixed(width: 400, height: 60))
+        Group {
+            PokerCardView(cardNumberSet: estimateNumberSet, cardNumber: cardNumber0, cardIndex: 0)
+            PokerCardView(cardNumberSet: estimateNumberSet, cardNumber: cardNumber1, cardIndex: 1)
+            PokerCardView(cardNumberSet: estimateNumberSet, cardNumber: cardNumber2, cardIndex: 2)
+        }
+        .padding()
+        .previewLayout(.sizeThatFits)
     }
 }

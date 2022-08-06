@@ -1,14 +1,20 @@
 import SwiftUI
 
 struct PlanningPokerView: View {
-//    @Binding var estimateNumber: [EstimateNumber]
-    var estimateNumber = EstimateNumber.sampleData
+    var estimateNumberSet = EstimateNumberSet.sampleData
+    var numberSet: [EstimateNumber] {
+        get { estimateNumberSet.numberSet }
+    }
     
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
-                ForEach(estimateNumber) { eachNumber in
-                    PokerCardView(cardNumber: eachNumber)
+                ForEach(numberSet) { eachCard in
+                    PokerCardView(
+                        cardNumberSet: estimateNumberSet,
+                        cardNumber: eachCard,
+                        cardIndex: numberSet.firstIndex(of: eachCard) ?? 0
+                    )
                 }
                 .padding()
             }
