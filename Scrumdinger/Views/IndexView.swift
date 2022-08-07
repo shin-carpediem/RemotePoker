@@ -7,7 +7,7 @@ struct IndexView: View {
     var body: some View {
         TabView {
             NavigationView {
-                PlanningPokerView()
+                EnterRoomView()
             }
             .tabItem {
                 VStack {

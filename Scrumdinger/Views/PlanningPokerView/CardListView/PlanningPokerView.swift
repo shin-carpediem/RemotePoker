@@ -16,7 +16,6 @@ struct PlanningPokerView: View {
                 .padding()
             }
         }
-        .navigationTitle("Planning Poker")
     }
 }
 
