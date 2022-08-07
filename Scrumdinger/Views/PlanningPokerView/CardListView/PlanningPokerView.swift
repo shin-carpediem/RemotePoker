@@ -17,6 +17,7 @@ struct PlanningPokerView: View {
                 .padding()
             }
         }
+        // TODO: 表示されてない
         .navigationTitle("\(String(room.usersId.count)) members in Room ID: \(room.id)")
         .navigationBarTitleDisplayMode(.inline)
     }

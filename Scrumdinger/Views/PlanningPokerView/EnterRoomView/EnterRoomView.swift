@@ -2,6 +2,7 @@ import SwiftUI
 
 struct EnterRoomView: View {
     @State private var isPresentingNewRoomView = false
+    @State private var willNextPagePresenting = false
     @State private var inputText: String = ""
         
     private func RegisterUser(room: RoomModel) {
@@ -37,16 +38,20 @@ struct EnterRoomView: View {
         }
         .sheet(isPresented: $isPresentingNewRoomView) {
             // TODO: PlanningPokerView()に遷移していない
-            NavigationLink(destination: PlanningPokerView(room: createRoomAndRegisterUser())) {
-                Button(action: {
-                    isPresentingNewRoomView = false
-                }) {
-                    Text("Create a New Room")
+            Button(action: {
+                isPresentingNewRoomView = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    willNextPagePresenting = true
                 }
-                .padding()
-                .buttonStyle(.borderedProminent)
+            }) {
+                Text("Create a New Room")
             }
+            .padding()
+            .buttonStyle(.borderedProminent)
         }
+        .fullScreenCover(isPresented: $willNextPagePresenting, content: {
+            PlanningPokerView(room: createRoomAndRegisterUser())
+        })
     }
 }
 
