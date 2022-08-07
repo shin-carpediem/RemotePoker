@@ -1,8 +1,9 @@
 import SwiftUI
 
 struct PlanningPokerView: View {
-    let estimateNumberSet = EstimateNumberSetModel.sampleData
-    let numberSet = EstimateNumberSetModel.numberSetSampleData
+    var room: RoomModel
+    private let estimateNumberSet = EstimateNumberSetModel.sampleData
+    private let numberSet = EstimateNumberSetModel.numberSetSampleData
     
     var body: some View {
         ScrollView {
@@ -16,11 +17,13 @@ struct PlanningPokerView: View {
                 .padding()
             }
         }
+        .navigationTitle("\(String(room.usersId.count)) members in Room ID: \(room.id)")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 struct PlanningPokerView_Previews: PreviewProvider {
     static var previews: some View {
-        PlanningPokerView()
+        PlanningPokerView(room: RoomModel.sampleData)
     }
 }
