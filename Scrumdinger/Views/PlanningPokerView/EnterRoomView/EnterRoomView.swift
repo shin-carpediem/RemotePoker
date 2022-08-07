@@ -37,7 +37,6 @@ struct EnterRoomView: View {
             }
         }
         .sheet(isPresented: $isPresentingNewRoomView) {
-            // TODO: PlanningPokerView()に遷移していない
             Button(action: {
                 isPresentingNewRoomView = false
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

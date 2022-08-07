@@ -7,6 +7,10 @@ struct PlanningPokerView: View {
     
     var body: some View {
         ScrollView {
+            Text("\(String(room.usersId.count)) members in Room ID: \(room.id)")
+                .font(.headline)
+                .padding()
+            Spacer()
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
                 ForEach(numberSet) { eachCard in
                     PokerCardView(cardNumberSet: estimateNumberSet,
@@ -17,9 +21,6 @@ struct PlanningPokerView: View {
                 .padding()
             }
         }
-        // TODO: 表示されてない
-        .navigationTitle("\(String(room.usersId.count)) members in Room ID: \(room.id)")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 

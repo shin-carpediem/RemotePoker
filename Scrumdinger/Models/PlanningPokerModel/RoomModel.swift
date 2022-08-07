@@ -1,7 +1,7 @@
 import Foundation
 
 class RoomModel: Identifiable {
-    let id: UUID = UUID()
+    let id: String = String(Int.random(in: 1000..<9999))
     var usersId: [UUID] = []
     var cardList: [EstimateNumberSetModel] = [EstimateNumberSetModel.sampleData]
     
