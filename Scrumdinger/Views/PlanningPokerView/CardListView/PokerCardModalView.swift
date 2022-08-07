@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct PokerCardModalView: View {
-    let cardNumberSet: EstimateNumberSet
-    let cardNumber: EstimateNumberSet.EstimateNumber
+    let cardNumberSet: EstimateNumberSetModel
+    let cardNumber: EstimateNumberSetModel.EstimateNumber
     let cardIndex: Int
     let cardColor: Color
     
@@ -19,7 +19,7 @@ struct PokerCardModalView: View {
 }
 
 struct PokerCardModalView_Previews: PreviewProvider {
-    static var cardNumberSet = EstimateNumberSet.sampleData
+    static var cardNumberSet = EstimateNumberSetModel.sampleData
     static var cardNumber = cardNumberSet.numberSet[0]
     
     static var previews: some View {

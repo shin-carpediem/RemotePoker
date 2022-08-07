@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct EstimateNumberSet: Identifiable {
+struct EstimateNumberSetModel: Identifiable {
     let id: UUID = UUID()
     let color: Color
     var numberSet: [EstimateNumber] = []
@@ -29,8 +29,8 @@ struct EstimateNumberSet: Identifiable {
     }
 }
 
-extension EstimateNumberSet {
-    static let sampleData: EstimateNumberSet = EstimateNumberSet(
+extension EstimateNumberSetModel {
+    static let sampleData: EstimateNumberSetModel = EstimateNumberSetModel(
         color: .purple,
         numberSet: numberSetSampleData
     )

@@ -45,8 +45,8 @@
 		F571FA562896CA3B003531CE /* FirebaseAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA1A2896CA2C003531CE /* FirebaseAuth.xcframework */; };
 		F571FA5F2896CCA5003531CE /* gRPCCertificates-Cpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F571FA5E2896CCA5003531CE /* gRPCCertificates-Cpp.bundle */; };
 		F571FA682896D137003531CE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F571FA672896D137003531CE /* GoogleService-Info.plist */; };
-		F5C397DA289E9342008AEFF2 /* EstimateNumberSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397D9289E9342008AEFF2 /* EstimateNumberSet.swift */; };
-		F5C397DC289F40C6008AEFF2 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DB289F40C6008AEFF2 /* Room.swift */; };
+		F5C397DA289E9342008AEFF2 /* EstimateNumberSetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397D9289E9342008AEFF2 /* EstimateNumberSetModel.swift */; };
+		F5C397DC289F40C6008AEFF2 /* RoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DB289F40C6008AEFF2 /* RoomModel.swift */; };
 		F5C397E0289F420F008AEFF2 /* EnterRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */; };
 		F5D21DE4287F7C16000C34E1 /* ErrorWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D21DE3287F7C16000C34E1 /* ErrorWrapper.swift */; };
 		F5D21DE6287F7CA9000C34E1 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D21DE5287F7CA9000C34E1 /* ErrorView.swift */; };
@@ -125,8 +125,8 @@
 		F571FA282896CA2C003531CE /* BoringSSL-GRPC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "BoringSSL-GRPC.xcframework"; path = "Carthage/Build/BoringSSL-GRPC.xcframework"; sourceTree = "<group>"; };
 		F571FA5E2896CCA5003531CE /* gRPCCertificates-Cpp.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "gRPCCertificates-Cpp.bundle"; path = "Carthage/Build/gRPC-C++.xcframework/ios-arm64/gRPC-C++.framework/Resources/gRPCCertificates-Cpp.bundle"; sourceTree = "<group>"; };
 		F571FA672896D137003531CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		F5C397D9289E9342008AEFF2 /* EstimateNumberSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimateNumberSet.swift; sourceTree = "<group>"; };
-		F5C397DB289F40C6008AEFF2 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		F5C397D9289E9342008AEFF2 /* EstimateNumberSetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EstimateNumberSetModel.swift; sourceTree = "<group>"; };
+		F5C397DB289F40C6008AEFF2 /* RoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomModel.swift; sourceTree = "<group>"; };
 		F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomView.swift; sourceTree = "<group>"; };
 		F5D21DE3287F7C16000C34E1 /* ErrorWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorWrapper.swift; sourceTree = "<group>"; };
 		F5D21DE5287F7CA9000C34E1 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -211,8 +211,8 @@
 		F52366982891E803005B1F65 /* PlanningPokerModel */ = {
 			isa = PBXGroup;
 			children = (
-				F5C397DB289F40C6008AEFF2 /* Room.swift */,
-				F5C397D9289E9342008AEFF2 /* EstimateNumberSet.swift */,
+				F5C397DB289F40C6008AEFF2 /* RoomModel.swift */,
+				F5C397D9289E9342008AEFF2 /* EstimateNumberSetModel.swift */,
 			);
 			path = PlanningPokerModel;
 			sourceTree = "<group>";
@@ -628,7 +628,7 @@
 				F523669C2891E8D8005B1F65 /* IndexView.swift in Sources */,
 				F52366A22896382F005B1F65 /* PokerCardView.swift in Sources */,
 				F53C2D852879C2FA0066D2F9 /* DetailEditView.swift in Sources */,
-				F5C397DC289F40C6008AEFF2 /* Room.swift in Sources */,
+				F5C397DC289F40C6008AEFF2 /* RoomModel.swift in Sources */,
 				F5D21DE4287F7C16000C34E1 /* ErrorWrapper.swift in Sources */,
 				F5E918012871229500AE8421 /* TrailingIconLabelStyle.swift in Sources */,
 				F5E917F628711E0C00AE8421 /* Theme.swift in Sources */,
@@ -641,7 +641,7 @@
 				F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */,
 				F53C2D87287A3A140066D2F9 /* ThemeView.swift in Sources */,
 				F5E917FE28711FF100AE8421 /* CardView.swift in Sources */,
-				F5C397DA289E9342008AEFF2 /* EstimateNumberSet.swift in Sources */,
+				F5C397DA289E9342008AEFF2 /* EstimateNumberSetModel.swift in Sources */,
 				F5D21DEA28803615000C34E1 /* SpeakerArc.swift in Sources */,
 				F53C2D97287A56650066D2F9 /* AVPlayer+Ding.swift in Sources */,
 			);
