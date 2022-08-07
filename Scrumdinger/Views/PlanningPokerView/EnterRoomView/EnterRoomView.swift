@@ -1,19 +1,27 @@
 import SwiftUI
 
 struct EnterRoomView: View {
+    @State var userId: UUID?
+    
+    // MARK: - Private
+    
     @State private var isPresentingNewRoomView = false
     @State private var willNextPagePresenting = false
     @State private var inputText: String = ""
-        
-    private func RegisterUser(room: RoomModel) {
-        room.addUserToRoom(UUID())
+    
+    private func registerUser(room: RoomModel) {
+        userId = UUID()  // TODO: Modifying state during view update, this will cause undefined behavior.
+        if (userId == nil) { return }
+        room.addUserToRoom(userId!)
     }
     
     private func createRoomAndRegisterUser() -> RoomModel {
         let room = RoomModel()
-        RegisterUser(room: room)
+        registerUser(room: room)
         return room
     }
+    
+    // MARK: - View
     
     var body: some View {
         VStack {
@@ -27,6 +35,9 @@ struct EnterRoomView: View {
                 .padding()
                 .fixedSize()
                 .shadow(radius: 4)
+//                .fullScreenCover(isPresented: $willNextPagePresenting, content: {
+//                    PlanningPokerView(room: createRoomAndRegisterUser())
+//                })
         }
         .navigationTitle("Planning Poker")
         .toolbar {
@@ -49,10 +60,12 @@ struct EnterRoomView: View {
             .buttonStyle(.borderedProminent)
         }
         .fullScreenCover(isPresented: $willNextPagePresenting, content: {
-            PlanningPokerView(room: createRoomAndRegisterUser())
+            PlanningPokerView(room: createRoomAndRegisterUser(), userId: userId)
         })
     }
 }
+
+// MARK: - Preview
 
 struct EnterRoomView_Previews: PreviewProvider {
     static var previews: some View {

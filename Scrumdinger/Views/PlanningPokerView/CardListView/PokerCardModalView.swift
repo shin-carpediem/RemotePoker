@@ -6,6 +6,8 @@ struct PokerCardModalView: View {
     let cardIndex: Int
     let cardColor: Color
     
+    // MARK: - View
+    
     var body: some View {
         Text("\(cardNumber.number)")
             .frame(width: 300, height: 400)
@@ -17,6 +19,8 @@ struct PokerCardModalView: View {
             .cornerRadius(20)
     }
 }
+
+// MARK: - Preview
 
 struct PokerCardModalView_Previews: PreviewProvider {
     static var cardNumberSet = EstimateNumberSetModel.sampleData

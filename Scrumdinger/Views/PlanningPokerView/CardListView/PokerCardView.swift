@@ -1,11 +1,16 @@
 import SwiftUI
 
 struct PokerCardView: View {
-    @State private var isPresentedModal = false
     let cardNumberSet: EstimateNumberSetModel
     let cardNumber: EstimateNumberSetModel.EstimateNumber
     let cardIndex: Int
     let cardColor: Color
+    
+    // MARK: - Private
+    
+    @State private var isPresentedModal = false
+    
+    // MARK: - View
     
     var body: some View {
         Button(action: {
@@ -43,6 +48,8 @@ struct PokerCardView: View {
         }
     }
 }
+
+// MARK: - Preview
 
 struct PokerCardView_Previews: PreviewProvider {
     static var estimateNumberSet = EstimateNumberSetModel.sampleData
