@@ -8,11 +8,10 @@ struct PlanningPokerView: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
                 ForEach(numberSet) { eachCard in
-                    PokerCardView(
-                        cardNumberSet: estimateNumberSet,
+                    PokerCardView(cardNumberSet: estimateNumberSet,
                         cardNumber: eachCard,
-                        cardIndex: numberSet.firstIndex(of: eachCard) ?? 0
-                    )
+                        cardIndex: numberSet.firstIndex(of: eachCard) ?? 0,
+                        cardColor: estimateNumberSet.color)
                 }
                 .padding()
             }

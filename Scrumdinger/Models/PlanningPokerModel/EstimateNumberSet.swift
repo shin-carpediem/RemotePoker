@@ -1,30 +1,37 @@
 import SwiftUI
 
 struct EstimateNumberSet: Identifiable {
-    let id: UUID
+    let id: UUID = UUID()
     let color: Color
     var numberSet: [EstimateNumber] = []
-    
-    init(id: UUID = UUID(), color: Color, numberSet: [EstimateNumber]) {
-        self.id = id
-        self.color = color
-        self.numberSet = numberSet
-    }
-    
-    struct EstimateNumber: Identifiable, Equatable {
-        let id: UUID
-        var number: String
         
-        init(id: UUID = UUID(), number: String) {
-            self.id = id
-            self.number = number
+    struct EstimateNumber: Identifiable, Equatable {
+        let id: UUID = UUID()
+        let number: String
+        
+        // MARK: - Method
+                
+        func outputForegroundColor(_ cardIndex: Int) -> Color {
+            outputOpacity(cardIndex) >= 0.5 ? .white : .gray
+        }
+        
+        func outputCardColor(_ cardIndex: Int, _ color: Color) -> Color {
+            let newOpacity = outputOpacity(cardIndex)
+            return color.opacity(newOpacity)
+        }
+        
+        // MARK: - Private
+        
+        private func outputOpacity(_ cardIndex: Int) -> Double {
+            let number: Int = cardIndex >= 10 ? 9 : cardIndex
+            return Double("0.\(number)") ?? 1.0
         }
     }
 }
 
 extension EstimateNumberSet {
     static let sampleData: EstimateNumberSet = EstimateNumberSet(
-        color: Color(red: 0, green: 200, blue: 11),
+        color: .purple,
         numberSet: numberSetSampleData
     )
     

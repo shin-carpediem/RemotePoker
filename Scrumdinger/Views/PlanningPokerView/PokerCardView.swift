@@ -5,20 +5,8 @@ struct PokerCardView: View {
     let cardNumberSet: EstimateNumberSet
     let cardNumber: EstimateNumberSet.EstimateNumber
     let cardIndex: Int
+    let cardColor: Color
     
-    private func outputOpacity(_ cardIndex: Int) -> Double {
-        let number: Int = cardIndex >= 10 ? 9 : cardIndex
-        return Double("0.\(number)") ?? 1.0
-    }
-    
-    private func outputCardColor(_ opacity: Double) -> Color {
-        cardNumberSet.color.opacity(opacity)
-    }
-    
-    private func outputForegroundColor(_ opacity: Double) -> Color {
-        opacity >= 5.0 ? .white : .gray
-    }
-
     var body: some View {
         Button(action: {
             isPresentedModal = true
@@ -26,17 +14,20 @@ struct PokerCardView: View {
             Text("\(cardNumber.number)")
                 .frame(width: 160, height: 120)
                 .font(.system(size: 40, weight: .bold))
-                .foregroundColor(outputForegroundColor(outputOpacity(cardIndex)))
-                .background(outputCardColor(outputOpacity(cardIndex)))
+                .foregroundColor(cardNumber.outputForegroundColor(cardIndex))
+                .background(cardNumber.outputCardColor(cardIndex, cardColor))
+                .border(LinearGradient(gradient: Gradient(colors: [.white, cardColor]), startPoint: .topLeading,endPoint: .bottomTrailing), width: 2)
                 // cornerRadiusはframeやforegroundColor/backgroundの後に指定しないと適用されない
                 .cornerRadius(10)
+
         }
         .sheet(isPresented: $isPresentedModal) {
             NavigationView {
                 PokerCardModalView(
                     cardNumberSet: cardNumberSet,
                     cardNumber: cardNumber,
-                    cardIndex: cardIndex)
+                    cardIndex: cardIndex,
+                    cardColor: cardColor)
                     .toolbar {
                         ToolbarItem(placement: .confirmationAction) {
                             Button(action: {
@@ -61,9 +52,18 @@ struct PokerCardView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            PokerCardView(cardNumberSet: estimateNumberSet, cardNumber: cardNumber0, cardIndex: 0)
-            PokerCardView(cardNumberSet: estimateNumberSet, cardNumber: cardNumber1, cardIndex: 1)
-            PokerCardView(cardNumberSet: estimateNumberSet, cardNumber: cardNumber2, cardIndex: 2)
+            PokerCardView(cardNumberSet: estimateNumberSet,
+                          cardNumber: cardNumber0,
+                          cardIndex: 0,
+                          cardColor: .green)
+            PokerCardView(cardNumberSet: estimateNumberSet,
+                          cardNumber: cardNumber1,
+                          cardIndex: 1,
+                          cardColor: .green)
+            PokerCardView(cardNumberSet: estimateNumberSet,
+                          cardNumber: cardNumber2,
+                          cardIndex: 2,
+                          cardColor: .green)
         }
         .padding()
         .previewLayout(.sizeThatFits)

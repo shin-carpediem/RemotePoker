@@ -19,13 +19,8 @@ struct DailyScrum: Identifiable, Codable {
 
 extension DailyScrum {
     struct Attendee: Identifiable, Codable {
-        let id: UUID
+        var id: UUID = UUID()
         var name: String
-        
-        init(id: UUID = UUID(), name: String) {
-            self.id = id
-            self.name = name
-        }
     }
     
     struct Data {
