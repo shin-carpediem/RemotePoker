@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct EnterRoomView: View {
-    @State var userId: UUID?
+    @State var userId = UUID()
+    @State var roomToEnter = RoomModel()
     
     // MARK: - Private
     
@@ -9,16 +10,12 @@ struct EnterRoomView: View {
     @State private var willNextPagePresenting = false
     @State private var inputText: String = ""
     
-    private func registerUser(room: RoomModel) {
-        userId = UUID()  // TODO: Modifying state during view update, this will cause undefined behavior.
-        if (userId == nil) { return }
-        room.addUserToRoom(userId!)
+    private func createRoomAndRegisterUser() {
+        roomToEnter.addUserToRoom(userId)
     }
     
-    private func createRoomAndRegisterUser() -> RoomModel {
-        let room = RoomModel()
-        registerUser(room: room)
-        return room
+    private func registerUserToExistingRoom() {
+        roomToEnter.addUserToRoom(userId)
     }
     
     // MARK: - View
@@ -28,16 +25,17 @@ struct EnterRoomView: View {
             TextField("Enter with Room ID",
                       text: $inputText,
                       onCommit: {
-                self.inputText = ""
+                inputText = ""
+                registerUserToExistingRoom()
             })
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .multilineTextAlignment(.center)
                 .padding()
                 .fixedSize()
                 .shadow(radius: 4)
-//                .fullScreenCover(isPresented: $willNextPagePresenting, content: {
-//                    PlanningPokerView(room: createRoomAndRegisterUser())
-//                })
+                .fullScreenCover(isPresented: $willNextPagePresenting, content: {
+                    PlanningPokerView(room: roomToEnter, userId: userId)
+                })
         }
         .navigationTitle("Planning Poker")
         .toolbar {
@@ -49,6 +47,7 @@ struct EnterRoomView: View {
         }
         .sheet(isPresented: $isPresentingNewRoomView) {
             Button(action: {
+                createRoomAndRegisterUser()
                 isPresentingNewRoomView = false
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     willNextPagePresenting = true
@@ -60,7 +59,7 @@ struct EnterRoomView: View {
             .buttonStyle(.borderedProminent)
         }
         .fullScreenCover(isPresented: $willNextPagePresenting, content: {
-            PlanningPokerView(room: createRoomAndRegisterUser(), userId: userId)
+            PlanningPokerView(room: roomToEnter, userId: userId)
         })
     }
 }
