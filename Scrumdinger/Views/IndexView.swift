@@ -1,13 +1,17 @@
 import SwiftUI
 
 struct IndexView: View {
+    // MARK: - Private
+    
     @StateObject private var store = ScrumStore()
     @State private var errorWrapper: ErrorWrapper?
 
+    // MARK: - Body
+    
     var body: some View {
         TabView {
             NavigationView {
-                PlanningPokerView()
+                EnterRoomView()
             }
             .tabItem {
                 VStack {
