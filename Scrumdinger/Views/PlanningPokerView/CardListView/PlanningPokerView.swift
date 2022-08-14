@@ -1,18 +1,26 @@
 import SwiftUI
 
 struct PlanningPokerView: View {
-    @Environment(\.dismiss) private var dismiss
-    var room: RoomModel
-    let userId: UUID?
+    @State var roomToEnter = RoomModel()
+    @State var userId = UUID()
     
     // MARK: - Private
+    
+    @Environment(\.dismiss) private var dismiss
     
     private let estimateNumberSet = EstimateNumberSetModel.sampleData
     private let numberSet = EstimateNumberSetModel.numberSetSampleData
     
+    private func createRoomAndRegisterUser() {
+        roomToEnter.addUserToRoom(userId)
+    }
+    
+    private func registerUserToExistingRoom() {
+        roomToEnter.addUserToRoom(userId)
+    }
+    
     private func leaveFromRoom() {
-        if (userId == nil) { return }
-        room.removeUserFromRoom(userId!)
+        roomToEnter.removeUserFromRoom(userId)
     }
     
     // MARK: - View
@@ -20,7 +28,7 @@ struct PlanningPokerView: View {
     var body: some View {
         ScrollView {
             HStack {
-                Text("\(String(room.usersId.count)) members in Room ID: \(room.id)")
+                Text("\(String(roomToEnter.usersId.count)) members in Room ID: \(roomToEnter.id)")
                     .font(.headline)
                     .padding()
                 Button(action: {
@@ -42,6 +50,9 @@ struct PlanningPokerView: View {
                 .padding()
             }
         }
+        .onAppear {
+            createRoomAndRegisterUser()
+        }
     }
 }
 
@@ -51,6 +62,6 @@ struct PlanningPokerView_Previews: PreviewProvider {
     static let sampleData = RoomModel.sampleData
     
     static var previews: some View {
-        PlanningPokerView(room: sampleData, userId: UUID())
+        PlanningPokerView(roomToEnter: sampleData, userId: UUID())
     }
 }

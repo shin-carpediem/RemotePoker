@@ -1,22 +1,11 @@
 import SwiftUI
 
 struct EnterRoomView: View {
-    @State var userId = UUID()
-    @State var roomToEnter = RoomModel()
-    
     // MARK: - Private
     
     @State private var isPresentingNewRoomView = false
     @State private var willNextPagePresenting = false
     @State private var inputText: String = ""
-    
-    private func createRoomAndRegisterUser() {
-        roomToEnter.addUserToRoom(userId)
-    }
-    
-    private func registerUserToExistingRoom() {
-        roomToEnter.addUserToRoom(userId)
-    }
     
     // MARK: - View
     
@@ -26,7 +15,10 @@ struct EnterRoomView: View {
                       text: $inputText,
                       onCommit: {
                 inputText = ""
-                registerUserToExistingRoom()
+                isPresentingNewRoomView = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    willNextPagePresenting = true
+                }
             })
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .multilineTextAlignment(.center)
@@ -34,7 +26,7 @@ struct EnterRoomView: View {
                 .fixedSize()
                 .shadow(radius: 4)
                 .fullScreenCover(isPresented: $willNextPagePresenting, content: {
-                    PlanningPokerView(room: roomToEnter, userId: userId)
+                    PlanningPokerView()
                 })
         }
         .navigationTitle("Planning Poker")
@@ -47,7 +39,6 @@ struct EnterRoomView: View {
         }
         .sheet(isPresented: $isPresentingNewRoomView) {
             Button(action: {
-                createRoomAndRegisterUser()
                 isPresentingNewRoomView = false
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     willNextPagePresenting = true
@@ -59,7 +50,7 @@ struct EnterRoomView: View {
             .buttonStyle(.borderedProminent)
         }
         .fullScreenCover(isPresented: $willNextPagePresenting, content: {
-            PlanningPokerView(room: roomToEnter, userId: userId)
+            PlanningPokerView()
         })
     }
 }
