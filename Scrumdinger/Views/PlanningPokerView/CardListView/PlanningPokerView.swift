@@ -12,6 +12,7 @@ struct PlanningPokerView: View {
     private let numberSet = EstimateNumberSetModel.numberSetSampleData
     
     private func createRoomAndRegisterUser() {
+        roomToEnter.createRoom()
         roomToEnter.addUserToRoom(userId)
     }
     
