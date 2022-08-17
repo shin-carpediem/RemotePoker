@@ -27,6 +27,9 @@ struct PokerCardModalView_Previews: PreviewProvider {
     static var cardNumber = cardNumberSet.numberSet[0]
     
     static var previews: some View {
-        PokerCardModalView(cardNumberSet:cardNumberSet, cardNumber: cardNumber, cardIndex: 1, cardColor: .green)
+        PokerCardModalView(cardNumberSet:cardNumberSet,
+                           cardNumber: cardNumber,
+                           cardIndex: 1,
+                           cardColor: .green)
     }
 }

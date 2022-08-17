@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PlanningPokerView: View {
     @State var roomToEnter = RoomModel()
-    @State var userId = UUID()
+    @State var userId = UUID().uuidString
     
     // MARK: - Private
     
@@ -63,6 +63,7 @@ struct PlanningPokerView_Previews: PreviewProvider {
     static let sampleData = RoomModel.sampleData
     
     static var previews: some View {
-        PlanningPokerView(roomToEnter: sampleData, userId: UUID())
+        PlanningPokerView(roomToEnter: sampleData,
+                          userId: UUID().uuidString)
     }
 }
