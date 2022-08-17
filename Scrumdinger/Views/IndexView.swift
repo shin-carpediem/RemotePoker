@@ -58,7 +58,8 @@ struct IndexView: View {
 struct IndexView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ScrumsView(scrums: .constant(DailyScrum.sampleData), saveAction: {})
+            ScrumsView(scrums: .constant(DailyScrum.sampleData),
+                       saveAction: {})
         }
     }
 }

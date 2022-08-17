@@ -1,16 +1,16 @@
 import SwiftUI
 
 struct EstimateNumberSetModel: Identifiable {
-    let id: UUID = UUID()
+    let id: String = UUID().uuidString
     let color: Color
     var numberSet: [EstimateNumber] = []
-        
+    
     struct EstimateNumber: Identifiable, Equatable {
-        let id: UUID = UUID()
+        let id: String = UUID().uuidString
         let number: String
         
         // MARK: - Method
-                
+        
         func outputForegroundColor(_ cardIndex: Int) -> Color {
             outputOpacity(cardIndex) >= 0.5 ? .white : .gray
         }
