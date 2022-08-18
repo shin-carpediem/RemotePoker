@@ -14,7 +14,7 @@ class RoomModel: Identifiable {
             "id": id,
             "usersId": usersId
         ]) { error in
-            print("Error writing document: \(String(describing: error))")
+            print("Error adding Document: \(String(describing: error))")
         }
         let cardListSubCollection = roomCollection.document(id).collection("cardList")
         cardList.forEach {
@@ -31,6 +31,12 @@ class RoomModel: Identifiable {
                     "number": $0.number
                 ])
             }
+        }
+    }
+    
+    func deleteRoom() {
+        roomCollection.document(id).delete() { error in
+            print("Error removing Document: \(String(describing: error))")
         }
     }
     

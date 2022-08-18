@@ -22,6 +22,9 @@ struct PlanningPokerView: View {
     
     private func leaveFromRoom() {
         roomToEnter.removeUserFromRoom(userId)
+        if roomToEnter.usersId.isEmpty {
+            roomToEnter.deleteRoom()
+        }
     }
     
     // MARK: - View
