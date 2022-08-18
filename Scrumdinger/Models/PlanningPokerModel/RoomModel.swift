@@ -5,7 +5,7 @@ class RoomModel: Identifiable {
     let id = String(Int.random(in: 1000..<9999))
     
     private(set) var usersId: [String] = []
-    private(set) var cardList = [EstimateNumberSetModel.sampleData]
+//    private(set) var cardList = [EstimateNumberSetModel.sampleData]
     
     // MARK: - Method
     
@@ -13,20 +13,20 @@ class RoomModel: Identifiable {
         roomCollection.document(id).setData([
             "id": id,
             "usersId": usersId,
-            "cardList": cardList
+//            "cardList": cardList
         ])
     }
     
     func addUserToRoom(_ userId: String) {
         usersId.append(userId)
-        roomCollection.document().updateData([
+        roomCollection.document(id).updateData([
             "usersId": usersId
         ])
     }
     
     func removeUserFromRoom(_ userId: String) {
         usersId.removeAll(where: {$0 == userId})
-        roomCollection.document().updateData([
+        roomCollection.document(id).updateData([
             "usersId": userId
         ])
     }
