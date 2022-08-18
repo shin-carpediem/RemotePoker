@@ -3,6 +3,7 @@ import SwiftUI
 struct PlanningPokerView: View {
     @State var roomToEnter = RoomModel()
     @State var userId = UUID().uuidString
+    var isNewRoom: Bool
     
     // MARK: - Private
     
@@ -55,7 +56,7 @@ struct PlanningPokerView: View {
             }
         }
         .onAppear {
-            createRoomAndRegisterUser()
+            isNewRoom ? createRoomAndRegisterUser() : registerUserToExistingRoom()
         }
     }
 }
@@ -67,6 +68,7 @@ struct PlanningPokerView_Previews: PreviewProvider {
     
     static var previews: some View {
         PlanningPokerView(roomToEnter: sampleData,
-                          userId: UUID().uuidString)
+                          userId: UUID().uuidString,
+                          isNewRoom: false)
     }
 }

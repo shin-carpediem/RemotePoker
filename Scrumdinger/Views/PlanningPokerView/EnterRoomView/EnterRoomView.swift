@@ -1,3 +1,5 @@
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 import SwiftUI
 
 struct EnterRoomView: View {
@@ -5,7 +7,20 @@ struct EnterRoomView: View {
     
     @State private var isPresentingNewRoomView = false
     @State private var willNextPagePresenting = false
+    @State private var alertMessagePresenting = false
+    @State private var isNewRoom = false
     @State private var inputText: String = ""
+    
+    private func isRoomExist() -> Bool {
+        var isRoomExist = false
+        let roomCollection = Firestore.firestore().collection("rooms")
+        roomCollection.whereField("id", isEqualTo: $inputText).getDocuments() { (querySnapshot, error) in
+            if error == nil {
+                isRoomExist = true
+            }
+        }
+        return isRoomExist
+    }
     
     // MARK: - View
     
@@ -15,9 +30,17 @@ struct EnterRoomView: View {
                       text: $inputText,
                       onCommit: {
                 inputText = ""
-                isPresentingNewRoomView = false
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    willNextPagePresenting = true
+                isNewRoom = false
+                if isRoomExist() {
+                    isPresentingNewRoomView = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        willNextPagePresenting = true
+                    }
+                } else {
+                    alertMessagePresenting = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        alertMessagePresenting = false
+                    }
                 }
             })
                 .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -26,8 +49,11 @@ struct EnterRoomView: View {
                 .fixedSize()
                 .shadow(radius: 4)
                 .fullScreenCover(isPresented: $willNextPagePresenting, content: {
-                    PlanningPokerView()
+                    PlanningPokerView(isNewRoom: false)
                 })
+                .alert(isPresented: $alertMessagePresenting) {
+                    Alert(title: Text("Room does not exist"))
+                }
         }
         .navigationTitle("Planning Poker")
         .toolbar {
@@ -40,6 +66,7 @@ struct EnterRoomView: View {
         .sheet(isPresented: $isPresentingNewRoomView) {
             Button(action: {
                 isPresentingNewRoomView = false
+                isNewRoom = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     willNextPagePresenting = true
                 }
@@ -50,7 +77,7 @@ struct EnterRoomView: View {
             .buttonStyle(.borderedProminent)
         }
         .fullScreenCover(isPresented: $willNextPagePresenting, content: {
-            PlanningPokerView()
+            PlanningPokerView(isNewRoom: true)
         })
     }
 }
