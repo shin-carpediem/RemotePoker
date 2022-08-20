@@ -31,11 +31,13 @@ struct PlanningPokerView: View {
     // MARK: - View
     
     var body: some View {
+        // TODO: isNewRoomの値がtrueに更新されるよりも前にViewを描画してしまう
         let roomId = isNewRoom ? roomToEnter.id : existingRoomId
         var usersIdList = isNewRoom ? roomToEnter.usersId : usersIdList
+        let usersCount = isNewRoom ? usersIdList.count : usersIdList.count + 1
         ScrollView {
             HStack {
-                Text("\(String(usersIdList.count)) members in Room ID: \(roomId)")
+                Text("\(String(usersCount)) members in Room ID: \(roomId)")
                     .font(.headline)
                     .padding()
                 Button(action: {
