@@ -24,7 +24,6 @@ struct PokerCardView: View {
                 .border(LinearGradient(gradient: Gradient(colors: [.white, cardColor]), startPoint: .topLeading,endPoint: .bottomTrailing), width: 2)
                 // cornerRadiusはframeやforegroundColor/backgroundの後に指定しないと適用されない
                 .cornerRadius(10)
-
         }
         .sheet(isPresented: $isPresentedModal) {
             NavigationView {

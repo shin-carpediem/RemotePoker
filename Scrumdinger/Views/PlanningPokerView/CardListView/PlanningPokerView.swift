@@ -3,7 +3,9 @@ import SwiftUI
 struct PlanningPokerView: View {
     @State var roomToEnter = RoomModel()
     @State var userId = UUID().uuidString
-    var isNewRoom: Bool
+    @Binding var isNewRoom: Bool
+    @Binding var existingRoomId: String
+    @Binding var usersIdList: [String]
     
     // MARK: - Private
     
@@ -13,31 +15,31 @@ struct PlanningPokerView: View {
     private let numberSet = EstimateNumberSetModel.numberSetSampleData
     
     private func createRoomAndRegisterUser() {
+        roomToEnter = RoomModel()
         roomToEnter.createRoom()
-        roomToEnter.addUserToRoom(userId)
+        roomToEnter.addUserToRoom(roomId: roomToEnter.id, userId: userId, usersIdList: &roomToEnter.usersId)
     }
     
-    private func registerUserToExistingRoom() {
-        roomToEnter.addUserToRoom(userId)
+    private func registerUserToExistingRoom(roomId: String, usersIdList: inout [String]) {
+        roomToEnter.addUserToRoom(roomId: roomId, userId: userId, usersIdList: &usersIdList)
     }
     
-    private func leaveFromRoom() {
-        roomToEnter.removeUserFromRoom(userId)
-        if roomToEnter.usersId.isEmpty {
-            roomToEnter.deleteRoom()
-        }
+    private func leaveFromRoom(roomId: String, usersIdList: inout [String]) {
+        roomToEnter.removeUserFromRoom(roomId: roomId, userId: userId, usersIdList: &usersIdList)
     }
     
     // MARK: - View
     
     var body: some View {
+        let roomId = isNewRoom ? roomToEnter.id : existingRoomId
+        var usersIdList = isNewRoom ? roomToEnter.usersId : usersIdList
         ScrollView {
             HStack {
-                Text("\(String(roomToEnter.usersId.count)) members in Room ID: \(roomToEnter.id)")
+                Text("\(String(usersIdList.count)) members in Room ID: \(roomId)")
                     .font(.headline)
                     .padding()
                 Button(action: {
-                    leaveFromRoom()
+                    leaveFromRoom(roomId: roomId, usersIdList: &usersIdList)
                     dismiss()
                 }) {
                     Text("Leave")
@@ -56,7 +58,7 @@ struct PlanningPokerView: View {
             }
         }
         .onAppear {
-            isNewRoom ? createRoomAndRegisterUser() : registerUserToExistingRoom()
+            isNewRoom ? createRoomAndRegisterUser() : registerUserToExistingRoom(roomId: roomId, usersIdList: &usersIdList)
         }
     }
 }
@@ -69,6 +71,8 @@ struct PlanningPokerView_Previews: PreviewProvider {
     static var previews: some View {
         PlanningPokerView(roomToEnter: sampleData,
                           userId: UUID().uuidString,
-                          isNewRoom: false)
+                          isNewRoom: .constant(false),
+                          existingRoomId: .constant("0"),
+                          usersIdList: .constant([]))
     }
 }
