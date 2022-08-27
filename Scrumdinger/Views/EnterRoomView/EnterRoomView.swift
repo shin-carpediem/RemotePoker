@@ -3,15 +3,18 @@ import FirebaseFirestoreSwift
 import SwiftUI
 
 struct EnterRoomView: View {
-    // MARK: - Private
-    @State private var isPresentingNewRoomView = false
-    @State private var willNextPagePresenting = false
-    @State private var alertMessagePresenting = false
-    @State private var inputText = ""
     @State var isNewRoom = false
     @State var isRoomExist = false
     @State var existingRoomId = "0"
     @State var usersIdList: [String] = []
+    
+    // MARK: - Private
+    
+    @State private var isPresentingNewRoomView = false
+    @State private var willNextPagePresenting = false
+    @State private var alertMessagePresenting = false
+    @State private var inputText = ""
+    @State private var errorWrapper: ErrorWrapper?
     
     // 既存Roomがあった場合はRoomIDを返却
     private func checkIsRoomExist(completionHandler: @escaping (Result<Any, Error>) -> ()) {
@@ -43,39 +46,37 @@ struct EnterRoomView: View {
     // MARK: - View
     
     var body: some View {
-        VStack {
-            TextField("Enter with Room ID",
-                      text: $inputText,
-                      onCommit: {
-                checkIsRoomExist { _ in
-                    if $isRoomExist.wrappedValue {
-                        isNewRoom = false
-                        isPresentingNewRoomView = false
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            willNextPagePresenting = true
-                        }
-                    } else {
-                        isNewRoom = false
-                        alertMessagePresenting = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                            alertMessagePresenting = false
-                        }
+        TextField("Enter with Room ID",
+                  text: $inputText,
+                  onCommit: {
+            checkIsRoomExist { _ in
+                if $isRoomExist.wrappedValue {
+                    isNewRoom = false
+                    isPresentingNewRoomView = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        willNextPagePresenting = true
+                    }
+                } else {
+                    isNewRoom = false
+                    alertMessagePresenting = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        alertMessagePresenting = false
                     }
                 }
-            })
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .multilineTextAlignment(.center)
-                .padding()
-                .fixedSize()
-                .shadow(radius: 4)
-                .fullScreenCover(isPresented: $willNextPagePresenting, content: {
-                    PlanningPokerView(isNewRoom: $isNewRoom,
-                                      existingRoomId: $existingRoomId,
-                                      usersIdList: $usersIdList)
-                })
-                .alert(isPresented: $alertMessagePresenting) {
-                    Alert(title: Text("Room does not exist"))
-                }
+            }
+        })
+        .textFieldStyle(RoundedBorderTextFieldStyle())
+        .multilineTextAlignment(.center)
+        .padding()
+        .fixedSize()
+        .shadow(radius: 4)
+        .fullScreenCover(isPresented: $willNextPagePresenting, content: {
+            CardListView(isNewRoom: $isNewRoom,
+                              existingRoomId: $existingRoomId,
+                              usersIdList: $usersIdList)
+        })
+        .alert(isPresented: $alertMessagePresenting) {
+            Alert(title: Text("Room does not exist"))
         }
         .navigationTitle("Planning Poker")
         .toolbar {
@@ -99,7 +100,7 @@ struct EnterRoomView: View {
             .buttonStyle(.borderedProminent)
         }
         .fullScreenCover(isPresented: $willNextPagePresenting, content: {
-            PlanningPokerView(isNewRoom: $isNewRoom,
+            CardListView(isNewRoom: $isNewRoom,
                               existingRoomId: $existingRoomId,
                               usersIdList: $usersIdList)
         })

@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct PokerCardView: View {
+struct CardView: View {
     let cardNumberSet: EstimateNumberSetModel
     let cardNumber: EstimateNumberSetModel.EstimateNumber
     let cardIndex: Int
@@ -27,7 +27,7 @@ struct PokerCardView: View {
         }
         .sheet(isPresented: $isPresentedModal) {
             NavigationView {
-                PokerCardModalView(
+                CardModalView(
                     cardNumberSet: cardNumberSet,
                     cardNumber: cardNumber,
                     cardIndex: cardIndex,
@@ -50,7 +50,7 @@ struct PokerCardView: View {
 
 // MARK: - Preview
 
-struct PokerCardView_Previews: PreviewProvider {
+struct CardView_Previews: PreviewProvider {
     static var estimateNumberSet = EstimateNumberSetModel.sampleData
     static var cardNumber0 = EstimateNumberSetModel.numberSetSampleData[0]
     static var cardNumber1 = EstimateNumberSetModel.numberSetSampleData[1]
@@ -58,15 +58,15 @@ struct PokerCardView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            PokerCardView(cardNumberSet: estimateNumberSet,
+            CardView(cardNumberSet: estimateNumberSet,
                           cardNumber: cardNumber0,
                           cardIndex: 0,
                           cardColor: .green)
-            PokerCardView(cardNumberSet: estimateNumberSet,
+            CardView(cardNumberSet: estimateNumberSet,
                           cardNumber: cardNumber1,
                           cardIndex: 1,
                           cardColor: .green)
-            PokerCardView(cardNumberSet: estimateNumberSet,
+            CardView(cardNumberSet: estimateNumberSet,
                           cardNumber: cardNumber2,
                           cardIndex: 2,
                           cardColor: .green)

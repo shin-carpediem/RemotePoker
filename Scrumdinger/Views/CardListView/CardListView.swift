@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct PlanningPokerView: View {
+struct CardListView: View {
     @State var roomToEnter = RoomModel()
     @State var userId = UUID().uuidString
     @Binding var isNewRoom: Bool
@@ -51,7 +51,7 @@ struct PlanningPokerView: View {
             Spacer()
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
                 ForEach(numberSet) { eachCard in
-                    PokerCardView(cardNumberSet: estimateNumberSet,
+                    CardView(cardNumberSet: estimateNumberSet,
                         cardNumber: eachCard,
                         cardIndex: numberSet.firstIndex(of: eachCard) ?? 0,
                         cardColor: estimateNumberSet.color)
@@ -67,11 +67,11 @@ struct PlanningPokerView: View {
 
 // MARK: - Preview
 
-struct PlanningPokerView_Previews: PreviewProvider {
+struct CardListView_Previews: PreviewProvider {
     static let sampleData = RoomModel.sampleData
     
     static var previews: some View {
-        PlanningPokerView(roomToEnter: sampleData,
+        CardListView(roomToEnter: sampleData,
                           userId: UUID().uuidString,
                           isNewRoom: .constant(false),
                           existingRoomId: .constant("0"),
