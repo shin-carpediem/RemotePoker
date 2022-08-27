@@ -13,7 +13,9 @@ struct ScrumdingerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
         WindowGroup {
-            IndexView()
+            NavigationView {
+                EnterRoomView()
+            }
         }
     }
 }
