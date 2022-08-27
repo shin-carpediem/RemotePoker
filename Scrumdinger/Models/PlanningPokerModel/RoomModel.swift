@@ -4,7 +4,7 @@ import FirebaseFirestoreSwift
 class RoomModel: Identifiable {
     let id = String(Int.random(in: 1000..<9999))
     
-    private(set) var usersId: [String] = []
+    var usersId: [String] = []
     private(set) var cardList = [EstimateNumberSetModel.sampleData]
     
     // MARK: - Method
@@ -13,9 +13,7 @@ class RoomModel: Identifiable {
         roomCollection.document(id).setData([
             "id": id,
             "usersId": usersId
-        ]) { error in
-            print("Error writing document: \(String(describing: error))")
-        }
+        ])
         let cardListSubCollection = roomCollection.document(id).collection("cardList")
         cardList.forEach {
             let cardListId = $0.id
@@ -34,22 +32,25 @@ class RoomModel: Identifiable {
         }
     }
     
-    func addUserToRoom(_ userId: String) {
-        usersId.append(userId)
-        roomCollection.document(id).updateData([
-            "usersId": usersId
-        ]) { error in
-            print("Error writing document: \(String(describing: error))")
-        }
+    func deleteRoom(roomId: String) {
+        roomCollection.document(roomId).delete()
     }
     
-    func removeUserFromRoom(_ userId: String) {
-        usersId.removeAll(where: {$0 == userId})
-        roomCollection.document(id).updateData([
-            "usersId": usersId
-        ]) { error in
-            print("Error writing document: \(String(describing: error))")
+    func addUserToRoom(roomId: String, userId: String, usersIdList: inout [String]) {
+        usersIdList.append(userId)
+        roomCollection.document(roomId).updateData([
+            "usersId": usersIdList
+        ])
+    }
+    
+    func removeUserFromRoom(roomId: String, userId: String, usersIdList: inout [String]) {
+        usersIdList.removeAll(where: {$0 == userId})
+        if usersIdList.isEmpty {
+            deleteRoom(roomId: roomId)
         }
+        roomCollection.document(roomId).updateData([
+            "usersId": usersIdList
+        ])
     }
     
     // MARK: - Private
