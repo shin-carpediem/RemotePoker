@@ -6,9 +6,7 @@ class RoomModel: Identifiable {
     
     var usersId: [String] = []
     private(set) var cardList = [EstimateNumberSetModel.sampleData]
-    
-    // MARK: - Method
-    
+        
     func createRoom() {
         roomCollection.document(id).setData([
             "id": id,

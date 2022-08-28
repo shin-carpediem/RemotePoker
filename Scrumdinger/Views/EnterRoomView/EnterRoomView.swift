@@ -11,14 +11,13 @@ struct EnterRoomView: View {
     
     // MARK: - Private
     
-    @State private var isPresentingNewRoomView = false
-    @State private var willNextPagePresenting = false
-    @State private var alertMessagePresenting = false
+    @State private var isNewRoomView = false
+    @State private var willNextPage = false
+    @State private var isAlertMessage = false
     @State private var inputText = ""
     @State private var errorWrapper: ErrorWrapper?
     
-    // 既存Roomがあった場合はRoomIDを返却
-    private func checkIsRoomExist(completionHandler: @escaping (Result<Any, Error>) -> ()) {
+    private func checkRoomExist(completionHandler: @escaping (Result<Any, Error>) -> ()) {
         let roomCollection = Firestore.firestore().collection("rooms")
         roomCollection.whereField("id", isEqualTo: inputText).getDocuments() { (querySnapshot, error) in
             if let error = error {
@@ -26,20 +25,14 @@ struct EnterRoomView: View {
             } else {
                 guard let documents = querySnapshot?.documents else { return }
                 if documents.isEmpty {
-                    roomExist = false
-                    alertMessagePresenting = true
+                    isAlertMessage = true
                     return
                 }
                 roomExist = true
-                if let roomId = querySnapshot?.documents[0].data()["id"] {
-                    let roomIdString = roomId as! String
-                    existingRoomId = roomIdString
-                    if let userIdList = querySnapshot?.documents[0].data()["usersId"] {
-                        let usersIdString = userIdList as! [String]
-                        usersIdList = usersIdString
-                        completionHandler(.success(usersIdString))
-                    }
-                }
+                guard let data = querySnapshot?.documents[0].data() else { return }
+                existingRoomId = data["id"] as! String
+                usersIdList = data["usersId"] as! [String]
+                completionHandler(.success(usersIdList))
             }
         }
     }
@@ -54,19 +47,15 @@ struct EnterRoomView: View {
                 TextField("Enter with Room ID ...",
                           text: $inputText,
                           onCommit: {
-                    checkIsRoomExist { _ in
+                    checkRoomExist { _ in
+                        isNewRoom = false
                         if $roomExist.wrappedValue {
-                            isNewRoom = false
-                            isPresentingNewRoomView = false
+                            isNewRoomView = false
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                willNextPagePresenting = true
+                                willNextPage = true
                             }
                         } else {
-                            isNewRoom = false
-                            alertMessagePresenting = true
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                                alertMessagePresenting = false
-                            }
+                            isAlertMessage = true
                         }
                     }
                 })
@@ -80,30 +69,31 @@ struct EnterRoomView: View {
                                          spread: 0.2,
                                          radius: 2)
                 )
-                .fullScreenCover(isPresented: $willNextPagePresenting,
+                .fullScreenCover(isPresented: $willNextPage,
                                  content: {
                     CardListView(isNewRoom: $isNewRoom,
                                       existingRoomId: $existingRoomId,
                                       usersIdList: $usersIdList)
                 })
-                .alert(isPresented: $alertMessagePresenting) {
+                .alert(isPresented: $isAlertMessage) {
                     Alert(title: Text("Room does not exist"))
                 }
                 
                 Button(action: {
-                    isPresentingNewRoomView = true
+                    isNewRoomView = true
                 }) {
                     Image(systemName: "plus")
                 }
                 .softButtonStyle(Circle())
-                .sheet(isPresented: $isPresentingNewRoomView) {
+                .padding(.top, 20)
+                .sheet(isPresented: $isNewRoomView) {
                     ZStack {
                         Color.Neumorphic.main.ignoresSafeArea()
                         Button(action: {
                             isNewRoom = true
-                            isPresentingNewRoomView = false
+                            isNewRoomView = false
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                willNextPagePresenting = true
+                                willNextPage = true
                             }
                         }) {
                             Text("Create a New Room")
@@ -112,14 +102,14 @@ struct EnterRoomView: View {
                         .softButtonStyle(RoundedRectangle(cornerRadius: 20))
                     }
                 }
-                .fullScreenCover(isPresented: $willNextPagePresenting,
+                .fullScreenCover(isPresented: $willNextPage,
                                  content: {
                     CardListView(isNewRoom: $isNewRoom,
                                       existingRoomId: $existingRoomId,
                                       usersIdList: $usersIdList)
                 })
             }
-            .padding().padding()
+            .padding(.all, 40)
         }
         .navigationTitle("Planning Poker")
     }

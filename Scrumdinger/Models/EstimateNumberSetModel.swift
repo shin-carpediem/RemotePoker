@@ -8,9 +8,7 @@ struct EstimateNumberSetModel: Identifiable {
     struct EstimateNumber: Identifiable, Equatable {
         let id: String = UUID().uuidString
         let number: String
-        
-        // MARK: - Method
-        
+                
         func outputForegroundColor(_ cardIndex: Int) -> Color {
             outputOpacity(cardIndex) >= 0.5 ? .white : .gray
         }
