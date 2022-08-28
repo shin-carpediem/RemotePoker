@@ -1,3 +1,4 @@
+import Neumorphic
 import SwiftUI
 
 struct CardListView: View {
@@ -35,32 +36,39 @@ struct CardListView: View {
         let roomId = isNewRoom ? roomToEnter.id : existingRoomId
         var usersIdList = isNewRoom ? roomToEnter.usersId : usersIdList
         let usersCount = isNewRoom ? usersIdList.count : usersIdList.count + 1
-        ScrollView {
-            HStack {
-                Text("\(String(usersCount)) members in Room ID: \(roomId)")
-                    .font(.headline)
+        
+        ZStack {
+            Color.Neumorphic.main.ignoresSafeArea()
+
+            ScrollView {
+                HStack {
+                    Text("\(String(usersCount)) members in Room ID: \(roomId)")
+                        .font(.headline)
+                        .padding()
+                    Button(action: {
+                        leaveFromRoom(roomId: roomId, usersIdList: &usersIdList)
+                        dismiss()
+                    }) {
+                        Text("Leave")
+                            .foregroundColor(.blue)
+                    }
+                }
+
+                Spacer()
+
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
+                    ForEach(numberSet) { eachCard in
+                        CardView(cardNumberSet: estimateNumberSet,
+                            cardNumber: eachCard,
+                            cardIndex: numberSet.firstIndex(of: eachCard) ?? 0,
+                            cardColor: estimateNumberSet.color)
+                    }
                     .padding()
-                Button(action: {
-                    leaveFromRoom(roomId: roomId, usersIdList: &usersIdList)
-                    dismiss()
-                }) {
-                    Text("Leave")
-                        .foregroundColor(.blue)
                 }
             }
-            Spacer()
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
-                ForEach(numberSet) { eachCard in
-                    CardView(cardNumberSet: estimateNumberSet,
-                        cardNumber: eachCard,
-                        cardIndex: numberSet.firstIndex(of: eachCard) ?? 0,
-                        cardColor: estimateNumberSet.color)
-                }
-                .padding()
+            .onAppear {
+                isNewRoom ? createRoomAndRegisterUser() : registerUserToExistingRoom(roomId: roomId, usersIdList: &usersIdList)
             }
-        }
-        .onAppear {
-            isNewRoom ? createRoomAndRegisterUser() : registerUserToExistingRoom(roomId: roomId, usersIdList: &usersIdList)
         }
     }
 }

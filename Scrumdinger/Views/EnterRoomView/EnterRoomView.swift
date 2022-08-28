@@ -1,10 +1,11 @@
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import Neumorphic
 import SwiftUI
 
 struct EnterRoomView: View {
     @State var isNewRoom = false
-    @State var isRoomExist = false
+    @State var roomExist = false
     @State var existingRoomId = "0"
     @State var usersIdList: [String] = []
     
@@ -25,11 +26,11 @@ struct EnterRoomView: View {
             } else {
                 guard let documents = querySnapshot?.documents else { return }
                 if documents.isEmpty {
-                    isRoomExist = false
+                    roomExist = false
                     alertMessagePresenting = true
                     return
                 }
-                isRoomExist = true
+                roomExist = true
                 if let roomId = querySnapshot?.documents[0].data()["id"] {
                     let roomIdString = roomId as! String
                     existingRoomId = roomIdString
@@ -46,64 +47,81 @@ struct EnterRoomView: View {
     // MARK: - View
     
     var body: some View {
-        TextField("Enter with Room ID",
-                  text: $inputText,
-                  onCommit: {
-            checkIsRoomExist { _ in
-                if $isRoomExist.wrappedValue {
-                    isNewRoom = false
-                    isPresentingNewRoomView = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        willNextPagePresenting = true
+        ZStack {
+            Color.Neumorphic.main.ignoresSafeArea()
+
+            VStack {
+                TextField("Enter with Room ID ...",
+                          text: $inputText,
+                          onCommit: {
+                    checkIsRoomExist { _ in
+                        if $roomExist.wrappedValue {
+                            isNewRoom = false
+                            isPresentingNewRoomView = false
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                willNextPagePresenting = true
+                            }
+                        } else {
+                            isNewRoom = false
+                            alertMessagePresenting = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                alertMessagePresenting = false
+                            }
+                        }
                     }
-                } else {
-                    isNewRoom = false
-                    alertMessagePresenting = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        alertMessagePresenting = false
+                })
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(Color.Neumorphic.main)
+                        .softInnerShadow(RoundedRectangle(cornerRadius: 20),
+                                         darkShadow: Color.Neumorphic.darkShadow,
+                                         lightShadow: Color.Neumorphic.lightShadow,
+                                         spread: 0.2,
+                                         radius: 2)
+                )
+                .fullScreenCover(isPresented: $willNextPagePresenting,
+                                 content: {
+                    CardListView(isNewRoom: $isNewRoom,
+                                      existingRoomId: $existingRoomId,
+                                      usersIdList: $usersIdList)
+                })
+                .alert(isPresented: $alertMessagePresenting) {
+                    Alert(title: Text("Room does not exist"))
+                }
+                
+                Button(action: {
+                    isPresentingNewRoomView = true
+                }) {
+                    Image(systemName: "plus")
+                }
+                .softButtonStyle(Circle())
+                .sheet(isPresented: $isPresentingNewRoomView) {
+                    ZStack {
+                        Color.Neumorphic.main.ignoresSafeArea()
+                        Button(action: {
+                            isNewRoom = true
+                            isPresentingNewRoomView = false
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                willNextPagePresenting = true
+                            }
+                        }) {
+                            Text("Create a New Room")
+                                .fontWeight(.bold)
+                        }
+                        .softButtonStyle(RoundedRectangle(cornerRadius: 20))
                     }
                 }
+                .fullScreenCover(isPresented: $willNextPagePresenting,
+                                 content: {
+                    CardListView(isNewRoom: $isNewRoom,
+                                      existingRoomId: $existingRoomId,
+                                      usersIdList: $usersIdList)
+                })
             }
-        })
-        .textFieldStyle(RoundedBorderTextFieldStyle())
-        .multilineTextAlignment(.center)
-        .padding()
-        .fixedSize()
-        .shadow(radius: 4)
-        .fullScreenCover(isPresented: $willNextPagePresenting, content: {
-            CardListView(isNewRoom: $isNewRoom,
-                              existingRoomId: $existingRoomId,
-                              usersIdList: $usersIdList)
-        })
-        .alert(isPresented: $alertMessagePresenting) {
-            Alert(title: Text("Room does not exist"))
+            .padding().padding()
         }
         .navigationTitle("Planning Poker")
-        .toolbar {
-            Button(action: {
-                isPresentingNewRoomView = true
-            }) {
-                Image(systemName: "plus")
-            }
-        }
-        .sheet(isPresented: $isPresentingNewRoomView) {
-            Button(action: {
-                isNewRoom = true
-                isPresentingNewRoomView = false
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    willNextPagePresenting = true
-                }
-            }) {
-                Text("Create a New Room")
-            }
-            .padding()
-            .buttonStyle(.borderedProminent)
-        }
-        .fullScreenCover(isPresented: $willNextPagePresenting, content: {
-            CardListView(isNewRoom: $isNewRoom,
-                              existingRoomId: $existingRoomId,
-                              usersIdList: $usersIdList)
-        })
     }
 }
 
