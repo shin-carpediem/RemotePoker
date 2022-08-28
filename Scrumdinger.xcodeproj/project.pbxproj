@@ -34,6 +34,7 @@
 		F571FA562896CA3B003531CE /* FirebaseAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA1A2896CA2C003531CE /* FirebaseAuth.xcframework */; };
 		F571FA5F2896CCA5003531CE /* gRPCCertificates-Cpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F571FA5E2896CCA5003531CE /* gRPCCertificates-Cpp.bundle */; };
 		F571FA682896D137003531CE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F571FA672896D137003531CE /* GoogleService-Info.plist */; };
+		F588E30728BB8E2800C5CA9A /* Neumorphic in Frameworks */ = {isa = PBXBuildFile; productRef = F588E30628BB8E2800C5CA9A /* Neumorphic */; };
 		F5C397DA289E9342008AEFF2 /* EstimateNumberSetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397D9289E9342008AEFF2 /* EstimateNumberSetModel.swift */; };
 		F5C397DC289F40C6008AEFF2 /* RoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DB289F40C6008AEFF2 /* RoomModel.swift */; };
 		F5C397E0289F420F008AEFF2 /* EnterRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */; };
@@ -127,6 +128,7 @@
 				F571FA352896CA2C003531CE /* GoogleUtilities.xcframework in Frameworks */,
 				F571FA562896CA3B003531CE /* FirebaseAuth.xcframework in Frameworks */,
 				F571FA3D2896CA2C003531CE /* FirebaseCoreDiagnostics.xcframework in Frameworks */,
+				F588E30728BB8E2800C5CA9A /* Neumorphic in Frameworks */,
 				F571FA3F2896CA2C003531CE /* FirebaseFirestoreSwift.xcframework in Frameworks */,
 				F571FA312896CA2C003531CE /* FirebaseCore.xcframework in Frameworks */,
 				F571FA292896CA2C003531CE /* FirebaseFirestore.xcframework in Frameworks */,
@@ -299,6 +301,9 @@
 			dependencies = (
 			);
 			name = Scrumdinger;
+			packageProductDependencies = (
+				F588E30628BB8E2800C5CA9A /* Neumorphic */,
+			);
 			productName = Scrumdinger;
 			productReference = F5E917C7287114DC00AE8421 /* Scrumdinger.app */;
 			productType = "com.apple.product-type.application";
@@ -371,6 +376,9 @@
 				Base,
 			);
 			mainGroup = F5E917BE287114DC00AE8421;
+			packageReferences = (
+				F588E30528BB8E2800C5CA9A /* XCRemoteSwiftPackageReference "neumorphic" */,
+			);
 			productRefGroup = F5E917C8287114DC00AE8421 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -782,6 +790,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F588E30528BB8E2800C5CA9A /* XCRemoteSwiftPackageReference "neumorphic" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/costachung/neumorphic/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F588E30628BB8E2800C5CA9A /* Neumorphic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F588E30528BB8E2800C5CA9A /* XCRemoteSwiftPackageReference "neumorphic" */;
+			productName = Neumorphic;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F5E917BF287114DC00AE8421 /* Project object */;
 }
