@@ -111,7 +111,7 @@ struct EnterRoomView: View {
             }
             .padding(.all, 40)
         }
-        .navigationTitle("Planning Poker")
+        .navigationTitle("Scrum Dinger")
     }
 }
 
