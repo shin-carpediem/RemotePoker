@@ -4,40 +4,17 @@ import Neumorphic
 import SwiftUI
 
 struct EnterRoomView: View {
+    /// 新規のルームか
     @State var isNewRoom = false
+
+    /// ルームが存在するか
     @State var roomExist = false
+
+    /// 存在しているルームのID
     @State var existingRoomId = "0"
+
+    /// ユーザーID一覧
     @State var usersIdList: [String] = []
-    
-    // MARK: - Private
-    
-    @State private var isNewRoomView = false
-    @State private var willNextPage = false
-    @State private var isAlertMessage = false
-    @State private var inputText = ""
-    @State private var errorWrapper: ErrorWrapper?
-    
-    private func checkRoomExist(completionHandler: @escaping (Result<Any, Error>) -> ()) {
-        let roomCollection = Firestore.firestore().collection("rooms")
-        roomCollection.whereField("id", isEqualTo: inputText).getDocuments() { (querySnapshot, error) in
-            if let error = error {
-                completionHandler(.failure(error))
-            } else {
-                guard let documents = querySnapshot?.documents else { return }
-                if documents.isEmpty {
-                    isAlertMessage = true
-                    return
-                }
-                roomExist = true
-                guard let data = querySnapshot?.documents[0].data() else { return }
-                existingRoomId = data["id"] as! String
-                usersIdList = data["usersId"] as! [String]
-                completionHandler(.success(usersIdList))
-            }
-        }
-    }
-    
-    // MARK: - View
     
     var body: some View {
         ZStack {
@@ -55,7 +32,7 @@ struct EnterRoomView: View {
                                 willNextPage = true
                             }
                         } else {
-                            isAlertMessage = true
+                            isShownAlert = true
                         }
                     }
                 })
@@ -72,10 +49,10 @@ struct EnterRoomView: View {
                 .fullScreenCover(isPresented: $willNextPage,
                                  content: {
                     CardListView(isNewRoom: $isNewRoom,
-                                      existingRoomId: $existingRoomId,
-                                      usersIdList: $usersIdList)
+                                 existingRoomId: $existingRoomId,
+                                 userIdList: $usersIdList)
                 })
-                .alert(isPresented: $isAlertMessage) {
+                .alert(isPresented: $isShownAlert) {
                     Alert(title: Text("Room does not exist"))
                 }
                 
@@ -89,6 +66,7 @@ struct EnterRoomView: View {
                 .sheet(isPresented: $isNewRoomView) {
                     ZStack {
                         Color.Neumorphic.main.ignoresSafeArea()
+
                         Button(action: {
                             isNewRoom = true
                             isNewRoomView = false
@@ -105,13 +83,50 @@ struct EnterRoomView: View {
                 .fullScreenCover(isPresented: $willNextPage,
                                  content: {
                     CardListView(isNewRoom: $isNewRoom,
-                                      existingRoomId: $existingRoomId,
-                                      usersIdList: $usersIdList)
+                                 existingRoomId: $existingRoomId,
+                                 userIdList: $usersIdList)
                 })
             }
             .padding(.all, 40)
         }
         .navigationTitle("Scrum Dinger")
+    }
+    
+    // MARK: - Private
+    
+    /// 新規のルームViewか
+    @State private var isNewRoomView = false
+    
+    /// 次のページに遷移するか
+    @State private var willNextPage = false
+    
+    /// アラートを表示するか
+    @State private var isShownAlert = false
+    
+    /// 入力テキスト
+    @State private var inputText = ""
+    
+    /// エラーラッパー
+    @State private var errorWrapper: ErrorWrapper?
+    
+    private func checkRoomExist(completionHandler: @escaping (Result<Any, Error>) -> ()) {
+        let roomCollection = Firestore.firestore().collection("rooms")
+        roomCollection.whereField("id", isEqualTo: inputText).getDocuments() { (querySnapshot, error) in
+            if let error = error {
+                completionHandler(.failure(error))
+            } else {
+                guard let documents = querySnapshot?.documents else { return }
+                if documents.isEmpty {
+                    isShownAlert = true
+                    return
+                }
+                roomExist = true
+                guard let data = querySnapshot?.documents[0].data() else { return }
+                existingRoomId = data["id"] as! String
+                usersIdList = data["usersId"] as! [String]
+                completionHandler(.success(usersIdList))
+            }
+        }
     }
 }
 

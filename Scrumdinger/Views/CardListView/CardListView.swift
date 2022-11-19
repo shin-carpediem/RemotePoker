@@ -2,39 +2,22 @@ import Neumorphic
 import SwiftUI
 
 struct CardListView: View {
+    /// ルーム
     @State var roomToEnter = RoomModel()
+
+    /// ユーザーID
     @State var userId = UUID().uuidString
+
     @Binding var isNewRoom: Bool
+
     @Binding var existingRoomId: String
-    @Binding var usersIdList: [String]
-    
-    // MARK: - Private
-    
-    @Environment(\.dismiss) private var dismiss
-    
-    private let estimateNumberSet = EstimateNumberSetModel.sampleData
-    private let numberSet = EstimateNumberSetModel.numberSetSampleData
-    
-    private func createRoomAndRegisterUser() {
-        roomToEnter = RoomModel()
-        roomToEnter.createRoom()
-        roomToEnter.addUserToRoom(roomId: roomToEnter.id, userId: userId, usersIdList: &roomToEnter.usersId)
-    }
-    
-    private func registerUserToExistingRoom(roomId: String, usersIdList: inout [String]) {
-        roomToEnter.addUserToRoom(roomId: roomId, userId: userId, usersIdList: &usersIdList)
-    }
-    
-    private func leaveFromRoom(roomId: String, usersIdList: inout [String]) {
-        roomToEnter.removeUserFromRoom(roomId: roomId, userId: userId, usersIdList: &usersIdList)
-    }
-    
-    // MARK: - View
+
+    @Binding var userIdList: [String]
     
     var body: some View {
         // TODO: isNewRoomの値がtrueに更新されるよりも前にViewを描画してしまう
         let roomId = isNewRoom ? roomToEnter.id : existingRoomId
-        var usersIdList = isNewRoom ? roomToEnter.usersId : usersIdList
+        var usersIdList = isNewRoom ? roomToEnter.userIdList : userIdList
         let usersCount = isNewRoom ? usersIdList.count : usersIdList.count + 1
         
         ZStack {
@@ -45,8 +28,9 @@ struct CardListView: View {
                     Text("\(String(usersCount)) members in Room ID: \(roomId)")
                         .font(.headline)
                         .padding()
+
                     Button(action: {
-                        leaveFromRoom(roomId: roomId, usersIdList: &usersIdList)
+                        leaveRoom(roomId: roomId, usersIdList: &usersIdList)
                         dismiss()
                     }) {
                         Text("Leave")
@@ -57,19 +41,50 @@ struct CardListView: View {
                 Spacer()
 
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
-                    ForEach(numberSet) { eachCard in
-                        CardView(cardNumberSet: estimateNumberSet,
-                            cardNumber: eachCard,
-                            cardIndex: numberSet.firstIndex(of: eachCard) ?? 0,
-                            cardColor: estimateNumberSet.color)
+                    ForEach(cardList) { eachCard in
+                        CardView(id: cardList.firstIndex(of: eachCard) ?? 0,
+                                 color: cardListWithColor.color,
+                                 point: eachCard,
+                                 pointList: cardListWithColor)
                     }
                     .padding()
                 }
             }
             .onAppear {
-                isNewRoom ? createRoomAndRegisterUser() : registerUserToExistingRoom(roomId: roomId, usersIdList: &usersIdList)
+                isNewRoom ? createRoomAndAddUser() : addUserToExistingRoom(roomId: roomId, usersIdList: &usersIdList)
             }
         }
+    }
+    
+    // MARK: - Private
+    
+    /// モーダルを解除する
+    @Environment(\.dismiss) private var dismiss
+    
+    /// カード一覧 + 色
+    private let cardListWithColor = CardListModel.sampleData
+
+    /// カード一覧
+    private let cardList = CardListModel.numberSetSampleData
+    
+    private func createRoomAndAddUser() {
+        roomToEnter = RoomModel()
+        roomToEnter.createRoom()
+        roomToEnter.addUserToRoom(roomId: roomToEnter.id,
+                                  userId: userId,
+                                  userIdList: &roomToEnter.userIdList)
+    }
+    
+    private func addUserToExistingRoom(roomId: String, usersIdList: inout [String]) {
+        roomToEnter.addUserToRoom(roomId: roomId,
+                                  userId: userId,
+                                  userIdList: &usersIdList)
+    }
+    
+    private func leaveRoom(roomId: String, usersIdList: inout [String]) {
+        roomToEnter.removeUserFromRoom(roomId: roomId,
+                                       userId: userId,
+                                       userIdList: &usersIdList)
     }
 }
 
@@ -80,9 +95,9 @@ struct CardListView_Previews: PreviewProvider {
     
     static var previews: some View {
         CardListView(roomToEnter: sampleData,
-                          userId: UUID().uuidString,
-                          isNewRoom: .constant(false),
-                          existingRoomId: .constant("0"),
-                          usersIdList: .constant([]))
+                     userId: UUID().uuidString,
+                     isNewRoom: .constant(false),
+                     existingRoomId: .constant("0"),
+                     userIdList: .constant([]))
     }
 }

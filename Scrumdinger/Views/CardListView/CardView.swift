@@ -1,37 +1,37 @@
 import SwiftUI
 
 struct CardView: View {
-    let cardNumberSet: EstimateNumberSetModel
-    let cardNumber: EstimateNumberSetModel.EstimateNumber
-    let cardIndex: Int
-    let cardColor: Color
-    
-    // MARK: - Private
-    
-    @State private var isPresentedModal = false
-    
-    // MARK: - View
+    /// ID
+    let id: Int
+
+    /// 色
+    let color: Color
+
+    /// 見積もりポイント
+    let point: CardListModel.Card
+
+    /// 見積もりポイント一覧
+    let pointList: CardListModel
     
     var body: some View {
         Button(action: {
             isPresentedModal = true
         }) {
-            Text("\(cardNumber.number)")
+            Text("\(point.point)")
                 .frame(width: 160, height: 120)
                 .font(.system(size: 40, weight: .bold))
-                .foregroundColor(cardNumber.outputForegroundColor(cardIndex))
-                .background(cardNumber.outputCardColor(cardIndex, cardColor))
-                .border(LinearGradient(gradient: Gradient(colors: [.white, cardColor]), startPoint: .topLeading,endPoint: .bottomTrailing), width: 2)
+                .foregroundColor(point.outputForegroundColor(id))
+                .background(point.outputCardColor(id, color))
+                .border(LinearGradient(gradient: Gradient(colors: [.white, color]), startPoint: .topLeading,endPoint: .bottomTrailing), width: 2)
                 // cornerRadiusはframeやforegroundColor/backgroundの後に指定しないと適用されない
                 .cornerRadius(10)
         }
         .sheet(isPresented: $isPresentedModal) {
             NavigationView {
-                CardModalView(
-                    cardNumberSet: cardNumberSet,
-                    cardNumber: cardNumber,
-                    cardIndex: cardIndex,
-                    cardColor: cardColor)
+                CardModalView(id: id,
+                              color: color,
+                              point: point,
+                              pointList: pointList)
                     .toolbar {
                         ToolbarItem(placement: .confirmationAction) {
                             Button(action: {
@@ -46,30 +46,35 @@ struct CardView: View {
             }
         }
     }
+    
+    // MARK: - Private
+    
+    /// モーダルが既に表示されているか
+    @State private var isPresentedModal = false
 }
 
 // MARK: - Preview
 
 struct CardView_Previews: PreviewProvider {
-    static var estimateNumberSet = EstimateNumberSetModel.sampleData
-    static var cardNumber0 = EstimateNumberSetModel.numberSetSampleData[0]
-    static var cardNumber1 = EstimateNumberSetModel.numberSetSampleData[1]
-    static var cardNumber2 = EstimateNumberSetModel.numberSetSampleData[2]
+    static var estimateNumberSet = CardListModel.sampleData
+    static var cardNumber0 = CardListModel.numberSetSampleData[0]
+    static var cardNumber1 = CardListModel.numberSetSampleData[1]
+    static var cardNumber2 = CardListModel.numberSetSampleData[2]
     
     static var previews: some View {
         Group {
-            CardView(cardNumberSet: estimateNumberSet,
-                          cardNumber: cardNumber0,
-                          cardIndex: 0,
-                          cardColor: .green)
-            CardView(cardNumberSet: estimateNumberSet,
-                          cardNumber: cardNumber1,
-                          cardIndex: 1,
-                          cardColor: .green)
-            CardView(cardNumberSet: estimateNumberSet,
-                          cardNumber: cardNumber2,
-                          cardIndex: 2,
-                          cardColor: .green)
+            CardView(id: 0,
+                     color: .green,
+                     point: cardNumber0,
+                     pointList: estimateNumberSet)
+            CardView(id: 1,
+                     color: .green,
+                     point: cardNumber1,
+                     pointList: estimateNumberSet)
+            CardView(id: 2,
+                     color: .green,
+                     point: cardNumber2,
+                     pointList: estimateNumberSet)
         }
         .padding()
         .previewLayout(.sizeThatFits)

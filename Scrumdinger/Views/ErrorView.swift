@@ -1,20 +1,26 @@
 import SwiftUI
 
 struct ErrorView: View {
+    /// エラーラッパー
     let errorWrapper: ErrorWrapper
+
+    /// ツールバーを解除する
     @Environment(\.dismiss) private var dismiss
-    
+
     var body: some View {
         NavigationView {
             VStack {
                 Text("An error has occurred!")
                     .font(.title)
                     .padding(.bottom)
+
                 Text(errorWrapper.error.localizedDescription)
                     .font(.headline)
+
                 Text(errorWrapper.guidance)
                     .font(.caption)
                     .padding(.top)
+
                 Spacer()
             }
             .padding()
@@ -32,13 +38,16 @@ struct ErrorView: View {
     }
 }
 
+// MARK: - Preview
+
 struct ErrorView_Previews: PreviewProvider {
     enum SampleError: Error {
         case errorRequired
     }
     
     static var wrapper: ErrorWrapper {
-        ErrorWrapper(error: SampleError.errorRequired, guidance: "You can safely ignore this error.")
+        ErrorWrapper(error: SampleError.errorRequired,
+                     guidance: "You can safely ignore this error.")
     }
     
     static var previews: some View {
