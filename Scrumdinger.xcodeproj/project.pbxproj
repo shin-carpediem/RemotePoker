@@ -186,24 +186,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F5C397DD289F41BC008AEFF2 /* EnterRoomView */ = {
-			isa = PBXGroup;
-			children = (
-				F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */,
-			);
-			path = EnterRoomView;
-			sourceTree = "<group>";
-		};
-		F5C397DE289F41DF008AEFF2 /* CardListView */ = {
-			isa = PBXGroup;
-			children = (
-				F52366A12896382F005B1F65 /* CardView.swift */,
-				F52366A328963E62005B1F65 /* CardModalView.swift */,
-				F52366992891E837005B1F65 /* CardListView.swift */,
-			);
-			path = CardListView;
-			sourceTree = "<group>";
-		};
 		F5E917BE287114DC00AE8421 = {
 			isa = PBXGroup;
 			children = (
@@ -277,8 +259,10 @@
 		F5E917FA28711FAE00AE8421 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F5C397DD289F41BC008AEFF2 /* EnterRoomView */,
-				F5C397DE289F41DF008AEFF2 /* CardListView */,
+				F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */,
+				F52366A12896382F005B1F65 /* CardView.swift */,
+				F52366A328963E62005B1F65 /* CardModalView.swift */,
+				F52366992891E837005B1F65 /* CardListView.swift */,
 				F5D21DE5287F7CA9000C34E1 /* ErrorView.swift */,
 			);
 			path = Views;

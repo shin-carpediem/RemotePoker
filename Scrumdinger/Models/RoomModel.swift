@@ -24,7 +24,7 @@ class RoomModel: Identifiable {
                 // TODO: SwiftUIのColorは型でもないしFirestoreで保存できるデータではない
 //                "color": $0.color
             ])
-            $0.pointList.forEach {
+            $0.cardList.forEach {
                 let eachCardId = $0.id
                 cardListSubCollection.document(cardListId).collection("pointList").document(eachCardId).setData([
                     "id": eachCardId,

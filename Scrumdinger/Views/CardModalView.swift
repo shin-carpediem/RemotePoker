@@ -37,7 +37,7 @@ struct CardModalView: View {
 
 struct CardModalView_Previews: PreviewProvider {
     static var cardNumberSet = CardListModel.sampleData
-    static var cardNumber = cardNumberSet.pointList[0]
+    static var cardNumber = cardNumberSet.cardList[0]
     
     static var previews: some View {
         CardModalView(id: 1,

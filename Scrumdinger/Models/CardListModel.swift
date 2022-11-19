@@ -7,15 +7,15 @@ struct CardListModel: Identifiable {
     /// 色
     let color: Color
     
-    /// 見積もりポイント一覧
-    var pointList: [Card] = []
+    /// カード一覧
+    var cardList: [Card] = []
     
     /// カード
     struct Card: Identifiable, Equatable {
         /// ID
         let id: String = UUID().uuidString
         
-        /// ポイント
+        /// 見積もりポイント
         let point: String
                 
         func outputForegroundColor(_ cardIndex: Int) -> Color {
@@ -38,7 +38,7 @@ struct CardListModel: Identifiable {
 
 extension CardListModel {
     static let sampleData = CardListModel(color: .purple,
-                                          pointList: numberSetSampleData)
+                                          cardList: numberSetSampleData)
     
     static let numberSetSampleData = [Card(point: "0"),
                                       Card(point: "0.5"),
