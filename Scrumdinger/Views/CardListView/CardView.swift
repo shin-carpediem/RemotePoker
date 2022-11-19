@@ -7,21 +7,21 @@ struct CardView: View {
     /// 色
     let color: Color
 
-    /// 見積もりポイント
-    let point: CardListModel.Card
+    /// カード
+    let card: CardListModel.Card
 
-    /// 見積もりポイント一覧
-    let pointList: CardListModel
+    /// カード一覧
+    let cardList: CardListModel
     
     var body: some View {
         Button(action: {
             isPresentedModal = true
         }) {
-            Text("\(point.point)")
+            Text("\(card.point)")
                 .frame(width: 160, height: 120)
                 .font(.system(size: 40, weight: .bold))
-                .foregroundColor(point.outputForegroundColor(id))
-                .background(point.outputCardColor(id, color))
+                .foregroundColor(card.outputForegroundColor(id))
+                .background(card.outputCardColor(id, color))
                 .border(LinearGradient(gradient: Gradient(colors: [.white, color]), startPoint: .topLeading,endPoint: .bottomTrailing), width: 2)
                 // cornerRadiusはframeやforegroundColor/backgroundの後に指定しないと適用されない
                 .cornerRadius(10)
@@ -30,8 +30,8 @@ struct CardView: View {
             NavigationView {
                 CardModalView(id: id,
                               color: color,
-                              point: point,
-                              pointList: pointList)
+                              card: card,
+                              cardList: cardList)
                     .toolbar {
                         ToolbarItem(placement: .confirmationAction) {
                             Button(action: {
@@ -65,16 +65,16 @@ struct CardView_Previews: PreviewProvider {
         Group {
             CardView(id: 0,
                      color: .green,
-                     point: cardNumber0,
-                     pointList: estimateNumberSet)
+                     card: cardNumber0,
+                     cardList: estimateNumberSet)
             CardView(id: 1,
                      color: .green,
-                     point: cardNumber1,
-                     pointList: estimateNumberSet)
+                     card: cardNumber1,
+                     cardList: estimateNumberSet)
             CardView(id: 2,
                      color: .green,
-                     point: cardNumber2,
-                     pointList: estimateNumberSet)
+                     card: cardNumber2,
+                     cardList: estimateNumberSet)
         }
         .padding()
         .previewLayout(.sizeThatFits)

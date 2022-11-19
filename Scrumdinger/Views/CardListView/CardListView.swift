@@ -44,8 +44,8 @@ struct CardListView: View {
                     ForEach(cardList) { eachCard in
                         CardView(id: cardList.firstIndex(of: eachCard) ?? 0,
                                  color: cardListWithColor.color,
-                                 point: eachCard,
-                                 pointList: cardListWithColor)
+                                 card: eachCard,
+                                 cardList: cardListWithColor)
                     }
                     .padding()
                 }

@@ -8,21 +8,21 @@ struct CardModalView: View {
     /// 色
     let color: Color
     
-    /// 見積もりポイント
-    let point: CardListModel.Card
+    /// カード
+    let card: CardListModel.Card
     
-    /// 見積もりポイント一覧
-    let pointList: CardListModel
+    /// カード一覧
+    let cardList: CardListModel
 
     var body: some View {
         ZStack {
             Color.Neumorphic.main.ignoresSafeArea()
 
-            Text("\(point.point)")
+            Text("\(card.point)")
                 .frame(width: 300, height: 400)
                 .font(.system(size: 80, weight: .bold))
-                .foregroundColor(point.outputForegroundColor(id))
-                .background(point.outputCardColor(id, color))
+                .foregroundColor(card.outputForegroundColor(id))
+                .background(card.outputCardColor(id, color))
                 .border(LinearGradient(gradient: Gradient(colors: [.white, color]),
                                        startPoint: .topLeading,
                                        endPoint: .bottomTrailing),
@@ -42,7 +42,7 @@ struct CardModalView_Previews: PreviewProvider {
     static var previews: some View {
         CardModalView(id: 1,
                       color: .green,
-                      point: cardNumber,
-                      pointList: cardNumberSet)
+                      card: cardNumber,
+                      cardList: cardNumberSet)
     }
 }
