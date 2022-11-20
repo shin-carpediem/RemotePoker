@@ -117,9 +117,8 @@ struct EnterRoomView: View {
             willNextPage = false
         } else {
             isNewRoomView = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                willNextPage = true
-            }
+            sleep(UInt32(0.5))
+            willNextPage = true
         }
     }
 }
