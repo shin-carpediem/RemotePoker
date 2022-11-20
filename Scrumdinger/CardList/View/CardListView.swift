@@ -17,8 +17,8 @@ struct CardListView: View {
     var body: some View {
         // TODO: isNewRoomの値がtrueに更新されるよりも前にViewを描画してしまう
         let roomId = isNewRoom ? roomToEnter.id : existingRoomId
-        var usersIdList = isNewRoom ? roomToEnter.userIdList : userIdList
-        let usersCount = isNewRoom ? usersIdList.count : usersIdList.count + 1
+        var userIdList = isNewRoom ? roomToEnter.userIdList : userIdList
+        let usersCount = isNewRoom ? userIdList.count : userIdList.count + 1
         
         ZStack {
             Color.Neumorphic.main.ignoresSafeArea()
@@ -30,7 +30,7 @@ struct CardListView: View {
                         .padding()
 
                     Button(action: {
-                        leaveRoom(roomId: roomId, usersIdList: &usersIdList)
+                        leaveRoom(roomId: roomId, usersIdList: &userIdList)
                         dismiss()
                     }) {
                         Text("Leave")
@@ -51,7 +51,7 @@ struct CardListView: View {
                 }
             }
             .onAppear {
-                isNewRoom ? createRoomAndAddUser() : addUserToExistingRoom(roomId: roomId, usersIdList: &usersIdList)
+                isNewRoom ? createRoomAndAddUser() : addUserToExistingRoom(roomId: roomId, usersIdList: &userIdList)
             }
         }
     }

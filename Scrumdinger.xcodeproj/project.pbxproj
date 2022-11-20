@@ -38,8 +38,6 @@
 		F5C397DA289E9342008AEFF2 /* CardListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397D9289E9342008AEFF2 /* CardListModel.swift */; };
 		F5C397DC289F40C6008AEFF2 /* RoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DB289F40C6008AEFF2 /* RoomModel.swift */; };
 		F5C397E0289F420F008AEFF2 /* EnterRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */; };
-		F5D21DE4287F7C16000C34E1 /* ErrorWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D21DE3287F7C16000C34E1 /* ErrorWrapper.swift */; };
-		F5D21DE6287F7CA9000C34E1 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D21DE5287F7CA9000C34E1 /* ErrorView.swift */; };
 		F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */; };
 		F5E917CF287114E900AE8421 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5E917CE287114E900AE8421 /* Assets.xcassets */; };
 		F5E917D2287114E900AE8421 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5E917D1287114E900AE8421 /* Preview Assets.xcassets */; };
@@ -96,8 +94,6 @@
 		F5C397D9289E9342008AEFF2 /* CardListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListModel.swift; sourceTree = "<group>"; };
 		F5C397DB289F40C6008AEFF2 /* RoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomModel.swift; sourceTree = "<group>"; };
 		F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomView.swift; sourceTree = "<group>"; };
-		F5D21DE3287F7C16000C34E1 /* ErrorWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorWrapper.swift; sourceTree = "<group>"; };
-		F5D21DE5287F7CA9000C34E1 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		F5E917C7287114DC00AE8421 /* Scrumdinger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrumdinger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrumdingerApp.swift; sourceTree = "<group>"; };
 		F5E917CE287114E900AE8421 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -186,6 +182,58 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F5E051662929B116006EA727 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F5E051672929B125006EA727 /* CardList */ = {
+			isa = PBXGroup;
+			children = (
+				F5E0516B2929B466006EA727 /* Model */,
+				F5E0516A2929B45C006EA727 /* View */,
+			);
+			path = CardList;
+			sourceTree = "<group>";
+		};
+		F5E051682929B407006EA727 /* EnterRoom */ = {
+			isa = PBXGroup;
+			children = (
+				F5E051692929B421006EA727 /* Model */,
+				F5E051662929B116006EA727 /* View */,
+			);
+			path = EnterRoom;
+			sourceTree = "<group>";
+		};
+		F5E051692929B421006EA727 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F5C397DB289F40C6008AEFF2 /* RoomModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F5E0516A2929B45C006EA727 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F52366992891E837005B1F65 /* CardListView.swift */,
+				F52366A12896382F005B1F65 /* CardView.swift */,
+				F52366A328963E62005B1F65 /* CardModalView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F5E0516B2929B466006EA727 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F5C397D9289E9342008AEFF2 /* CardListModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		F5E917BE287114DC00AE8421 = {
 			isa = PBXGroup;
 			children = (
@@ -211,8 +259,8 @@
 		F5E917C9287114DC00AE8421 /* Scrumdinger */ = {
 			isa = PBXGroup;
 			children = (
-				F5E917FA28711FAE00AE8421 /* Views */,
-				F5E917F428711DF100AE8421 /* Models */,
+				F5E051682929B407006EA727 /* EnterRoom */,
+				F5E051672929B125006EA727 /* CardList */,
 				F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */,
 				F5E917CE287114E900AE8421 /* Assets.xcassets */,
 				F571FA672896D137003531CE /* GoogleService-Info.plist */,
@@ -244,28 +292,6 @@
 				F5E917E7287114EA00AE8421 /* ScrumdingerUITestsLaunchTests.swift */,
 			);
 			path = ScrumdingerUITests;
-			sourceTree = "<group>";
-		};
-		F5E917F428711DF100AE8421 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				F5C397DB289F40C6008AEFF2 /* RoomModel.swift */,
-				F5C397D9289E9342008AEFF2 /* CardListModel.swift */,
-				F5D21DE3287F7C16000C34E1 /* ErrorWrapper.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		F5E917FA28711FAE00AE8421 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */,
-				F52366A12896382F005B1F65 /* CardView.swift */,
-				F52366A328963E62005B1F65 /* CardModalView.swift */,
-				F52366992891E837005B1F65 /* CardListView.swift */,
-				F5D21DE5287F7CA9000C34E1 /* ErrorView.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -430,10 +456,8 @@
 				F5C397E0289F420F008AEFF2 /* EnterRoomView.swift in Sources */,
 				F52366A22896382F005B1F65 /* CardView.swift in Sources */,
 				F5C397DC289F40C6008AEFF2 /* RoomModel.swift in Sources */,
-				F5D21DE4287F7C16000C34E1 /* ErrorWrapper.swift in Sources */,
 				F523669A2891E837005B1F65 /* CardListView.swift in Sources */,
 				F52366A428963E62005B1F65 /* CardModalView.swift in Sources */,
-				F5D21DE6287F7CA9000C34E1 /* ErrorView.swift in Sources */,
 				F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */,
 				F5C397DA289E9342008AEFF2 /* CardListModel.swift in Sources */,
 			);

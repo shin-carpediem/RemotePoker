@@ -7,9 +7,6 @@ struct EnterRoomView: View {
     /// 新規のルームか
     @State var isNewRoom = false
 
-    /// ルームが存在するか
-    @State var roomExist = false
-
     /// 存在しているルームのID
     @State var existingRoomId = "0"
 
@@ -24,16 +21,9 @@ struct EnterRoomView: View {
                 TextField("Enter with Room ID ...",
                           text: $inputText,
                           onCommit: {
-                    checkRoomExist { _ in
-                        isNewRoom = false
-                        if $roomExist.wrappedValue {
-                            isNewRoomView = false
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                willNextPage = true
-                            }
-                        } else {
-                            isShownAlert = true
-                        }
+                    Task {
+                        await fetchUserIdList()
+                        gotoNextPage()
                     }
                 })
                 .padding()
@@ -53,7 +43,7 @@ struct EnterRoomView: View {
                                  userIdList: $usersIdList)
                 })
                 .alert(isPresented: $isShownAlert) {
-                    Alert(title: Text("Room does not exist"))
+                    Alert(title: Text("The room does not exist"))
                 }
                 
                 Button(action: {
@@ -106,25 +96,29 @@ struct EnterRoomView: View {
     /// 入力テキスト
     @State private var inputText = ""
     
-    /// エラーラッパー
-    @State private var errorWrapper: ErrorWrapper?
-    
-    private func checkRoomExist(completionHandler: @escaping (Result<Any, Error>) -> ()) {
-        let roomCollection = Firestore.firestore().collection("rooms")
-        roomCollection.whereField("id", isEqualTo: inputText).getDocuments() { (querySnapshot, error) in
-            if let error = error {
-                completionHandler(.failure(error))
-            } else {
-                guard let documents = querySnapshot?.documents else { return }
+    private func fetchUserIdList() async {
+        Firestore.firestore().collection("rooms").whereField("id", isEqualTo: inputText).getDocuments() { (querySnapshot, error) in
+            if error == nil, let documents = querySnapshot?.documents {
                 if documents.isEmpty {
                     isShownAlert = true
-                    return
+                } else {
+                    isShownAlert = false
+                    guard let data = querySnapshot?.documents[0].data() else { return }
+                    existingRoomId = data["id"] as! String
+                    usersIdList = data["usersId"] as! [String]
                 }
-                roomExist = true
-                guard let data = querySnapshot?.documents[0].data() else { return }
-                existingRoomId = data["id"] as! String
-                usersIdList = data["usersId"] as! [String]
-                completionHandler(.success(usersIdList))
+            }
+        }
+    }
+
+    private func gotoNextPage() {
+        if usersIdList.isEmpty {
+            isShownAlert = true
+            willNextPage = false
+        } else {
+            isNewRoomView = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                willNextPage = true
             }
         }
     }
