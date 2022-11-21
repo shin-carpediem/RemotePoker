@@ -9,6 +9,7 @@ struct RoomModel: Identifiable {
     private(set) var cardList = [CardListModel.sampleData]
 }
 
+// プレビュー用
 extension RoomModel {
     static let sampleData = RoomModel(id: "0",
                                       userIdList: ["0"])

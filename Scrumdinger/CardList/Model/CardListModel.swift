@@ -2,10 +2,10 @@ import SwiftUI
 
 struct CardListModel: Identifiable {
     /// ID
-    let id: String = UUID().uuidString
+    var id: String = UUID().uuidString
     
     /// 色
-    let color: Color
+    var color: Color
     
     /// カード一覧
     var cardList: [Card] = []
@@ -13,10 +13,10 @@ struct CardListModel: Identifiable {
     /// カード
     struct Card: Identifiable, Equatable {
         /// ID
-        let id: String = UUID().uuidString
+        var id: String = UUID().uuidString
         
         /// 見積もりポイント
-        let point: String
+        var point: String
                 
         func outputForegroundColor(_ cardIndex: Int) -> Color {
             outputOpacity(cardIndex) >= 0.5 ? .white : .gray

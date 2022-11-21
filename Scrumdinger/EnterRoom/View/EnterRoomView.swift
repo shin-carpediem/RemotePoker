@@ -40,7 +40,7 @@ struct EnterRoomView: View {
     /// 入力テキスト
     @State private var inputText = ""
     
-    private let roomDataStore = RoomDataStore()
+    private var roomDataStore = RoomDataStore()
     
     private func fetchRoomInfo() async -> RoomModel? {
         let roomId: String
