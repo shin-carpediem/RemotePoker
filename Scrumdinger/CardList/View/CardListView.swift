@@ -8,17 +8,17 @@ struct CardListView: View {
     /// ユーザーID
     @State var userId = UUID().uuidString
 
-    @Binding var isNewRoom: Bool
-
-    @Binding var existingRoomId: String
-
-    @Binding var userIdList: [String]
+    /// ルームID
+    var roomId: String?
+    
+    /// ユーザーID一覧
+    var userIdList: [String]
     
     var body: some View {
         // TODO: isNewRoomの値がtrueに更新されるよりも前にViewを描画してしまう
-        let roomId = isNewRoom ? roomToEnter.id : existingRoomId
-        var userIdList = isNewRoom ? roomToEnter.userIdList : userIdList
-        let usersCount = isNewRoom ? userIdList.count : userIdList.count + 1
+        let roomId = isNewRoom ? roomToEnter.id : roomId
+        var usersIdList = isNewRoom ? roomToEnter.userIdList : userIdList
+        let usersCount = isNewRoom ? usersIdList.count : usersIdList.count + 1
         
         ZStack {
             Color.Neumorphic.main.ignoresSafeArea()
@@ -30,7 +30,7 @@ struct CardListView: View {
                         .padding()
 
                     Button(action: {
-                        leaveRoom(roomId: roomId, usersIdList: &userIdList)
+                        leaveRoom(roomId: roomId, usersIdList: &usersIdList)
                         dismiss()
                     }) {
                         Text("Leave")
@@ -51,7 +51,7 @@ struct CardListView: View {
                 }
             }
             .onAppear {
-                isNewRoom ? createRoomAndAddUser() : addUserToExistingRoom(roomId: roomId, usersIdList: &userIdList)
+                isNewRoom ? createRoomAndAddUser() : addUserToExistingRoom(roomId: roomId, usersIdList: &usersIdList)
             }
         }
     }
