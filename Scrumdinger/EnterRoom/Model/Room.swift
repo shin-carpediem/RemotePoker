@@ -1,6 +1,6 @@
 struct Room: Identifiable {
     /// ID
-    var id: String
+    var id: Int
     
     /// ユーザーID一覧
     var userIdList: [String]

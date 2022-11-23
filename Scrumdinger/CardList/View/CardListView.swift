@@ -63,7 +63,7 @@ struct CardListView: View {
 
 struct CardListView_Previews: PreviewProvider {
     static var previews: some View {
-        CardListView(room: .init(id: "0",
+        CardListView(room: .init(id: 0,
                                  userIdList: ["0"],
                                  cardPackage: CardPackage.sampleCardPackage),
                      currentUserId: "0")

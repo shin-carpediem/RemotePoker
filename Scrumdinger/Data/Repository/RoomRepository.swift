@@ -10,24 +10,24 @@ protocol RoomRepository {
     /// ルームが存在するか確認する
     /// - parameter roomId: ルームID
     /// - returns: 存在するか
-    func checkRoomExist(roomId: String) async -> Bool
+    func checkRoomExist(roomId: Int) async -> Bool
     
     /// ルーム情報を取得する
     /// - parameter roomId: ルームID
     /// - returns: ルーム
-    func fetchRoom(roomId: String) async -> Room?
+    func fetchRoom(roomId: Int) async -> Room?
     
     /// ルームにユーザーを追加する
     /// - parameter roomId: ルームID
     /// - parameter userId: ユーザーID
-    func addUserToRoom(roomId: String, userId: String) async
+    func addUserToRoom(roomId: Int, userId: String) async
     
     /// ルームから退出する
     /// - parameter roomId: ルームID
     /// - parameter userId: ユーザーID
-    func removeUserFromRoom(roomId: String, userId: String) async
+    func removeUserFromRoom(roomId: Int, userId: String) async
     
     /// ルームを削除する
     /// - parameter roomId: ルームID
-    func deleteRoom(roomId: String) async
+    func deleteRoom(roomId: Int) async
 }
