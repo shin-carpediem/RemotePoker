@@ -42,13 +42,13 @@ extension CardPackage {
                                                cardList: sampleCardList)
     
     static let sampleCardList = [Card(point: "0", index: 0),
-                                 Card(point: "0.5", index: 1),
-                                 Card(point: "1", index: 2),
-                                 Card(point: "2", index: 3),
-                                 Card(point: "3", index: 4),
-                                 Card(point: "5", index: 5),
-                                 Card(point: "8", index: 6),
-                                 Card(point: "13", index: 7),
-                                 Card(point: "20", index: 8),
-                                 Card(point: "40", index: 9)]
+                                 Card(point: "1", index: 1),
+                                 Card(point: "2", index: 2),
+                                 Card(point: "3", index: 3),
+                                 Card(point: "5", index: 4),
+                                 Card(point: "8", index: 5),
+                                 Card(point: "13", index: 6),
+                                 Card(point: "21", index: 7),
+                                 Card(point: "34", index: 8),
+                                 Card(point: "☕️", index: 9)]
 }

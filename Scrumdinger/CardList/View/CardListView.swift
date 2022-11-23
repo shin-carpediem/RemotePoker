@@ -16,12 +16,14 @@ struct CardListView: View {
     }
     
     var body: some View {
+        let usersCount = room.userIdList.count
+        
         ZStack {
             Color.Neumorphic.main.ignoresSafeArea()
 
             ScrollView {
                 HStack {
-                    Text("\(String(room.userIdList.count)) members in Room ID: \(room.id)")
+                    Text("\(String(usersCount)) member" + (usersCount == 1 ? "" : "s") + " in Room ID: \(room.id)")
                         .font(.headline)
                         .padding()
 
@@ -63,9 +65,19 @@ struct CardListView: View {
 
 struct CardListView_Previews: PreviewProvider {
     static var previews: some View {
-        CardListView(room: .init(id: 0,
-                                 userIdList: ["0"],
-                                 cardPackage: CardPackage.sampleCardPackage),
-                     currentUserId: "0")
+        Group {
+            CardListView(room: .init(id: 1000,
+                                     userIdList: ["0"],
+                                     cardPackage: CardPackage.sampleCardPackage),
+                         currentUserId: "0")
+            .previewDisplayName("ユーザーが自分のみ")
+            
+            // TODO: 環境変数 presentationMode の影響か、複数Previewを表示しようとするとクラッシュする
+//            CardListView(room: .init(id: 1001,
+//                                     userIdList: ["0", "1"],
+//                                     cardPackage: CardPackage.sampleCardPackage),
+//                         currentUserId: "0")
+//            .previewDisplayName("ユーザーが2名以上")
+        }
     }
 }

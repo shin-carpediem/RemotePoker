@@ -32,10 +32,15 @@ struct CardView_Previews: PreviewProvider {
         Group {
             CardView(card: CardPackage.sampleCardList[0],
                      themeColor: .green)
-            CardView(card: CardPackage.sampleCardList[3],
-                     themeColor: .green)
-            CardView(card: CardPackage.sampleCardList[8],
-                     themeColor: .green)
+            .previewDisplayName("色/薄い")
+            
+//            CardView(card: CardPackage.sampleCardList[4],
+//                     themeColor: .green)
+//            .previewDisplayName("色/中間")
+//
+//            CardView(card: CardPackage.sampleCardList[9],
+//                     themeColor: .green)
+//            .previewDisplayName("色/濃い")
         }
         .padding()
         .previewLayout(.sizeThatFits)
