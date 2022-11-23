@@ -21,8 +21,6 @@ struct EnterRoomView: View {
                                     isActive: $willPushNextView) {
                                         EmptyView()
                                     }
-                            } else {
-                                willPushNextView = false
                             }
                         }
                     }

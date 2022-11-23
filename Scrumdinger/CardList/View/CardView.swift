@@ -9,7 +9,7 @@ struct CardView: View {
     
     var body: some View {
         Button(action: {
-            // TODO: アラートを表示する
+            isShownPointCheckAlert = true
         }) {
             Text("\(card.point)")
                 .frame(width: 160, height: 120)
@@ -22,7 +22,22 @@ struct CardView: View {
                         width: 2)
                 .cornerRadius(10)
         }
+        .alert("Confirm",
+               isPresented: $isShownPointCheckAlert,
+               actions: {
+            Button("Cancel") {}
+            Button("OK") {
+                // TODO: ポイント登録の処理
+            }
+        }, message: {
+            Text("You are about to submit card: \(card.point)")
+        })
     }
+    
+    // MARK: - Private
+
+    /// 見積もりポイントの確認アラートを表示するか
+    @State private var isShownPointCheckAlert = false
 }
 
 // MARK: - Preview
