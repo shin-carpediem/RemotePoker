@@ -2,8 +2,6 @@ import Neumorphic
 import SwiftUI
 
 struct EnterRoomView: View {
-    init() {}
-    
     var body: some View {
         ZStack {
             Color.Neumorphic.main.ignoresSafeArea()
@@ -13,10 +11,10 @@ struct EnterRoomView: View {
                           text: $inputText,
                           onCommit: {
                     Task {
-                        let room = await fetchRoomInfo()!
+                        let (room, currentUserId) = await fetchRoomInfo()
                         NavigationLink(
-                            destination: CardListView(roomId: room.id,
-                                                      userIdList: room.userIdList)) {}
+                            destination: CardListView(room: room,
+                                                      currentUserId: currentUserId)) {}
                     }
                 })
                 .padding()
@@ -42,25 +40,33 @@ struct EnterRoomView: View {
     
     private var roomDataStore = RoomDataStore()
     
-    private func fetchRoomInfo() async -> RoomModel? {
+    /// ルームを取得し、ルームとカレントユーザーIDを返却
+    private func fetchRoomInfo() async -> (Room, String) {
+        let room: Room
         let roomId: String
-        let userId = String(Int.random(in: 1000..<9999))
+        let currentUserId = String(Int.random(in: 1000..<9999))
         let userIdList: [String]
         
         let roomExist = await roomDataStore.checkRoomExist(roomId: inputText)
         if roomExist {
             // 既存のルーム
-            guard let room = await roomDataStore.fetchRoom(roomId: inputText) else { return nil }
+            room = await roomDataStore.fetchRoom(roomId: inputText)!
             roomId = room.id
-            userIdList = room.userIdList + [userId]
+            userIdList = room.userIdList + [currentUserId]
+            
+            await roomDataStore.addUserToRoom(roomId: roomId, userId: currentUserId)
         } else {
             // 新規ルーム
             roomId = String(Int.random(in: 1000..<9999))
-            userIdList = [userId]
+            userIdList = [currentUserId]
+            room = Room(id: roomId,
+                        userIdList: userIdList,
+                        cardPackage: CardPackage.sampleCardPackage)
+            
+            await roomDataStore.createRoom(room)
         }
         
-        return RoomModel(id: roomId,
-                         userIdList: userIdList)
+        return (room, currentUserId)
     }
 }
 
