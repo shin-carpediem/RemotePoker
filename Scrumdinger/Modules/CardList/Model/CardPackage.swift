@@ -5,13 +5,13 @@ struct CardPackage: Identifiable {
     var id: String = UUID().uuidString
     
     /// テーマカラー
-    var themeColor: Color
+    var themeColor: ThemeColor
     
     /// カード一覧
     var cardList: [Card]
 }
 
-struct Card: Identifiable, Equatable {
+struct Card: Identifiable {
     /// ID
     var id: String = UUID().uuidString
 
@@ -29,10 +29,10 @@ struct Card: Identifiable, Equatable {
     }
 
     /// 指定カードの背景色
-    func outputBackgroundColor(color: Color) -> Color {
+    func outputBackgroundColor(color: ThemeColor) -> Color {
         let number = index >= 10 ? 9 : index
         let opacity = Double("0.\(number)") ?? 1.0
-        return color.opacity(opacity)
+        return Color(color.rawValue).opacity(opacity)
     }
 }
 
@@ -51,4 +51,23 @@ extension CardPackage {
                                  Card(point: "21", index: 7),
                                  Card(point: "34", index: 8),
                                  Card(point: "☕️", index: 9)]
+}
+
+enum ThemeColor: String {
+    case bubblegum
+    case buttercup
+    case indigo
+    case lavender
+    case magenta
+    case navy
+    case orange
+    case oxblood
+    case periwinkle
+    case poppy
+    case purple
+    case seafoam
+    case sky
+    case tan
+    case teal
+    case yellow
 }

@@ -15,8 +15,7 @@ class RoomDataStore: RoomRepository {
         let cardPackageDocument = roomDocument.collection(cardPackages).document(cardPackageId)
         try? await cardPackageDocument.setData([
             id: cardPackageId,
-            // TODO: SwiftUIのColorは型でもないしFirestoreで保存できるデータではない
-//            themeColor: room.cardPackage.themeColor
+            themeColor: room.cardPackage.themeColor.rawValue
         ])
         
         room.cardPackage.cardList.forEach { card in

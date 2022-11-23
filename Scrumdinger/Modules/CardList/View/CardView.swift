@@ -5,7 +5,7 @@ struct CardView: View {
     var card: Card
     
     /// テーマカラー
-    var themeColor: Color
+    var themeColor: ThemeColor
     
     var body: some View {
         Button(action: {
@@ -16,7 +16,7 @@ struct CardView: View {
                 .font(.system(size: 40, weight: .bold))
                 .foregroundColor(card.fontColor)
                 .background(card.outputBackgroundColor(color: themeColor))
-                .border(LinearGradient(gradient: Gradient(colors: [.white, themeColor]),
+                .border(LinearGradient(gradient: Gradient(colors: [.white, Color(themeColor.rawValue)]),
                                        startPoint: .topLeading,
                                        endPoint: .bottomTrailing),
                         width: 2)
@@ -46,7 +46,7 @@ struct CardView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             CardView(card: CardPackage.sampleCardList[0],
-                     themeColor: .green)
+                     themeColor: .bubblegum)
             .previewDisplayName("色/薄い")
             
 //            CardView(card: CardPackage.sampleCardList[4],

@@ -1,4 +1,4 @@
-struct Room: Identifiable {
+struct Room {
     /// ID
     var id: Int
     
