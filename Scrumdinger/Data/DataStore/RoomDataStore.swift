@@ -43,8 +43,7 @@ class RoomDataStore: RoomRepository {
         guard let data else { return nil }
         let room = Room(id: data[id] as! Int,
                         userIdList: data[userIdList] as! [String],
-                        // TODO: サンプルデータ
-                        cardPackage: CardPackage.sampleCardPackage)
+                        cardPackage: data[cardPackage] as! CardPackage)
 
         return room
     }
@@ -93,6 +92,8 @@ class RoomDataStore: RoomRepository {
     private let id = "id"
     
     private let userIdList = "userIdList"
+    
+    private let cardPackage = "cardPackage"
     
     private let themeColor = "themeColor"
     

@@ -36,23 +36,6 @@ struct Card: Identifiable {
     }
 }
 
-/// サンプルデータ
-extension CardPackage {
-    static let sampleCardPackage = CardPackage(themeColor: .purple,
-                                               cardList: sampleCardList)
-    
-    static let sampleCardList = [Card(point: "0", index: 0),
-                                 Card(point: "1", index: 1),
-                                 Card(point: "2", index: 2),
-                                 Card(point: "3", index: 3),
-                                 Card(point: "5", index: 4),
-                                 Card(point: "8", index: 5),
-                                 Card(point: "13", index: 6),
-                                 Card(point: "21", index: 7),
-                                 Card(point: "34", index: 8),
-                                 Card(point: "☕️", index: 9)]
-}
-
 enum ThemeColor: String {
     case bubblegum
     case buttercup
@@ -70,4 +53,21 @@ enum ThemeColor: String {
     case tan
     case teal
     case yellow
+}
+
+/// サンプルデータ
+extension CardPackage {
+    static let sampleCardPackage = CardPackage(themeColor: .purple,
+                                               cardList: sampleCardList)
+    
+    static let sampleCardList = [Card(point: "0", index: 0),
+                                 Card(point: "1", index: 1),
+                                 Card(point: "2", index: 2),
+                                 Card(point: "3", index: 3),
+                                 Card(point: "5", index: 4),
+                                 Card(point: "8", index: 5),
+                                 Card(point: "13", index: 6),
+                                 Card(point: "21", index: 7),
+                                 Card(point: "34", index: 8),
+                                 Card(point: "☕️", index: 9)]
 }
