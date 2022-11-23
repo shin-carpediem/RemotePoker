@@ -8,24 +8,19 @@ class EnterRoomPresenter {
     let currentUserId = UUID().uuidString
     
     func fetchRoomInfo(inputNumber: Int) async {
-        let roomId: Int
-        let userIdList: [String]
-        
         let roomExist = await dataStore.checkRoomExist(roomId: inputNumber)
         if roomExist {
             // 既存ルーム
             room = await dataStore.fetchRoom(roomId: inputNumber)
-            roomId = room!.id
-            userIdList = room!.userIdList + [currentUserId]
+            let roomId = room!.id
+            let userIdList = room!.userIdList + [currentUserId]
             
             await dataStore.addUserToRoom(roomId: roomId, userId: currentUserId)
         } else {
             // 新規ルーム
-            roomId = inputNumber
-            userIdList = [currentUserId]
-            room = Room(id: roomId,
-                        userIdList: userIdList,
-                        cardPackage: CardPackage.sampleCardPackage)
+            room = Room(id: inputNumber,
+                        userIdList: [currentUserId],
+                        cardPackage: .sampleCardPackage)
             
             await dataStore.createRoom(room!)
         }
