@@ -155,6 +155,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F5125F26292DF92700C822FE /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				F5E051682929B407006EA727 /* EnterRoom */,
+				F5E051672929B125006EA727 /* CardList */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
 		F571FA122896CA2B003531CE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,8 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				F5E0516F292BAFF4006EA727 /* Data */,
-				F5E051682929B407006EA727 /* EnterRoom */,
-				F5E051672929B125006EA727 /* CardList */,
+				F5125F26292DF92700C822FE /* Modules */,
 				F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */,
 				F5E917CE287114E900AE8421 /* Assets.xcassets */,
 				F571FA672896D137003531CE /* GoogleService-Info.plist */,
