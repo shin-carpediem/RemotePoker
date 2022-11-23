@@ -15,7 +15,7 @@ protocol RoomRepository {
     /// ルーム情報を取得する
     /// - parameter roomId: ルームID
     /// - returns: ルーム
-    func fetchRoom(roomId: Int) async -> Room?
+    func fetchRoom(roomId: Int) async -> Room
     
     /// ルームにユーザーを追加する
     /// - parameter roomId: ルームID

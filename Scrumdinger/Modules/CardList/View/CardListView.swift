@@ -2,7 +2,7 @@ import Neumorphic
 import SwiftUI
 
 struct CardListView: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.dismiss) var dismiss
     
     /// ルーム
     var room: Room
@@ -48,7 +48,6 @@ struct CardListView: View {
                 }
             }
         }
-        .navigationBarBackButtonHidden(true)
     }
     
     // MARK: - Private
@@ -57,7 +56,7 @@ struct CardListView: View {
     
     private func leaveRoom() async {
         await roomDataStore.removeUserFromRoom(roomId: room.id, userId: currentUserId)
-        presentationMode.wrappedValue.dismiss()
+        dismiss()
     }
 }
 
@@ -68,16 +67,16 @@ struct CardListView_Previews: PreviewProvider {
         Group {
             CardListView(room: .init(id: 1000,
                                      userIdList: ["0"],
-                                     cardPackage: CardPackage.sampleCardPackage),
+                                     cardPackage: .sampleCardPackage),
                          currentUserId: "0")
             .previewDisplayName("ユーザーが自分のみ")
             
             // TODO: 環境変数 presentationMode の影響か、複数Previewを表示しようとするとクラッシュする
-//            CardListView(room: .init(id: 1001,
-//                                     userIdList: ["0", "1"],
-//                                     cardPackage: CardPackage.sampleCardPackage),
-//                         currentUserId: "0")
-//            .previewDisplayName("ユーザーが2名以上")
+            CardListView(room: .init(id: 1001,
+                                     userIdList: ["0", "1"],
+                                     cardPackage: .sampleCardPackage),
+                         currentUserId: "0")
+            .previewDisplayName("ユーザーが2名以上")
         }
     }
 }

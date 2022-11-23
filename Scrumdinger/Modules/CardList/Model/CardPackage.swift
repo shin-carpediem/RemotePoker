@@ -2,7 +2,7 @@ import SwiftUI
 
 struct CardPackage: Identifiable {
     /// ID
-    var id: String = UUID().uuidString
+    var id: String
     
     /// テーマカラー
     var themeColor: ThemeColor
@@ -13,7 +13,7 @@ struct CardPackage: Identifiable {
 
 struct Card: Identifiable {
     /// ID
-    var id: String = UUID().uuidString
+    var id: String
 
     /// 見積もりポイント
     var point: String
@@ -36,6 +36,7 @@ struct Card: Identifiable {
     }
 }
 
+/// テーマカラー
 enum ThemeColor: String {
     case bubblegum
     case buttercup
@@ -57,17 +58,38 @@ enum ThemeColor: String {
 
 /// サンプルデータ
 extension CardPackage {
-    static let sampleCardPackage = CardPackage(themeColor: .purple,
+    static let sampleCardPackage = CardPackage(id: UUID().uuidString,
+                                               themeColor: .purple,
                                                cardList: sampleCardList)
     
-    static let sampleCardList = [Card(point: "0", index: 0),
-                                 Card(point: "1", index: 1),
-                                 Card(point: "2", index: 2),
-                                 Card(point: "3", index: 3),
-                                 Card(point: "5", index: 4),
-                                 Card(point: "8", index: 5),
-                                 Card(point: "13", index: 6),
-                                 Card(point: "21", index: 7),
-                                 Card(point: "34", index: 8),
-                                 Card(point: "☕️", index: 9)]
+    static let sampleCardList = [Card(id: UUID().uuidString,
+                                      point: "0",
+                                      index: 0),
+                                 Card(id: UUID().uuidString,
+                                      point: "1",
+                                      index: 1),
+                                 Card(id: UUID().uuidString,
+                                      point: "2",
+                                      index: 2),
+                                 Card(id: UUID().uuidString,
+                                      point: "3",
+                                      index: 3),
+                                 Card(id: UUID().uuidString,
+                                      point: "5",
+                                      index: 4),
+                                 Card(id: UUID().uuidString,
+                                      point: "8",
+                                      index: 5),
+                                 Card(id: UUID().uuidString,
+                                      point: "13",
+                                      index: 6),
+                                 Card(id: UUID().uuidString,
+                                      point: "21",
+                                      index: 7),
+                                 Card(id: UUID().uuidString,
+                                      point: "34",
+                                      index: 8),
+                                 Card(id: UUID().uuidString,
+                                      point: "☕️",
+                                      index: 9)]
 }

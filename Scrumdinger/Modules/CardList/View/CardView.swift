@@ -25,6 +25,7 @@ struct CardView: View {
         .alert("Confirm",
                isPresented: $isShownPointCheckAlert,
                actions: {
+            // TODO: 実行後、前の画面に戻ってしまう
             Button("Cancel") {}
             Button("OK") {
                 // TODO: ポイント登録の処理
@@ -49,13 +50,13 @@ struct CardView_Previews: PreviewProvider {
                      themeColor: .bubblegum)
             .previewDisplayName("色/薄い")
             
-//            CardView(card: CardPackage.sampleCardList[4],
-//                     themeColor: .green)
-//            .previewDisplayName("色/中間")
-//
-//            CardView(card: CardPackage.sampleCardList[9],
-//                     themeColor: .green)
-//            .previewDisplayName("色/濃い")
+            CardView(card: CardPackage.sampleCardList[4],
+                     themeColor: .bubblegum)
+            .previewDisplayName("色/中間")
+
+            CardView(card: CardPackage.sampleCardList[9],
+                     themeColor: .bubblegum)
+            .previewDisplayName("色/濃い")
         }
         .padding()
         .previewLayout(.sizeThatFits)

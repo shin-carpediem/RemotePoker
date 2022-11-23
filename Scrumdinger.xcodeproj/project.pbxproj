@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F5125F2E292E755600C822FE /* EnterRoomPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5125F2D292E755600C822FE /* EnterRoomPresenter.swift */; };
 		F523669A2891E837005B1F65 /* CardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52366992891E837005B1F65 /* CardListView.swift */; };
 		F52366A22896382F005B1F65 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52366A12896382F005B1F65 /* CardView.swift */; };
 		F571FA292896CA2C003531CE /* FirebaseFirestore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */; };
@@ -65,6 +66,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F5125F2D292E755600C822FE /* EnterRoomPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomPresenter.swift; sourceTree = "<group>"; };
 		F52366992891E837005B1F65 /* CardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListView.swift; sourceTree = "<group>"; };
 		F52366A12896382F005B1F65 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestore.xcframework; path = Carthage/Build/FirebaseFirestore.xcframework; sourceTree = "<group>"; };
@@ -164,6 +166,14 @@
 			path = Modules;
 			sourceTree = "<group>";
 		};
+		F5125F2C292E753700C822FE /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				F5125F2D292E755600C822FE /* EnterRoomPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		F571FA122896CA2B003531CE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				F5E051692929B421006EA727 /* Model */,
+				F5125F2C292E753700C822FE /* Presenter */,
 				F5E051662929B116006EA727 /* View */,
 			);
 			path = EnterRoom;
@@ -494,6 +505,7 @@
 				F5C397DC289F40C6008AEFF2 /* Room.swift in Sources */,
 				F523669A2891E837005B1F65 /* CardListView.swift in Sources */,
 				F5E05171292BB05F006EA727 /* RoomRepository.swift in Sources */,
+				F5125F2E292E755600C822FE /* EnterRoomPresenter.swift in Sources */,
 				F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */,
 				F5C397DA289E9342008AEFF2 /* CardPackage.swift in Sources */,
 			);
