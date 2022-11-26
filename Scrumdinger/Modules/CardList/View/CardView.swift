@@ -6,12 +6,15 @@ struct CardView: View {
     
     /// テーマカラー
     var themeColor: ThemeColor
-        
+    
+    /// カード選択ハンドラー
+    var selectCardHandler: ((Card) -> Void)?
+    
     // MARK: - View
     
     var body: some View {
         Button(action: {
-            // TODO: ユーザーの選択済みカードに指定
+            selectCardHandler?(card)
         }) {
             Text("\(card.point)")
                 .frame(width: 160, height: 120)

@@ -11,6 +11,18 @@ class CardListPresenter: CardListPresentation {
         self.dependency = dependency
     }
     
+    // MARK: - CardListPresentation
+    
+    func subscribeRoom() {
+        // TODO: ovservable
+    }
+    
+    func openSelectedCardList() {
+    }
+    
+    func resetSelectedCardList() {
+    }
+    
     func leaveRoom() async {
         await dependency.dataStore.removeUserFromRoom(userId: dependency.currentUser.id)
     }
