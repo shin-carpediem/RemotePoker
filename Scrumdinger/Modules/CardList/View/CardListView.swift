@@ -56,6 +56,7 @@ struct CardListView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
@@ -65,20 +66,23 @@ struct CardListView_Previews: PreviewProvider {
     static let me: User = .init(id: "0",
                                 name: "ロイド フォージャ")
     
+    static let room1: Room = .init(id: 0,
+                                   userList: [me],
+                                   cardPackage: .sampleCardPackage)
+    
+    static let room2: Room = .init(id: 1,
+                                   userList: [me, me],
+                                   cardPackage: .sampleCardPackage)
+    
     static var previews: some View {
         Group {
             CardListView(dependency: .init(
                 presenter: .init(
                     dependency: .init(
                         dataStore: .init(),
-                        room: .init(
-                            id: 0,
-                            userList: [me],
-                            cardPackage: .sampleCardPackage),
+                        room: room1,
                         currentUser: me)),
-                room: .init(id: 0,
-                            userList: [me],
-                            cardPackage: .sampleCardPackage),
+                room: room1,
                 currentUser: me))
             .previewDisplayName("ユーザーが自分のみ")
             
@@ -87,14 +91,9 @@ struct CardListView_Previews: PreviewProvider {
                 presenter: .init(
                     dependency: .init(
                         dataStore: .init(),
-                        room: .init(
-                            id: 0,
-                            userList: [me, me],
-                            cardPackage: .sampleCardPackage),
+                        room: room2,
                         currentUser: me)),
-                room: .init(id: 0,
-                            userList: [me, me],
-                            cardPackage: .sampleCardPackage),
+                room: room2,
                 currentUser: me))
             .previewDisplayName("ユーザーが2名以上")
         }

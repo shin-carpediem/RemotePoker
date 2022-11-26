@@ -1,5 +1,3 @@
-import Foundation
-
 class CardListPresenter: CardListPresentation {
     // MARK: - Dependency
     

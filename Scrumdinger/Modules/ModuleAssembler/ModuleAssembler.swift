@@ -1,5 +1,3 @@
-import SwiftUI
-
 protocol ModuleAssembler {
     /// ルームに入る画面をアセンブルする
     /// - returns: ルームに入る画面

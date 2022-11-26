@@ -18,7 +18,7 @@ struct EnterRoomView: View, ModuleAssembler {
     @State private var inputName = ""
     
     /// 入力フォーム/ルームID
-    @State private var inputRoomId = 0
+    @State private var inputRoomId = ""
     
     /// 入力フォーム/ルームIDの無効を示すアラートを表示するか
     @State private var isShownInputRoomIdInvalidAlert = false
@@ -29,20 +29,11 @@ struct EnterRoomView: View, ModuleAssembler {
     private var dependency: Dependency
     
     private var isInputRoomIdValid: Bool {
-        String(inputRoomId).count == 4
+        guard let inputInt = Int(inputRoomId) else { return false }
+        return String(inputInt).count == 4
     }
     
     // MARK: - View
-    
-    var backGround: some View {
-        RoundedRectangle(cornerRadius: 20)
-            .fill(Color.Neumorphic.main)
-            .softInnerShadow(RoundedRectangle(cornerRadius: 20),
-                             darkShadow: Color.Neumorphic.darkShadow,
-                             lightShadow: Color.Neumorphic.lightShadow,
-                             spread: 0.2,
-                             radius: 2)
-    }
     
     var body: some View {
         NavigationView {
@@ -50,16 +41,21 @@ struct EnterRoomView: View, ModuleAssembler {
                 Color.Neumorphic.main.ignoresSafeArea()
 
                 VStack(spacing: 28) {
-                    TextField("Name",
-                              text: $inputName)
-                    .padding()
-                    .background(backGround)
-                    
-                    TextField("Room ID",
-                              value: $inputRoomId,
-                              format: .number)
-                    .padding()
-                    .background(backGround)
+                    HStack(spacing: 14) {
+                        TextField("Name",
+                                  text: $inputName)
+                        .padding()
+                        .background(innerShadowBackGround)
+                        .tint(.gray)
+                        .foregroundColor(.gray)
+                        
+                        TextField("Room ID",
+                                  text: $inputRoomId)
+                        .padding()
+                        .background(innerShadowBackGround)
+                        .tint(.gray)
+                        .foregroundColor(.gray)
+                    }
                     
                     Button {
                         if !isInputRoomIdValid {
@@ -68,31 +64,44 @@ struct EnterRoomView: View, ModuleAssembler {
                             Task {
                                 await dependency.presenter.fetchRoomInfo(
                                     inputName: inputName,
-                                    inputRoomId: inputRoomId)
+                                    inputRoomId: Int(inputRoomId)!)
                                 willPushNextView = true
                             }
                         }
                     } label: {
                         Text("Enter")
+                            .frame(width: 140, height: 20)
                     }
-
+                    .softButtonStyle(RoundedRectangle(cornerRadius: 20))
+                    .padding()
+                    
                     NavigationLink(isActive: $willPushNextView, destination: {
-                        assembleCardList(room: dependency.presenter.room!,
-                                         currrentUser: dependency.presenter.currentUser)
-                    }) {
-                        EmptyView()
-                    }
+                        if willPushNextView {
+                            assembleCardList(room: dependency.presenter.room!,
+                                             currrentUser: dependency.presenter.currentUser)
+                        } else { EmptyView() }
+                    }) { EmptyView() }
                 }
-                .padding(.all, 40)
+                .padding(.horizontal, 40)
             }
-            .alert("4 Digit Number Required",
-                   isPresented: $isShownInputRoomIdInvalidAlert,
-                   actions: {
-            }, message: {
-                Text("If the number is new, a new room will be created.")
-            })
-            .navigationTitle("Scrum Dinger")
         }
+        .alert("4 Digit Number Required",
+               isPresented: $isShownInputRoomIdInvalidAlert,
+               actions: {
+        }, message: {
+            Text("If the number is new, a new room will be created.")
+        })
+        .navigationTitle("Scrum Dinger")
+    }
+    
+    private var innerShadowBackGround: some View {
+        RoundedRectangle(cornerRadius: 20)
+            .fill(Color.Neumorphic.main)
+            .softInnerShadow(RoundedRectangle(cornerRadius: 20),
+                             darkShadow: Color.Neumorphic.darkShadow,
+                             lightShadow: Color.Neumorphic.lightShadow,
+                             spread: 0.2,
+                             radius: 2)
     }
 }
 
