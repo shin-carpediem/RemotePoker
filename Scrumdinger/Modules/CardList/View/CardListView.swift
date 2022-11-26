@@ -2,7 +2,7 @@ import Neumorphic
 import SwiftUI
 
 struct CardListView: View {
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.presentationMode) var presentation
         
     // MARK: - Dependency
     
@@ -33,15 +33,17 @@ struct CardListView: View {
                     Text("\(String(usersCount)) member" + (usersCount == 1 ? "" : "s") + " in Room ID: \(dependency.room.id)")
                         .font(.headline)
                         .padding()
+                        .tint(.gray)
 
                     Button(action: {
                         Task {
                             await dependency.presenter.leaveRoom()
-                            dismiss()
+                            presentation.wrappedValue.dismiss()
                         }
                     }) {
                         Text("Leave")
                             .foregroundColor(.blue)
+                            .tint(.gray)
                     }
                 }
 
@@ -64,7 +66,8 @@ struct CardListView: View {
 
 struct CardListView_Previews: PreviewProvider {
     static let me: User = .init(id: "0",
-                                name: "ロイド フォージャ")
+                                name: "ロイド フォージャ",
+                                selectedCardId: "")
     
     static let room1: Room = .init(id: 0,
                                    userList: [me],

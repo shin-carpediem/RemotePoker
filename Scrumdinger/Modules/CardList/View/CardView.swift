@@ -6,17 +6,12 @@ struct CardView: View {
     
     /// テーマカラー
     var themeColor: ThemeColor
-    
-    // MARK: - Private
-
-    /// 見積もりポイントの確認アラートを表示するか
-    @State private var isShownPointCheckAlert = false
-    
+        
     // MARK: - View
     
     var body: some View {
         Button(action: {
-            isShownPointCheckAlert = true
+            // TODO: ユーザーの選択済みカードに指定
         }) {
             Text("\(card.point)")
                 .frame(width: 160, height: 120)
@@ -29,17 +24,6 @@ struct CardView: View {
                         width: 2)
                 .cornerRadius(10)
         }
-        .alert("Confirm",
-               isPresented: $isShownPointCheckAlert,
-               actions: {
-            // TODO: 実行後、前の画面に戻ってしまう
-            Button("Cancel") {}
-            Button("OK") {
-                // TODO: ポイント登録の処理
-            }
-        }, message: {
-            Text("You are about to submit card: \(card.point)")
-        })
     }
 }
 

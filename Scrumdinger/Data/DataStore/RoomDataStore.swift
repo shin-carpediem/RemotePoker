@@ -26,7 +26,8 @@ class RoomDataStore: RoomRepository {
             let userDocument = roomDocument.collection(users).document(userId)
             userDocument.setData([
                 id: userId,
-                name: user.name
+                name: user.name,
+                selectedCardId: user.selectedCardId
             ])
         }
         
@@ -66,7 +67,8 @@ class RoomDataStore: RoomRepository {
         let userList: [User] = usersDocument!.map { userDoc in
             let userData = userDoc.data()
             return User(id: userData[id] as! String,
-                        name: userData[name] as! String)
+                        name: userData[name] as! String,
+                        selectedCardId: userData[selectedCardId] as! String)
         }
         
         // カードパッケージ取得
@@ -99,7 +101,8 @@ class RoomDataStore: RoomRepository {
         let usersCollection = firebaseRef?.usersCollection
         usersCollection?.addDocument(data: [
             id: user.id,
-            name: user.name
+            name: user.name,
+            selectedCardId: user.selectedCardId
         ]) { error in
             ()
         }
@@ -124,6 +127,8 @@ class RoomDataStore: RoomRepository {
     private let users = "users"
     
     private let name = "name"
+    
+    private let selectedCardId = "selectedCardId"
     
     private let cardPackages = "cardPackages"
     
