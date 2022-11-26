@@ -1,10 +1,9 @@
 import FirebaseFirestore
 import FirebaseFirestoreSwift
-import Foundation
 
 protocol RoomRepository {
     /// ルームを新規作成する
-    /// - parameter roomModel: ルーム
+    /// - parameter room: ルーム
     func createRoom(_ room: Room) async
     
     /// ルームが存在するか確認する
@@ -12,22 +11,18 @@ protocol RoomRepository {
     /// - returns: 存在するか
     func checkRoomExist(roomId: Int) async -> Bool
     
-    /// ルーム情報を取得する
-    /// - parameter roomId: ルームID
+    /// ルームを取得する
     /// - returns: ルーム
-    func fetchRoom(roomId: Int) async -> Room
+    func fetchRoom() async -> Room
     
     /// ルームにユーザーを追加する
-    /// - parameter roomId: ルームID
-    /// - parameter userId: ユーザーID
-    func addUserToRoom(roomId: Int, userId: String) async
+    /// - parameter user: ユーザー
+    func addUserToRoom(user: User) async
     
     /// ルームから退出する
-    /// - parameter roomId: ルームID
     /// - parameter userId: ユーザーID
-    func removeUserFromRoom(roomId: Int, userId: String) async
+    func removeUserFromRoom(userId: String) async
     
     /// ルームを削除する
-    /// - parameter roomId: ルームID
-    func deleteRoom(roomId: Int) async
+    func deleteRoom() async
 }

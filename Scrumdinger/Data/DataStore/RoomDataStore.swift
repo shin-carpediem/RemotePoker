@@ -3,23 +3,42 @@ import FirebaseFirestoreSwift
 import Foundation
 
 class RoomDataStore: RoomRepository {
+    init() {
+        firebaseRef = nil
+    }
+    
+    convenience init(roomId: Int) {
+        self.init()
+        firebaseRef = FirebaseRef(roomId: roomId)
+    }
+    
     func createRoom(_ room: Room) async {
+        // ルーム追加
         let roomId = room.id
-        let roomCollection = Firestore.firestore().collection(rooms)
-        let roomDocument = roomCollection.document(String(roomId))
+        let roomDocument = Firestore.firestore().collection(rooms).document(String(roomId))
         try? await roomDocument.setData([
-            id: roomId,
-            userIdList: room.userIdList
+            id: roomId
         ])
         
+        // ユーザー追加
+        room.userList.forEach { user in
+            let userId = user.id
+            let userDocument = roomDocument.collection(users).document(userId)
+            userDocument.setData([
+                id: userId,
+                name: user.name
+            ])
+        }
+        
+        // カードパッケージ追加
         let cardPackageId = room.cardPackage.id
-        let cardPackagesCollection = roomDocument.collection(cardPackages)
-        let cardPackageDocument = cardPackagesCollection.document(cardPackageId)
+        let cardPackageDocument = roomDocument.collection(cardPackages).document(cardPackageId)
         try? await cardPackageDocument.setData([
             id: cardPackageId,
             themeColor: room.cardPackage.themeColor.rawValue
         ])
         
+        // カード一覧追加
         room.cardPackage.cardList.forEach { card in
             let cardId = card.id
             let cardDocument = cardPackageDocument.collection(cards).document(cardId)
@@ -32,28 +51,32 @@ class RoomDataStore: RoomRepository {
     }
     
     func checkRoomExist(roomId: Int) async -> Bool {
-        let roomCollection = Firestore.firestore().collection(rooms)
-        guard let document = try? await roomCollection.document(String(roomId)).getDocument() else { return false }
+        guard let document = try? await Firestore.firestore().collection(rooms).document(String(roomId)).getDocument() else { return false }
         return document.exists
     }
     
-    func fetchRoom(roomId: Int) async -> Room {
-        let roomsCollection = Firestore.firestore().collection(rooms)
-        let roomDocument = try? await roomsCollection.document(String(roomId)).getDocument()
+    func fetchRoom() async -> Room {
+        // ルーム取得
+        let roomDocument = try? await firebaseRef?.roomDocument.getDocument()
         let roomData = roomDocument?.data()
         let roomId = roomData![id] as! Int
-        let userIdList = roomData![userIdList] as! [String]
         
-        let cardPackagesCollection = roomsCollection.document(id).collection(cardPackages)
-        // TODO: cardPackagesDocumentがnil
-        let cardPackagesDocument = try? await cardPackagesCollection.getDocuments().documents.first
+        // ユーザー一覧取得
+        let usersDocument = await firebaseRef?.usersDocument()?.documents
+        let userList: [User] = usersDocument!.map { userDoc in
+            let userData = userDoc.data()
+            return User(id: userData[id] as! String,
+                        name: userData[name] as! String)
+        }
+        
+        // カードパッケージ取得
+        let cardPackagesDocument = await firebaseRef?.cardPackagesDocument()?.documents.first
         let cardPackageData = cardPackagesDocument?.data()
         let cardPackageId = cardPackageData![id] as! String
         let themeColor = cardPackageData![themeColor] as! ThemeColor
         
-        let cardsCollection = cardPackagesCollection.document(cardPackageId).collection(cards)
-        let cardsDocument = try? await cardsCollection.getDocuments().documents
-
+        // カード一覧取得
+        let cardsDocument = await firebaseRef?.cardsDocument(cardPackageId: cardPackageId)?.documents
         let cardList: [Card] = cardsDocument!.map { cardDoc in
             let cardData = cardDoc.data()
             return Card(id: cardData[id] as! String,
@@ -66,51 +89,41 @@ class RoomDataStore: RoomRepository {
                                       cardList: cardList)
 
         let room = Room(id: roomId,
-                        userIdList: userIdList,
+                        userList: userList,
                         cardPackage: cardPackage)
 
         return room
     }
     
-    func addUserToRoom(roomId: Int, userId: String) async {
-        let roomsCollection = Firestore.firestore().collection(rooms)
-
-        let document = try? await roomsCollection.document(String(roomId)).getDocument()
-        let data = document?.data()
-        var list = data![userIdList] as! [String]
-        list.append(userId)
-        
-        let room = roomsCollection.document(String(roomId))
-        try? await room.updateData([
-            userIdList: list
-        ])
+    func addUserToRoom(user: User) async {
+        let usersCollection = firebaseRef?.usersCollection
+        usersCollection?.addDocument(data: [
+            id: user.id,
+            name: user.name
+        ]) { error in
+            ()
+        }
     }
     
-    func removeUserFromRoom(roomId: Int, userId: String) async {
-        let roomsCollection = Firestore.firestore().collection(rooms)
-        
-        let document = try? await roomsCollection.document(String(roomId)).getDocument()
-        let data = document?.data()
-        var list = data![userIdList] as! [String]
-        list.removeAll(where: { $0 == userId })
-        
-        let room = roomsCollection.document(String(roomId))
-        try? await room.updateData([
-            userIdList: list
-        ])
+    func removeUserFromRoom(userId: String) async {
+        try? await firebaseRef?.userDocument(userId: userId).delete()
     }
     
-    func deleteRoom(roomId: Int) async {
-        let roomsCollection = Firestore.firestore().collection(rooms)
-        let document = roomsCollection.document(String(roomId))
-        try? await document.delete()
+    func deleteRoom() async {
+        try? await firebaseRef?.roomDocument.delete()
     }
     
     // MARK: - Private
     
+    private var firebaseRef: FirebaseRef?
+    
     private let id = "id"
     
     private let rooms = "rooms"
+    
+    private let users = "users"
+    
+    private let name = "name"
     
     private let cardPackages = "cardPackages"
     

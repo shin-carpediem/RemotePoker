@@ -2,7 +2,7 @@ import SwiftUI
 import FirebaseCore
 
 @main
-struct ScrumdingerApp: App {
+struct ScrumdingerApp: App, ModuleAssembler {
     class AppDelegate: NSObject, UIApplicationDelegate {
         func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
             FirebaseApp.configure()
@@ -14,7 +14,7 @@ struct ScrumdingerApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                EnterRoomView()
+                assmebleEnterRoom()
             }
         }
     }

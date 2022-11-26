@@ -1,32 +1,47 @@
 import Foundation
 
-class EnterRoomPresenter {
+class EnterRoomPresenter: EnterRoomPresentation {
+    // MARK: - Dependency
+    
+    struct Dependency {
+        var dataStore: RoomDataStore
+    }
+    
     /// ルーム
     var room: Room?
     
-    /// カレントユーザーID
-    let currentUserId = UUID().uuidString
+    /// カレントユーザー
+    var currentUser: User = .init(id: UUID().uuidString,
+                                  name: "")
     
-    func fetchRoomInfo(inputNumber: Int) async {
-        let roomExist = await dataStore.checkRoomExist(roomId: inputNumber)
+    init(dependency: Dependency) {
+        self.dependency = dependency
+    }
+    
+    // MARK: - EnterRoomPresentation
+    
+    func fetchRoomInfo(inputName: String, inputRoomId: Int) async {
+        let roomExist = await dependency.dataStore.checkRoomExist(roomId: inputRoomId)
         if roomExist {
             // 既存ルーム
-            room = await dataStore.fetchRoom(roomId: inputNumber)
-            let roomId = room!.id
-            let userIdList = room!.userIdList + [currentUserId]
-            
-            await dataStore.addUserToRoom(roomId: roomId, userId: currentUserId)
+            dependency.dataStore = RoomDataStore(roomId: inputRoomId)
+            room = await dependency.dataStore.fetchRoom()
+            await dependency.dataStore.addUserToRoom(user: .init(
+                id: currentUser.id,
+                name: inputName))
+            room?.userList.append(currentUser)
         } else {
             // 新規ルーム
-            room = Room(id: inputNumber,
-                        userIdList: [currentUserId],
+            room = Room(id: inputRoomId,
+                        userList: [.init(
+                            id: currentUser.id,
+                            name: inputName)],
                         cardPackage: .sampleCardPackage)
-            
-            await dataStore.createRoom(room!)
+            await dependency.dataStore.createRoom(room!)
         }
     }
     
     // MARK: - Private
     
-    private var dataStore = RoomDataStore()
+    private var dependency: Dependency
 }

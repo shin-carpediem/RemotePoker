@@ -7,6 +7,13 @@ struct CardView: View {
     /// テーマカラー
     var themeColor: ThemeColor
     
+    // MARK: - Private
+
+    /// 見積もりポイントの確認アラートを表示するか
+    @State private var isShownPointCheckAlert = false
+    
+    // MARK: - View
+    
     var body: some View {
         Button(action: {
             isShownPointCheckAlert = true
@@ -34,11 +41,6 @@ struct CardView: View {
             Text("You are about to submit card: \(card.point)")
         })
     }
-    
-    // MARK: - Private
-
-    /// 見積もりポイントの確認アラートを表示するか
-    @State private var isShownPointCheckAlert = false
 }
 
 // MARK: - Preview
