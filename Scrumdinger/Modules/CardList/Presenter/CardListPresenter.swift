@@ -13,8 +13,7 @@ class CardListPresenter: CardListPresentation {
     
     // MARK: - CardListPresentation
     
-    func subscribeRoom() {
-        // TODO: ovservable
+    func subscribeUser() {
     }
     
     func openSelectedCardList() {
@@ -25,6 +24,10 @@ class CardListPresenter: CardListPresentation {
     
     func leaveRoom() async {
         await dependency.dataStore.removeUserFromRoom(userId: dependency.currentUser.id)
+    }
+    
+    func unsubscribeUser() {
+        dependency.dataStore.unsubscribeUser()
     }
     
     // MARK: - Private

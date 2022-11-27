@@ -10,7 +10,7 @@ protocol RoomRepository {
     /// - parameter roomId: ルームID
     /// - returns: 存在するか
     func checkRoomExist(roomId: Int) async -> Bool
-    
+        
     /// ルームを取得する
     /// - returns: ルーム
     func fetchRoom() async -> Room
@@ -23,6 +23,12 @@ protocol RoomRepository {
     /// - parameter userId: ユーザーID
     func removeUserFromRoom(userId: String) async
     
-    /// ルームを削除する
-    func deleteRoom() async
+//    /// ルームを削除する
+//    func deleteRoom() async
+    
+    /// ユーザーを購読する
+    func subscribeUser()
+    
+    /// ユーザーの購読を解除する
+    func unsubscribeUser()
 }

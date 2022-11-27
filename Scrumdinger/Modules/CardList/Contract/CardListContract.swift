@@ -1,6 +1,6 @@
 protocol CardListPresentation {
-    /// ルームを購読する
-    func subscribeRoom()
+    /// ユーザーを購読する
+    func subscribeUser()
     
     /// 選択済みカード一覧を公開する
     func openSelectedCardList()
@@ -10,4 +10,7 @@ protocol CardListPresentation {
     
     /// ルームから退室する
     func leaveRoom() async
+    
+    /// ユーザーの購読を解除する
+    func unsubscribeUser()
 }
