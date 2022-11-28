@@ -17,14 +17,10 @@ struct CardView: View {
             selectCardHandler?(card)
         }) {
             Text("\(card.point)")
-                .frame(width: 160, height: 120)
+                .frame(width: 170, height: 120)
                 .font(.system(size: 40, weight: .bold))
                 .foregroundColor(card.fontColor)
                 .background(card.outputBackgroundColor(color: themeColor))
-                .border(LinearGradient(gradient: Gradient(colors: [.white, Color(themeColor.rawValue)]),
-                                       startPoint: .topLeading,
-                                       endPoint: .bottomTrailing),
-                        width: 2)
                 .cornerRadius(10)
         }
     }

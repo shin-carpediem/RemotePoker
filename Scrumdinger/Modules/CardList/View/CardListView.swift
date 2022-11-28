@@ -3,7 +3,10 @@ import SwiftUI
 
 struct CardListView: View {
     @Environment(\.presentationMode) var presentation
-        
+    
+    /// ヘッダーテキスト
+    @State var headerTitle: String = ""
+    
     // MARK: - Dependency
     
     struct Dependency {
@@ -26,17 +29,15 @@ struct CardListView: View {
     // MARK: - View
     
     var body: some View {
-        let usersCount = dependency.room.userList.count
-        
         ZStack {
             Color.Neumorphic.main.ignoresSafeArea()
 
             ScrollView {
                 HStack {
-                    Text("\(String(usersCount)) member" + (usersCount == 1 ? "" : "s") + " in Room ID: \(dependency.room.id)")
+                    Text(headerTitle)
                         .font(.headline)
                         .padding()
-                        .tint(.gray)
+                        .foregroundColor(.gray)
 
                     Button(action: {
                         Task {
@@ -45,8 +46,7 @@ struct CardListView: View {
                         }
                     }) {
                         Text("Leave")
-                            .foregroundColor(.blue)
-                            .tint(.gray)
+                            .foregroundColor(.gray)
                     }
                 }
 
@@ -63,6 +63,9 @@ struct CardListView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            dependency.presenter.outputHeaderTitle()
+        }
     }
 }
 

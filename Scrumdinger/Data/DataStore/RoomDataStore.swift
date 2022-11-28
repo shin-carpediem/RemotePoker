@@ -121,15 +121,15 @@ class RoomDataStore: RoomRepository {
     
     func subscribeUser() {
         userListener = firebaseRef?.usersQuery.addSnapshotListener { querySnapshot, error in
-            querySnapshot?.documentChanges.forEach { diff in
+            querySnapshot?.documentChanges.forEach { [weak self] diff in
                 if (diff.type == .added) {
-                    // TODO: delegateで処理を委譲する
+                    self?.delegate?.whenUserAdded()
                 }
                 if (diff.type == .modified) {
-                    
+                    self?.delegate?.whenUserModified()
                 }
                 if (diff.type == .removed) {
-                    
+                    self?.delegate?.whenUserRemoved()
                 }
             }
         }
@@ -142,6 +142,8 @@ class RoomDataStore: RoomRepository {
     // MARK: - Private
         
     private var firebaseRef: FirebaseRef?
+    
+    private var delegate: RoomDelegate?
     
     private var userListener: ListenerRegistration?
     

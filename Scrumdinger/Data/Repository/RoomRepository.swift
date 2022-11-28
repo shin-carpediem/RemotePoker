@@ -1,6 +1,17 @@
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+protocol RoomDelegate {
+    /// ユーザーが追加された時
+    func whenUserAdded()
+    
+    /// ユーザーが更新された時
+    func whenUserModified()
+    
+    /// ユーザーが削除された時
+    func whenUserRemoved()
+}
+
 protocol RoomRepository {
     /// ルームを新規作成する
     /// - parameter room: ルーム

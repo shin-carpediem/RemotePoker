@@ -1,4 +1,7 @@
 protocol CardListPresentation {
+    /// ヘッダーテキストを出力する
+    func outputHeaderTitle()
+    
     /// ユーザーを購読する
     func subscribeUser()
     

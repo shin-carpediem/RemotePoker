@@ -31,7 +31,7 @@ struct Card: Identifiable {
     /// 指定カードの背景色
     func outputBackgroundColor(color: ThemeColor) -> Color {
         let number = index >= 10 ? 9 : index
-        let opacity = Double("0.\(number)") ?? 1.0
+        let opacity = Double("0.\(number)5") ?? 1.0
         return Color(color.rawValue).opacity(opacity)
     }
 }

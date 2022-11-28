@@ -14,6 +14,7 @@ extension ModuleAssembler {
             presenter: presenter,
             room: room,
             currentUser: currrentUser))
+        presenter.view = view
         return view
     }
 }
