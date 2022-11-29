@@ -5,10 +5,9 @@ class CardListPresenter: CardListPresentation {
         var dataStore: RoomDataStore
         var room: Room
         var currentUser: User
+        var viewModel: CardListViewModel
     }
-    
-    var view: CardListView?
-        
+            
     init(dependency: Dependency) {
         self.dependency = dependency
     }
@@ -23,7 +22,7 @@ class CardListPresenter: CardListPresentation {
         
         let headerTitle = "\(currentUserName) & \(String(otherUsersCount)) member\(s) in Room ID: \(roomId)"
         
-        view?.headerTitle = headerTitle
+        dependency.viewModel.headerTitle = headerTitle
     }
     
     func subscribeUser() {

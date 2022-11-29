@@ -12,6 +12,11 @@ class RoomDataStore: RoomRepository {
         firebaseRef = FirebaseRef(roomId: roomId)
     }
     
+    func checkRoomExist(roomId: Int) async -> Bool {
+        guard let document = try? await Firestore.firestore().collection(rooms).document(String(roomId)).getDocument() else { return false }
+        return document.exists
+    }
+    
     func createRoom(_ room: Room) async {
         // ルーム追加
         let roomId = room.id
@@ -52,11 +57,6 @@ class RoomDataStore: RoomRepository {
                 index: card.index
             ])
         }
-    }
-    
-    func checkRoomExist(roomId: Int) async -> Bool {
-        guard let document = try? await Firestore.firestore().collection(rooms).document(String(roomId)).getDocument() else { return false }
-        return document.exists
     }
         
     func fetchRoom() async -> Room {

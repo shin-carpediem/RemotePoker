@@ -8,29 +8,20 @@ struct EnterRoomView: View, ModuleAssembler {
         var presenter: EnterRoomPresenter
     }
     
-    init(dependency: Dependency) {
+    init(dependency: Dependency, viewModel: EnterRoomViewModel) {
         self.dependency = dependency
+        self.viewModel = viewModel
     }
     
     // MARK: - Private
     
-    /// 入力フォーム/名前
-    @State private var inputName = ""
-    
-    /// 入力フォーム/ルームID
-    @State private var inputRoomId = ""
-    
-    /// 入力フォーム内容の無効を示すアラートを表示するか
-    @State private var isShownInputFormInvalidAlert = false
-    
-    /// 次の画面に遷移するか
-    @State private var willPushNextView = false
+    @ObservedObject private var viewModel: EnterRoomViewModel
     
     private var dependency: Dependency
     
     private var isInputFormValid: Bool {
-        guard !inputName.isEmpty else { return false }
-        guard let inputInt = Int(inputRoomId) else { return false }
+        guard !viewModel.inputName.isEmpty else { return false }
+        guard let inputInt = Int(viewModel.inputRoomId) else { return false }
         return String(inputInt).count == 4
     }
     
@@ -44,14 +35,14 @@ struct EnterRoomView: View, ModuleAssembler {
                 VStack(spacing: 28) {
                     HStack(spacing: 14) {
                         TextField("Name",
-                                  text: $inputName)
+                                  text: $viewModel.inputName)
                         .padding()
                         .background(innerShadowBackGround)
                         .tint(.gray)
                         .foregroundColor(.gray)
                         
                         TextField("Room ID",
-                                  text: $inputRoomId)
+                                  text: $viewModel.inputRoomId)
                         .padding()
                         .background(innerShadowBackGround)
                         .tint(.gray)
@@ -60,13 +51,13 @@ struct EnterRoomView: View, ModuleAssembler {
                     
                     Button {
                         if !isInputFormValid {
-                            isShownInputFormInvalidAlert = true
+                            viewModel.isShownInputFormInvalidAlert = true
                         } else {
                             Task {
-                                await dependency.presenter.fetchRoomInfo(
-                                    inputName: inputName,
-                                    inputRoomId: Int(inputRoomId)!)
-                                willPushNextView = true
+                                await dependency.presenter.enterRoom(
+                                    userName: viewModel.inputName,
+                                    roomId: Int(viewModel.inputRoomId)!)
+                                viewModel.willPushNextView = true
                             }
                         }
                     } label: {
@@ -76,8 +67,8 @@ struct EnterRoomView: View, ModuleAssembler {
                     .softButtonStyle(RoundedRectangle(cornerRadius: 20))
                     .padding()
                     
-                    NavigationLink(isActive: $willPushNextView, destination: {
-                        if willPushNextView {
+                    NavigationLink(isActive: $viewModel.willPushNextView, destination: {
+                        if viewModel.willPushNextView {
                             assembleCardList(room: dependency.presenter.room!,
                                              currrentUser: dependency.presenter.currentUser)
                         } else { EmptyView() }
@@ -87,7 +78,7 @@ struct EnterRoomView: View, ModuleAssembler {
             }
         }
         .alert("Name & 4 Digit Number Required",
-               isPresented: $isShownInputFormInvalidAlert,
+               isPresented: $viewModel.isShownInputFormInvalidAlert,
                actions: {
         }, message: {
             Text("If the number is new, a new room will be created.")
@@ -113,6 +104,7 @@ struct EnterRoomView_Previews: PreviewProvider {
         EnterRoomView(dependency: .init(
             presenter: .init(
                 dependency: .init(
-                    dataStore: .init()))))
+                    dataStore: .init()))),
+                      viewModel: .init())
     }
 }

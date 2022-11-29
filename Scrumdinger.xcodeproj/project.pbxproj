@@ -10,6 +10,8 @@
 		F5125F2E292E755600C822FE /* EnterRoomPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5125F2D292E755600C822FE /* EnterRoomPresenter.swift */; };
 		F523669A2891E837005B1F65 /* CardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52366992891E837005B1F65 /* CardListView.swift */; };
 		F52366A22896382F005B1F65 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52366A12896382F005B1F65 /* CardView.swift */; };
+		F525301429364D5200727472 /* EnterRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F525301329364D5200727472 /* EnterRoomViewModel.swift */; };
+		F52530162936560D00727472 /* CardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52530152936560D00727472 /* CardListViewModel.swift */; };
 		F571FA292896CA2C003531CE /* FirebaseFirestore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */; };
 		F571FA2B2896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */; };
 		F571FA2D2896CA2C003531CE /* GoogleDataTransport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA152896CA2C003531CE /* GoogleDataTransport.xcframework */; };
@@ -75,6 +77,8 @@
 		F5125F2D292E755600C822FE /* EnterRoomPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomPresenter.swift; sourceTree = "<group>"; };
 		F52366992891E837005B1F65 /* CardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListView.swift; sourceTree = "<group>"; };
 		F52366A12896382F005B1F65 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		F525301329364D5200727472 /* EnterRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomViewModel.swift; sourceTree = "<group>"; };
+		F52530152936560D00727472 /* CardListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewModel.swift; sourceTree = "<group>"; };
 		F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestore.xcframework; path = Carthage/Build/FirebaseFirestore.xcframework; sourceTree = "<group>"; };
 		F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurementIdentitySupport.xcframework; path = Carthage/Build/GoogleAppMeasurementIdentitySupport.xcframework; sourceTree = "<group>"; };
 		F571FA152896CA2C003531CE /* GoogleDataTransport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleDataTransport.xcframework; path = Carthage/Build/GoogleDataTransport.xcframework; sourceTree = "<group>"; };
@@ -182,9 +186,26 @@
 		F5125F2C292E753700C822FE /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				F5E051692929B421006EA727 /* Model */,
 				F5125F2D292E755600C822FE /* EnterRoomPresenter.swift */,
 			);
 			path = Presenter;
+			sourceTree = "<group>";
+		};
+		F525301129364D1D00727472 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				F525301329364D5200727472 /* EnterRoomViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		F525301229364D2C00727472 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				F52530152936560D00727472 /* CardListViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		F571FA122896CA2B003531CE /* Frameworks */ = {
@@ -227,6 +248,7 @@
 		F5802CFC293207B400955949 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				F5E0516B2929B466006EA727 /* Model */,
 				F5802CFD293207C700955949 /* CardListPresenter.swift */,
 			);
 			path = Presenter;
@@ -260,6 +282,7 @@
 		F5E051662929B116006EA727 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F525301129364D1D00727472 /* ViewModel */,
 				F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */,
 			);
 			path = View;
@@ -269,7 +292,6 @@
 			isa = PBXGroup;
 			children = (
 				F5802D092932189C00955949 /* Contract */,
-				F5E0516B2929B466006EA727 /* Model */,
 				F5802CFC293207B400955949 /* Presenter */,
 				F5E0516A2929B45C006EA727 /* View */,
 			);
@@ -280,7 +302,6 @@
 			isa = PBXGroup;
 			children = (
 				F5802D06293217C100955949 /* Contract */,
-				F5E051692929B421006EA727 /* Model */,
 				F5125F2C292E753700C822FE /* Presenter */,
 				F5E051662929B116006EA727 /* View */,
 			);
@@ -298,6 +319,7 @@
 		F5E0516A2929B45C006EA727 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F525301229364D2C00727472 /* ViewModel */,
 				F52366992891E837005B1F65 /* CardListView.swift */,
 				F52366A12896382F005B1F65 /* CardView.swift */,
 			);
@@ -567,8 +589,10 @@
 				F5802D0529320F1B00955949 /* ModuleAssembler+Default.swift in Sources */,
 				F5E05171292BB05F006EA727 /* RoomRepository.swift in Sources */,
 				F5125F2E292E755600C822FE /* EnterRoomPresenter.swift in Sources */,
+				F525301429364D5200727472 /* EnterRoomViewModel.swift in Sources */,
 				F5802D0329320DEF00955949 /* ModuleAssembler.swift in Sources */,
 				F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */,
+				F52530162936560D00727472 /* CardListViewModel.swift in Sources */,
 				F5802D08293217D000955949 /* EnterRoomContract.swift in Sources */,
 				F5C397DA289E9342008AEFF2 /* CardPackage.swift in Sources */,
 				F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */,

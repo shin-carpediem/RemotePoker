@@ -21,23 +21,23 @@ class EnterRoomPresenter: EnterRoomPresentation {
     
     // MARK: - EnterRoomPresentation
     
-    func fetchRoomInfo(inputName: String, inputRoomId: Int) async {
-        let roomExist = await dependency.dataStore.checkRoomExist(roomId: inputRoomId)
+    func enterRoom(userName: String, roomId: Int) async {
+        let roomExist = await dependency.dataStore.checkRoomExist(roomId: roomId)
         if roomExist {
             // 既存ルーム
-            dependency.dataStore = RoomDataStore(roomId: inputRoomId)
+            dependency.dataStore = RoomDataStore(roomId: roomId)
             room = await dependency.dataStore.fetchRoom()
             await dependency.dataStore.addUserToRoom(user: .init(
                 id: currentUser.id,
-                name: inputName,
+                name: userName,
                 selectedCardId: ""))
             room?.userList.append(currentUser)
         } else {
             // 新規ルーム
-            room = Room(id: inputRoomId,
+            room = Room(id: roomId,
                         userList: [.init(
                             id: currentUser.id,
-                            name: inputName,
+                            name: userName,
                             selectedCardId: "")],
                         cardPackage: .sampleCardPackage)
             await dependency.dataStore.createRoom(room!)

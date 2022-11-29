@@ -4,9 +4,6 @@ import SwiftUI
 struct CardListView: View {
     @Environment(\.presentationMode) var presentation
     
-    /// ヘッダーテキスト
-    @State var headerTitle: String = ""
-    
     // MARK: - Dependency
     
     struct Dependency {
@@ -15,11 +12,14 @@ struct CardListView: View {
         var currentUser: User
     }
     
-    init(dependency: Dependency) {
+    init(dependency: Dependency, viewModel: CardListViewModel) {
         self.dependency = dependency
+        self.viewModel = viewModel
     }
     
     // MARK: - Private
+    
+    @ObservedObject private var viewModel: CardListViewModel
     
     private var dependency: Dependency
     
@@ -31,7 +31,7 @@ struct CardListView: View {
 
             ScrollView {
                 HStack {
-                    Text(headerTitle)
+                    Text(viewModel.headerTitle)
                         .font(.headline)
                         .padding()
                         .foregroundColor(.gray)
@@ -92,9 +92,11 @@ struct CardListView_Previews: PreviewProvider {
                     dependency: .init(
                         dataStore: .init(),
                         room: room1,
-                        currentUser: me)),
+                        currentUser: me,
+                        viewModel: .init())),
                 room: room1,
-                currentUser: me))
+                currentUser: me),
+                         viewModel: .init())
             .previewDisplayName("ユーザーが自分のみ")
             
             // TODO: 環境変数 presentationMode の影響か、複数Previewを表示しようとするとクラッシュする
@@ -103,9 +105,11 @@ struct CardListView_Previews: PreviewProvider {
                     dependency: .init(
                         dataStore: .init(),
                         room: room2,
-                        currentUser: me)),
+                        currentUser: me,
+                        viewModel: .init())),
                 room: room2,
-                currentUser: me))
+                currentUser: me),
+                         viewModel: .init())
             .previewDisplayName("ユーザーが2名以上")
         }
     }

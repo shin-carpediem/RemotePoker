@@ -13,14 +13,14 @@ protocol RoomDelegate {
 }
 
 protocol RoomRepository {
-    /// ルームを新規作成する
-    /// - parameter room: ルーム
-    func createRoom(_ room: Room) async
-    
     /// ルームが存在するか確認する
     /// - parameter roomId: ルームID
     /// - returns: 存在するか
     func checkRoomExist(roomId: Int) async -> Bool
+    
+    /// ルームを新規作成する
+    /// - parameter room: ルーム
+    func createRoom(_ room: Room) async
         
     /// ルームを取得する
     /// - returns: ルーム
