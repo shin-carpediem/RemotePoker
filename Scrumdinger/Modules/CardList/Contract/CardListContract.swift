@@ -5,6 +5,10 @@ protocol CardListPresentation {
     /// ユーザーを購読する
     func subscribeUser()
     
+    /// カードを選択した
+    /// - parameter cardId: カードID
+    func didSelectCard(cardId: String) async
+    
     /// 選択済みカード一覧を公開する
     func openSelectedCardList()
     

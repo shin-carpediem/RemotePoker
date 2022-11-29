@@ -17,5 +17,5 @@ struct User {
     var name: String
     
     /// 選択済みカードID
-    var selectedCardId: String
+    var selectedCardId: String?
 }

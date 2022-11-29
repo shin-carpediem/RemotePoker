@@ -28,7 +28,7 @@ class RoomDataStore: RoomRepository {
             userDocument.setData([
                 id: userId,
                 name: user.name,
-                selectedCardId: user.selectedCardId,
+                selectedCardId: user.selectedCardId ?? "",
                 createdAt: Timestamp()
             ])
         }
@@ -71,7 +71,7 @@ class RoomDataStore: RoomRepository {
             let userData = userDoc.data()
             return User(id: userData[id] as! String,
                         name: userData[name] as! String,
-                        selectedCardId: userData[selectedCardId] as! String)
+                        selectedCardId: userData[selectedCardId] as? String)
         }
         
         // カードパッケージ取得
@@ -105,7 +105,7 @@ class RoomDataStore: RoomRepository {
         usersCollection?.addDocument(data: [
             id: user.id,
             name: user.name,
-            selectedCardId: user.selectedCardId
+            selectedCardId: user.selectedCardId ?? ""
         ]) { error in
             ()
         }
@@ -133,6 +133,13 @@ class RoomDataStore: RoomRepository {
                 }
             }
         }
+    }
+    
+    func addCardToSelectedCardList(userId: String, cardId: String) async {
+        let userDocument = firebaseRef?.userDocument(userId: userId)
+        try? await userDocument?.updateData([
+            selectedCardId: cardId
+        ])
     }
     
     func unsubscribeUser() {

@@ -30,6 +30,12 @@ class CardListPresenter: CardListPresentation {
         dependency.dataStore.subscribeUser()
     }
     
+    func didSelectCard(cardId: String) async {
+        dependency.currentUser.selectedCardId = cardId
+        await dependency.dataStore.addCardToSelectedCardList(userId: dependency.currentUser.id,
+                                                             cardId: cardId)
+    }
+    
     func openSelectedCardList() {
     }
     
@@ -47,6 +53,9 @@ class CardListPresenter: CardListPresentation {
     // MARK: - Private
     
     private var dependency: Dependency
+    
+    /// 選択されたカード一覧
+    private var selectedCardList: [Card] = []
 }
 
 // MARK: - RoomDelegate
@@ -56,7 +65,14 @@ extension CardListPresenter: RoomDelegate {
         outputHeaderTitle()
     }
     
-    func whenUserModified() {}
+    func whenUserModified() {
+        // 選択されたカード一覧を更新する
+        let room = dependency.room
+        // TODO: 今のままだと、Firestoreのroomを取得できていないので、selectedCardListが他ユーザと共有されない
+        selectedCardList = room.userList.map { user in
+            room.cardPackage.cardList.first(where: { $0.id == user.selectedCardId! })!
+        }
+    }
     
     func whenUserRemoved() {
         outputHeaderTitle()

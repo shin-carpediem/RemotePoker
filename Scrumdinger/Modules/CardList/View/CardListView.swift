@@ -23,9 +23,6 @@ struct CardListView: View {
     
     private var dependency: Dependency
     
-    /// カード選択ハンドラー
-    private var selectCardHandler: ((Card) -> Void)?
-    
     // MARK: - View
     
     var body: some View {
@@ -54,9 +51,13 @@ struct CardListView: View {
 
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
                     ForEach(dependency.room.cardPackage.cardList) { card in
-                        // TODO: 子ビューからのハンドラーをどう親ビューが受け取るか
+                        let themeColor = dependency.room.cardPackage.themeColor
                         CardView(card: card,
-                                 themeColor: dependency.room.cardPackage.themeColor)
+                                 themeColor: themeColor) { selectedCard in
+                            Task {
+                                await dependency.presenter.didSelectCard(cardId: selectedCard.id)
+                            }
+                        }
                     }
                     .padding()
                 }

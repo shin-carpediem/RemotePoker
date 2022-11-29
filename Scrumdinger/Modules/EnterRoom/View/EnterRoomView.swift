@@ -20,15 +20,16 @@ struct EnterRoomView: View, ModuleAssembler {
     /// 入力フォーム/ルームID
     @State private var inputRoomId = ""
     
-    /// 入力フォーム/ルームIDの無効を示すアラートを表示するか
-    @State private var isShownInputRoomIdInvalidAlert = false
+    /// 入力フォーム内容の無効を示すアラートを表示するか
+    @State private var isShownInputFormInvalidAlert = false
     
     /// 次の画面に遷移するか
     @State private var willPushNextView = false
     
     private var dependency: Dependency
     
-    private var isInputRoomIdValid: Bool {
+    private var isInputFormValid: Bool {
+        guard !inputName.isEmpty else { return false }
         guard let inputInt = Int(inputRoomId) else { return false }
         return String(inputInt).count == 4
     }
@@ -58,8 +59,8 @@ struct EnterRoomView: View, ModuleAssembler {
                     }
                     
                     Button {
-                        if !isInputRoomIdValid {
-                            isShownInputRoomIdInvalidAlert = true
+                        if !isInputFormValid {
+                            isShownInputFormInvalidAlert = true
                         } else {
                             Task {
                                 await dependency.presenter.fetchRoomInfo(
@@ -85,8 +86,8 @@ struct EnterRoomView: View, ModuleAssembler {
                 .padding(.horizontal, 40)
             }
         }
-        .alert("4 Digit Number Required",
-               isPresented: $isShownInputRoomIdInvalidAlert,
+        .alert("Name & 4 Digit Number Required",
+               isPresented: $isShownInputFormInvalidAlert,
                actions: {
         }, message: {
             Text("If the number is new, a new room will be created.")
