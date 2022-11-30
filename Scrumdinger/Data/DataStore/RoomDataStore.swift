@@ -78,7 +78,7 @@ class RoomDataStore: RoomRepository {
         let cardPackagesSnapshot = await firebaseRef?.cardPackagesSnapshot()?.first
         let cardPackageData = cardPackagesSnapshot?.data()
         let cardPackageId = cardPackageData![id] as! String
-        let themeColor = cardPackageData![themeColor] as! ThemeColor
+        let themeColor = cardPackageData![themeColor] as! String
         
         // カード一覧取得
         let cardsSnapshot = await firebaseRef?.cardsSnapshot(cardPackageId: cardPackageId)
@@ -87,10 +87,10 @@ class RoomDataStore: RoomRepository {
             return Card(id: cardData[id] as! String,
                         point: cardData[point] as! String,
                         index: cardData[index] as! Int)
-        }
+        }.sorted { $0.index < $1.index }
         
         let cardPackage = CardPackage(id: cardPackageId,
-                                      themeColor: themeColor,
+                                      themeColor: ThemeColor(rawValue: themeColor)!,
                                       cardList: cardList)
 
         let room = Room(id: roomId,
@@ -136,6 +136,7 @@ class RoomDataStore: RoomRepository {
     }
     
     func addCardToSelectedCardList(userId: String, cardId: String) async {
+        // TODO: firebaseRefがnilのまま
         let userDocument = firebaseRef?.userDocument(userId: userId)
         try? await userDocument?.updateData([
             selectedCardId: cardId

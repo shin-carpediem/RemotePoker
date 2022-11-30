@@ -22,6 +22,7 @@ class EnterRoomPresenter: EnterRoomPresentation {
     // MARK: - EnterRoomPresentation
     
     func enterRoom(userName: String, roomId: Int) async {
+        currentUser.name = userName
         let roomExist = await dependency.dataStore.checkRoomExist(roomId: roomId)
         if roomExist {
             // 既存ルーム

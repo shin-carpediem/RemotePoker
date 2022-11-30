@@ -7,7 +7,7 @@ class CardListPresenter: CardListPresentation {
         var currentUser: User
         var viewModel: CardListViewModel
     }
-            
+    
     init(dependency: Dependency) {
         self.dependency = dependency
     }
@@ -20,7 +20,7 @@ class CardListPresenter: CardListPresentation {
         let roomId = dependency.room.id
         let s = otherUsersCount > 1 ? "s" : ""
         
-        let headerTitle = "\(currentUserName) & \(String(otherUsersCount)) member\(s) in Room ID: \(roomId)"
+        let headerTitle = "\(currentUserName), \(String(otherUsersCount)) guy\(s) in Room: \(roomId)"
         
         dependency.viewModel.headerTitle = headerTitle
     }
