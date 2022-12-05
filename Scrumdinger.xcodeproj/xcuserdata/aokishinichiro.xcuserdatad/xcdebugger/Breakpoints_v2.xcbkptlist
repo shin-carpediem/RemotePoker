@@ -14,13 +14,13 @@
             filePath = "Scrumdinger/Modules/CardList/Presenter/CardListPresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
             landmarkName = "whenUserModified()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "69A4D62F-B1B2-4EAC-A943-165137D21C15 - 46e4d5617fec376"
+                  uuid = "69A4D62F-B1B2-4EAC-A943-165137D21C15 - 46e4d5617fec357"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -30,12 +30,12 @@
                   urlString = "file:///Users/aokishinichiro/develop/Scrumdinger/Scrumdinger/Modules/CardList/Presenter/CardListPresenter.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "71"
-                  endingLineNumber = "71"
+                  startingLineNumber = "72"
+                  endingLineNumber = "72"
                   offsetFromSymbolStart = "631">
                </Location>
                <Location
-                  uuid = "69A4D62F-B1B2-4EAC-A943-165137D21C15 - a1c3dfd880e5572e"
+                  uuid = "69A4D62F-B1B2-4EAC-A943-165137D21C15 - a1c3dfd880e557c9"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -45,8 +45,8 @@
                   urlString = "file:///Users/aokishinichiro/develop/Scrumdinger/Scrumdinger/Modules/CardList/Presenter/CardListPresenter.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "72"
-                  endingLineNumber = "72"
+                  startingLineNumber = "73"
+                  endingLineNumber = "73"
                   offsetFromSymbolStart = "62">
                </Location>
             </Locations>
@@ -62,42 +62,10 @@
             filePath = "Scrumdinger/Modules/CardList/Presenter/CardListPresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
             landmarkName = "whenUserAdded()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D4808AA9-2CCE-46C0-9E8D-70838F087B34"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Scrumdinger/Data/DataStore/RoomDataStore.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
-            landmarkName = "addCardToSelectedCardList(userId:cardId:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "58124111-47D2-4A25-A6EA-48C0A9C23A01"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Scrumdinger/Modules/EnterRoom/View/EnterRoomView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "body"
-            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

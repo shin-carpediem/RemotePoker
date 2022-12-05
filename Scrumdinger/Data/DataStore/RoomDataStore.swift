@@ -136,7 +136,6 @@ class RoomDataStore: RoomRepository {
     }
     
     func addCardToSelectedCardList(userId: String, cardId: String) async {
-        // TODO: firebaseRefがnilのまま
         let userDocument = firebaseRef?.userDocument(userId: userId)
         try? await userDocument?.updateData([
             selectedCardId: cardId

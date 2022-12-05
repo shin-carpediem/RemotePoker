@@ -19,8 +19,9 @@ class CardListPresenter: CardListPresentation {
         let otherUsersCount = dependency.room.userList.count - 1
         let roomId = dependency.room.id
         let s = otherUsersCount > 1 ? "s" : ""
+        let otherUsersText = "and \(String(otherUsersCount)) guy\(s)"
         
-        let headerTitle = "\(currentUserName), \(String(otherUsersCount)) guy\(s) in Room: \(roomId)"
+        let headerTitle = "\(currentUserName) \(otherUsersText) in Room: \(roomId)"
         
         dependency.viewModel.headerTitle = headerTitle
     }

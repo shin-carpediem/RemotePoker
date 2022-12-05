@@ -28,38 +28,16 @@ struct CardListView: View {
     var body: some View {
         ZStack {
             Color.Neumorphic.main.ignoresSafeArea()
-
-            ScrollView {
-                HStack {
-                    Text(viewModel.headerTitle)
-                        .font(.headline)
-                        .padding()
-                        .foregroundColor(.gray)
-
-                    Button(action: {
-                        Task {
-                            await dependency.presenter.leaveRoom()
-                            presentation.wrappedValue.dismiss()
-                        }
-                    }) {
-                        Text("Leave")
-                            .foregroundColor(.gray)
-                    }
+            VStack {
+                ScrollView {
+                    headerTitle
+                    Spacer()
+                    cardListView
                 }
-
-                Spacer()
-
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
-                    ForEach(dependency.room.cardPackage.cardList) { card in
-                        let themeColor = dependency.room.cardPackage.themeColor
-                        CardView(card: card,
-                                 themeColor: themeColor) { selectedCard in
-                            Task {
-                                await dependency.presenter.didSelectCard(cardId: selectedCard.id)
-                            }
-                        }
-                    }
-                    .padding()
+                HStack {
+                    Spacer()
+                        .background(.clear).opacity(0)
+                    floatingActionButton
                 }
             }
         }
@@ -68,8 +46,57 @@ struct CardListView: View {
             dependency.presenter.outputHeaderTitle()
         }
     }
+    
+    private var headerTitle: some View {
+        HStack {
+            Text(viewModel.headerTitle)
+                .font(.headline)
+                .padding()
+                .foregroundColor(.gray)
+            
+            Button(action: {
+                Task {
+                    await dependency.presenter.leaveRoom()
+                    presentation.wrappedValue.dismiss()
+                }
+            }) {
+                Text("Leave")
+                    .foregroundColor(.gray)
+            }
+        }
+    }
+    
+    private var cardListView: some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
+            ForEach(dependency.room.cardPackage.cardList) { card in
+                let themeColor = dependency.room.cardPackage.themeColor
+                CardView(card: card,
+                         themeColor: themeColor) { selectedCard in
+                    Task {
+                        await dependency.presenter.didSelectCard(cardId: selectedCard.id)
+                    }
+                }
+            }
+            .padding()
+        }
+    }
+    
+    private var floatingActionButton: some View {
+        Button {
+            print("Tapped!")
+        } label: {
+            Image(systemName: "lock.rotation.open")
+                .foregroundColor(.gray)
+                .font(.system(size: 24))
+        }
+        .frame(width: 60, height: 60)
+        .background(.white)
+        .cornerRadius(30)
+        .shadow(radius: 3)
+        .padding(EdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 16))
+    }
 }
-
+    
 // MARK: - Preview
 
 struct CardListView_Previews: PreviewProvider {

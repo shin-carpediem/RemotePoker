@@ -31,48 +31,10 @@ struct EnterRoomView: View, ModuleAssembler {
         NavigationView {
             ZStack {
                 Color.Neumorphic.main.ignoresSafeArea()
-
                 VStack(spacing: 28) {
-                    HStack(spacing: 14) {
-                        TextField("Name",
-                                  text: $viewModel.inputName)
-                        .padding()
-                        .background(innerShadowBackGround)
-                        .tint(.gray)
-                        .foregroundColor(.gray)
-                        
-                        TextField("Room ID",
-                                  text: $viewModel.inputRoomId)
-                        .padding()
-                        .background(innerShadowBackGround)
-                        .tint(.gray)
-                        .foregroundColor(.gray)
-                    }
-                    
-                    Button {
-                        if !isInputFormValid {
-                            viewModel.isShownInputFormInvalidAlert = true
-                        } else {
-                            Task {
-                                await dependency.presenter.enterRoom(
-                                    userName: viewModel.inputName,
-                                    roomId: Int(viewModel.inputRoomId)!)
-                                viewModel.willPushNextView = true
-                            }
-                        }
-                    } label: {
-                        Text("Enter")
-                            .frame(width: 140, height: 20)
-                    }
-                    .softButtonStyle(RoundedRectangle(cornerRadius: 20))
-                    .padding()
-                    
-                    NavigationLink(isActive: $viewModel.willPushNextView, destination: {
-                        if viewModel.willPushNextView {
-                            assembleCardList(room: dependency.presenter.room!,
-                                             currrentUser: dependency.presenter.currentUser)
-                        } else { EmptyView() }
-                    }) { EmptyView() }
+                    inputField
+                    sendButton
+                    destination
                 }
                 .padding(.horizontal, 40)
             }
@@ -86,6 +48,44 @@ struct EnterRoomView: View, ModuleAssembler {
         .navigationTitle("Scrum Dinger")
     }
     
+    private var inputField: some View {
+        HStack(spacing: 14) {
+            TextField("Name",
+                      text: $viewModel.inputName)
+            .padding()
+            .background(innerShadowBackGround)
+            .tint(.gray)
+            .foregroundColor(.gray)
+            
+            TextField("Room ID",
+                      text: $viewModel.inputRoomId)
+            .padding()
+            .background(innerShadowBackGround)
+            .tint(.gray)
+            .foregroundColor(.gray)
+        }
+    }
+    
+    private var sendButton: some View {
+        Button {
+            if !isInputFormValid {
+                viewModel.isShownInputFormInvalidAlert = true
+            } else {
+                Task {
+                    await dependency.presenter.enterRoom(
+                        userName: viewModel.inputName,
+                        roomId: Int(viewModel.inputRoomId)!)
+                    viewModel.willPushNextView = true
+                }
+            }
+        } label: {
+            Text("Enter")
+                .frame(width: 140, height: 20)
+        }
+        .softButtonStyle(RoundedRectangle(cornerRadius: 20))
+        .padding()
+    }
+    
     private var innerShadowBackGround: some View {
         RoundedRectangle(cornerRadius: 20)
             .fill(Color.Neumorphic.main)
@@ -94,6 +94,15 @@ struct EnterRoomView: View, ModuleAssembler {
                              lightShadow: Color.Neumorphic.lightShadow,
                              spread: 0.2,
                              radius: 2)
+    }
+    
+    private var destination: some View {
+        NavigationLink(isActive: $viewModel.willPushNextView, destination: {
+            if viewModel.willPushNextView {
+                assembleCardList(room: dependency.presenter.room!,
+                                 currrentUser: dependency.presenter.currentUser)
+            } else { EmptyView() }
+        }) { EmptyView() }
     }
 }
 
