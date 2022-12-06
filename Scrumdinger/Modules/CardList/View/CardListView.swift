@@ -111,7 +111,7 @@ struct CardListView: View, ModuleAssembler {
     private var destination: some View {
         NavigationLink(isActive: $viewModel.willPushNextView, destination: {
             if viewModel.willPushNextView {
-                assembleOpenCardList()
+                assembleOpenCardList(selectedCardList: viewModel.selectedCardList)
             } else { EmptyView() }
         }) { EmptyView() }
     }
@@ -123,6 +123,10 @@ struct CardListView_Previews: PreviewProvider {
     static let me: User = .init(id: "0",
                                 name: "ロイド フォージャ",
                                 selectedCardId: "")
+    
+    static let user1: User = .init(id: "1",
+                                   name: "ヨル フォージャ",
+                                   selectedCardId: "")
     
     static let room1: Room = .init(id: 0,
                                    userList: [me],

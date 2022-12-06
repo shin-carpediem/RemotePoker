@@ -13,6 +13,8 @@
 		F525301429364D5200727472 /* EnterRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F525301329364D5200727472 /* EnterRoomViewModel.swift */; };
 		F52530162936560D00727472 /* CardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52530152936560D00727472 /* CardListViewModel.swift */; };
 		F533A39E293FB99F00C833F7 /* OpenCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F533A39D293FB99F00C833F7 /* OpenCardListView.swift */; };
+		F533A3A4293FCD7300C833F7 /* OpenCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F533A3A3293FCD7300C833F7 /* OpenCardView.swift */; };
+		F533A3A6293FD11100C833F7 /* SelectedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F533A3A5293FD11100C833F7 /* SelectedCard.swift */; };
 		F571FA292896CA2C003531CE /* FirebaseFirestore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */; };
 		F571FA2B2896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */; };
 		F571FA2D2896CA2C003531CE /* GoogleDataTransport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA152896CA2C003531CE /* GoogleDataTransport.xcframework */; };
@@ -81,6 +83,8 @@
 		F525301329364D5200727472 /* EnterRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomViewModel.swift; sourceTree = "<group>"; };
 		F52530152936560D00727472 /* CardListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewModel.swift; sourceTree = "<group>"; };
 		F533A39D293FB99F00C833F7 /* OpenCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCardListView.swift; sourceTree = "<group>"; };
+		F533A3A3293FCD7300C833F7 /* OpenCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCardView.swift; sourceTree = "<group>"; };
+		F533A3A5293FD11100C833F7 /* SelectedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedCard.swift; sourceTree = "<group>"; };
 		F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestore.xcframework; path = Carthage/Build/FirebaseFirestore.xcframework; sourceTree = "<group>"; };
 		F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurementIdentitySupport.xcframework; path = Carthage/Build/GoogleAppMeasurementIdentitySupport.xcframework; sourceTree = "<group>"; };
 		F571FA152896CA2C003531CE /* GoogleDataTransport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleDataTransport.xcframework; path = Carthage/Build/GoogleDataTransport.xcframework; sourceTree = "<group>"; };
@@ -214,31 +218,16 @@
 		F533A399293FB94900C833F7 /* OpenCardList */ = {
 			isa = PBXGroup;
 			children = (
-				F533A39A293FB97800C833F7 /* Contract */,
-				F533A39B293FB97D00C833F7 /* Presenter */,
 				F533A39C293FB98300C833F7 /* View */,
 			);
 			path = OpenCardList;
-			sourceTree = "<group>";
-		};
-		F533A39A293FB97800C833F7 /* Contract */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Contract;
-			sourceTree = "<group>";
-		};
-		F533A39B293FB97D00C833F7 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Presenter;
 			sourceTree = "<group>";
 		};
 		F533A39C293FB98300C833F7 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				F533A39D293FB99F00C833F7 /* OpenCardListView.swift */,
+				F533A3A3293FCD7300C833F7 /* OpenCardView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -365,6 +354,7 @@
 			isa = PBXGroup;
 			children = (
 				F5C397D9289E9342008AEFF2 /* CardPackage.swift */,
+				F533A3A5293FD11100C833F7 /* SelectedCard.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -622,6 +612,7 @@
 				F5802D0B293218A800955949 /* CardListContract.swift in Sources */,
 				F523669A2891E837005B1F65 /* CardListView.swift in Sources */,
 				F5802D0529320F1B00955949 /* ModuleAssembler+Default.swift in Sources */,
+				F533A3A6293FD11100C833F7 /* SelectedCard.swift in Sources */,
 				F5E05171292BB05F006EA727 /* RoomRepository.swift in Sources */,
 				F5125F2E292E755600C822FE /* EnterRoomPresenter.swift in Sources */,
 				F525301429364D5200727472 /* EnterRoomViewModel.swift in Sources */,
@@ -632,6 +623,7 @@
 				F5C397DA289E9342008AEFF2 /* CardPackage.swift in Sources */,
 				F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */,
 				F533A39E293FB99F00C833F7 /* OpenCardListView.swift in Sources */,
+				F533A3A4293FCD7300C833F7 /* OpenCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

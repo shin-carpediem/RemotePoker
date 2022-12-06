@@ -25,8 +25,9 @@ extension ModuleAssembler {
         return view
     }
     
-    func assembleOpenCardList() -> OpenCardListView {
-        let view = OpenCardListView()
+    func assembleOpenCardList(selectedCardList: [SelectedCard]) -> OpenCardListView {
+        let view = OpenCardListView(dependency: .init(
+            selectedCardList: selectedCardList))
         return view
     }
 }

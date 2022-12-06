@@ -16,7 +16,7 @@ struct CardView: View {
         Button(action: {
             selectCardHandler?(card)
         }) {
-            Text("\(card.point)")
+            Text(card.point)
                 .frame(width: 170, height: 120)
                 .font(.system(size: 40, weight: .bold))
                 .foregroundColor(card.fontColor)
@@ -29,17 +29,23 @@ struct CardView: View {
 // MARK: - Preview
 
 struct CardView_Previews: PreviewProvider {
+    static let card1 = CardPackage.sampleCardList[0]
+    
+    static let card2 = CardPackage.sampleCardList[4]
+    
+    static let card3 = CardPackage.sampleCardList[9]
+    
     static var previews: some View {
         Group {
-            CardView(card: CardPackage.sampleCardList[0],
+            CardView(card: card1,
                      themeColor: .bubblegum)
             .previewDisplayName("色/薄い")
             
-            CardView(card: CardPackage.sampleCardList[4],
+            CardView(card: card2,
                      themeColor: .bubblegum)
             .previewDisplayName("色/中間")
 
-            CardView(card: CardPackage.sampleCardList[9],
+            CardView(card: card3,
                      themeColor: .bubblegum)
             .previewDisplayName("色/濃い")
         }
