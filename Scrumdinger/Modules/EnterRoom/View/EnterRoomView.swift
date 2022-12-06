@@ -15,15 +15,9 @@ struct EnterRoomView: View, ModuleAssembler {
     
     // MARK: - Private
     
-    @ObservedObject private var viewModel: EnterRoomViewModel
-    
     private var dependency: Dependency
     
-    private var isInputFormValid: Bool {
-        guard !viewModel.inputName.isEmpty else { return false }
-        guard let inputInt = Int(viewModel.inputRoomId) else { return false }
-        return String(inputInt).count == 4
-    }
+    @ObservedObject private var viewModel: EnterRoomViewModel
     
     // MARK: - View
     
@@ -34,9 +28,9 @@ struct EnterRoomView: View, ModuleAssembler {
                 VStack(spacing: 28) {
                     inputField
                     sendButton
-                    destination
                 }
                 .padding(.horizontal, 40)
+                destination
             }
         }
         .alert("Name & 4 Digit Number Required",
@@ -68,14 +62,13 @@ struct EnterRoomView: View, ModuleAssembler {
     
     private var sendButton: some View {
         Button {
-            if !isInputFormValid {
-                viewModel.isShownInputFormInvalidAlert = true
+            if !dependency.presenter.isInputFormValid() {
+                dependency.presenter.showInputInvalidAlert()
             } else {
                 Task {
                     await dependency.presenter.enterRoom(
                         userName: viewModel.inputName,
                         roomId: Int(viewModel.inputRoomId)!)
-                    viewModel.willPushNextView = true
                 }
             }
         } label: {
@@ -96,6 +89,8 @@ struct EnterRoomView: View, ModuleAssembler {
                              radius: 2)
     }
     
+    // MARK: - Router
+    
     private var destination: some View {
         NavigationLink(isActive: $viewModel.willPushNextView, destination: {
             if viewModel.willPushNextView {
@@ -113,7 +108,8 @@ struct EnterRoomView_Previews: PreviewProvider {
         EnterRoomView(dependency: .init(
             presenter: .init(
                 dependency: .init(
-                    dataStore: .init()))),
+                    dataStore: .init(),
+                    viewModel: .init()))),
                       viewModel: .init())
     }
 }

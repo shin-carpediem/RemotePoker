@@ -1,7 +1,9 @@
 extension ModuleAssembler {
     func assmebleEnterRoom() -> EnterRoomView {
         let viewModel = EnterRoomViewModel()
-        let presenter = EnterRoomPresenter(dependency: .init(dataStore: .init()))
+        let presenter = EnterRoomPresenter(dependency: .init(
+            dataStore: .init(),
+            viewModel: viewModel))
         let view = EnterRoomView(dependency: .init(
             presenter: presenter),
                                  viewModel: viewModel)
@@ -20,6 +22,11 @@ extension ModuleAssembler {
             room: room,
             currentUser: currrentUser),
                                 viewModel: viewModel)
+        return view
+    }
+    
+    func assembleOpenCardList() -> OpenCardListView {
+        let view = OpenCardListView()
         return view
     }
 }

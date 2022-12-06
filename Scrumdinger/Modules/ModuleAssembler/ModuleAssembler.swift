@@ -8,4 +8,7 @@ protocol ModuleAssembler {
     /// - parameter currrentUser: カレントユーザー
     /// - returns: カードリスト画面
     func assembleCardList(room: Room, currrentUser: User) -> CardListView
+    
+    /// 公開されたカード一覧画面をアセンブルする
+    func assembleOpenCardList() -> OpenCardListView
 }

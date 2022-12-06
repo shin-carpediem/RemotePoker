@@ -5,6 +5,7 @@ class EnterRoomPresenter: EnterRoomPresentation {
     
     struct Dependency {
         var dataStore: RoomDataStore
+        var viewModel: EnterRoomViewModel
     }
     
     /// ルーム
@@ -20,6 +21,16 @@ class EnterRoomPresenter: EnterRoomPresentation {
     }
     
     // MARK: - EnterRoomPresentation
+    
+    func isInputFormValid() -> Bool {
+        guard !dependency.viewModel.inputName.isEmpty else { return false }
+        guard let inputInt = Int(dependency.viewModel.inputRoomId) else { return false }
+        return String(inputInt).count == 4
+    }
+    
+    func showInputInvalidAlert() {
+        dependency.viewModel.isShownInputFormInvalidAlert = true
+    }
     
     func enterRoom(userName: String, roomId: Int) async {
         currentUser.name = userName
@@ -42,6 +53,11 @@ class EnterRoomPresenter: EnterRoomPresentation {
                             selectedCardId: "")],
                         cardPackage: .sampleCardPackage)
             await dependency.dataStore.createRoom(room!)
+        }
+        // TODO: Actorで置き換える
+        // https://qiita.com/uhooi/items/1d2c94df69c75fcfbdbf
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel.willPushNextView = true
         }
     }
     

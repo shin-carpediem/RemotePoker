@@ -38,12 +38,12 @@ class CardListPresenter: CardListPresentation {
     
     func openSelectedCardList() {
         dependency.viewModel.isOpenSelectedCardList = true
-        
+        dependency.viewModel.willPushNextView = true
     }
     
     func resetSelectedCardList() {
         dependency.viewModel.isOpenSelectedCardList = false
-        
+        dependency.viewModel.willPushNextView = false
     }
     
     func leaveRoom() async {

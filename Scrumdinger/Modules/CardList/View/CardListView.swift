@@ -1,7 +1,7 @@
 import Neumorphic
 import SwiftUI
 
-struct CardListView: View {
+struct CardListView: View, ModuleAssembler {
     @Environment(\.presentationMode) var presentation
     
     // MARK: - Dependency
@@ -19,26 +19,29 @@ struct CardListView: View {
     
     // MARK: - Private
     
-    @ObservedObject private var viewModel: CardListViewModel
-    
     private var dependency: Dependency
+    
+    @ObservedObject private var viewModel: CardListViewModel
     
     // MARK: - View
     
     var body: some View {
-        ZStack {
-            Color.Neumorphic.main.ignoresSafeArea()
-            VStack {
-                ScrollView {
-                    headerTitle
-                    Spacer()
-                    cardListView
+        NavigationView {
+            ZStack {
+                Color.Neumorphic.main.ignoresSafeArea()
+                VStack {
+                    ScrollView {
+                        headerTitle
+                        Spacer()
+                        cardListView
+                    }
+                    HStack {
+                        Spacer()
+                            .background(.clear).opacity(0)
+                        floatingActionButton
+                    }
                 }
-                HStack {
-                    Spacer()
-                        .background(.clear).opacity(0)
-                    floatingActionButton
-                }
+                destination
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -83,7 +86,11 @@ struct CardListView: View {
     
     private var floatingActionButton: some View {
         Button {
-            dependency.presenter.openSelectedCardList()
+            if viewModel.isOpenSelectedCardList {
+                dependency.presenter.resetSelectedCardList()
+            } else {
+                dependency.presenter.openSelectedCardList()
+            }
         } label: {
             buttonImage
         }
@@ -97,6 +104,16 @@ struct CardListView: View {
     private var buttonImage: some View {
         let systemName = viewModel.isOpenSelectedCardList ? "gobackward" : "lock.rotation.open"
         return Image(systemName: systemName)
+    }
+    
+    // MARK: - Router
+    
+    private var destination: some View {
+        NavigationLink(isActive: $viewModel.willPushNextView, destination: {
+            if viewModel.willPushNextView {
+                assembleOpenCardList()
+            } else { EmptyView() }
+        }) { EmptyView() }
     }
 }
 
