@@ -83,11 +83,9 @@ struct CardListView: View {
     
     private var floatingActionButton: some View {
         Button {
-            print("Tapped!")
+            dependency.presenter.openSelectedCardList()
         } label: {
-            Image(systemName: "lock.rotation.open")
-                .foregroundColor(.gray)
-                .font(.system(size: 24))
+            buttonImage
         }
         .frame(width: 60, height: 60)
         .background(.white)
@@ -95,8 +93,13 @@ struct CardListView: View {
         .shadow(radius: 3)
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 16))
     }
-}
     
+    private var buttonImage: some View {
+        let systemName = viewModel.isOpenSelectedCardList ? "gobackward" : "lock.rotation.open"
+        return Image(systemName: systemName)
+    }
+}
+
 // MARK: - Preview
 
 struct CardListView_Previews: PreviewProvider {

@@ -14,13 +14,13 @@
             filePath = "Scrumdinger/Modules/CardList/Presenter/CardListPresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
             landmarkName = "whenUserModified()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "69A4D62F-B1B2-4EAC-A943-165137D21C15 - 46e4d5617fec357"
+                  uuid = "69A4D62F-B1B2-4EAC-A943-165137D21C15 - 46e4d5617fec3d3"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -30,12 +30,12 @@
                   urlString = "file:///Users/aokishinichiro/develop/Scrumdinger/Scrumdinger/Modules/CardList/Presenter/CardListPresenter.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "72"
-                  endingLineNumber = "72"
+                  startingLineNumber = "76"
+                  endingLineNumber = "76"
                   offsetFromSymbolStart = "631">
                </Location>
                <Location
-                  uuid = "69A4D62F-B1B2-4EAC-A943-165137D21C15 - a1c3dfd880e557c9"
+                  uuid = "69A4D62F-B1B2-4EAC-A943-165137D21C15 - a1c3dfd880e55675"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -45,8 +45,8 @@
                   urlString = "file:///Users/aokishinichiro/develop/Scrumdinger/Scrumdinger/Modules/CardList/Presenter/CardListPresenter.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "73"
-                  endingLineNumber = "73"
+                  startingLineNumber = "77"
+                  endingLineNumber = "77"
                   offsetFromSymbolStart = "62">
                </Location>
             </Locations>
@@ -62,8 +62,8 @@
             filePath = "Scrumdinger/Modules/CardList/Presenter/CardListPresenter.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "whenUserAdded()"
             landmarkType = "7">
          </BreakpointContent>

@@ -37,9 +37,13 @@ class CardListPresenter: CardListPresentation {
     }
     
     func openSelectedCardList() {
+        dependency.viewModel.isOpenSelectedCardList = true
+        
     }
     
     func resetSelectedCardList() {
+        dependency.viewModel.isOpenSelectedCardList = false
+        
     }
     
     func leaveRoom() async {
