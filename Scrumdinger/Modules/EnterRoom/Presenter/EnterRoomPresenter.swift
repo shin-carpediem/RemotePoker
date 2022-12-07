@@ -14,7 +14,7 @@ class EnterRoomPresenter: EnterRoomPresentation {
     /// カレントユーザー
     var currentUser: User = .init(id: UUID().uuidString,
                                   name: "",
-                                  selectedCardId: "")
+                                  selectedCard: nil)
     
     init(dependency: Dependency) {
         self.dependency = dependency
@@ -42,7 +42,7 @@ class EnterRoomPresenter: EnterRoomPresentation {
             await dependency.dataStore.addUserToRoom(user: .init(
                 id: currentUser.id,
                 name: userName,
-                selectedCardId: ""))
+                selectedCard: nil))
             room?.userList.append(currentUser)
         } else {
             // 新規ルーム
@@ -50,7 +50,7 @@ class EnterRoomPresenter: EnterRoomPresentation {
                         userList: [.init(
                             id: currentUser.id,
                             name: userName,
-                            selectedCardId: "")],
+                            selectedCard: nil)],
                         cardPackage: .sampleCardPackage)
             await dependency.dataStore.createRoom(room!)
         }

@@ -1,20 +1,20 @@
 import SwiftUI
 
 struct OpenCardView: View {
-    /// 選択されたカード
-    var selectedCard: SelectedCard
+    /// ユーザーのカード選択状況
+    var userSelectStatus: UserSelectStatus
     
     // MARK: - View
     
     var body: some View {
         VStack {
-            Text(selectedCard.user.name)
+            Text(userSelectStatus.user.name)
             
-            Text(selectedCard.card.point)
+            Text(userSelectStatus.selectedCard?.point ?? "")
                 .frame(width: 170, height: 120)
                 .font(.system(size: 40, weight: .bold))
-                .foregroundColor(selectedCard.card.fontColor)
-                .background(selectedCard.card.outputBackgroundColor(color: selectedCard.themeColor))
+                .foregroundColor(userSelectStatus.selectedCard?.fontColor)
+                .background(userSelectStatus.selectedCard?.outputBackgroundColor(color: userSelectStatus.themeColor))
                 .cornerRadius(10)
         }
     }
@@ -22,13 +22,13 @@ struct OpenCardView: View {
 
 // MARK: - Preview
 
+// TODO: なぜか落ちる
 struct OpenCardView_Previews: PreviewProvider {
     static var previews: some View {
-        OpenCardView(selectedCard: .init(
+        OpenCardView(userSelectStatus: .init(
             id: 0,
             user: CardListView_Previews.me,
-            card: CardView_Previews.card1,
-            themeColor: .bubblegum))
+            themeColor: .buttercup))
         .padding()
         .previewLayout(.sizeThatFits)
     }

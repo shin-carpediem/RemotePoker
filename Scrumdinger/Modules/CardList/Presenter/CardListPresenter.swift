@@ -14,26 +14,44 @@ class CardListPresenter: CardListPresentation {
     
     // MARK: - CardListPresentation
     
-    func outputHeaderTitle() {
+    func outputHeaderTitle() -> String {
         let currentUserName = dependency.currentUser.name
         let otherUsersCount = dependency.room.userList.count - 1
         let roomId = dependency.room.id
-        let s = otherUsersCount > 1 ? "s" : ""
-        let otherUsersText = "and \(String(otherUsersCount)) guy\(s)"
+        let only = otherUsersCount >= 1 ? "" : "only"
+        let s = otherUsersCount >= 2 ? "s" : ""
+        let otherUsersText = otherUsersCount >= 1 ? "and \(String(otherUsersCount)) guy\(s)" : ""
         
-        let headerTitle = "\(currentUserName) \(otherUsersText) in Room: \(roomId)"
-        
+        let headerTitle = "\(only) \(currentUserName) \(otherUsersText) in Room: \(roomId)"
         dependency.viewModel.headerTitle = headerTitle
+        return headerTitle
     }
     
     func subscribeUser() {
         dependency.dataStore.subscribeUser()
     }
     
-    func didSelectCard(cardId: String) async {
-        dependency.currentUser.selectedCardId = cardId
-        await dependency.dataStore.addCardToSelectedCardList(userId: dependency.currentUser.id,
-                                                             cardId: cardId)
+    func didSelectCard(card: Card) async {
+        dependency.currentUser.selectedCard = card
+        let userSelectStatus = UserSelectStatus(id: Int.random(in: 0..<99999999),
+                                                user: dependency.currentUser,
+                                                themeColor: dependency.room.cardPackage.themeColor,
+                                                selectedCard: card)
+        dependency.viewModel.userSelectStatus.append(userSelectStatus)
+        await dependency.dataStore.updateSelectedCard(userId: dependency.currentUser.id,
+                                                   selectedCard: card)
+    }
+    
+    func outputUserSelectStatus() -> [UserSelectStatus] {
+        let userSelectStatus: [UserSelectStatus] = dependency.room.userList.map { user in
+            return UserSelectStatus(id: Int.random(in: 0..<99999999),
+                                    user: user,
+                                    themeColor: dependency.room.cardPackage.themeColor,
+                                    selectedCard: user.selectedCard ?? nil)
+        }
+        
+        dependency.viewModel.userSelectStatus = userSelectStatus
+        return userSelectStatus
     }
     
     func openSelectedCardList() {
@@ -41,7 +59,9 @@ class CardListPresenter: CardListPresentation {
         dependency.viewModel.willPushNextView = true
     }
     
-    func resetSelectedCardList() {
+    func resetSelectedCardList() async {
+        dependency.viewModel.userSelectStatus.removeAll()
+        await dependency.dataStore.removeSelectedCardFromAllUsers()
         dependency.viewModel.isOpenSelectedCardList = false
         dependency.viewModel.willPushNextView = false
     }
@@ -57,28 +77,22 @@ class CardListPresenter: CardListPresentation {
     // MARK: - Private
     
     private var dependency: Dependency
-    
-    /// 選択されたカード一覧
-    private var selectedCardList: [Card] = []
 }
 
 // MARK: - RoomDelegate
 
 extension CardListPresenter: RoomDelegate {
     func whenUserAdded() {
-        outputHeaderTitle()
+        dependency.viewModel.headerTitle = outputHeaderTitle()
     }
     
     func whenUserModified() {
         // 選択されたカード一覧を更新する
         let room = dependency.room
-        // TODO: 今のままだと、Firestoreのroomを取得できていないので、selectedCardListが他ユーザと共有されない
-        selectedCardList = room.userList.map { user in
-            room.cardPackage.cardList.first(where: { $0.id == user.selectedCardId! })!
-        }
+        dependency.viewModel.userSelectStatus = outputUserSelectStatus()
     }
     
     func whenUserRemoved() {
-        outputHeaderTitle()
+        dependency.viewModel.headerTitle = outputHeaderTitle()
     }
 }

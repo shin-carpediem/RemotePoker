@@ -7,70 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "69A4D62F-B1B2-4EAC-A943-165137D21C15"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Scrumdinger/Modules/CardList/Presenter/CardListPresenter.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "whenUserModified()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "69A4D62F-B1B2-4EAC-A943-165137D21C15 - 46e4d5617fec3d3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Scrumdinger.CardListPresenter.whenUserModified() -&gt; ()"
-                  moduleName = "Scrumdinger"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/aokishinichiro/develop/Scrumdinger/Scrumdinger/Modules/CardList/Presenter/CardListPresenter.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "76"
-                  endingLineNumber = "76"
-                  offsetFromSymbolStart = "631">
-               </Location>
-               <Location
-                  uuid = "69A4D62F-B1B2-4EAC-A943-165137D21C15 - a1c3dfd880e55675"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Scrumdinger.User) -&gt; Scrumdinger.Card in Scrumdinger.CardListPresenter.whenUserModified() -&gt; ()"
-                  moduleName = "Scrumdinger"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/aokishinichiro/develop/Scrumdinger/Scrumdinger/Modules/CardList/Presenter/CardListPresenter.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "77"
-                  endingLineNumber = "77"
-                  offsetFromSymbolStart = "62">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "125A9EE0-D1CB-44DC-9982-F289CA996B39"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Scrumdinger/Modules/CardList/Presenter/CardListPresenter.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "whenUserAdded()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "9D23CFD2-0452-453D-BAE5-FF45F4ACC98E"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -81,6 +17,22 @@
             startingLineNumber = "18"
             endingLineNumber = "18"
             landmarkName = "outputHeaderTitle()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "22B559C4-A3A5-46DA-8240-58CF15B42D00"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Scrumdinger/Modules/CardList/Presenter/CardListPresenter.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "whenUserModified()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

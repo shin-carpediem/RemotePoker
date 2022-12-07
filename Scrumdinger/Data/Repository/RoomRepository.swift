@@ -40,10 +40,13 @@ protocol RoomRepository {
     /// ユーザーを購読する
     func subscribeUser()
     
-    /// カードを選択済みカード一覧に追加する
+    /// カードをユーザーの選択済みカードに追加する
     /// - parameter userId: ユーザーID
-    /// - parameter cardId: カードID
-    func addCardToSelectedCardList(userId: String, cardId: String) async
+    /// - parameter selectedCard: 選択されたカード
+    func updateSelectedCard(userId: String, selectedCard: Card) async
+    
+    /// 全てのユーザーのカードを未選択状態にする
+    func removeSelectedCardFromAllUsers() async
     
     /// ユーザーの購読を解除する
     func unsubscribeUser()

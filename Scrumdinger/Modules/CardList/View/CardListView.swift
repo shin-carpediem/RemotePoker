@@ -45,9 +45,6 @@ struct CardListView: View, ModuleAssembler {
             }
         }
         .navigationBarBackButtonHidden(true)
-        .onAppear {
-            dependency.presenter.outputHeaderTitle()
-        }
     }
     
     private var headerTitle: some View {
@@ -76,7 +73,7 @@ struct CardListView: View, ModuleAssembler {
                 CardView(card: card,
                          themeColor: themeColor) { selectedCard in
                     Task {
-                        await dependency.presenter.didSelectCard(cardId: selectedCard.id)
+                        await dependency.presenter.didSelectCard(card: selectedCard)
                     }
                 }
             }
@@ -103,7 +100,7 @@ struct CardListView: View, ModuleAssembler {
     
     private var buttonImage: some View {
         let systemName = viewModel.isOpenSelectedCardList ? "gobackward" : "lock.rotation.open"
-        return Image(systemName: systemName)
+        return Image(systemName: systemName).foregroundColor(.gray)
     }
     
     // MARK: - Router
@@ -111,7 +108,8 @@ struct CardListView: View, ModuleAssembler {
     private var destination: some View {
         NavigationLink(isActive: $viewModel.willPushNextView, destination: {
             if viewModel.willPushNextView {
-                assembleOpenCardList(selectedCardList: viewModel.selectedCardList)
+                assembleOpenCardList(room: dependency.room,
+                                     userSelectStatus: viewModel.userSelectStatus)
             } else { EmptyView() }
         }) { EmptyView() }
     }
@@ -122,11 +120,15 @@ struct CardListView: View, ModuleAssembler {
 struct CardListView_Previews: PreviewProvider {
     static let me: User = .init(id: "0",
                                 name: "ロイド フォージャ",
-                                selectedCardId: "")
+                                selectedCard: nil)
     
     static let user1: User = .init(id: "1",
                                    name: "ヨル フォージャ",
-                                   selectedCardId: "")
+                                   selectedCard: nil)
+    
+    static let user2: User = .init(id: "2",
+                                   name: "アーニャ フォージャ",
+                                   selectedCard: nil)
     
     static let room1: Room = .init(id: 0,
                                    userList: [me],

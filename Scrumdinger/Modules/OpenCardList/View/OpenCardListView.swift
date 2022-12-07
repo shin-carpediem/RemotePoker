@@ -5,7 +5,8 @@ struct OpenCardListView: View {
     // MARK: - Dependency
     
     struct Dependency {
-        var selectedCardList: [SelectedCard]
+        var userSelectStatus: [UserSelectStatus]
+        var room: Room
     }
     
     init(dependency: Dependency) {
@@ -29,8 +30,8 @@ struct OpenCardListView: View {
     
     private var cardListView: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
-            ForEach(dependency.selectedCardList) { card in
-                OpenCardView(selectedCard: card)
+            ForEach(dependency.userSelectStatus) { userSelect in
+                OpenCardView(userSelectStatus: userSelect)
             }
             .padding()
         }
@@ -42,16 +43,19 @@ struct OpenCardListView: View {
 struct OpenCardListView_Previews: PreviewProvider {
     static var previews: some View {
         OpenCardListView(dependency: .init(
-            selectedCardList: [
+            userSelectStatus: [
                 .init(id: 0,
                       user: CardListView_Previews.me,
-                      card: CardView_Previews.card2,
-                      themeColor: .bubblegum),
-                
-                    .init(id: 1,
-                          user: CardListView_Previews.user1,
-                          card: CardView_Previews.card3,
-                          themeColor: .buttercup)
-            ]))
+                      themeColor: .navy,
+                      selectedCard: CardView_Previews.card1),
+                .init(id: 1,
+                      user: CardListView_Previews.user1,
+                      themeColor: .indigo,
+                      selectedCard: CardView_Previews.card2),
+                .init(id: 2,
+                      user: CardListView_Previews.user2,
+                      themeColor: .buttercup,
+                      selectedCard: CardView_Previews.card3)
+            ], room: CardListView_Previews.room1))
     }
 }

@@ -16,6 +16,6 @@ struct User {
     /// 名前
     var name: String
     
-    /// 選択済みカードID
-    var selectedCardId: String?
+    /// 選択済みカード
+    var selectedCard: Card?
 }

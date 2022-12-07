@@ -11,6 +11,11 @@ struct FirebaseRef {
         roomsCollection.document(String(roomId)).collection("users")
     }
     
+    /// rooms / {roomId} / users / {userId}
+    func selectedCardsCollection(userId: String) -> CollectionReference {
+        usersCollection.document(userId).collection("selectedCards")
+    }
+    
     /// rooms / {roomId} / cardPackages
     var cardPackagesCollection: CollectionReference {
         roomsCollection.document(String(roomId)).collection("cardPackages")
@@ -31,6 +36,11 @@ struct FirebaseRef {
     /// rooms / {roomId} / users / {userId}
     func userDocument(userId: String) -> DocumentReference {
         usersCollection.document(userId)
+    }
+    
+    /// rooms / {roomId} / users / {userId} / selectedCards / {userId}
+    func selectedCardDocument(userId: String) -> DocumentReference {
+        selectedCardsCollection(userId: userId).document(userId)
     }
     
     // MARK: - DocumentSnapshot

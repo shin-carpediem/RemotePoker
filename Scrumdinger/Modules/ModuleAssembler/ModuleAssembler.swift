@@ -7,7 +7,8 @@ protocol ModuleAssembler {
     /// - parameter currrentUser: カレントユーザー
     func assembleCardList(room: Room, currrentUser: User) -> CardListView
     
-    /// ≈をアセンブルする
-    /// - parameter selectedCardList: 選択されたカード一覧
-    func assembleOpenCardList(selectedCardList: [SelectedCard]) -> OpenCardListView
+    /// 選択されたカード一覧画面をアセンブルする
+    /// - parameter room: ルーム
+    /// - parameter userSelectStatus: ユーザーのカード選択状況
+    func assembleOpenCardList(room: Room, userSelectStatus: [UserSelectStatus]) -> OpenCardListView
 }

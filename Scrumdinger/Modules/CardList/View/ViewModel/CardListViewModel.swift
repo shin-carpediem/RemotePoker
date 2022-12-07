@@ -4,12 +4,26 @@ class CardListViewModel: ObservableObject {
     /// ヘッダーテキスト
     @Published var headerTitle: String = ""
     
-    /// 選択済みカード一覧
-    @Published var selectedCardList: [SelectedCard] = []
+    /// ユーザーのカード選択状況
+    @Published var userSelectStatus: [UserSelectStatus] = []
     
     /// 次の画面に遷移するか
     @Published var willPushNextView = false
     
     /// 選択済みカード一覧が公開されているか
     @Published var isOpenSelectedCardList: Bool = false
+}
+
+struct UserSelectStatus: Identifiable {
+    /// ID
+    var id: Int
+    
+    /// ユーザー
+    var user: User
+    
+    /// テーマカラー
+    var themeColor: ThemeColor
+    
+    /// 選択済みカード
+    var selectedCard: Card?
 }
