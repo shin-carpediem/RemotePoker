@@ -137,15 +137,18 @@ class RoomDataStore: RoomRepository {
     func subscribeUser() {
         userListener = firebaseRef?.usersQuery.addSnapshotListener { querySnapshot, error in
             querySnapshot?.documentChanges.forEach { [weak self] diff in
+                var actionType: UserActionType
                 if (diff.type == .added) {
-                    self?.delegate?.whenUserAdded()
+                    actionType = .added
+                } else if (diff.type == .modified) {
+                    actionType = .modified
+                } else if (diff.type == .removed) {
+                    actionType = .removed
+                } else {
+                    actionType = .unKnown
                 }
-                if (diff.type == .modified) {
-                    self?.delegate?.whenUserModified()
-                }
-                if (diff.type == .removed) {
-                    self?.delegate?.whenUserRemoved()
-                }
+                
+                self?.delegate?.whenUserChanged(actionType: actionType)
             }
         }
     }
@@ -161,11 +164,7 @@ class RoomDataStore: RoomRepository {
     
     func removeSelectedCardFromAllUsers() async {
         // TODO: 要実装
-        let usersSnapshot = await firebaseRef?.usersSnapshot()
-        usersSnapshot?.forEach { userDoc in
-            userDoc.updateData([
-            ])
-        }
+        
     }
     
     func unsubscribeUser() {

@@ -1,6 +1,6 @@
 import Foundation
 
-class EnterRoomPresenter: EnterRoomPresentation {
+class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     // MARK: - Dependency
     
     struct Dependency {
@@ -28,11 +28,7 @@ class EnterRoomPresenter: EnterRoomPresentation {
         return String(inputInt).count == 4
     }
     
-    func showInputInvalidAlert() {
-        dependency.viewModel.isShownInputFormInvalidAlert = true
-    }
-    
-    func enterRoom(userName: String, roomId: Int) async {
+    func didTapEnterRoomButton(userName: String, roomId: Int) async {
         currentUser.name = userName
         let roomExist = await dependency.dataStore.checkRoomExist(roomId: roomId)
         if roomExist {
@@ -54,14 +50,29 @@ class EnterRoomPresenter: EnterRoomPresentation {
                         cardPackage: .sampleCardPackage)
             await dependency.dataStore.createRoom(room!)
         }
+        
+        pushNextView(true)
+    }
+    
+    // MARK: - EnterRoomPresentationOutput
+    
+    func outputInputInvalidAlert() {
         // TODO: Actorで置き換える
         // https://qiita.com/uhooi/items/1d2c94df69c75fcfbdbf
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.willPushNextView = true
+            self?.dependency.viewModel.isShownInputFormInvalidAlert = true
         }
     }
     
     // MARK: - Private
     
     private var dependency: Dependency
+    
+    // MARK: - Router
+    
+    private func pushNextView(_ willPush: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel.willPushNextView = willPush
+        }
+    }
 }

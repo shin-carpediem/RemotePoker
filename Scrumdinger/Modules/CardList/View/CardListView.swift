@@ -56,7 +56,7 @@ struct CardListView: View, ModuleAssembler {
             
             Button(action: {
                 Task {
-                    await dependency.presenter.leaveRoom()
+                    await dependency.presenter.didTapLeaveRoomButton()
                     presentation.wrappedValue.dismiss()
                 }
             }) {
@@ -84,9 +84,11 @@ struct CardListView: View, ModuleAssembler {
     private var floatingActionButton: some View {
         Button {
             if viewModel.isOpenSelectedCardList {
-                dependency.presenter.resetSelectedCardList()
+                Task {
+                    await dependency.presenter.didTapResetSelectedCardListButton()
+                }
             } else {
-                dependency.presenter.openSelectedCardList()
+                dependency.presenter.didTapOpenSelectedCardListButton()
             }
         } label: {
             buttonImage

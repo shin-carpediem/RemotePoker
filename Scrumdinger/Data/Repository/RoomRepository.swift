@@ -1,15 +1,20 @@
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-protocol RoomDelegate {
+enum UserActionType {
     /// ユーザーが追加された時
-    func whenUserAdded()
-    
+    case added
     /// ユーザーが更新された時
-    func whenUserModified()
-    
+    case modified
     /// ユーザーが削除された時
-    func whenUserRemoved()
+    case removed
+    /// 不明
+    case unKnown
+}
+
+protocol RoomDelegate {
+    /// ユーザーが変更された時
+    func whenUserChanged(actionType: UserActionType)
 }
 
 protocol RoomRepository {

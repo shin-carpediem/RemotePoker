@@ -20,7 +20,7 @@ extension ModuleAssembler {
                 room: room,
                 currentUser: currrentUser,
                 viewModel: viewModel))
-        viewModel.headerTitle = presenter.outputHeaderTitle()
+//        viewModel.headerTitle = presenter.outputHeaderTitle()
         let view = CardListView(
             dependency: .init(
                 presenter: presenter,

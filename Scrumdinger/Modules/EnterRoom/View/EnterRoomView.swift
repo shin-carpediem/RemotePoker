@@ -63,10 +63,10 @@ struct EnterRoomView: View, ModuleAssembler {
     private var sendButton: some View {
         Button {
             if !dependency.presenter.isInputFormValid() {
-                dependency.presenter.showInputInvalidAlert()
+                dependency.presenter.outputInputInvalidAlert()
             } else {
                 Task {
-                    await dependency.presenter.enterRoom(
+                    await dependency.presenter.didTapEnterRoomButton(
                         userName: viewModel.inputName,
                         roomId: Int(viewModel.inputRoomId)!)
                 }

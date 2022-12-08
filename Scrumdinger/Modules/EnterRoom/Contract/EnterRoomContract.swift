@@ -2,11 +2,13 @@ protocol EnterRoomPresentation {
     /// 入力フォームが有効か
     func isInputFormValid() -> Bool
     
-    /// 入力内容が無効だと示すアラートを表示する
-    func showInputInvalidAlert()
-    
-    /// ルームに入る
+    /// ルームに入るボタンが押された
     /// - parameter userName: ユーザー名
     /// - parameter roomId: ルームID:
-    func enterRoom(userName: String, roomId: Int) async
+    func didTapEnterRoomButton(userName: String, roomId: Int) async
+}
+
+protocol EnterRoomPresentationOutput {
+    /// 入力内容が無効だと示すアラートを出力する
+    func outputInputInvalidAlert()
 }
