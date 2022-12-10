@@ -2,21 +2,18 @@ import SwiftUI
 
 class CardListViewModel: ObservableObject {
     /// ヘッダーテキスト
-    @Published var headerTitle: String = ""
+    @Published var headerTitle = ""
     
     /// ユーザーのカード選択状況
     @Published var userSelectStatus: [UserSelectStatus] = []
     
-    /// 選択済みカード一覧が公開されているか
-    @Published var isOpenSelectedCardList: Bool = false
+    /// 選択済みカード一覧が公開されるか
+    @Published var isShownSelectedCardList = false
     
     /// ボタンが有効か
     @Published var isButtonAbled = true
     
     // MARK: - Router
-    
-    /// 選択されたカード一覧画面に遷移するか
-    @Published var willPushOpenCardListView = false
     
     /// 設定画面に遷移するか
     @Published var willPushSettingView = false

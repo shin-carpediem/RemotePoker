@@ -30,14 +30,6 @@ extension ModuleAssembler {
         return view
     }
     
-    func assembleOpenCardList(room: Room, userSelectStatus: [UserSelectStatus]) -> OpenCardListView {
-        let view = OpenCardListView(
-            dependency: .init(
-                userSelectStatus: userSelectStatus,
-                room: room))
-        return view
-    }
-    
     func assembleSetting() -> SettingView {
         let view = SettingView()
         return view

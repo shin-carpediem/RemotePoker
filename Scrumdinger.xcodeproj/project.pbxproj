@@ -15,7 +15,6 @@
 		F52366A22896382F005B1F65 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52366A12896382F005B1F65 /* CardView.swift */; };
 		F525301429364D5200727472 /* EnterRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F525301329364D5200727472 /* EnterRoomViewModel.swift */; };
 		F52530162936560D00727472 /* CardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52530152936560D00727472 /* CardListViewModel.swift */; };
-		F533A39E293FB99F00C833F7 /* OpenCardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F533A39D293FB99F00C833F7 /* OpenCardListView.swift */; };
 		F533A3A4293FCD7300C833F7 /* OpenCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F533A3A3293FCD7300C833F7 /* OpenCardView.swift */; };
 		F571FA292896CA2C003531CE /* FirebaseFirestore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */; };
 		F571FA2B2896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */; };
@@ -87,7 +86,6 @@
 		F52366A12896382F005B1F65 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		F525301329364D5200727472 /* EnterRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomViewModel.swift; sourceTree = "<group>"; };
 		F52530152936560D00727472 /* CardListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewModel.swift; sourceTree = "<group>"; };
-		F533A39D293FB99F00C833F7 /* OpenCardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCardListView.swift; sourceTree = "<group>"; };
 		F533A3A3293FCD7300C833F7 /* OpenCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCardView.swift; sourceTree = "<group>"; };
 		F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestore.xcframework; path = Carthage/Build/FirebaseFirestore.xcframework; sourceTree = "<group>"; };
 		F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurementIdentitySupport.xcframework; path = Carthage/Build/GoogleAppMeasurementIdentitySupport.xcframework; sourceTree = "<group>"; };
@@ -205,7 +203,6 @@
 				F5802D0129320DDC00955949 /* ModuleAssembler */,
 				F5E051682929B407006EA727 /* EnterRoom */,
 				F5E051672929B125006EA727 /* CardList */,
-				F533A399293FB94900C833F7 /* OpenCardList */,
 				F50060F62944376D005923A7 /* Setting */,
 			);
 			path = Modules;
@@ -234,23 +231,6 @@
 				F52530152936560D00727472 /* CardListViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		F533A399293FB94900C833F7 /* OpenCardList */ = {
-			isa = PBXGroup;
-			children = (
-				F533A39C293FB98300C833F7 /* View */,
-			);
-			path = OpenCardList;
-			sourceTree = "<group>";
-		};
-		F533A39C293FB98300C833F7 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				F533A39D293FB99F00C833F7 /* OpenCardListView.swift */,
-				F533A3A3293FCD7300C833F7 /* OpenCardView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		F571FA122896CA2B003531CE /* Frameworks */ = {
@@ -367,6 +347,7 @@
 				F525301229364D2C00727472 /* ViewModel */,
 				F52366992891E837005B1F65 /* CardListView.swift */,
 				F52366A12896382F005B1F65 /* CardView.swift */,
+				F533A3A3293FCD7300C833F7 /* OpenCardView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -645,7 +626,6 @@
 				F5802D08293217D000955949 /* EnterRoomContract.swift in Sources */,
 				F5C397DA289E9342008AEFF2 /* CardPackage.swift in Sources */,
 				F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */,
-				F533A39E293FB99F00C833F7 /* OpenCardListView.swift in Sources */,
 				F533A3A4293FCD7300C833F7 /* OpenCardView.swift in Sources */,
 				F50060F9294437A3005923A7 /* SettingView.swift in Sources */,
 			);

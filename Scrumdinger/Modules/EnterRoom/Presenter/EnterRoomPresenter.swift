@@ -61,7 +61,6 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
             // 既存ルーム
             if AppConfig.shared.isCurrentUserLoggedIn {
                 // ルームにログインしている
-                disableButton(false)
                 pushCardListView()
             } else {
                 // ルームにログインしていない
@@ -126,9 +125,9 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     // MARK: - Router
     
     private func pushCardListView() {
-        disableButton(false)
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.willPushCardListView = true
         }
+        disableButton(false)
     }
 }

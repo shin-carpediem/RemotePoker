@@ -33,8 +33,7 @@ class CardListPresenter: CardListPresentation {
     
     func didTapOpenSelectedCardListButton() {
         disableButton(true)
-        switchOpenSelectedCardListStatus(true)
-        pushOpenCardListView()
+        showSelectedCardList(true)
     }
     
     func didTapResetSelectedCardListButton() async {
@@ -42,8 +41,7 @@ class CardListPresenter: CardListPresentation {
         await dependency.dataStore.removeSelectedCardFromAllUsers()
         updateUserSelectStatus()
 
-        switchOpenSelectedCardListStatus(false)
-        pushOpenCardListView()
+        showSelectedCardList(false)
     }
     
     func didTapLeaveRoomButton() async {
@@ -83,14 +81,13 @@ class CardListPresenter: CardListPresentation {
         }
     }
         
-    private func switchOpenSelectedCardListStatus(_ open: Bool) {
+    private func showSelectedCardList(_ open: Bool) {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.isOpenSelectedCardList = !open
+            self?.dependency.viewModel.isShownSelectedCardList = open
         }
     }
 
     private func updateUserSelectStatus() {
-        disableButton(false)
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             let userSelectStatus: [UserSelectStatus] = self.dependency.room.userList.map { user in
@@ -102,22 +99,16 @@ class CardListPresenter: CardListPresentation {
             
             self.dependency.viewModel.userSelectStatus = userSelectStatus
         }
+        disableButton(false)
     }
     
     // MARK: - Router
     
-    private func pushOpenCardListView() {
-        disableButton(false)
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.willPushOpenCardListView = true
-        }
-    }
-    
     private func pushSettingView() {
-        disableButton(false)
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.willPushSettingView = true
         }
+        disableButton(false)
     }
 }
 

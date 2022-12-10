@@ -33,7 +33,11 @@ struct CardListView: View, ModuleAssembler {
                     ScrollView {
                         headerTitle
                         Spacer()
-                        cardListView
+                        if viewModel.isShownSelectedCardList {
+                            selectedCardListView
+                        } else {
+                            cardListView
+                        }
                     }
                     HStack {
                         Spacer()
@@ -41,7 +45,6 @@ struct CardListView: View, ModuleAssembler {
                         floatingActionButton
                     }
                 }
-                navigationForOpenCardListView
                 navigationForSettingView
             }
         }
@@ -69,7 +72,8 @@ struct CardListView: View, ModuleAssembler {
                 .foregroundColor(.gray)
         }
     }
-    
+
+    /// カード一覧
     private var cardListView: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
             ForEach(dependency.room.cardPackage.cardList) { card in
@@ -85,9 +89,19 @@ struct CardListView: View, ModuleAssembler {
         }
     }
     
+    /// 選択済みカード一覧
+    private var selectedCardListView: some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
+            ForEach(viewModel.userSelectStatus) { userSelect in
+                OpenCardView(userSelectStatus: userSelect)
+            }
+            .padding()
+        }
+    }
+    
     private var floatingActionButton: some View {
         Button {
-            if viewModel.isOpenSelectedCardList {
+            if viewModel.isShownSelectedCardList {
                 Task {
                     await dependency.presenter.didTapResetSelectedCardListButton()
                 }
@@ -95,7 +109,8 @@ struct CardListView: View, ModuleAssembler {
                 dependency.presenter.didTapOpenSelectedCardListButton()
             }
         } label: {
-            buttonImage
+            let systemName = viewModel.isShownSelectedCardList ? "gobackward" : "lock.rotation.open"
+            return Image(systemName: systemName).foregroundColor(.gray)
         }
         .frame(width: 60, height: 60)
         .background(.white)
@@ -104,21 +119,7 @@ struct CardListView: View, ModuleAssembler {
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 16))
     }
     
-    private var buttonImage: some View {
-        let systemName = viewModel.isOpenSelectedCardList ? "gobackward" : "lock.rotation.open"
-        return Image(systemName: systemName).foregroundColor(.gray)
-    }
-    
     // MARK: - Router
-    
-    private var navigationForOpenCardListView: some View {
-        NavigationLink(isActive: $viewModel.willPushOpenCardListView, destination: {
-            if viewModel.willPushOpenCardListView {
-                assembleOpenCardList(room: dependency.room,
-                                     userSelectStatus: viewModel.userSelectStatus)
-            } else { EmptyView() }
-        }) { EmptyView() }
-    }
     
     private var navigationForSettingView: some View {
         NavigationLink(isActive: $viewModel.willPushSettingView, destination: {
@@ -132,6 +133,33 @@ struct CardListView: View, ModuleAssembler {
 // MARK: - Preview
 
 struct CardListView_Previews: PreviewProvider {
+    static let cardListView: CardListViewModel = {
+        let viewModel = CardListViewModel()
+        viewModel.userSelectStatus = []
+        viewModel.isShownSelectedCardList = false
+        return viewModel
+    }()
+    
+    static let selectedCardListView: CardListViewModel = {
+        let viewModel = CardListViewModel()
+        viewModel.userSelectStatus = [
+            .init(id: 0,
+                  user: CardListView_Previews.me,
+                  themeColor: .navy,
+                  selectedCard: CardView_Previews.card1),
+            .init(id: 1,
+                  user: CardListView_Previews.user1,
+                  themeColor: .indigo,
+                  selectedCard: CardView_Previews.card2),
+            .init(id: 2,
+                  user: CardListView_Previews.user2,
+                  themeColor: .buttercup,
+                  selectedCard: CardView_Previews.card3)
+        ]
+        viewModel.isShownSelectedCardList = true
+        return viewModel
+    }()
+    
     static let me: User = .init(id: "0",
                                 name: "ロイド フォージャ",
                                 selectedCard: nil)
@@ -160,11 +188,11 @@ struct CardListView_Previews: PreviewProvider {
                         dataStore: .init(),
                         room: room1,
                         currentUser: me,
-                        viewModel: .init())),
+                        viewModel: cardListView)),
                 room: room1,
                 currentUser: me),
-                         viewModel: .init())
-            .previewDisplayName("ユーザーが自分のみ")
+                         viewModel: cardListView)
+            .previewDisplayName("カード一覧画面/ユーザーが自分のみ")
             
             // TODO: 環境変数 presentationMode の影響か、複数Previewを表示しようとするとクラッシュする
             CardListView(dependency: .init(
@@ -173,11 +201,23 @@ struct CardListView_Previews: PreviewProvider {
                         dataStore: .init(),
                         room: room2,
                         currentUser: me,
-                        viewModel: .init())),
+                        viewModel: cardListView)),
                 room: room2,
                 currentUser: me),
-                         viewModel: .init())
-            .previewDisplayName("ユーザーが2名以上")
+                         viewModel: cardListView)
+            .previewDisplayName("カード一覧画面/ユーザーが2名以上")
+            
+            CardListView(dependency: .init(
+                presenter: .init(
+                    dependency: .init(
+                        dataStore: .init(),
+                        room: room2,
+                        currentUser: me,
+                        viewModel: selectedCardListView)),
+                room: room1,
+                currentUser: me),
+                         viewModel: selectedCardListView)
+            .previewDisplayName("選択済みカード一覧画面")
         }
     }
 }
