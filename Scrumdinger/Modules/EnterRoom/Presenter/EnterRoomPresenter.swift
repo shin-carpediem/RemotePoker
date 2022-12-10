@@ -37,7 +37,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     }
     
     func didTapEnterExistingRoomButton() async {
-        disableSendButton(true)
+        disableButton(true)
         let roomId = AppConfig.shared.currentUserRoomId
         let roomExist = await dependency.dataStore.checkRoomExist(roomId: roomId)
         if roomExist {
@@ -45,16 +45,15 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
             dependency.dataStore = RoomDataStore(roomId: roomId)
             room = await dependency.dataStore.fetchRoom()
             
-            disableSendButton(false)
-            pushCardListView(true)
+            pushCardListView()
         } else {
             AppConfig.shared.resetLocalLogInData()
-            disableSendButton(false)
+            disableButton(false)
         }
     }
     
     func didTapEnterRoomButton(userName: String, roomId: Int) async {
-        disableSendButton(true)
+        disableButton(true)
         
         currentUser.name = userName
         let roomExist = await dependency.dataStore.checkRoomExist(roomId: roomId)
@@ -62,8 +61,8 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
             // 既存ルーム
             if AppConfig.shared.isCurrentUserLoggedIn {
                 // ルームにログインしている
-                disableSendButton(false)
-                pushCardListView(true)
+                disableButton(false)
+                pushCardListView()
             } else {
                 // ルームにログインしていない
                 dependency.dataStore = RoomDataStore(roomId: roomId)
@@ -86,9 +85,9 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
 
             await dependency.dataStore.createRoom(room!)
         }
+
         addLocalLogInData()
-        disableSendButton(false)
-        pushCardListView(true)
+        pushCardListView()
     }
     
     // MARK: - EnterRoomPresentationOutput
@@ -111,7 +110,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     
     private var dependency: Dependency
     
-    private func disableSendButton(_ disabled: Bool) {
+    private func disableButton(_ disabled: Bool) {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.isButtonAbled = !disabled
             self?.dependency.viewModel.activityIndicator.isAnimating = disabled
@@ -126,9 +125,10 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     
     // MARK: - Router
     
-    private func pushCardListView(_ willPush: Bool) {
+    private func pushCardListView() {
+        disableButton(false)
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.willPushCardListView = willPush
+            self?.dependency.viewModel.willPushCardListView = true
         }
     }
 }

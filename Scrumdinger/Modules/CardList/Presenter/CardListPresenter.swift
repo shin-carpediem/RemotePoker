@@ -26,46 +26,42 @@ class CardListPresenter: CardListPresentation {
     
     func didSelectCard(card: Card) async {
         dependency.currentUser.selectedCard = card
-//        let userSelectStatus = UserSelectStatus(id: Int.random(in: 0..<99999999),
-//                                                user: dependency.currentUser,
-//                                                themeColor: dependency.room.cardPackage.themeColor,
-//                                                selectedCard: card)
         await dependency.dataStore.updateSelectedCard(userId: dependency.currentUser.id,
                                                       selectedCard: card)
         updateUserSelectStatus()
     }
     
     func didTapOpenSelectedCardListButton() {
-        disableSendButton(true)
+        disableButton(true)
         switchOpenSelectedCardListStatus(true)
-        pushOpenCardListView(true)
+        pushOpenCardListView()
     }
     
     func didTapResetSelectedCardListButton() async {
-        disableSendButton(true)
+        disableButton(true)
         await dependency.dataStore.removeSelectedCardFromAllUsers()
         updateUserSelectStatus()
 
         switchOpenSelectedCardListStatus(false)
-        pushOpenCardListView(false)
+        pushOpenCardListView()
     }
     
     func didTapLeaveRoomButton() async {
-        disableSendButton(true)
+        disableButton(true)
         await dependency.dataStore.removeUserFromRoom(userId: dependency.currentUser.id)
         dependency.dataStore.unsubscribeUser()
         AppConfig.shared.resetLocalLogInData()
     }
     
     func didTapSettingButton() {
-        pushSettingView(true)
+        pushSettingView()
     }
     
     // MARK: - Private
     
     private var dependency: Dependency
     
-    private func disableSendButton(_ disabled: Bool) {
+    private func disableButton(_ disabled: Bool) {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.isButtonAbled = !disabled
         }
@@ -94,7 +90,7 @@ class CardListPresenter: CardListPresentation {
     }
 
     private func updateUserSelectStatus() {
-        disableSendButton(false)
+        disableButton(false)
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             let userSelectStatus: [UserSelectStatus] = self.dependency.room.userList.map { user in
@@ -110,15 +106,17 @@ class CardListPresenter: CardListPresentation {
     
     // MARK: - Router
     
-    private func pushOpenCardListView(_ willPush: Bool) {
+    private func pushOpenCardListView() {
+        disableButton(false)
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.willPushOpenCardListView = willPush
+            self?.dependency.viewModel.willPushOpenCardListView = true
         }
     }
     
-    private func pushSettingView(_ willPush: Bool) {
+    private func pushSettingView() {
+        disableButton(false)
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.willPushSettingView = willPush
+            self?.dependency.viewModel.willPushSettingView = true
         }
     }
 }
