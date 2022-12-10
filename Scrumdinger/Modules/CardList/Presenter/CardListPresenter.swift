@@ -32,23 +32,26 @@ class CardListPresenter: CardListPresentation {
 //                                                selectedCard: card)
         await dependency.dataStore.updateSelectedCard(userId: dependency.currentUser.id,
                                                       selectedCard: card)
-        outputUserSelectStatus()
+        updateUserSelectStatus()
     }
     
     func didTapOpenSelectedCardListButton() {
+        disableSendButton(true)
         switchOpenSelectedCardListStatus(true)
         pushNextView(true)
     }
     
     func didTapResetSelectedCardListButton() async {
+        disableSendButton(true)
         await dependency.dataStore.removeSelectedCardFromAllUsers()
-        outputUserSelectStatus()
+        updateUserSelectStatus()
 
         switchOpenSelectedCardListStatus(false)
         pushNextView(false)
     }
     
     func didTapLeaveRoomButton() async {
+        disableSendButton(true)
         await dependency.dataStore.removeUserFromRoom(userId: dependency.currentUser.id)
     }
     
@@ -56,7 +59,13 @@ class CardListPresenter: CardListPresentation {
     
     private var dependency: Dependency
     
-    private func outputHeaderTitle() {
+    private func disableSendButton(_ disabled: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel.isButtonAbled = !disabled
+        }
+    }
+    
+    private func showHeaderTitle() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             let currentUserName = self.dependency.currentUser.name
@@ -78,7 +87,8 @@ class CardListPresenter: CardListPresentation {
         }
     }
 
-    private func outputUserSelectStatus() {
+    private func updateUserSelectStatus() {
+        disableSendButton(false)
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             let userSelectStatus: [UserSelectStatus] = self.dependency.room.userList.map { user in
@@ -107,9 +117,9 @@ extension CardListPresenter: RoomDelegate {
     func whenUserChanged(actionType: UserActionType) {
         switch actionType {
         case .added, .removed:
-            outputHeaderTitle()
+            showHeaderTitle()
         case .modified:
-            outputUserSelectStatus()
+            updateUserSelectStatus()
         case .unKnown:
             fatalError()
         }

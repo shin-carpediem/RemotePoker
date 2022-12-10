@@ -29,6 +29,8 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     }
     
     func didTapEnterRoomButton(userName: String, roomId: Int) async {
+        disableSendButton(true)
+        
         currentUser.name = userName
         let roomExist = await dependency.dataStore.checkRoomExist(roomId: roomId)
         if roomExist {
@@ -37,7 +39,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
             room = await dependency.dataStore.fetchRoom()
             await dependency.dataStore.addUserToRoom(user: .init(
                 id: currentUser.id,
-                name: userName,
+                name: currentUser.name,
                 selectedCard: nil))
             room?.userList.append(currentUser)
         } else {
@@ -45,7 +47,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
             room = Room(id: roomId,
                         userList: [.init(
                             id: currentUser.id,
-                            name: userName,
+                            name: currentUser.name,
                             selectedCard: nil)],
                         cardPackage: .sampleCardPackage)
             await dependency.dataStore.createRoom(room!)
@@ -67,6 +69,12 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     // MARK: - Private
     
     private var dependency: Dependency
+    
+    private func disableSendButton(_ disabled: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel.isButtonAbled = !disabled
+        }
+    }
     
     // MARK: - Router
     
