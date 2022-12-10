@@ -18,7 +18,7 @@ class AppConfig {
         }
     }
     
-    /// カレントユーザーのID
+    /// カレントユーザーID
     var currentUserId: String {
         get {
             UserDefaults.standard.string(forKey: "currentUserId") ?? ""

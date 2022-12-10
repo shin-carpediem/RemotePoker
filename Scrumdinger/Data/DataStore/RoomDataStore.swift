@@ -33,14 +33,8 @@ class RoomDataStore: RoomRepository {
             userDocument.setData([
                 "id": userId,
                 "name": user.name,
+                "selectedCardId": user.selectedCardId,
                 "createdAt": Timestamp()
-            ])
-            
-            let selectedCardDocument = userDocument.collection("selectedCards").document(userId)
-            selectedCardDocument.setData([
-                "id": "",
-                "point": "",
-                "index": 0,
             ])
         }
         
@@ -77,8 +71,7 @@ class RoomDataStore: RoomRepository {
             let userData = userDoc.data()
             return User(id: userData["id"] as! String,
                         name: userData["name"] as! String,
-                        // TODO: これではダメ
-                        selectedCard: nil)
+                        selectedCardId: userData["selectedCardId"] as! String)
         }
         
         // カードパッケージ取得
@@ -111,14 +104,8 @@ class RoomDataStore: RoomRepository {
         let usersCollection = firebaseRef?.usersCollection
         usersCollection?.addDocument(data: [
             "id": user.id,
-            "name": user.name
-        ]) { _ in () }
-
-        let selectedCardsCollection = firebaseRef?.selectedCardsCollection(userId: user.id)
-        selectedCardsCollection?.addDocument(data: [
-            "id": "",
-            "point": "",
-            "index": 0
+            "name": user.name,
+            "selectedCardId": user.selectedCardId
         ]) { _ in () }
     }
     
@@ -129,16 +116,6 @@ class RoomDataStore: RoomRepository {
 //    func deleteRoom() async {
 //        try? await firebaseRef?.roomDocument.delete()
 //    }
-    
-    func fetchUserName(id: String) -> String {
-        var userName = ""
-        let userDocument = firebaseRef?.userDocument(userId: id)
-        userDocument?.getDocument() { userSnapshot, _ in
-            let userData = userSnapshot?.data()
-            userName = userData?["name"] as! String
-        }
-        return userName
-    }
     
     func subscribeUser() {
         userListener = firebaseRef?.usersQuery.addSnapshotListener { querySnapshot, error in
@@ -159,22 +136,40 @@ class RoomDataStore: RoomRepository {
         }
     }
     
-    func updateSelectedCard(userId: String, selectedCard: Card) async {
-        let selectedCardDocument = firebaseRef?.selectedCardDocument(userId: userId)
-        try? await selectedCardDocument?.updateData([
-            "id": selectedCard.id,
-            "point": selectedCard.point,
-            "index": selectedCard.index
-        ])
-    }
-    
-    func removeSelectedCardFromAllUsers() async {
-        // TODO: 要実装
-        
+    func fetchUser(id: String) -> User {
+        var user: User = .init(id: "", name: "", selectedCardId: "")
+        let userDocument = firebaseRef?.userDocument(userId: id)
+        userDocument?.getDocument() { userSnapshot, _ in
+            let userData = userSnapshot?.data()
+            user = .init(id: userData?["id"] as! String,
+                         name: userData?["name"] as! String,
+                         selectedCardId: userData?["selectedCardId"] as! String)
+        }
+        return user
     }
     
     func unsubscribeUser() {
         userListener?.remove()
+    }
+    
+    func updateSelectedCardId(userId: String, selectedCardId: String) async {
+        let userDocument = firebaseRef?.userDocument(userId: userId)
+        try? await userDocument?.updateData([
+            "selectedCardId": selectedCardId
+        ])
+    }
+    
+    func fetchCard(cardPackageId: String, cardId: String) -> Card {
+        var card: Card = .init(id: "", point: "", index: 0)
+        let cardDocument = firebaseRef?.cardDocument(cardPackageId: cardPackageId,
+                                                     cardId: cardId)
+        cardDocument?.getDocument(completion: { cardSnapshot, _ in
+            let cardData = cardSnapshot?.data()
+            card = .init(id: cardData?["id"] as! String,
+                         point: cardData?["point"] as! String,
+                         index: cardData?["index"] as! Int)
+        })
+        return card
     }
     
     // MARK: - Private

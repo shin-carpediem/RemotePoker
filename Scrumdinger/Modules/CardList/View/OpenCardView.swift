@@ -31,5 +31,6 @@ struct OpenCardView_Previews: PreviewProvider {
             themeColor: .buttercup))
         .padding()
         .previewLayout(.sizeThatFits)
+        .previewDisplayName("選択されたカード")
     }
 }

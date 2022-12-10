@@ -42,22 +42,25 @@ protocol RoomRepository {
 //    /// ルームを削除する
 //    func deleteRoom() async
     
-    /// 指定IDのユーザー名を取得する
-    /// - parameter id: ユーザーID
-    /// - returns: ユーザー名
-    func fetchUserName(id: String) -> String
-    
     /// ユーザーを購読する
     func subscribeUser()
     
-    /// カードをユーザーの選択済みカードに追加する
-    /// - parameter userId: ユーザーID
-    /// - parameter selectedCard: 選択されたカード
-    func updateSelectedCard(userId: String, selectedCard: Card) async
-    
-    /// 全てのユーザーのカードを未選択状態にする
-    func removeSelectedCardFromAllUsers() async
-    
     /// ユーザーの購読を解除する
     func unsubscribeUser()
+    
+    /// 指定IDのユーザーを取得する
+    /// - parameter id: ユーザーID
+    /// - returns: ユーザー
+    func fetchUser(id: String) -> User
+    
+    /// ユーザーの選択済みカードを更新する
+    /// - parameter userId: ユーザーID
+    /// - parameter selectedCardId: 選択されたカードID
+    func updateSelectedCardId(userId: String, selectedCardId: String) async
+    
+    /// 指定IDのカードを取得する
+    /// - parameter cardPackageId: カードパッケージID
+    /// - parameter cardId: カードID
+    /// - returns: カード
+    func fetchCard(cardPackageId: String, cardId: String) -> Card
 }

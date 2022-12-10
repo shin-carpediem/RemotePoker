@@ -157,15 +157,15 @@ struct CardListView_Previews: PreviewProvider {
     
     static let me: User = .init(id: "0",
                                 name: "ロイド フォージャ",
-                                selectedCard: nil)
+                                selectedCardId: "")
     
     static let user1: User = .init(id: "1",
                                    name: "ヨル フォージャ",
-                                   selectedCard: nil)
+                                   selectedCardId: "")
     
     static let user2: User = .init(id: "2",
                                    name: "アーニャ フォージャ",
-                                   selectedCard: nil)
+                                   selectedCardId: "")
     
     static let room1: Room = .init(id: 0,
                                    userList: [me],

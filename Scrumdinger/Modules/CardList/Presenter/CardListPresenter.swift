@@ -25,9 +25,9 @@ class CardListPresenter: CardListPresentation {
     }
     
     func didSelectCard(card: Card) async {
-        dependency.currentUser.selectedCard = card
-        await dependency.dataStore.updateSelectedCard(userId: dependency.currentUser.id,
-                                                      selectedCard: card)
+        dependency.currentUser.selectedCardId = card.id
+        await dependency.dataStore.updateSelectedCardId(userId: dependency.currentUser.id,
+                                                        selectedCardId: card.id)
         updateUserSelectStatus()
     }
     
@@ -38,7 +38,13 @@ class CardListPresenter: CardListPresentation {
     
     func didTapResetSelectedCardListButton() async {
         disableButton(true)
-        await dependency.dataStore.removeSelectedCardFromAllUsers()
+        dependency.currentUser.selectedCardId = ""
+        let userIdList: [String] = dependency.viewModel.userSelectStatus.map { $0.user.id }
+        // TODO: 何とかする
+        userIdList.forEach { userId in
+            await dependency.dataStore.updateSelectedCardId(userId: userId,
+                                                            selectedCardId: "")
+        }
         updateUserSelectStatus()
 
         showSelectedCardList(false)
@@ -83,11 +89,16 @@ class CardListPresenter: CardListPresentation {
     private func updateUserSelectStatus() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            let userSelectStatus: [UserSelectStatus] = self.dependency.room.userList.map { user in
+            let userSelectStatus: [UserSelectStatus] = self.dependency.room.userList.map { [weak self] user in
+                let selectedCardId: String = self?.dependency.dataStore.fetchUser(id: user.id).selectedCardId ?? ""
+                let selectedCard: Card = self?.dependency.dataStore.fetchCard(
+                    cardPackageId: self?.dependency.room.cardPackage.id ?? "",
+                    cardId: selectedCardId) ?? .init(id: "", point: "", index: 0)
+
                 return UserSelectStatus(id: Int.random(in: 0..<99999999),
                                         user: user,
-                                        themeColor: self.dependency.room.cardPackage.themeColor,
-                                        selectedCard: user.selectedCard ?? nil)
+                                        themeColor: self?.dependency.room.cardPackage.themeColor ?? .oxblood,
+                                        selectedCard: selectedCard)
             }
             
             self.dependency.viewModel.userSelectStatus = userSelectStatus

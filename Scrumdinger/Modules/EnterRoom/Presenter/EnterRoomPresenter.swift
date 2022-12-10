@@ -12,19 +12,21 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     var room: Room?
     
     /// カレントユーザー
-    var currentUser: User = .init(id: "", name: "")
+    var currentUser: User = .init(id: "", name: "", selectedCardId: "")
     
     init(dependency: Dependency) {
         self.dependency = dependency
         
         let currentUserId = AppConfig.shared.currentUserId
         if !currentUserId.isEmpty {
-            currentUser.id = currentUserId
-            currentUser.name = self.dependency.dataStore.fetchUserName(id: currentUserId)
+            currentUser = .init(id: currentUserId,
+                                name: self.dependency.dataStore.fetchUser(id: currentUserId).name,
+                                selectedCardId: "")
         } else {
             AppConfig.shared.resetLocalLogInData()
-            currentUser.id = UUID().uuidString
-            currentUser.name = ""
+            currentUser = .init(id: UUID().uuidString,
+                                name: "",
+                                selectedCardId: "")
         }
     }
     
@@ -63,6 +65,8 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
                 // ルームにログインしている
                 pushCardListView()
             } else {
+                // TODO: ローカルで保持していたデータが消えたがFirestore上ではルームにログインしている場合、ユーザーは追加させない
+                
                 // ルームにログインしていない
                 dependency.dataStore = RoomDataStore(roomId: roomId)
                 room = await dependency.dataStore.fetchRoom()
@@ -70,7 +74,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
                 await dependency.dataStore.addUserToRoom(user: .init(
                     id: currentUser.id,
                     name: currentUser.name,
-                    selectedCard: nil))
+                    selectedCardId: ""))
                 room?.userList.append(currentUser)
             }
         } else {
@@ -79,7 +83,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
                         userList: [.init(
                             id: currentUser.id,
                             name: currentUser.name,
-                            selectedCard: nil)],
+                            selectedCardId: "")],
                         cardPackage: .sampleCardPackage)
 
             await dependency.dataStore.createRoom(room!)
