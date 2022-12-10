@@ -53,6 +53,7 @@ class CardListPresenter: CardListPresentation {
     func didTapLeaveRoomButton() async {
         disableSendButton(true)
         await dependency.dataStore.removeUserFromRoom(userId: dependency.currentUser.id)
+        AppConfig.shared.isCurrentUserLoggedIn = false
     }
     
     // MARK: - Private

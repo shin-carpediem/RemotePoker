@@ -59,7 +59,7 @@ enum ThemeColor: String {
 /// サンプルデータ
 extension CardPackage {
     static let sampleCardPackage = CardPackage(id: UUID().uuidString,
-                                               themeColor: .purple,
+                                               themeColor: .oxblood,
                                                cardList: sampleCardList)
     
     static let sampleCardList = [Card(id: UUID().uuidString,

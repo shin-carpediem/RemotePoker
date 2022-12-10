@@ -1,6 +1,10 @@
 import SwiftUI
 
 class EnterRoomViewModel: ObservableObject {
+    /// ログインしているか
+    // Firebaseではなくローカルで保持する
+    @Published var isLoggedIn = AppConfig.shared.isCurrentUserLoggedIn
+    
     /// 入力フォーム/名前
     @Published var inputName = ""
     

@@ -53,6 +53,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
             await dependency.dataStore.createRoom(room!)
         }
         
+        AppConfig.shared.isCurrentUserLoggedIn = true
         pushNextView(true)
     }
     

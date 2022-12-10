@@ -53,16 +53,19 @@ struct CardListView: View, ModuleAssembler {
                 .font(.headline)
                 .padding()
                 .foregroundColor(.gray)
-            
-            Button(action: {
-                Task {
-                    await dependency.presenter.didTapLeaveRoomButton()
-                    presentation.wrappedValue.dismiss()
-                }
-            }) {
-                Text("Leave")
-                    .foregroundColor(.gray)
+            settingButton
+        }
+    }
+    
+    private var settingButton: some View {
+        Button(action: {
+            Task {
+                await dependency.presenter.didTapLeaveRoomButton()
+                presentation.wrappedValue.dismiss()
             }
+        }) {
+            Text("Leave")
+                .foregroundColor(.gray)
         }
     }
     
