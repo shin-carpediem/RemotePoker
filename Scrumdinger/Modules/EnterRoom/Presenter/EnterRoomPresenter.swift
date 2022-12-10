@@ -22,6 +22,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
             currentUser.id = currentUserId
             currentUser.name = self.dependency.dataStore.fetchUserName(id: currentUserId)
         } else {
+            AppConfig.shared.resetLocalLogInData()
             currentUser.id = UUID().uuidString
             currentUser.name = ""
         }
@@ -47,6 +48,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
             disableSendButton(false)
             pushCardListView(true)
         } else {
+            AppConfig.shared.resetLocalLogInData()
             disableSendButton(false)
         }
     }
@@ -58,14 +60,21 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
         let roomExist = await dependency.dataStore.checkRoomExist(roomId: roomId)
         if roomExist {
             // 既存ルーム
-            dependency.dataStore = RoomDataStore(roomId: roomId)
-            room = await dependency.dataStore.fetchRoom()
+            if AppConfig.shared.isCurrentUserLoggedIn {
+                // ルームにログインしている
+                disableSendButton(false)
+                pushCardListView(true)
+            } else {
+                // ルームにログインしていない
+                dependency.dataStore = RoomDataStore(roomId: roomId)
+                room = await dependency.dataStore.fetchRoom()
 
-            await dependency.dataStore.addUserToRoom(user: .init(
-                id: currentUser.id,
-                name: currentUser.name,
-                selectedCard: nil))
-            room?.userList.append(currentUser)
+                await dependency.dataStore.addUserToRoom(user: .init(
+                    id: currentUser.id,
+                    name: currentUser.name,
+                    selectedCard: nil))
+                room?.userList.append(currentUser)
+            }
         } else {
             // 新規ルーム
             room = Room(id: roomId,

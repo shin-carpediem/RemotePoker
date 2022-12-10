@@ -54,8 +54,6 @@ struct EnterRoomView: View, ModuleAssembler {
         .onAppear {
             if AppConfig.shared.isCurrentUserLoggedIn {
                 dependency.presenter.outputLoginAsCurrentUserAlert()
-            } else {
-                AppConfig.shared.resetLocalLogInData()
             }
         }
     }
