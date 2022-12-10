@@ -11,4 +11,7 @@ protocol ModuleAssembler {
     /// - parameter room: ルーム
     /// - parameter userSelectStatus: ユーザーのカード選択状況
     func assembleOpenCardList(room: Room, userSelectStatus: [UserSelectStatus]) -> OpenCardListView
+    
+    /// 設定画面をアセンブルする
+    func assembleSetting() -> SettingView
 }

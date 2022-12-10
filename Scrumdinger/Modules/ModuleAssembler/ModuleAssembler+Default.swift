@@ -37,4 +37,9 @@ extension ModuleAssembler {
                 room: room))
         return view
     }
+    
+    func assembleSetting() -> SettingView {
+        let view = SettingView()
+        return view
+    }
 }

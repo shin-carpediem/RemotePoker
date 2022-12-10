@@ -41,7 +41,8 @@ struct CardListView: View, ModuleAssembler {
                         floatingActionButton
                     }
                 }
-                destination
+                navigationForOpenCardListView
+                navigationForSettingView
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -64,7 +65,7 @@ struct CardListView: View, ModuleAssembler {
                 presentation.wrappedValue.dismiss()
             }
         }) {
-            Text("Leave")
+            Image(systemName: "slider.horizontal.3")
                 .foregroundColor(.gray)
         }
     }
@@ -110,11 +111,19 @@ struct CardListView: View, ModuleAssembler {
     
     // MARK: - Router
     
-    private var destination: some View {
-        NavigationLink(isActive: $viewModel.willPushNextView, destination: {
-            if viewModel.willPushNextView {
+    private var navigationForOpenCardListView: some View {
+        NavigationLink(isActive: $viewModel.willPushOpenCardListView, destination: {
+            if viewModel.willPushOpenCardListView {
                 assembleOpenCardList(room: dependency.room,
                                      userSelectStatus: viewModel.userSelectStatus)
+            } else { EmptyView() }
+        }) { EmptyView() }
+    }
+    
+    private var navigationForSettingView: some View {
+        NavigationLink(isActive: $viewModel.willPushSettingView, destination: {
+            if viewModel.willPushSettingView {
+                assembleSetting()
             } else { EmptyView() }
         }) { EmptyView() }
     }

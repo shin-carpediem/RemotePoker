@@ -11,6 +11,9 @@ class EnterRoomViewModel: ObservableObject {
     /// 入力フォーム/ルームID
     @Published var inputRoomId = ""
     
+    /// ログイン済みのルームに入るか促すアラートを表示するか
+    @Published var isShownLoginAsCurrentUserAlert = false
+    
     /// 入力フォーム内容の無効を示すアラートを表示するか
     @Published var isShownInputFormInvalidAlert = false
     
@@ -22,6 +25,6 @@ class EnterRoomViewModel: ObservableObject {
     
     // MARK: - Router
     
-    /// 次の画面に遷移するか
-    @Published var willPushNextView = false
+    /// カード一覧画面に遷移するか
+    @Published var willPushCardListView = false
 }

@@ -6,22 +6,22 @@ struct FirebaseRef {
     
     // MARK: - CollectionReference
     
-    /// rooms / {roomId} / users
+    /// rooms / { roomId } / users
     var usersCollection: CollectionReference {
         roomsCollection.document(String(roomId)).collection("users")
     }
     
-    /// rooms / {roomId} / users / {userId}
+    /// rooms /  {roomId } / users / { userId }
     func selectedCardsCollection(userId: String) -> CollectionReference {
         usersCollection.document(userId).collection("selectedCards")
     }
     
-    /// rooms / {roomId} / cardPackages
+    /// rooms / { roomId } / cardPackages
     var cardPackagesCollection: CollectionReference {
         roomsCollection.document(String(roomId)).collection("cardPackages")
     }
     
-    /// rooms / {roomId} / cardPackages / {cardPackageId} / cards
+    /// rooms / { roomId } / cardPackages / { cardPackageId } / cards
     func cardsCollection(cardPackageId: String) -> CollectionReference {
         cardPackagesCollection.document(cardPackageId).collection("cards")
     }
@@ -33,12 +33,12 @@ struct FirebaseRef {
         roomsCollection.document(String(roomId))
     }
     
-    /// rooms / {roomId} / users / {userId}
+    /// rooms /  {roomId } / users / { userId }
     func userDocument(userId: String) -> DocumentReference {
         usersCollection.document(userId)
     }
     
-    /// rooms / {roomId} / users / {userId} / selectedCards / {userId}
+    /// rooms / { roomId}  / users / { userId } / selectedCards / { userId }
     func selectedCardDocument(userId: String) -> DocumentReference {
         selectedCardsCollection(userId: userId).document(userId)
     }
@@ -52,24 +52,24 @@ struct FirebaseRef {
     
     // MARK: - Query
     
-    /// rooms / {roomId} / users / *
+    /// rooms / { roomId } / users / *
     var usersQuery: Query {
         usersCollection.whereField("id", isNotEqualTo: "")
     }
     
     // MARK: - QueryDocumentSnapshot
     
-    /// rooms / {roomId} / users / *
+    /// rooms / { roomId } / users / *
     func usersSnapshot() async -> [QueryDocumentSnapshot]? {
         try? await usersCollection.getDocuments().documents
     }
     
-    /// rooms / {roomId} / cardPackages / *
+    /// rooms / { roomId } / cardPackages / *
     func cardPackagesSnapshot() async -> [QueryDocumentSnapshot]? {
         try? await cardPackagesCollection.getDocuments().documents
     }
     
-    /// rooms / {roomId} / cardPackages / {cardPackageId} / cards / *
+    /// rooms / { roomId } / cardPackages / { cardPackageId } / cards / *
     func cardsSnapshot(cardPackageId: String) async -> [QueryDocumentSnapshot]? {
         try? await cardsCollection(cardPackageId: cardPackageId).getDocuments().documents
     }

@@ -25,7 +25,7 @@ class RoomDataStore: RoomRepository {
             "id": roomId,
             "createdAt": Timestamp()
         ])
-                
+        
         // ユーザー追加
         room.userList.forEach { user in
             let userId = user.id
@@ -64,7 +64,7 @@ class RoomDataStore: RoomRepository {
             ])
         }
     }
-        
+    
     func fetchRoom() async -> Room {
         // ルーム取得
         let roomSnapshot = await firebaseRef?.roomSnapshot()
@@ -112,18 +112,14 @@ class RoomDataStore: RoomRepository {
         usersCollection?.addDocument(data: [
             "id": user.id,
             "name": user.name
-        ]) { error in
-            ()
-        }
+        ]) { _ in () }
 
         let selectedCardsCollection = firebaseRef?.selectedCardsCollection(userId: user.id)
         selectedCardsCollection?.addDocument(data: [
             "id": "",
             "point": "",
             "index": 0
-        ]) { error in
-            ()
-        }
+        ]) { _ in () }
     }
     
     func removeUserFromRoom(userId: String) async {
@@ -133,6 +129,16 @@ class RoomDataStore: RoomRepository {
 //    func deleteRoom() async {
 //        try? await firebaseRef?.roomDocument.delete()
 //    }
+    
+    func fetchUserName(id: String) -> String {
+        var userName = ""
+        let userDocument = firebaseRef?.userDocument(userId: id)
+        userDocument?.getDocument() { userSnapshot, _ in
+            let userData = userSnapshot?.data()
+            userName = userData?["name"] as! String
+        }
+        return userName
+    }
     
     func subscribeUser() {
         userListener = firebaseRef?.usersQuery.addSnapshotListener { querySnapshot, error in

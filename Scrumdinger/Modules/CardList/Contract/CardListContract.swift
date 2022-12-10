@@ -17,4 +17,7 @@ protocol CardListPresentation {
     
     /// ルームから退室するボタンがタップされた
     func didTapLeaveRoomButton() async
+    
+    /// 設定ボタンがタップされた
+    func didTapSettingButton()
 }

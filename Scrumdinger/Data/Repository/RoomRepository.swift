@@ -42,6 +42,11 @@ protocol RoomRepository {
 //    /// ルームを削除する
 //    func deleteRoom() async
     
+    /// 指定IDのユーザー名を取得する
+    /// - parameter id: ユーザーID
+    /// - returns: ユーザー名
+    func fetchUserName(id: String) -> String
+    
     /// ユーザーを購読する
     func subscribeUser()
     

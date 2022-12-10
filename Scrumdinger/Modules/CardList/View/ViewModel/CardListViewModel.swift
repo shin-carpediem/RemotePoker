@@ -15,8 +15,11 @@ class CardListViewModel: ObservableObject {
     
     // MARK: - Router
     
-    /// 次の画面に遷移するか
-    @Published var willPushNextView = false
+    /// 選択されたカード一覧画面に遷移するか
+    @Published var willPushOpenCardListView = false
+    
+    /// 設定画面に遷移するか
+    @Published var willPushSettingView = false
 }
 
 struct UserSelectStatus: Identifiable {

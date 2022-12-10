@@ -38,7 +38,7 @@ class CardListPresenter: CardListPresentation {
     func didTapOpenSelectedCardListButton() {
         disableSendButton(true)
         switchOpenSelectedCardListStatus(true)
-        pushNextView(true)
+        pushOpenCardListView(true)
     }
     
     func didTapResetSelectedCardListButton() async {
@@ -47,13 +47,18 @@ class CardListPresenter: CardListPresentation {
         updateUserSelectStatus()
 
         switchOpenSelectedCardListStatus(false)
-        pushNextView(false)
+        pushOpenCardListView(false)
     }
     
     func didTapLeaveRoomButton() async {
         disableSendButton(true)
         await dependency.dataStore.removeUserFromRoom(userId: dependency.currentUser.id)
-        AppConfig.shared.isCurrentUserLoggedIn = false
+        dependency.dataStore.unsubscribeUser()
+        AppConfig.shared.resetLocalLogInData()
+    }
+    
+    func didTapSettingButton() {
+        pushSettingView(true)
     }
     
     // MARK: - Private
@@ -105,9 +110,15 @@ class CardListPresenter: CardListPresentation {
     
     // MARK: - Router
     
-    private func pushNextView(_ willPush: Bool) {
+    private func pushOpenCardListView(_ willPush: Bool) {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.willPushNextView = willPush
+            self?.dependency.viewModel.willPushOpenCardListView = willPush
+        }
+    }
+    
+    private func pushSettingView(_ willPush: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel.willPushSettingView = willPush
         }
     }
 }

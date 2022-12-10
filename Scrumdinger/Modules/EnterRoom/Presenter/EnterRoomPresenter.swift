@@ -12,12 +12,19 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     var room: Room?
     
     /// カレントユーザー
-    var currentUser: User = .init(id: UUID().uuidString,
-                                  name: "",
-                                  selectedCard: nil)
+    var currentUser: User = .init(id: "", name: "")
     
     init(dependency: Dependency) {
         self.dependency = dependency
+        
+        let currentUserId = AppConfig.shared.currentUserId
+        if !currentUserId.isEmpty {
+            currentUser.id = currentUserId
+            currentUser.name = self.dependency.dataStore.fetchUserName(id: currentUserId)
+        } else {
+            currentUser.id = UUID().uuidString
+            currentUser.name = ""
+        }
     }
     
     // MARK: - EnterRoomPresentation
@@ -26,6 +33,22 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
         guard !dependency.viewModel.inputName.isEmpty else { return false }
         guard let inputInt = Int(dependency.viewModel.inputRoomId) else { return false }
         return String(inputInt).count == 4
+    }
+    
+    func didTapEnterExistingRoomButton() async {
+        disableSendButton(true)
+        let roomId = AppConfig.shared.currentUserRoomId
+        let roomExist = await dependency.dataStore.checkRoomExist(roomId: roomId)
+        if roomExist {
+            // 既存ルーム
+            dependency.dataStore = RoomDataStore(roomId: roomId)
+            room = await dependency.dataStore.fetchRoom()
+            
+            disableSendButton(false)
+            pushCardListView(true)
+        } else {
+            disableSendButton(false)
+        }
     }
     
     func didTapEnterRoomButton(userName: String, roomId: Int) async {
@@ -37,6 +60,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
             // 既存ルーム
             dependency.dataStore = RoomDataStore(roomId: roomId)
             room = await dependency.dataStore.fetchRoom()
+
             await dependency.dataStore.addUserToRoom(user: .init(
                 id: currentUser.id,
                 name: currentUser.name,
@@ -50,14 +74,21 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
                             name: currentUser.name,
                             selectedCard: nil)],
                         cardPackage: .sampleCardPackage)
+
             await dependency.dataStore.createRoom(room!)
         }
-        
-        AppConfig.shared.isCurrentUserLoggedIn = true
-        pushNextView(true)
+        addLocalLogInData()
+        disableSendButton(false)
+        pushCardListView(true)
     }
     
     // MARK: - EnterRoomPresentationOutput
+    
+    func outputLoginAsCurrentUserAlert() {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel.isShownLoginAsCurrentUserAlert = true
+        }
+    }
     
     func outputInputInvalidAlert() {
         // TODO: Actorで置き換える
@@ -78,11 +109,17 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
         }
     }
     
+    private func addLocalLogInData() {
+        AppConfig.shared.isCurrentUserLoggedIn = true
+        AppConfig.shared.currentUserId = currentUser.id
+        AppConfig.shared.currentUserRoomId = room?.id ?? 0
+    }
+    
     // MARK: - Router
     
-    private func pushNextView(_ willPush: Bool) {
+    private func pushCardListView(_ willPush: Bool) {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.willPushNextView = willPush
+            self?.dependency.viewModel.willPushCardListView = willPush
         }
     }
 }

@@ -30,17 +30,34 @@ struct EnterRoomView: View, ModuleAssembler {
                     sendButton
                 }
                 .padding(.horizontal, 40)
-//                viewModel.activityIndicator.body
-                destination
+                // TODO: インジケーターがうまく作用しない
+                // viewModel.activityIndicator.body
+                navigationForCardListView
             }
         }
+        .alert(isPresented: $viewModel.isShownLoginAsCurrentUserAlert, content: {
+            Alert(title: Text("Enter Existing Room?"),
+                  primaryButton: .default(Text("OK"), action: {
+                Task {
+                    await dependency.presenter.didTapEnterExistingRoomButton()
+                }
+            }),
+                  secondaryButton: .cancel())
+        })
         .alert("Name & 4 Digit Number Required",
                isPresented: $viewModel.isShownInputFormInvalidAlert,
-               actions: {
-        }, message: {
+               actions: {},
+               message: {
             Text("If the number is new, a new room will be created.")
         })
         .navigationTitle("Scrum Dinger")
+        .onAppear {
+            if AppConfig.shared.isCurrentUserLoggedIn {
+                dependency.presenter.outputLoginAsCurrentUserAlert()
+            } else {
+                AppConfig.shared.resetLocalLogInData()
+            }
+        }
     }
     
     private var inputField: some View {
@@ -93,9 +110,9 @@ struct EnterRoomView: View, ModuleAssembler {
     
     // MARK: - Router
     
-    private var destination: some View {
-        NavigationLink(isActive: $viewModel.willPushNextView, destination: {
-            if viewModel.willPushNextView {
+    private var navigationForCardListView: some View {
+        NavigationLink(isActive: $viewModel.willPushCardListView, destination: {
+            if viewModel.willPushCardListView {
                 assembleCardList(room: dependency.presenter.room!,
                                  currrentUser: dependency.presenter.currentUser)
             } else { EmptyView() }
