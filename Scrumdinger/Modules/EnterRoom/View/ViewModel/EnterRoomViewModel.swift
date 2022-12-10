@@ -18,7 +18,7 @@ class EnterRoomViewModel: ObservableObject {
     @Published var isShownInputFormInvalidAlert = false
     
     /// ボタンが有効か
-    @Published var isButtonAbled = true
+    @Published var isButtonEnabled = true
     
     /// インジケーター
     @Published var activityIndicator = ActivityIndicator()

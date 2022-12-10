@@ -11,7 +11,7 @@ class CardListViewModel: ObservableObject {
     @Published var isShownSelectedCardList = false
     
     /// ボタンが有効か
-    @Published var isButtonAbled = true
+    @Published var isButtonEnabled = true
     
     // MARK: - Router
     

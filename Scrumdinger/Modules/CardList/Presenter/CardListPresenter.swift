@@ -44,13 +44,6 @@ class CardListPresenter: CardListPresentation {
         showSelectedCardList(false)
     }
     
-    func didTapLeaveRoomButton() async {
-        disableButton(true)
-        await dependency.dataStore.removeUserFromRoom(userId: dependency.currentUser.id)
-        dependency.dataStore.unsubscribeUser()
-        AppConfig.shared.resetLocalLogInData()
-    }
-    
     func didTapSettingButton() {
         pushSettingView()
     }
@@ -61,7 +54,7 @@ class CardListPresenter: CardListPresentation {
     
     private func disableButton(_ disabled: Bool) {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.isButtonAbled = !disabled
+            self?.dependency.viewModel.isButtonEnabled = !disabled
         }
     }
     

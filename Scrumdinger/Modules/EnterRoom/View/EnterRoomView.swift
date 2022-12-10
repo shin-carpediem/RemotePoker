@@ -93,7 +93,7 @@ struct EnterRoomView: View, ModuleAssembler {
         }
         .softButtonStyle(RoundedRectangle(cornerRadius: 20))
         .padding()
-        .disabled(!viewModel.isButtonAbled)
+        .disabled(!viewModel.isButtonEnabled)
     }
     
     private var innerShadowBackGround: some View {

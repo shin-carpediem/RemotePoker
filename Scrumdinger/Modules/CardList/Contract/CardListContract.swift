@@ -15,9 +15,6 @@ protocol CardListPresentation {
     /// 選択済みカード一覧をリセットするボタンがタップされた
     func didTapResetSelectedCardListButton() async
     
-    /// ルームから退室するボタンがタップされた
-    func didTapLeaveRoomButton() async
-    
     /// 設定ボタンがタップされた
     func didTapSettingButton()
 }

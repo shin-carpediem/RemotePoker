@@ -2,8 +2,6 @@ import Neumorphic
 import SwiftUI
 
 struct CardListView: View, ModuleAssembler {
-    @Environment(\.presentationMode) var presentation
-    
     // MARK: - Dependency
     
     struct Dependency {
@@ -63,10 +61,7 @@ struct CardListView: View, ModuleAssembler {
     
     private var settingButton: some View {
         Button(action: {
-            Task {
-                await dependency.presenter.didTapLeaveRoomButton()
-                presentation.wrappedValue.dismiss()
-            }
+            dependency.presenter.didTapSettingButton()
         }) {
             Image(systemName: "slider.horizontal.3")
                 .foregroundColor(.gray)
@@ -124,7 +119,7 @@ struct CardListView: View, ModuleAssembler {
     private var navigationForSettingView: some View {
         NavigationLink(isActive: $viewModel.willPushSettingView, destination: {
             if viewModel.willPushSettingView {
-                assembleSetting()
+                assembleSetting(currrentUser: dependency.currentUser)
             } else { EmptyView() }
         }) { EmptyView() }
     }
@@ -194,7 +189,6 @@ struct CardListView_Previews: PreviewProvider {
                          viewModel: cardListView)
             .previewDisplayName("カード一覧画面/ユーザーが自分のみ")
             
-            // TODO: 環境変数 presentationMode の影響か、複数Previewを表示しようとするとクラッシュする
             CardListView(dependency: .init(
                 presenter: .init(
                     dependency: .init(

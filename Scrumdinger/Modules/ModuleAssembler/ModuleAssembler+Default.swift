@@ -30,8 +30,17 @@ extension ModuleAssembler {
         return view
     }
     
-    func assembleSetting() -> SettingView {
-        let view = SettingView()
+    func assembleSetting(currrentUser: User) -> SettingView {
+        let viewModel = SettingViewModel()
+        let presenter = SettingPresenter(
+            dependency: .init(
+                dataStore: .init(),
+                currentUser: currrentUser,
+                viewModel: viewModel))
+        let view = SettingView(
+            dependency: .init(
+                presenter: presenter),
+            viewModel: viewModel)
         return view
     }
 }
