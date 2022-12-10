@@ -30,6 +30,7 @@ struct EnterRoomView: View, ModuleAssembler {
                     sendButton
                 }
                 .padding(.horizontal, 40)
+//                viewModel.activityIndicator.body
                 destination
             }
         }

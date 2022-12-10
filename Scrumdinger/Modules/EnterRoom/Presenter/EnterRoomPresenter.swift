@@ -73,6 +73,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     private func disableSendButton(_ disabled: Bool) {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.isButtonAbled = !disabled
+            self?.dependency.viewModel.activityIndicator.isAnimating = disabled
         }
     }
     

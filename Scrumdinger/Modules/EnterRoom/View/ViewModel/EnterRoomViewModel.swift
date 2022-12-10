@@ -13,6 +13,9 @@ class EnterRoomViewModel: ObservableObject {
     /// ボタンが有効か
     @Published var isButtonAbled = true
     
+    /// インジケーター
+    @Published var activityIndicator = ActivityIndicator()
+    
     // MARK: - Router
     
     /// 次の画面に遷移するか
