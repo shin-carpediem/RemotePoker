@@ -27,19 +27,23 @@ struct SettingView: View {
         ZStack {
             Color.Neumorphic.main.ignoresSafeArea()
             VStack(alignment: .leading) {
-                Button(action: {
-                    presentation.wrappedValue.dismiss()
-                }) {
-                    HStack {
-                        Image(systemName: "rectangle.portrait.and.arrow.forward")
-                            .foregroundColor(.gray)
-                        Text("Leave Room")
-                            .foregroundColor(.gray)
-                    }
-                }
-                .padding()
+                leaveButton
+                    .padding()
                 Divider()
                 Spacer()
+            }
+        }
+    }
+    
+    private var leaveButton: some View {
+        Button(action: {
+            presentation.wrappedValue.dismiss()
+        }) {
+            HStack {
+                Image(systemName: "rectangle.portrait.and.arrow.forward")
+                    .foregroundColor(.gray)
+                Text("Leave Room")
+                    .foregroundColor(.gray)
             }
         }
     }
