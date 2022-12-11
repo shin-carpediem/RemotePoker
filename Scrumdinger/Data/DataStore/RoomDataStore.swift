@@ -152,11 +152,13 @@ class RoomDataStore: RoomRepository {
         userListener?.remove()
     }
     
-    func updateSelectedCardId(userId: String, selectedCardId: String) async {
-        let userDocument = firebaseRef?.userDocument(userId: userId)
-        try? await userDocument?.updateData([
-            "selectedCardId": selectedCardId
-        ])
+    func updateSelectedCardId(selectedCardDictionary: [String: String]) {
+        selectedCardDictionary.forEach { userId, selectedCardId in
+            let userDocument = firebaseRef?.userDocument(userId: userId)
+            userDocument?.updateData([
+                "selectedCardId": selectedCardId
+            ])
+        }
     }
     
     func fetchCard(cardPackageId: String, cardId: String) -> Card {

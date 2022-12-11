@@ -4,13 +4,19 @@ struct OpenCardView: View {
     /// ユーザーのカード選択状況
     var userSelectStatus: UserSelectStatus
     
+    // MARK: - Private
+    
+    /// 選択されたカード
+    private var selectedCard: Card? {
+        userSelectStatus.selectedCard
+    }
+    
     // MARK: - View
     
     var body: some View {
         VStack {
             userName
-            
-            if userSelectStatus.selectedCard != nil {
+            if selectedCard != nil {
                 selectedCardView
             } else {
                 userNotSelectedView
@@ -20,14 +26,15 @@ struct OpenCardView: View {
     
     private var userName: some View {
         Text(userSelectStatus.user.name)
+            .background(.gray)
     }
     
     private var selectedCardView: some View {
-        Text(userSelectStatus.selectedCard!.point)
+        Text(selectedCard!.point)
             .frame(width: 170, height: 120)
             .font(.system(size: 40, weight: .bold))
-            .foregroundColor(userSelectStatus.selectedCard!.fontColor)
-            .background(userSelectStatus.selectedCard!.outputBackgroundColor(color: userSelectStatus.themeColor))
+            .foregroundColor(selectedCard!.fontColor)
+            .background(selectedCard!.outputBackgroundColor(color: userSelectStatus.themeColor))
             .cornerRadius(10)
     }
     
@@ -35,7 +42,7 @@ struct OpenCardView: View {
         Text("Not Selected Yet")
             .frame(width: 170, height: 120)
             .font(.system(size: 40, weight: .bold))
-            .foregroundColor(.white)
+            .foregroundColor(.black)
             .background(.gray)
             .cornerRadius(10)
     }

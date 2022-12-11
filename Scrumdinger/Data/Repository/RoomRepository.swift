@@ -54,9 +54,8 @@ protocol RoomRepository {
     func fetchUser(id: String) -> User
     
     /// ユーザーの選択済みカードを更新する
-    /// - parameter userId: ユーザーID
-    /// - parameter selectedCardId: 選択されたカードID
-    func updateSelectedCardId(userId: String, selectedCardId: String) async
+    /// - parameter selectedCardDictionary: ユーザーIDと選択されたカードIDの辞書
+    func updateSelectedCardId(selectedCardDictionary: [String: String])
     
     /// 指定IDのカードを取得する
     /// - parameter cardPackageId: カードパッケージID

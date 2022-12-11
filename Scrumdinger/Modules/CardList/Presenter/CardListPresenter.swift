@@ -26,8 +26,7 @@ class CardListPresenter: CardListPresentation {
     
     func didSelectCard(card: Card) async {
         dependency.currentUser.selectedCardId = card.id
-        await dependency.dataStore.updateSelectedCardId(userId: dependency.currentUser.id,
-                                                        selectedCardId: card.id)
+        dependency.dataStore.updateSelectedCardId(selectedCardDictionary: [dependency.currentUser.id: card.id])
         updateUserSelectStatus()
     }
     
@@ -40,11 +39,11 @@ class CardListPresenter: CardListPresentation {
         disableButton(true)
         dependency.currentUser.selectedCardId = ""
         let userIdList: [String] = dependency.viewModel.userSelectStatus.map { $0.user.id }
-        // TODO: 何とかする
+        var selectedCardDictionary: [String: String] = [:]
         userIdList.forEach { userId in
-            await dependency.dataStore.updateSelectedCardId(userId: userId,
-                                                            selectedCardId: "")
+            selectedCardDictionary[userId] = ""
         }
+        dependency.dataStore.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
         updateUserSelectStatus()
 
         showSelectedCardList(false)
@@ -90,14 +89,16 @@ class CardListPresenter: CardListPresentation {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             let userSelectStatus: [UserSelectStatus] = self.dependency.room.userList.map { [weak self] user in
-                let selectedCardId: String = self?.dependency.dataStore.fetchUser(id: user.id).selectedCardId ?? ""
-                let selectedCard: Card = self?.dependency.dataStore.fetchCard(
-                    cardPackageId: self?.dependency.room.cardPackage.id ?? "",
-                    cardId: selectedCardId) ?? .init(id: "", point: "", index: 0)
+                // TODO: データの流れを明確にする
+//                let selectedCardId: String = self!.dependency.dataStore.fetchUser(id: user.id).selectedCardId
+                let selectedCardId: String = user.selectedCardId
+                let selectedCard: Card = self!.dependency.dataStore.fetchCard(
+                    cardPackageId: self!.dependency.room.cardPackage.id,
+                    cardId: selectedCardId)
 
                 return UserSelectStatus(id: Int.random(in: 0..<99999999),
                                         user: user,
-                                        themeColor: self?.dependency.room.cardPackage.themeColor ?? .oxblood,
+                                        themeColor: self!.dependency.room.cardPackage.themeColor,
                                         selectedCard: selectedCard)
             }
             
