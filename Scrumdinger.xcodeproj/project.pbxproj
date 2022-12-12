@@ -337,6 +337,15 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		F5B2FADF2947E0A700592363 /* ViewComponents */ = {
+			isa = PBXGroup;
+			children = (
+				F52366A12896382F005B1F65 /* CardView.swift */,
+				F533A3A3293FCD7300C833F7 /* OpenCardView.swift */,
+			);
+			path = ViewComponents;
+			sourceTree = "<group>";
+		};
 		F5E051662929B116006EA727 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -378,9 +387,8 @@
 			isa = PBXGroup;
 			children = (
 				F525301229364D2C00727472 /* ViewModel */,
+				F5B2FADF2947E0A700592363 /* ViewComponents */,
 				F52366992891E837005B1F65 /* CardListView.swift */,
-				F52366A12896382F005B1F65 /* CardView.swift */,
-				F533A3A3293FCD7300C833F7 /* OpenCardView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
