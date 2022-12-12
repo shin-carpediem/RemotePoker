@@ -123,8 +123,10 @@ extension CardListPresenter: RoomDelegate {
     func whenUserChanged(actionType: UserActionType) {
         switch actionType {
         case .added, .removed:
+            // ユーザーが入室あるいは退室した時
             showHeaderTitle()
         case .modified:
+            // ユーザーの選択済みカードが更新された時
             updateUserSelectStatus()
         case .unKnown:
             fatalError()

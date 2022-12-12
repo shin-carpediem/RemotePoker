@@ -200,7 +200,6 @@
 		F50060F72944378C005923A7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				F5B2FADC2944772C00592363 /* ViewModel */,
 				F50060F8294437A3005923A7 /* SettingView.swift */,
 			);
 			path = View;
@@ -220,7 +219,7 @@
 		F5125F2C292E753700C822FE /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				F5E051692929B421006EA727 /* Model */,
+				F525301129364D1D00727472 /* ViewModel */,
 				F5125F2D292E755600C822FE /* EnterRoomPresenter.swift */,
 			);
 			path = Presenter;
@@ -282,7 +281,7 @@
 		F5802CFC293207B400955949 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				F5E0516B2929B466006EA727 /* Model */,
+				F525301229364D2C00727472 /* ViewModel */,
 				F5802CFD293207C700955949 /* CardListPresenter.swift */,
 			);
 			path = Presenter;
@@ -300,6 +299,7 @@
 		F5802D06293217C100955949 /* Contract */ = {
 			isa = PBXGroup;
 			children = (
+				F5E051692929B421006EA727 /* Model */,
 				F5802D07293217D000955949 /* EnterRoomContract.swift */,
 			);
 			path = Contract;
@@ -308,6 +308,7 @@
 		F5802D092932189C00955949 /* Contract */ = {
 			isa = PBXGroup;
 			children = (
+				F5E0516B2929B466006EA727 /* Model */,
 				F5802D0A293218A800955949 /* CardListContract.swift */,
 			);
 			path = Contract;
@@ -324,6 +325,7 @@
 		F5B2FAD72944767300592363 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				F5B2FADC2944772C00592363 /* ViewModel */,
 				F5B2FADA294476BA00592363 /* SettingPresenter.swift */,
 			);
 			path = Presenter;
@@ -349,7 +351,6 @@
 		F5E051662929B116006EA727 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				F525301129364D1D00727472 /* ViewModel */,
 				F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */,
 			);
 			path = View;
@@ -386,7 +387,6 @@
 		F5E0516A2929B45C006EA727 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				F525301229364D2C00727472 /* ViewModel */,
 				F5B2FADF2947E0A700592363 /* ViewComponents */,
 				F52366992891E837005B1F65 /* CardListView.swift */,
 			);
