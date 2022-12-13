@@ -22,7 +22,7 @@ struct CardListView: View, ModuleAssembler {
     @ObservedObject private var viewModel: CardListViewModel
     
     /// View生成時
-    private func construct() async {
+    private func construct() {
         dependency.presenter.subscribeUser()
         dependency.presenter.outputHeaderTitle()
     }
@@ -56,14 +56,13 @@ struct CardListView: View, ModuleAssembler {
             }
         }
         .navigationBarBackButtonHidden(true)
-        .onAppear {
-            Task { await construct() }
-        }
+        .onAppear { construct() }
     }
     
     /// ヘッダータイトル
     private var headerTitle: some View {
         HStack {
+            Spacer()
             headerText
                 .padding()
             Spacer()
@@ -95,9 +94,7 @@ struct CardListView: View, ModuleAssembler {
                 let themeColor = dependency.room.cardPackage.themeColor
                 CardView(card: card,
                          themeColor: themeColor) { selectedCard in
-                    Task {
-                        await dependency.presenter.didSelectCard(card: selectedCard)
-                    }
+                    dependency.presenter.didSelectCard(card: selectedCard)
                 }
             }
         }
@@ -116,9 +113,7 @@ struct CardListView: View, ModuleAssembler {
     private var floatingActionButton: some View {
         Button {
             if viewModel.isShownSelectedCardList {
-                Task {
-                    await dependency.presenter.didTapResetSelectedCardListButton()
-                }
+                dependency.presenter.didTapResetSelectedCardListButton()
             } else {
                 dependency.presenter.didTapOpenSelectedCardListButton()
             }

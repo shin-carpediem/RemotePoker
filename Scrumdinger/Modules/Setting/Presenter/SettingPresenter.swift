@@ -15,11 +15,15 @@ class SettingPresenter: SettingPresentation {
     
     // MARK: - SettingPresentation
     
-    func didTapLeaveRoomButton() async {
+    func didTapLeaveRoomButton() {
         disableButton(true)
-        await dependency.dataStore.removeUserFromRoom(userId: dependency.currentUser.id)
-        dependency.dataStore.unsubscribeUser()
         AppConfig.shared.resetLocalLogInData()
+        dependency.dataStore.unsubscribeUser()
+        Task {
+            await dependency.dataStore.removeUserFromRoom(userId: dependency.currentUser.id)
+        }
+        
+        // TODO: ログイン画面に遷移
     }
     
     // MARK: - Private

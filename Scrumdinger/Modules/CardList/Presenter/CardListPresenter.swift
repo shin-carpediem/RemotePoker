@@ -25,7 +25,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
         dependency.dataStore.unsubscribeUser()
     }
     
-    func didSelectCard(card: Card) async {
+    func didSelectCard(card: Card) {
         disableButton(true)
         dependency.dataStore.updateSelectedCardId(selectedCardDictionary: [dependency.currentUser.id: card.id])
     }
@@ -35,7 +35,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
         showSelectedCardList()
     }
     
-    func didTapResetSelectedCardListButton() async {
+    func didTapResetSelectedCardListButton() {
         disableButton(true)
 
         let userIdList: [String] = dependency.viewModel.userSelectStatus.map { $0.user.id }
@@ -90,7 +90,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
                     let id = Int.random(in: 0..<99999999)
                     let themeColor = cardPackage.themeColor
                     let selectedCardId: String = user.selectedCardId
-                    let selectedCard: Card = cardPackage.cardList.first(where: { $0.id == selectedCardId })!
+                    let selectedCard: Card? = cardPackage.cardList.first(where: { $0.id == selectedCardId })
 
                     return UserSelectStatus(id: id,
                                             user: user,

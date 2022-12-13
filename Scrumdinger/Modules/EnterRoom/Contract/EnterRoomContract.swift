@@ -3,12 +3,12 @@ protocol EnterRoomPresentation {
     func isInputFormValid() -> Bool
     
     /// ログイン済みのルームに入るボタンが押された
-    func didTapEnterExistingRoomButton() async
+    func didTapEnterExistingRoomButton()
     
     /// ルームに入るボタンが押された
     /// - parameter userName: ユーザー名
     /// - parameter roomId: ルームID:
-    func didTapEnterRoomButton(userName: String, roomId: Int) async
+    func didTapEnterRoomButton(userName: String, roomId: Int)
 }
 
 protocol EnterRoomPresentationOutput {

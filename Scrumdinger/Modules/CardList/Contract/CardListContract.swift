@@ -7,13 +7,13 @@ protocol CardListPresentation {
     
     /// カードを選択した
     /// - parameter card: カード
-    func didSelectCard(card: Card) async
+    func didSelectCard(card: Card)
     
     /// 選択済みカード一覧を公開するボタンがタップされた
     func didTapOpenSelectedCardListButton()
     
     /// 選択済みカード一覧をリセットするボタンがタップされた
-    func didTapResetSelectedCardListButton() async
+    func didTapResetSelectedCardListButton()
     
     /// 設定ボタンがタップされた
     func didTapSettingButton()

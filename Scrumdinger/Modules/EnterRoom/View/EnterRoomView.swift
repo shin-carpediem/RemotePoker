@@ -46,9 +46,7 @@ struct EnterRoomView: View, ModuleAssembler {
         .alert(isPresented: $viewModel.isShownLoginAsCurrentUserAlert, content: {
             Alert(title: Text("Enter Existing Room?"),
                   primaryButton: .default(Text("OK"), action: {
-                Task {
-                    await dependency.presenter.didTapEnterExistingRoomButton()
-                }
+                dependency.presenter.didTapEnterExistingRoomButton()
             }),
                   secondaryButton: .cancel())
         })
@@ -96,11 +94,9 @@ struct EnterRoomView: View, ModuleAssembler {
             if !dependency.presenter.isInputFormValid() {
                 dependency.presenter.outputInputInvalidAlert()
             } else {
-                Task {
-                    await dependency.presenter.didTapEnterRoomButton(
-                        userName: viewModel.inputName,
-                        roomId: Int(viewModel.inputRoomId)!)
-                }
+                dependency.presenter.didTapEnterRoomButton(
+                    userName: viewModel.inputName,
+                    roomId: Int(viewModel.inputRoomId)!)
             }
         } label: {
             Text("Enter")

@@ -27,61 +27,65 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
         return String(inputInt).count == 4
     }
     
-    func didTapEnterExistingRoomButton() async {
-        disableButton(true)
-        let roomId = AppConfig.shared.currentUserRoomId
-        let roomExist = await dependency.dataStore.checkRoomExist(roomId: roomId)
-        if roomExist {
-            // 既存ルーム
-            dependency.dataStore = RoomDataStore(roomId: roomId)
-            room = await dependency.dataStore.fetchRoom()
-            
-            pushCardListView()
-        } else {
-            fatalError()
+    func didTapEnterExistingRoomButton() {
+        Task {
+            disableButton(true)
+            let roomId = AppConfig.shared.currentUserRoomId
+            let roomExist = await dependency.dataStore.checkRoomExist(roomId: roomId)
+            if roomExist {
+                // 既存ルーム
+                dependency.dataStore = RoomDataStore(roomId: roomId)
+                room = await dependency.dataStore.fetchRoom()
+                
+                pushCardListView()
+            } else {
+                fatalError()
+            }
         }
     }
     
-    func didTapEnterRoomButton(userName: String, roomId: Int) async {
-        disableButton(true)
-        
-        currentUser.name = userName
-        let roomExist = await dependency.dataStore.checkRoomExist(roomId: roomId)
-        if roomExist {
-            // 既存ルーム
-            if AppConfig.shared.isCurrentUserLoggedIn {
-                // ルームにログインしている
-                pushCardListView()
+    func didTapEnterRoomButton(userName: String, roomId: Int) {
+        Task {
+            disableButton(true)
+            
+            currentUser.name = userName
+            let roomExist = await dependency.dataStore.checkRoomExist(roomId: roomId)
+            if roomExist {
+                // 既存ルーム
+                if AppConfig.shared.isCurrentUserLoggedIn {
+                    // ルームにログインしている
+                    pushCardListView()
+                } else {
+                    // TODO: ローカルで保持していたデータが消えたがFirestore上ではルームにログインしている場合、ユーザーは追加させない
+                    
+                    // ルームにログインしていない
+                    dependency.dataStore = RoomDataStore(roomId: roomId)
+                    room = await dependency.dataStore.fetchRoom()
+
+                    await dependency.dataStore.addUserToRoom(user: .init(
+                        id: currentUser.id,
+                        name: currentUser.name,
+                        selectedCardId: ""))
+                    room?.userList.append(currentUser)
+                }
             } else {
-                // TODO: ローカルで保持していたデータが消えたがFirestore上ではルームにログインしている場合、ユーザーは追加させない
-                
-                // ルームにログインしていない
-                dependency.dataStore = RoomDataStore(roomId: roomId)
-                room = await dependency.dataStore.fetchRoom()
+                // 新規ルーム
+                room = Room(id: roomId,
+                            userList: [.init(
+                                id: currentUser.id,
+                                name: currentUser.name,
+                                selectedCardId: "")],
+                            cardPackage: .sampleCardPackage)
 
-                await dependency.dataStore.addUserToRoom(user: .init(
-                    id: currentUser.id,
-                    name: currentUser.name,
-                    selectedCardId: ""))
-                room?.userList.append(currentUser)
+                await dependency.dataStore.createRoom(room!)
             }
-        } else {
-            // 新規ルーム
-            room = Room(id: roomId,
-                        userList: [.init(
-                            id: currentUser.id,
-                            name: currentUser.name,
-                            selectedCardId: "")],
-                        cardPackage: .sampleCardPackage)
 
-            await dependency.dataStore.createRoom(room!)
+            // ローカルにユーザーデータの一部を保存
+            AppConfig.shared.addLocalLogInData(userId: currentUser.id,
+                                               userName: currentUser.name,
+                                               roomId: room!.id)
+            pushCardListView()
         }
-
-        // ローカルにユーザーデータの一部を保存
-        AppConfig.shared.addLocalLogInData(userId: currentUser.id,
-                                           userName: currentUser.name,
-                                           roomId: room!.id)
-        pushCardListView()
     }
     
     // MARK: - EnterRoomPresentationOutput
