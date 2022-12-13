@@ -149,13 +149,6 @@ struct CardListView: View, ModuleAssembler {
 // MARK: - Preview
 
 struct CardListView_Previews: PreviewProvider {
-    static let cardListView: CardListViewModel = {
-        let viewModel = CardListViewModel()
-        viewModel.userSelectStatus = []
-        viewModel.isShownSelectedCardList = false
-        return viewModel
-    }()
-    
     static let selectedCardListView: CardListViewModel = {
         let viewModel = CardListViewModel()
         viewModel.userSelectStatus = [
@@ -204,10 +197,10 @@ struct CardListView_Previews: PreviewProvider {
                         dataStore: .init(),
                         room: room1,
                         currentUser: me,
-                        viewModel: cardListView)),
+                        viewModel: .init())),
                 room: room1,
                 currentUser: me),
-                         viewModel: cardListView)
+                         viewModel: .init())
             .previewDisplayName("カード一覧画面/ユーザーが自分のみ")
             
             CardListView(dependency: .init(
@@ -216,10 +209,10 @@ struct CardListView_Previews: PreviewProvider {
                         dataStore: .init(),
                         room: room2,
                         currentUser: me,
-                        viewModel: cardListView)),
+                        viewModel: .init())),
                 room: room2,
                 currentUser: me),
-                         viewModel: cardListView)
+                         viewModel: .init())
             .previewDisplayName("カード一覧画面/ユーザーが2名以上")
             
             CardListView(dependency: .init(

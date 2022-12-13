@@ -26,6 +26,7 @@ class SettingPresenter: SettingPresentation {
     
     private var dependency: Dependency
     
+    /// ボタンを無効にする
     private func disableButton(_ disabled: Bool) {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.isButtonEnabled = !disabled

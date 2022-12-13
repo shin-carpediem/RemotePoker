@@ -104,6 +104,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     
     private var dependency: Dependency
     
+    /// ボタンを無効にする
     private func disableButton(_ disabled: Bool) {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.isButtonEnabled = !disabled
@@ -111,6 +112,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
         }
     }
     
+    /// カレントユーザーのローカルデータを取得する
     private func fetchCurrentUserLocalData() {
         let currentUserId = AppConfig.shared.currentUserId
         if !currentUserId.isEmpty {
@@ -129,6 +131,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     
     // MARK: - Router
     
+    /// カード一覧画面に遷移する
     private func pushCardListView() {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.willPushCardListView = true

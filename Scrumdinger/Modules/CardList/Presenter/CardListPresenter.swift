@@ -25,6 +25,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     }
     
     func didSelectCard(card: Card) async {
+        disableButton(true)
         dependency.dataStore.updateSelectedCardId(selectedCardDictionary: [dependency.currentUser.id: card.id])
     }
     
@@ -53,6 +54,8 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     func outputHeaderTitle() async {
         // Firestoreからデータ取得
         dependency.room = await dependency.dataStore.fetchRoom()
+
+        dependency.currentUser.selectedCardId = dependency.room.userList.first(where: { $0.id == dependency.currentUser.id })?.selectedCardId ?? ""
         
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
@@ -72,6 +75,8 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     func outputUserSelectStatus() async {
         // Firestoreからデータ取得
         dependency.room = await dependency.dataStore.fetchRoom()
+
+        dependency.currentUser.selectedCardId = dependency.room.userList.first(where: { $0.id == dependency.currentUser.id })?.selectedCardId ?? ""
         
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
@@ -98,18 +103,21 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     
     private var dependency: Dependency
     
+    /// ボタンを無効にする
     private func disableButton(_ disabled: Bool) {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.isButtonEnabled = !disabled
         }
     }
-        
+     
+    /// 選択されたカード一覧を表示する
     private func showSelectedCardList() {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.isShownSelectedCardList = true
         }
     }
     
+    /// 選択されたカード一覧を非表示にする
     private func hideSelectedCardList() {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.isShownSelectedCardList = false
@@ -118,6 +126,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     
     // MARK: - Router
     
+    /// 設定画面に遷移する
     private func pushSettingView() {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.willPushSettingView = true
@@ -133,6 +142,7 @@ extension CardListPresenter: RoomDelegate {
         switch actionType {
         case .added, .removed:
             // ユーザーが入室あるいは退室した時
+            // TODO: 非同期はここでは使えない
 //            outputHeaderTitle()
             ()
         case .modified:
