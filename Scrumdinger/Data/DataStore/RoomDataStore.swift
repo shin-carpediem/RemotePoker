@@ -103,12 +103,12 @@ class RoomDataStore: RoomRepository {
     }
     
     func addUserToRoom(user: User) async {
-        let usersCollection = firebaseRef?.usersCollection
-        usersCollection?.addDocument(data: [
+        let userDocument = firebaseRef?.usersCollection.document(user.id)
+        try? await userDocument?.setData([
             "id": user.id,
             "name": user.name,
             "selectedCardId": user.selectedCardId
-        ]) { _ in () }
+        ])
     }
     
     func removeUserFromRoom(userId: String) async {

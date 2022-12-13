@@ -38,6 +38,7 @@ struct SettingView: View {
     /// 退出ボタン
     private var leaveButton: some View {
         Button(action: {
+            dependency.presenter.didTapLeaveRoomButton()
             presentation.wrappedValue.dismiss()
         }) {
             HStack {

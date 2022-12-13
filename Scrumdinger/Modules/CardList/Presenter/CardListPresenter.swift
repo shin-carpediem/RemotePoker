@@ -53,10 +53,11 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     // MARK: - CardListPresentationOutput
     
     func outputHeaderTitle() {
-        // Firestoreからデータ取得
+        // TODO: 以下記事を参考にInteractorにTaskを切り分け
+        // https://www.hackingwithswift.com/quick-start/concurrency/how-to-get-a-result-from-a-task
         Task {
+            // Firestoreからデータ取得
             dependency.room = await dependency.dataStore.fetchRoom()
-            
             dependency.currentUser.selectedCardId = dependency.room.userList.first(where: { $0.id == dependency.currentUser.id })?.selectedCardId ?? ""
             
             DispatchQueue.main.async { [weak self] in
@@ -76,10 +77,9 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     }
     
     func outputUserSelectStatus() {
-        // Firestoreからデータ取得
         Task {
+            // Firestoreからデータ取得
             dependency.room = await dependency.dataStore.fetchRoom()
-            
             dependency.currentUser.selectedCardId = dependency.room.userList.first(where: { $0.id == dependency.currentUser.id })?.selectedCardId ?? ""
             
             DispatchQueue.main.async { [weak self] in
@@ -99,8 +99,8 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
                 }
                 
                 self.dependency.viewModel.userSelectStatus = userSelectStatus
+                self.disableButton(false)
             }
-            disableButton(false)
         }
     }
     

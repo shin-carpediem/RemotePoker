@@ -51,6 +51,9 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
             currentUser.name = userName
             let roomExist = await dependency.dataStore.checkRoomExist(roomId: roomId)
             if roomExist {
+                dependency.dataStore = RoomDataStore(roomId: roomId)
+                room = await dependency.dataStore.fetchRoom()
+
                 // 既存ルーム
                 if AppConfig.shared.isCurrentUserLoggedIn {
                     // ルームにログインしている
@@ -59,9 +62,6 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
                     // TODO: ローカルで保持していたデータが消えたがFirestore上ではルームにログインしている場合、ユーザーは追加させない
                     
                     // ルームにログインしていない
-                    dependency.dataStore = RoomDataStore(roomId: roomId)
-                    room = await dependency.dataStore.fetchRoom()
-
                     await dependency.dataStore.addUserToRoom(user: .init(
                         id: currentUser.id,
                         name: currentUser.name,
@@ -81,9 +81,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
             }
 
             // ローカルにユーザーデータの一部を保存
-            AppConfig.shared.addLocalLogInData(userId: currentUser.id,
-                                               userName: currentUser.name,
-                                               roomId: room!.id)
+            AppConfig.shared.addLocalLogInData(currentUser.id, currentUser.name, room!.id)
             pushCardListView()
         }
     }

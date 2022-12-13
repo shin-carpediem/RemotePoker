@@ -8,9 +8,9 @@ class AppConfig {
         return Static.instance
     }
     
-    func addLocalLogInData(userId: String?,
-                           userName: String?,
-                           roomId: Int?) {
+    func addLocalLogInData(_ userId: String?,
+                           _ userName: String?,
+                           _ roomId: Int?) {
         AppConfig.shared.isCurrentUserLoggedIn = true
         if let userId {
             AppConfig.shared.currentUserId = userId
@@ -25,6 +25,7 @@ class AppConfig {
     
     func resetLocalLogInData() {
         AppConfig.shared.isCurrentUserLoggedIn = false
+        print(AppConfig.shared.isCurrentUserLoggedIn)
         AppConfig.shared.currentUserId = ""
         AppConfig.shared.currentUserName = ""
         AppConfig.shared.currentUserRoomId = 0
