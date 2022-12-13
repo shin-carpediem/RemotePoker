@@ -56,7 +56,7 @@ struct EnterRoomView: View, ModuleAssembler {
                message: {
             Text("If the number is new, a new room will be created.")
         })
-        .navigationTitle("Scrum Dinger")
+        .navigationTitle("Remote Poker")
         .onAppear { construct() }
     }
     

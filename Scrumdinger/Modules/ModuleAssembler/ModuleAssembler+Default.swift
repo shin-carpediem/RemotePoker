@@ -14,9 +14,14 @@ extension ModuleAssembler {
     
     func assembleCardList(room: Room, currrentUser: User) -> CardListView {
         let viewModel = CardListViewModel()
-        let presenter = CardListPresenter(
+        let interactor = CardListInteractor(
             dependency: .init(
                 dataStore: .init(roomId: room.id),
+                room: room,
+                currentUser: currrentUser))
+        let presenter = CardListPresenter(
+            dependency: .init(
+                interactor: interactor,
                 room: room,
                 currentUser: currrentUser,
                 viewModel: viewModel))

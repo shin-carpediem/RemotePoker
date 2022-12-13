@@ -19,10 +19,31 @@ protocol CardListPresentation {
     func didTapSettingButton()
 }
 
+protocol CardListUseCase {
+    /// ユーザーを購読する
+    func subscribeUser()
+    
+    /// ユーザーの購読を解除する
+    func unsubscribeUser()
+    
+    /// 選択されたカードIDを更新する
+    /// - parameter card: カード
+    func updateSelectedCardId(card: Card)
+    
+    /// ルームを取得する
+    func fetchRoom()
+}
+
 protocol CardListPresentationOutput {
     /// ヘッダータイトルを出力する
     func outputHeaderTitle()
     
     /// ユーザーの選択されたカード一覧状況を出力する
     func outputUserSelectStatus()
+    
+    /// データ処理の成功を出力
+    func outputSuccess()
+    
+    /// エラーを出力
+    func outputError()
 }

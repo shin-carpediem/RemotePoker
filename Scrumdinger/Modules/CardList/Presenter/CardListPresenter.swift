@@ -4,7 +4,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     // MARK: - Dependency
     
     struct Dependency {
-        var dataStore: RoomDataStore
+        var interactor: CardListInteractor
         var room: Room
         var currentUser: User
         var viewModel: CardListViewModel
@@ -18,11 +18,11 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     
     func subscribeUser() {
         dependency.dataStore.delegate = self
-        dependency.dataStore.subscribeUser()
+        dependency.interactor.subscribeUser()
     }
     
     func unsubscribeUser() {
-        dependency.dataStore.unsubscribeUser()
+        dependency.interactor.unsubscribeUser()
     }
     
     func didSelectCard(card: Card) {
@@ -102,6 +102,14 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
                 self.disableButton(false)
             }
         }
+    }
+    
+    func outputSuccess() {
+        
+    }
+    
+    func outputError() {
+        
     }
     
     // MARK: - Private
