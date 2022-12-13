@@ -20,7 +20,6 @@ extension ModuleAssembler {
                 room: room,
                 currentUser: currrentUser,
                 viewModel: viewModel))
-//        viewModel.headerTitle = presenter.outputHeaderTitle()
         let view = CardListView(
             dependency: .init(
                 presenter: presenter,
@@ -30,11 +29,11 @@ extension ModuleAssembler {
         return view
     }
     
-    func assembleSetting(currrentUser: User) -> SettingView {
+    func assembleSetting(room: Room, currrentUser: User) -> SettingView {
         let viewModel = SettingViewModel()
         let presenter = SettingPresenter(
             dependency: .init(
-                dataStore: .init(),
+                dataStore: .init(roomId: room.id),
                 currentUser: currrentUser,
                 viewModel: viewModel))
         let view = SettingView(

@@ -21,6 +21,12 @@ struct CardListView: View, ModuleAssembler {
     
     @ObservedObject private var viewModel: CardListViewModel
     
+    /// View生成時
+    private func construct() async {
+        dependency.presenter.subscribeUser()
+        await dependency.presenter.outputHeaderTitle()
+    }
+    
     // MARK: - View
     
     var body: some View {
@@ -30,11 +36,14 @@ struct CardListView: View, ModuleAssembler {
                 VStack {
                     ScrollView {
                         headerTitle
+                            .padding([.leading, .trailing])
                         Spacer()
                         if viewModel.isShownSelectedCardList {
                             selectedCardListView
+                                .padding()
                         } else {
                             cardListView
+                                .padding()
                         }
                     }
                     HStack {
@@ -47,18 +56,29 @@ struct CardListView: View, ModuleAssembler {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            Task { await construct() }
+        }
     }
     
+    /// ヘッダータイトル
     private var headerTitle: some View {
         HStack {
-            Text(viewModel.headerTitle)
-                .font(.headline)
+            headerText
                 .padding()
-                .foregroundColor(.gray)
+            Spacer()
             settingButton
         }
     }
     
+    /// ヘッダーテキスト
+    private var headerText: some View {
+        Text(viewModel.headerTitle)
+            .font(.headline)
+            .foregroundColor(.gray)
+    }
+    
+    /// 設定ボタン
     private var settingButton: some View {
         Button(action: {
             dependency.presenter.didTapSettingButton()
@@ -80,7 +100,6 @@ struct CardListView: View, ModuleAssembler {
                     }
                 }
             }
-            .padding()
         }
     }
     
@@ -90,10 +109,10 @@ struct CardListView: View, ModuleAssembler {
             ForEach(viewModel.userSelectStatus) { userSelect in
                 OpenCardView(userSelectStatus: userSelect)
             }
-            .padding()
         }
     }
     
+    /// フローティングアクションボタン
     private var floatingActionButton: some View {
         Button {
             if viewModel.isShownSelectedCardList {
@@ -116,10 +135,12 @@ struct CardListView: View, ModuleAssembler {
     
     // MARK: - Router
     
+    /// 設定画面へ遷移させるナビゲーション
     private var navigationForSettingView: some View {
         NavigationLink(isActive: $viewModel.willPushSettingView, destination: {
             if viewModel.willPushSettingView {
-                assembleSetting(currrentUser: dependency.currentUser)
+                assembleSetting(room: dependency.room,
+                                currrentUser: dependency.currentUser)
             } else { EmptyView() }
         }) { EmptyView() }
     }

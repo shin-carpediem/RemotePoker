@@ -18,3 +18,11 @@ protocol CardListPresentation {
     /// 設定ボタンがタップされた
     func didTapSettingButton()
 }
+
+protocol CardListPresentationOutput {
+    /// ヘッダータイトルを出力する
+    func outputHeaderTitle() async
+    
+    /// ユーザーの選択されたカード一覧状況を出力する
+    func outputUserSelectStatus() async
+}

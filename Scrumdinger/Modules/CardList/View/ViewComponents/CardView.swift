@@ -16,6 +16,7 @@ struct CardView: View {
         cardView
     }
     
+    /// カードビュー
     private var cardView: some View {
         Button(action: {
             selectCardHandler?(card)

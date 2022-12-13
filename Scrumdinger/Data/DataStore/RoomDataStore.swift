@@ -161,19 +161,6 @@ class RoomDataStore: RoomRepository {
         }
     }
     
-    func fetchCard(cardPackageId: String, cardId: String) -> Card {
-        var card: Card = .init(id: "", point: "", index: 0)
-        let cardDocument = firebaseRef?.cardDocument(cardPackageId: cardPackageId,
-                                                     cardId: cardId)
-        cardDocument?.getDocument(completion: { cardSnapshot, _ in
-            let cardData = cardSnapshot?.data()
-            card = .init(id: cardData?["id"] as! String,
-                         point: cardData?["point"] as! String,
-                         index: cardData?["index"] as! Int)
-        })
-        return card
-    }
-    
     // MARK: - Private
         
     private var firebaseRef: FirebaseRef?

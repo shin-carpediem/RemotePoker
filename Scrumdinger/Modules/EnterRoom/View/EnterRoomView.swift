@@ -19,6 +19,13 @@ struct EnterRoomView: View, ModuleAssembler {
     
     @ObservedObject private var viewModel: EnterRoomViewModel
     
+    /// View生成時
+    private func construct() {
+        if AppConfig.shared.isCurrentUserLoggedIn {
+            dependency.presenter.outputLoginAsCurrentUserAlert()
+        }
+    }
+    
     // MARK: - View
     
     var body: some View {
@@ -28,6 +35,7 @@ struct EnterRoomView: View, ModuleAssembler {
                 VStack(spacing: 28) {
                     inputField
                     sendButton
+                        .padding()
                 }
                 .padding(.horizontal, 40)
                 // TODO: インジケーターがうまく作用しない
@@ -51,31 +59,38 @@ struct EnterRoomView: View, ModuleAssembler {
             Text("If the number is new, a new room will be created.")
         })
         .navigationTitle("Scrum Dinger")
-        .onAppear {
-            if AppConfig.shared.isCurrentUserLoggedIn {
-                dependency.presenter.outputLoginAsCurrentUserAlert()
-            }
-        }
+        .onAppear { construct() }
     }
     
+    /// 入力フォーム
     private var inputField: some View {
         HStack(spacing: 14) {
-            TextField("Name",
-                      text: $viewModel.inputName)
-            .padding()
-            .background(innerShadowBackGround)
-            .tint(.gray)
-            .foregroundColor(.gray)
-            
-            TextField("Room ID",
-                      text: $viewModel.inputRoomId)
-            .padding()
-            .background(innerShadowBackGround)
-            .tint(.gray)
-            .foregroundColor(.gray)
+            inputItemName
+            inputRoomId
         }
     }
     
+    /// 入力項目/名前
+    private var inputItemName: some View {
+        TextField("Name",
+                  text: $viewModel.inputName)
+        .padding()
+        .background(innerShadow)
+        .tint(.gray)
+        .foregroundColor(.gray)
+    }
+    
+    /// 入力項目/ルームID
+    private var inputRoomId: some View {
+        TextField("Room ID",
+                  text: $viewModel.inputRoomId)
+        .padding()
+        .background(innerShadow)
+        .tint(.gray)
+        .foregroundColor(.gray)
+    }
+    
+    /// 送信ボタン
     private var sendButton: some View {
         Button {
             if !dependency.presenter.isInputFormValid() {
@@ -92,11 +107,11 @@ struct EnterRoomView: View, ModuleAssembler {
                 .frame(width: 140, height: 20)
         }
         .softButtonStyle(RoundedRectangle(cornerRadius: 20))
-        .padding()
         .disabled(!viewModel.isButtonEnabled)
     }
     
-    private var innerShadowBackGround: some View {
+    /// ニューモーフィズム用シャドウ
+    private var innerShadow: some View {
         RoundedRectangle(cornerRadius: 20)
             .fill(Color.Neumorphic.main)
             .softInnerShadow(RoundedRectangle(cornerRadius: 20),
@@ -108,6 +123,7 @@ struct EnterRoomView: View, ModuleAssembler {
     
     // MARK: - Router
     
+    /// カード一覧画面に遷移させるナビゲーション
     private var navigationForCardListView: some View {
         NavigationLink(isActive: $viewModel.willPushCardListView, destination: {
             if viewModel.willPushCardListView {

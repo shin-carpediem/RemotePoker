@@ -16,18 +16,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     
     init(dependency: Dependency) {
         self.dependency = dependency
-        
-        let currentUserId = AppConfig.shared.currentUserId
-        if !currentUserId.isEmpty {
-            currentUser = .init(id: currentUserId,
-                                name: self.dependency.dataStore.fetchUser(id: currentUserId).name,
-                                selectedCardId: "")
-        } else {
-            AppConfig.shared.resetLocalLogInData()
-            currentUser = .init(id: UUID().uuidString,
-                                name: "",
-                                selectedCardId: "")
-        }
+        fetchCurrentUserLocalData()
     }
     
     // MARK: - EnterRoomPresentation
@@ -49,8 +38,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
             
             pushCardListView()
         } else {
-            AppConfig.shared.resetLocalLogInData()
-            disableButton(false)
+            fatalError()
         }
     }
     
@@ -89,7 +77,10 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
             await dependency.dataStore.createRoom(room!)
         }
 
-        addLocalLogInData()
+        // ローカルにユーザーデータの一部を保存
+        AppConfig.shared.addLocalLogInData(userId: currentUser.id,
+                                           userName: currentUser.name,
+                                           roomId: room!.id)
         pushCardListView()
     }
     
@@ -120,10 +111,20 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
         }
     }
     
-    private func addLocalLogInData() {
-        AppConfig.shared.isCurrentUserLoggedIn = true
-        AppConfig.shared.currentUserId = currentUser.id
-        AppConfig.shared.currentUserRoomId = room?.id ?? 0
+    private func fetchCurrentUserLocalData() {
+        let currentUserId = AppConfig.shared.currentUserId
+        if !currentUserId.isEmpty {
+            let name = AppConfig.shared.currentUserName
+            // ローカルにカレントユーザーデータが存在する時
+            currentUser = .init(id: currentUserId,
+                                name: name,
+                                selectedCardId: "")
+        } else {
+            AppConfig.shared.resetLocalLogInData()
+            currentUser = .init(id: UUID().uuidString,
+                                name: "",
+                                selectedCardId: "")
+        }
     }
     
     // MARK: - Router

@@ -35,6 +35,7 @@ struct SettingView: View {
         }
     }
     
+    /// 退出ボタン
     private var leaveButton: some View {
         Button(action: {
             presentation.wrappedValue.dismiss()

@@ -8,6 +8,7 @@ protocol ModuleAssembler {
     func assembleCardList(room: Room, currrentUser: User) -> CardListView
     
     /// 設定画面をアセンブルする
+    /// - parameter room: ルーム
     /// - parameter currrentUser: カレントユーザー
-    func assembleSetting(currrentUser: User) -> SettingView
+    func assembleSetting(room: Room, currrentUser: User) -> SettingView
 }

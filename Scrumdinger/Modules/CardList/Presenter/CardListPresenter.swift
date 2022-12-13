@@ -1,6 +1,6 @@
 import Foundation
 
-class CardListPresenter: CardListPresentation {
+class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     // MARK: - Dependency
     
     struct Dependency {
@@ -25,45 +25,35 @@ class CardListPresenter: CardListPresentation {
     }
     
     func didSelectCard(card: Card) async {
-        dependency.currentUser.selectedCardId = card.id
         dependency.dataStore.updateSelectedCardId(selectedCardDictionary: [dependency.currentUser.id: card.id])
-        updateUserSelectStatus()
     }
     
     func didTapOpenSelectedCardListButton() {
         disableButton(true)
-        showSelectedCardList(true)
+        showSelectedCardList()
     }
     
     func didTapResetSelectedCardListButton() async {
         disableButton(true)
-        dependency.currentUser.selectedCardId = ""
+
         let userIdList: [String] = dependency.viewModel.userSelectStatus.map { $0.user.id }
         var selectedCardDictionary: [String: String] = [:]
-        userIdList.forEach { userId in
-            selectedCardDictionary[userId] = ""
-        }
+        userIdList.forEach { selectedCardDictionary[$0] = "" }
         dependency.dataStore.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
-        updateUserSelectStatus()
 
-        showSelectedCardList(false)
+        hideSelectedCardList()
     }
     
     func didTapSettingButton() {
         pushSettingView()
     }
     
-    // MARK: - Private
+    // MARK: - CardListPresentationOutput
     
-    private var dependency: Dependency
-    
-    private func disableButton(_ disabled: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.isButtonEnabled = !disabled
-        }
-    }
-    
-    private func showHeaderTitle() {
+    func outputHeaderTitle() async {
+        // Firestoreからデータ取得
+        dependency.room = await dependency.dataStore.fetchRoom()
+        
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             let currentUserName = self.dependency.currentUser.name
@@ -78,33 +68,52 @@ class CardListPresenter: CardListPresentation {
             self.dependency.viewModel.headerTitle = headerTitle
         }
     }
+    
+    func outputUserSelectStatus() async {
+        // Firestoreからデータ取得
+        dependency.room = await dependency.dataStore.fetchRoom()
         
-    private func showSelectedCardList(_ open: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.isShownSelectedCardList = open
-        }
-    }
-
-    private func updateUserSelectStatus() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             let userSelectStatus: [UserSelectStatus] = self.dependency.room.userList.map { [weak self] user in
-                // TODO: データの流れを明確にする
-//                let selectedCardId: String = self!.dependency.dataStore.fetchUser(id: user.id).selectedCardId
+                let cardPackage = self!.dependency.room.cardPackage
+                
+                let id = Int.random(in: 0..<99999999)
+                let themeColor = cardPackage.themeColor
                 let selectedCardId: String = user.selectedCardId
-                let selectedCard: Card = self!.dependency.dataStore.fetchCard(
-                    cardPackageId: self!.dependency.room.cardPackage.id,
-                    cardId: selectedCardId)
+                let selectedCard: Card = cardPackage.cardList.first(where: { $0.id == selectedCardId })!
 
-                return UserSelectStatus(id: Int.random(in: 0..<99999999),
+                return UserSelectStatus(id: id,
                                         user: user,
-                                        themeColor: self!.dependency.room.cardPackage.themeColor,
+                                        themeColor: themeColor,
                                         selectedCard: selectedCard)
             }
             
             self.dependency.viewModel.userSelectStatus = userSelectStatus
         }
         disableButton(false)
+    }
+    
+    // MARK: - Private
+    
+    private var dependency: Dependency
+    
+    private func disableButton(_ disabled: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel.isButtonEnabled = !disabled
+        }
+    }
+        
+    private func showSelectedCardList() {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel.isShownSelectedCardList = true
+        }
+    }
+    
+    private func hideSelectedCardList() {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel.isShownSelectedCardList = false
+        }
     }
     
     // MARK: - Router
@@ -124,10 +133,12 @@ extension CardListPresenter: RoomDelegate {
         switch actionType {
         case .added, .removed:
             // ユーザーが入室あるいは退室した時
-            showHeaderTitle()
+//            outputHeaderTitle()
+            ()
         case .modified:
             // ユーザーの選択済みカードが更新された時
-            updateUserSelectStatus()
+//            outputUserSelectStatus()
+            ()
         case .unKnown:
             fatalError()
         }

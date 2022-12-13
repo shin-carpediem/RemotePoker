@@ -24,11 +24,12 @@ struct OpenCardView: View {
         }
     }
     
+    /// ユーザーネーム
     private var userName: some View {
         Text(userSelectStatus.user.name)
-            .background(.gray)
     }
     
+    /// 選択されたカードビュー
     private var selectedCardView: some View {
         Text(selectedCard!.point)
             .frame(width: 170, height: 120)
@@ -38,6 +39,7 @@ struct OpenCardView: View {
             .cornerRadius(10)
     }
     
+    /// ユーザーが未選択時のビュー
     private var userNotSelectedView: some View {
         Text("Not Selected Yet")
             .frame(width: 170, height: 120)
