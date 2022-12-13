@@ -21,8 +21,8 @@ protocol CardListPresentation {
 
 protocol CardListPresentationOutput {
     /// ヘッダータイトルを出力する
-    func outputHeaderTitle() async
+    func outputHeaderTitle()
     
     /// ユーザーの選択されたカード一覧状況を出力する
-    func outputUserSelectStatus() async
+    func outputUserSelectStatus()
 }

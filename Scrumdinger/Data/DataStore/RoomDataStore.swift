@@ -133,7 +133,7 @@ class RoomDataStore: RoomRepository {
                     actionType = .unKnown
                 }
                 
-                self?.delegate!.whenUserChanged(actionType: actionType)
+                self?.delegate?.whenUserChanged(actionType: actionType)
             }
         }
     }

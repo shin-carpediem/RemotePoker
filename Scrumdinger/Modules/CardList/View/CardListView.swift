@@ -24,7 +24,7 @@ struct CardListView: View, ModuleAssembler {
     /// View生成時
     private func construct() async {
         dependency.presenter.subscribeUser()
-        await dependency.presenter.outputHeaderTitle()
+        dependency.presenter.outputHeaderTitle()
     }
     
     // MARK: - View
