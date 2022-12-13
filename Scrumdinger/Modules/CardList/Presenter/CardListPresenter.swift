@@ -17,6 +17,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     // MARK: - CardListPresentation
     
     func subscribeUser() {
+        dependency.dataStore.delegate = self
         dependency.dataStore.subscribeUser()
     }
     
@@ -102,7 +103,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     // MARK: - Private
     
     private var dependency: Dependency
-    
+        
     /// ボタンを無効にする
     private func disableButton(_ disabled: Bool) {
         DispatchQueue.main.async { [weak self] in
@@ -115,6 +116,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.isShownSelectedCardList = true
         }
+        disableButton(false)
     }
     
     /// 選択されたカード一覧を非表示にする
@@ -122,6 +124,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.isShownSelectedCardList = false
         }
+        disableButton(false)
     }
     
     // MARK: - Router
@@ -144,11 +147,11 @@ extension CardListPresenter: RoomDelegate {
             // ユーザーが入室あるいは退室した時
             // TODO: 非同期はここでは使えない
 //            outputHeaderTitle()
-            ()
+            print("added")
         case .modified:
             // ユーザーの選択済みカードが更新された時
 //            outputUserSelectStatus()
-            ()
+            print("modified")
         case .unKnown:
             fatalError()
         }

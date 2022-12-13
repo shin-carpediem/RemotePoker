@@ -13,11 +13,14 @@ enum UserActionType {
 }
 
 protocol RoomDelegate {
-    /// ユーザーが変更された時
+    /// ルームにユーザーが追加/更新/削除された時
     func whenUserChanged(actionType: UserActionType)
 }
 
 protocol RoomRepository {
+    /// デリゲート
+    var delegate: RoomDelegate? { get set }
+    
     /// ルームが存在するか確認する
     /// - parameter roomId: ルームID
     /// - returns: 存在するか

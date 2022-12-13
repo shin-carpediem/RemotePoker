@@ -7,97 +7,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9919D7AB-8561-4D85-86E4-0910DE51A500"
-            shouldBeEnabled = "Yes"
+            uuid = "6BEEEDE2-D364-45EB-949C-BD4BE53B71E8"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Scrumdinger/Data/DataStore/RoomDataStore.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
-            landmarkName = "fetchUser(id:)"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "subscribeUser()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "9919D7AB-8561-4D85-86E4-0910DE51A500 - df03b522c3b660ac"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Scrumdinger.RoomDataStore.fetchUser(id: Swift.String) -&gt; Scrumdinger.User"
-                  moduleName = "Scrumdinger"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/aokishinichiro/develop/Scrumdinger/Scrumdinger/Data/DataStore/RoomDataStore.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "142"
-                  endingLineNumber = "142"
-                  offsetFromSymbolStart = "464">
-               </Location>
-               <Location
-                  uuid = "9919D7AB-8561-4D85-86E4-0910DE51A500 - cc63449484f6d628"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRDocumentSnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Scrumdinger.RoomDataStore.fetchUser(id: Swift.String) -&gt; Scrumdinger.User"
-                  moduleName = "Scrumdinger"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/aokishinichiro/develop/Scrumdinger/Scrumdinger/Data/DataStore/RoomDataStore.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "140"
-                  endingLineNumber = "140"
-                  offsetFromSymbolStart = "125">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "2ECE5C56-33A3-4399-A944-56CA3C5D7E1D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Scrumdinger/Data/DataStore/RoomDataStore.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
-            landmarkName = "fetchUser(id:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "2ECE5C56-33A3-4399-A944-56CA3C5D7E1D - cc63449484f6d5a4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRDocumentSnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Scrumdinger.RoomDataStore.fetchUser(id: Swift.String) -&gt; Scrumdinger.User"
-                  moduleName = "Scrumdinger"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/aokishinichiro/develop/Scrumdinger/Scrumdinger/Data/DataStore/RoomDataStore.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "144"
-                  endingLineNumber = "144"
-                  offsetFromSymbolStart = "393">
-               </Location>
-               <Location
-                  uuid = "2ECE5C56-33A3-4399-A944-56CA3C5D7E1D - cc63449484f6d5a4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;__C.FIRDocumentSnapshot&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Scrumdinger.RoomDataStore.fetchUser(id: Swift.String) -&gt; Scrumdinger.User"
-                  moduleName = "Scrumdinger"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/aokishinichiro/develop/Scrumdinger/Scrumdinger/Data/DataStore/RoomDataStore.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "144"
-                  endingLineNumber = "144"
-                  offsetFromSymbolStart = "427">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

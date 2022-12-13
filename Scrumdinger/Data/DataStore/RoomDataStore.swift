@@ -3,14 +3,16 @@ import FirebaseFirestoreSwift
 import Foundation
 
 class RoomDataStore: RoomRepository {
-    init() {
-        firebaseRef = nil
-    }
+    init() {}
     
     convenience init(roomId: Int) {
         self.init()
         firebaseRef = FirebaseRef(roomId: roomId)
     }
+    
+    // MARK: - RoomRepository
+    
+    var delegate: RoomDelegate?
     
     func checkRoomExist(roomId: Int) async -> Bool {
         guard let document = try? await Firestore.firestore().collection("rooms").document(String(roomId)).getDocument() else { return false }
@@ -131,7 +133,7 @@ class RoomDataStore: RoomRepository {
                     actionType = .unKnown
                 }
                 
-                self?.delegate?.whenUserChanged(actionType: actionType)
+                self?.delegate!.whenUserChanged(actionType: actionType)
             }
         }
     }
@@ -164,8 +166,6 @@ class RoomDataStore: RoomRepository {
     // MARK: - Private
         
     private var firebaseRef: FirebaseRef?
-    
-    private var delegate: RoomDelegate?
     
     private var userListener: ListenerRegistration?
 }
