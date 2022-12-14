@@ -31,6 +31,7 @@ extension ModuleAssembler {
                 room: room,
                 currentUser: currrentUser),
             viewModel: viewModel)
+        interactor.dependency.presenter = presenter
         return view
     }
     

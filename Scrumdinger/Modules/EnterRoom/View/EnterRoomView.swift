@@ -73,7 +73,13 @@ struct EnterRoomView: View, ModuleAssembler {
         TextField("Name",
                   text: $viewModel.inputName)
         .padding()
-        .background(innerShadow)
+        .background(RoundedRectangle(cornerRadius: 20)
+            .fill(Color.Neumorphic.main)
+            .softInnerShadow(RoundedRectangle(cornerRadius: 20),
+                             darkShadow: Color.Neumorphic.darkShadow,
+                             lightShadow: Color.Neumorphic.lightShadow,
+                             spread: 0.2,
+                             radius: 2))
         .tint(.gray)
         .foregroundColor(.gray)
     }
@@ -83,7 +89,13 @@ struct EnterRoomView: View, ModuleAssembler {
         TextField("Room ID",
                   text: $viewModel.inputRoomId)
         .padding()
-        .background(innerShadow)
+        .background(RoundedRectangle(cornerRadius: 20)
+            .fill(Color.Neumorphic.main)
+            .softInnerShadow(RoundedRectangle(cornerRadius: 20),
+                             darkShadow: Color.Neumorphic.darkShadow,
+                             lightShadow: Color.Neumorphic.lightShadow,
+                             spread: 0.2,
+                             radius: 2))
         .tint(.gray)
         .foregroundColor(.gray)
     }
@@ -104,17 +116,6 @@ struct EnterRoomView: View, ModuleAssembler {
         }
         .softButtonStyle(RoundedRectangle(cornerRadius: 20))
         .disabled(!viewModel.isButtonEnabled)
-    }
-    
-    /// ニューモーフィズム用シャドウ
-    private var innerShadow: some View {
-        RoundedRectangle(cornerRadius: 20)
-            .fill(Color.Neumorphic.main)
-            .softInnerShadow(RoundedRectangle(cornerRadius: 20),
-                             darkShadow: Color.Neumorphic.darkShadow,
-                             lightShadow: Color.Neumorphic.lightShadow,
-                             spread: 0.2,
-                             radius: 2)
     }
     
     // MARK: - Router

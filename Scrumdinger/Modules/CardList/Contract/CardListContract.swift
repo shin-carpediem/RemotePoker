@@ -27,14 +27,17 @@ protocol CardListUseCase {
     func unsubscribeUser()
     
     /// 選択されたカードIDを更新する
-    /// - parameter card: カード
-    func updateSelectedCardId(card: Card)
+    /// - parameter selectedCardDictionary: カレントユーザーIDと選択されたカードIDの辞書
+    func updateSelectedCardId(selectedCardDictionary: [String: String])
     
     /// ルームを取得する
-    func fetchRoom()
+    func fetchRoom() async
 }
 
 protocol CardListPresentationOutput {
+    /// ルームを出力する
+    func outputRoom(_ room: Room)
+    
     /// ヘッダータイトルを出力する
     func outputHeaderTitle()
     

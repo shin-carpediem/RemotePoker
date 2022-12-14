@@ -17,7 +17,6 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     // MARK: - CardListPresentation
     
     func subscribeUser() {
-        dependency.dataStore.delegate = self
         dependency.interactor.subscribeUser()
     }
     
@@ -27,7 +26,8 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     
     func didSelectCard(card: Card) {
         disableButton(true)
-        dependency.dataStore.updateSelectedCardId(selectedCardDictionary: [dependency.currentUser.id: card.id])
+        let selectedCardDictionary: [String : String] = [dependency.currentUser.id: card.id]
+        dependency.interactor.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
     }
     
     func didTapOpenSelectedCardListButton() {
@@ -41,7 +41,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
         let userIdList: [String] = dependency.viewModel.userSelectStatus.map { $0.user.id }
         var selectedCardDictionary: [String: String] = [:]
         userIdList.forEach { selectedCardDictionary[$0] = "" }
-        dependency.dataStore.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
+        dependency.interactor.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
 
         hideSelectedCardList()
     }
@@ -52,12 +52,15 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     
     // MARK: - CardListPresentationOutput
     
+    func outputRoom(_ room: Room) {
+        dependency.room = room
+    }
+    
     func outputHeaderTitle() {
-        // TODO: 以下記事を参考にInteractorにTaskを切り分け
-        // https://www.hackingwithswift.com/quick-start/concurrency/how-to-get-a-result-from-a-task
         Task {
             // Firestoreからデータ取得
-            dependency.room = await dependency.dataStore.fetchRoom()
+            await dependency.interactor.fetchRoom()
+
             dependency.currentUser.selectedCardId = dependency.room.userList.first(where: { $0.id == dependency.currentUser.id })?.selectedCardId ?? ""
             
             DispatchQueue.main.async { [weak self] in
@@ -79,7 +82,8 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     func outputUserSelectStatus() {
         Task {
             // Firestoreからデータ取得
-            dependency.room = await dependency.dataStore.fetchRoom()
+            await dependency.interactor.fetchRoom()
+            
             dependency.currentUser.selectedCardId = dependency.room.userList.first(where: { $0.id == dependency.currentUser.id })?.selectedCardId ?? ""
             
             DispatchQueue.main.async { [weak self] in
@@ -105,11 +109,11 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     }
     
     func outputSuccess() {
-        
+        // TODO: 成功メッセージ
     }
     
     func outputError() {
-        
+        // TODO: エラーメッセージ
     }
     
     // MARK: - Private
@@ -147,22 +151,5 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
             self?.dependency.viewModel.willPushSettingView = true
         }
         disableButton(false)
-    }
-}
-
-// MARK: - RoomDelegate
-
-extension CardListPresenter: RoomDelegate {
-    func whenUserChanged(actionType: UserActionType) {
-        switch actionType {
-        case .added, .removed:
-            // ユーザーが入室あるいは退室した時
-            outputHeaderTitle()
-        case .modified:
-            // ユーザーの選択済みカードが更新された時
-            outputUserSelectStatus()
-        case .unKnown:
-            fatalError()
-        }
     }
 }
