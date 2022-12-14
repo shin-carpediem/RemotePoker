@@ -7,34 +7,9 @@ class AppConfig {
         }
         return Static.instance
     }
-    
-    func addLocalLogInData(_ userId: String?,
-                           _ userName: String?,
-                           _ roomId: Int?) {
-        AppConfig.shared.isCurrentUserLoggedIn = true
-        if let userId {
-            AppConfig.shared.currentUserId = userId
-        }
-        if let userName {
-            AppConfig.shared.currentUserName = userName
-        }
-        if let roomId {
-            AppConfig.shared.currentUserRoomId = roomId
-        }
-    }
-    
-    func resetLocalLogInData() {
-        AppConfig.shared.isCurrentUserLoggedIn = false
-        print(AppConfig.shared.isCurrentUserLoggedIn)
-        AppConfig.shared.currentUserId = ""
-        AppConfig.shared.currentUserName = ""
-        AppConfig.shared.currentUserRoomId = 0
-    }
-    
-    // MARK: - Private
-    
+        
     /// カレントユーザーがログイン中か
-    private(set) var isCurrentUserLoggedIn: Bool {
+    var isCurrentUserLoggedIn: Bool {
         get {
             UserDefaults.standard.bool(forKey: "isCurrentUserLoggedIn")
         }
@@ -43,6 +18,24 @@ class AppConfig {
         }
     }
     
+    func addLocalLogInData(userId: String,
+                           userName: String,
+                           roomId: Int) {
+        AppConfig.shared.isCurrentUserLoggedIn = true
+        AppConfig.shared.currentUserId = userId
+        AppConfig.shared.currentUserName = userName
+        AppConfig.shared.currentUserRoomId = roomId
+    }
+    
+    func resetLocalLogInData() {
+        AppConfig.shared.isCurrentUserLoggedIn = false
+        AppConfig.shared.currentUserId = ""
+        AppConfig.shared.currentUserName = ""
+        AppConfig.shared.currentUserRoomId = 0
+    }
+    
+    // MARK: - Private
+
     /// カレントユーザーID
     private(set) var currentUserId: String {
         get {

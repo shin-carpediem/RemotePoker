@@ -1,7 +1,7 @@
 protocol EnterRoomPresentation {
     /// カレントユーザーのローカルデータを取得する
     func fetchCurrentUserLocalData()
-    
+        
     /// 入力フォームが有効か
     func isInputFormValid() -> Bool
     
@@ -11,7 +11,8 @@ protocol EnterRoomPresentation {
     /// ルームに入るボタンが押された
     /// - parameter userName: ユーザー名
     /// - parameter roomId: ルームID:
-    func didTapEnterRoomButton(userName: String, roomId: Int)
+    func didTapEnterRoomButton(userName: String,
+                               roomId: Int)
 }
 
 protocol EnterRoomPresentationOutput {

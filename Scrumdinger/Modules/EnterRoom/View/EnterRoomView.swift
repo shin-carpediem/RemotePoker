@@ -49,7 +49,9 @@ struct EnterRoomView: View, ModuleAssembler {
                   primaryButton: .default(Text("OK"), action: {
                 dependency.presenter.didTapEnterExistingRoomButton()
             }),
-                  secondaryButton: .cancel())
+                  secondaryButton: .cancel {
+                AppConfig.shared.isCurrentUserLoggedIn = false
+            })
         })
         .alert("Name & 4 Digit Number Required",
                isPresented: $viewModel.isShownInputFormInvalidAlert,

@@ -81,7 +81,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
                         id: currentUser.id,
                         name: currentUser.name,
                         selectedCardId: ""))
-                    room?.userList.append(currentUser)
+                    room!.userList.append(currentUser)
                 }
             } else {
                 // 新規ルーム
@@ -96,7 +96,9 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
             }
 
             // ローカルにユーザーデータの一部を保存
-            AppConfig.shared.addLocalLogInData(currentUser.id, currentUser.name, room!.id)
+            AppConfig.shared.addLocalLogInData(userId: currentUser.id,
+                                               userName: currentUser.name,
+                                               roomId: room!.id)
             pushCardListView()
         }
     }
