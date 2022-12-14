@@ -57,7 +57,8 @@ struct CardListView: View, ModuleAssembler {
         .navigationTitle(viewModel.headerTitle)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(trailing: settingButton)
+        // TODO: 退出ボタンを押した時にルートに戻る実装をしてから公開する
+//        .navigationBarItems(trailing: settingButton)
         .onAppear { construct() }
     }
         
