@@ -1,2 +1,1 @@
-![VIPER_SwiftUI](https://user-images.githubusercontent.com/71208265/207172404-50721b3b-7579-4bf0-9e6e-e49d8c9ea755.png)
-# Scrumdinger
+![VIPER_SwiftUI](https://user-images.githubusercontent.com/71208265/207720255-8bf04fee-8693-4b2e-ad72-fdc26d361159.png)
