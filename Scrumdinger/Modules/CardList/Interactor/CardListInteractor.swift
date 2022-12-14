@@ -33,12 +33,12 @@ class CardListInteractor: CardListUseCase {
     
     func fetchRoom() async {
         let task = Task { () -> Room in
-            dependency.room = await dependency.dataStore.fetchRoom()
-            return dependency.room
+            await dependency.dataStore.fetchRoom()
         }
         let result = await task.result
         do {
             let room = try result.get()
+            dependency.room = room
             dependency.presenter?.outputRoom(room)
         } catch {
             dependency.presenter?.outputError()

@@ -58,11 +58,12 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     
     func outputHeaderTitle() {
         Task {
-            // Firestoreからデータ取得
+            // Interactor→Firestore
             await dependency.interactor.fetchRoom()
 
             dependency.currentUser.selectedCardId = dependency.room.userList.first(where: { $0.id == dependency.currentUser.id })?.selectedCardId ?? ""
             
+            // PresententationOutput
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 let currentUserName = self.dependency.currentUser.name
@@ -81,11 +82,12 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     
     func outputUserSelectStatus() {
         Task {
-            // Firestoreからデータ取得
+            // Interactor→Firestore
             await dependency.interactor.fetchRoom()
             
             dependency.currentUser.selectedCardId = dependency.room.userList.first(where: { $0.id == dependency.currentUser.id })?.selectedCardId ?? ""
             
+            // PresententationOutput
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 let userSelectStatus: [UserSelectStatus] = self.dependency.room.userList.map { [weak self] user in

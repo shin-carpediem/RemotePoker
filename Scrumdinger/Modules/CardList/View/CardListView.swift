@@ -25,6 +25,7 @@ struct CardListView: View, ModuleAssembler {
     private func construct() {
         dependency.presenter.subscribeUser()
         dependency.presenter.outputHeaderTitle()
+        dependency.presenter.outputUserSelectStatus()
     }
     
     // MARK: - View
@@ -35,9 +36,6 @@ struct CardListView: View, ModuleAssembler {
                 Color.Neumorphic.main.ignoresSafeArea()
                 VStack {
                     ScrollView {
-                        headerTitle
-                            .padding([.leading, .trailing])
-                        Spacer()
                         if viewModel.isShownSelectedCardList {
                             selectedCardListView
                                 .padding()
@@ -55,28 +53,13 @@ struct CardListView: View, ModuleAssembler {
                 navigationForSettingView
             }
         }
+        .navigationTitle(viewModel.headerTitle)
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
+        .navigationBarItems(trailing: settingButton)
         .onAppear { construct() }
     }
-    
-    /// ヘッダータイトル
-    private var headerTitle: some View {
-        HStack {
-            Spacer()
-            headerText
-                .padding()
-            Spacer()
-            settingButton
-        }
-    }
-    
-    /// ヘッダーテキスト
-    private var headerText: some View {
-        Text(viewModel.headerTitle)
-            .font(.headline)
-            .foregroundColor(.gray)
-    }
-    
+        
     /// 設定ボタン
     private var settingButton: some View {
         Button(action: {
