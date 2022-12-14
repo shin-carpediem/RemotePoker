@@ -36,6 +36,7 @@ struct CardListView: View, ModuleAssembler {
                 Color.Neumorphic.main.ignoresSafeArea()
                 VStack {
                     ScrollView {
+                        Spacer()
                         if viewModel.isShownSelectedCardList {
                             selectedCardListView
                                 .padding()
@@ -46,7 +47,7 @@ struct CardListView: View, ModuleAssembler {
                     }
                     HStack {
                         Spacer()
-                            .background(.clear).opacity(0)
+                        buttonText
                         floatingActionButton
                     }
                 }
@@ -92,6 +93,14 @@ struct CardListView: View, ModuleAssembler {
         }
     }
     
+    /// ボタンの説明テキスト
+    private var buttonText: some View {
+        let text = viewModel.isShownSelectedCardList ? "Reset Selected Cards" : "Open Selected Cards"
+        return Text(text)
+            .foregroundColor(.gray)
+            .font(.system(size: 14, weight: .regular))
+    }
+    
     /// フローティングアクションボタン
     private var floatingActionButton: some View {
         Button {
@@ -101,7 +110,19 @@ struct CardListView: View, ModuleAssembler {
                 dependency.presenter.didTapOpenSelectedCardListButton()
             }
         } label: {
-            let systemName = viewModel.isShownSelectedCardList ? "gobackward" : "lock.rotation.open"
+            let selectedCardCount = viewModel.userSelectStatus.map { $0.selectedCard }.count
+            let systemName: String
+            if viewModel.isShownSelectedCardList {
+                systemName = "gobackward"
+            } else {
+                if selectedCardCount >= 3 {
+                    systemName = "person.3.sequence"
+                } else if selectedCardCount == 2 {
+                    systemName = "person.2"
+                } else {
+                    systemName = "person"
+                }
+            }
             return Image(systemName: systemName).foregroundColor(.gray)
         }
         .frame(width: 60, height: 60)

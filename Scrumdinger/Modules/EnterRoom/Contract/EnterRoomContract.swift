@@ -1,4 +1,7 @@
 protocol EnterRoomPresentation {
+    /// カレントユーザーのローカルデータを取得する
+    func fetchCurrentUserLocalData()
+    
     /// 入力フォームが有効か
     func isInputFormValid() -> Bool
     

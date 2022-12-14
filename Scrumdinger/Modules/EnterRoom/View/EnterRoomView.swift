@@ -21,6 +21,7 @@ struct EnterRoomView: View, ModuleAssembler {
     
     /// View生成時
     private func construct() {
+        dependency.presenter.fetchCurrentUserLocalData()
         if AppConfig.shared.isCurrentUserLoggedIn {
             dependency.presenter.outputLoginAsCurrentUserAlert()
         }

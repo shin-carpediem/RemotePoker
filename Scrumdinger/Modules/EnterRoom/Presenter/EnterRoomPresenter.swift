@@ -16,10 +16,25 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     
     init(dependency: Dependency) {
         self.dependency = dependency
-        fetchCurrentUserLocalData()
     }
     
     // MARK: - EnterRoomPresentation
+    
+    func fetchCurrentUserLocalData() {
+        let currentUserId = AppConfig.shared.currentUserId
+        if !currentUserId.isEmpty {
+            let name = AppConfig.shared.currentUserName
+            // ローカルにカレントユーザーデータが存在する時
+            currentUser = .init(id: currentUserId,
+                                name: name,
+                                selectedCardId: "")
+        } else {
+            AppConfig.shared.resetLocalLogInData()
+            currentUser = .init(id: UUID().uuidString,
+                                name: "",
+                                selectedCardId: "")
+        }
+    }
     
     func isInputFormValid() -> Bool {
         guard !dependency.viewModel.inputName.isEmpty else { return false }
@@ -111,23 +126,6 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.isButtonEnabled = !disabled
             self?.dependency.viewModel.activityIndicator.isAnimating = disabled
-        }
-    }
-    
-    /// カレントユーザーのローカルデータを取得する
-    private func fetchCurrentUserLocalData() {
-        let currentUserId = AppConfig.shared.currentUserId
-        if !currentUserId.isEmpty {
-            let name = AppConfig.shared.currentUserName
-            // ローカルにカレントユーザーデータが存在する時
-            currentUser = .init(id: currentUserId,
-                                name: name,
-                                selectedCardId: "")
-        } else {
-            AppConfig.shared.resetLocalLogInData()
-            currentUser = .init(id: UUID().uuidString,
-                                name: "",
-                                selectedCardId: "")
         }
     }
     
