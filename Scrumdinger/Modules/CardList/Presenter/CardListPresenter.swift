@@ -95,8 +95,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
                     
                     let id = Int.random(in: 0..<99999999)
                     let themeColor = cardPackage.themeColor
-                    let selectedCardId: String = user.selectedCardId
-                    let selectedCard: Card? = cardPackage.cardList.first(where: { $0.id == selectedCardId })
+                    let selectedCard: Card? = cardPackage.cardList.first(where: { $0.id == user.selectedCardId })
 
                     return UserSelectStatus(id: id,
                                             user: user,

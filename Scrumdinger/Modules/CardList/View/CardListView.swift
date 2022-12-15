@@ -10,9 +10,12 @@ struct CardListView: View, ModuleAssembler {
         var currentUser: User
     }
     
+    /// View生成時
     init(dependency: Dependency, viewModel: CardListViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
+        
+        construct()
     }
     
     // MARK: - Private
@@ -60,7 +63,6 @@ struct CardListView: View, ModuleAssembler {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(trailing: settingButton)
-        .onAppear { construct() }
     }
         
     /// 設定ボタン

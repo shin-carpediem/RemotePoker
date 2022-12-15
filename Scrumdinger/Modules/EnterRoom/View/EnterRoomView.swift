@@ -11,6 +11,8 @@ struct EnterRoomView: View, ModuleAssembler {
     init(dependency: Dependency, viewModel: EnterRoomViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
+        
+        construct()
     }
     
     // MARK: - Private
@@ -60,7 +62,6 @@ struct EnterRoomView: View, ModuleAssembler {
             Text("If the number is new, a new room will be created.")
         })
         .navigationTitle("Remote Poker")
-        .onAppear { construct() }
     }
     
     /// 入力フォーム
