@@ -8,6 +8,9 @@ protocol EnterRoomPresentation {
     /// ログイン済みのルームに入るボタンが押された
     func didTapEnterExistingRoomButton()
     
+    /// ログイン済みのルームに入るキャンセルが押された
+    func didCancelEnterExistingRoomButton()
+    
     /// ルームに入るボタンが押された
     /// - parameter userName: ユーザー名
     /// - parameter roomId: ルームID:

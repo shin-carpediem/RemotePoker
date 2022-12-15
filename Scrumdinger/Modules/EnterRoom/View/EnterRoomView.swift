@@ -50,7 +50,7 @@ struct EnterRoomView: View, ModuleAssembler {
                 dependency.presenter.didTapEnterExistingRoomButton()
             }),
                   secondaryButton: .cancel {
-                AppConfig.shared.isCurrentUserLoggedIn = false
+                dependency.presenter.didCancelEnterExistingRoomButton()
             })
         })
         .alert("Name & 4 Digit Number Required",

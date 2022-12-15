@@ -18,6 +18,7 @@ class AppConfig {
         }
     }
     
+    /// カレントユーザーにローカルデータを追加する
     func addLocalLogInData(userId: String,
                            userName: String,
                            roomId: Int) {
@@ -27,6 +28,7 @@ class AppConfig {
         AppConfig.shared.currentUserRoomId = roomId
     }
     
+    /// カレントユーザーからローカルデータをリセットする
     func resetLocalLogInData() {
         AppConfig.shared.isCurrentUserLoggedIn = false
         AppConfig.shared.currentUserId = ""

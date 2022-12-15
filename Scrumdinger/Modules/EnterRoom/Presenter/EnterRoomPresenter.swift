@@ -51,12 +51,17 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
                 // 既存ルーム
                 dependency.dataStore = RoomDataStore(roomId: roomId)
                 room = await dependency.dataStore.fetchRoom()
+                dependency.viewModel.isEnterLoggedInRoom = true
                 
                 pushCardListView()
             } else {
                 fatalError()
             }
         }
+    }
+    
+    func didCancelEnterExistingRoomButton() {
+        dependency.viewModel.isEnterLoggedInRoom = false
     }
     
     func didTapEnterRoomButton(userName: String, roomId: Int) {
@@ -66,17 +71,27 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
             currentUser.name = userName
             let roomExist = await dependency.dataStore.checkRoomExist(roomId: roomId)
             if roomExist {
+                // 既存ルーム
                 dependency.dataStore = RoomDataStore(roomId: roomId)
                 room = await dependency.dataStore.fetchRoom()
 
-                // 既存ルーム
                 if AppConfig.shared.isCurrentUserLoggedIn {
-                    // ルームにログインしている
-                    pushCardListView()
+                    // ルームにログイン中
+                    if let isEnterLoggedInRoom = dependency.viewModel.isEnterLoggedInRoom, isEnterLoggedInRoom {
+                        // ログインしているルームに入る予定
+                        pushCardListView()
+                    } else {
+                        // ログインしているルームに入らない
+                        await dependency.dataStore.addUserToRoom(user: .init(
+                            id: currentUser.id,
+                            name: currentUser.name,
+                            selectedCardId: ""))
+                        room!.userList.append(currentUser)
+                    }
+                    
                 } else {
                     // TODO: ローカルで保持していたデータが消えたがFirestore上ではルームにログインしている場合、ユーザーは追加させない
-                    
-                    // ルームにログインしていない
+                    // ログインしていない
                     await dependency.dataStore.addUserToRoom(user: .init(
                         id: currentUser.id,
                         name: currentUser.name,

@@ -5,6 +5,9 @@ class EnterRoomViewModel: ObservableObject {
     // Firebaseではなくローカルで保持する
     @Published var isLoggedIn = AppConfig.shared.isCurrentUserLoggedIn
     
+    /// ログイン中のルームに入るか
+    @Published var isEnterLoggedInRoom: Bool?
+    
     /// 入力フォーム/名前
     @Published var inputName = ""
     
