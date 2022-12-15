@@ -47,6 +47,8 @@ struct CardListView: View, ModuleAssembler {
                     }
                     HStack {
                         Spacer()
+                        selectedCardPointView
+                        Spacer()
                         buttonText
                         floatingActionButton
                     }
@@ -57,8 +59,7 @@ struct CardListView: View, ModuleAssembler {
         .navigationTitle(viewModel.headerTitle)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
-        // TODO: 退出ボタンを押した時にルートに戻る実装をしてから公開する
-//        .navigationBarItems(trailing: settingButton)
+        .navigationBarItems(trailing: settingButton)
         .onAppear { construct() }
     }
         
@@ -77,8 +78,10 @@ struct CardListView: View, ModuleAssembler {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
             ForEach(dependency.room.cardPackage.cardList) { card in
                 let themeColor = dependency.room.cardPackage.themeColor
+                let isSelected = card.id == dependency.currentUser.selectedCardId
                 CardView(card: card,
-                         themeColor: themeColor) { selectedCard in
+                         themeColor: themeColor,
+                         isSelected: isSelected) { selectedCard in
                     dependency.presenter.didSelectCard(card: selectedCard)
                 }
             }
@@ -92,6 +95,15 @@ struct CardListView: View, ModuleAssembler {
                 OpenCardView(userSelectStatus: userSelect)
             }
         }
+    }
+    
+    /// 選択されたカードのポイント
+    private var selectedCardPointView: some View {
+        let currentUserSelectStatus = viewModel.userSelectStatus.first(where: { $0.user.id == dependency.currentUser.id })
+        let point = currentUserSelectStatus?.selectedCard?.point ?? ""
+        return Text(point)
+            .foregroundColor(.gray)
+            .font(.system(size: 26, weight: .regular))
     }
     
     /// ボタンの説明テキスト

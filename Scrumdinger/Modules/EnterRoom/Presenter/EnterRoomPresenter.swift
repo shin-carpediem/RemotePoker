@@ -77,6 +77,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
 
                 if AppConfig.shared.isCurrentUserLoggedIn {
                     // ルームにログイン中
+                    // TODO: ローカルで保持していたデータが消えたがFirestore上ではルームにログインしている場合も考慮する。
                     if let isEnterLoggedInRoom = dependency.viewModel.isEnterLoggedInRoom, isEnterLoggedInRoom {
                         // ログインしているルームに入る予定
                         pushCardListView()
@@ -88,9 +89,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
                             selectedCardId: ""))
                         room!.userList.append(currentUser)
                     }
-                    
                 } else {
-                    // TODO: ローカルで保持していたデータが消えたがFirestore上ではルームにログインしている場合、ユーザーは追加させない
                     // ログインしていない
                     await dependency.dataStore.addUserToRoom(user: .init(
                         id: currentUser.id,
