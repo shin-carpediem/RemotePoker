@@ -3,6 +3,7 @@ protocol EnterRoomPresentation {
     func fetchCurrentUserLocalData()
         
     /// 入力フォームが有効か
+    /// - returns: 有効か
     func isInputFormValid() -> Bool
     
     /// ログイン済みのルームに入るボタンが押された

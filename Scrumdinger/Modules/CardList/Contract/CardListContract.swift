@@ -36,6 +36,7 @@ protocol CardListUseCase {
 
 protocol CardListPresentationOutput {
     /// ルームを出力する
+    /// - parameter room: ルーム
     func outputRoom(_ room: Room)
     
     /// ヘッダータイトルを出力する
