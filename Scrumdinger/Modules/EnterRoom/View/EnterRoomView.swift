@@ -61,7 +61,7 @@ struct EnterRoomView: View, ModuleAssembler {
                message: {
             Text("If the number is new, a new room will be created.")
         })
-        .navigationTitle("Remote Poker")
+        .navigationTitle("RemotePoker")
     }
     
     /// 入力フォーム
