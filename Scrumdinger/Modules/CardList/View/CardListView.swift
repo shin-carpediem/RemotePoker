@@ -2,6 +2,8 @@ import Neumorphic
 import SwiftUI
 
 struct CardListView: View, ModuleAssembler {
+    @Environment(\.presentationMode) var presentation
+    
     // MARK: - Dependency
     
     struct Dependency {
@@ -155,6 +157,12 @@ struct CardListView: View, ModuleAssembler {
             if viewModel.willPushSettingView {
                 assembleSetting(room: dependency.room,
                                 currrentUser: dependency.currentUser)
+                .onDisappear {
+                    // 設定画面から戻った時
+                    if !AppConfig.shared.isCurrentUserLoggedIn {
+                        presentation.wrappedValue.dismiss()
+                    }
+                }
             } else { EmptyView() }
         }) { EmptyView() }
     }
