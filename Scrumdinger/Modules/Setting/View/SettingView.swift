@@ -27,10 +27,29 @@ struct SettingView: View {
         ZStack {
             Color.Neumorphic.main.ignoresSafeArea()
             VStack(alignment: .leading) {
+                selecteThemeColorButton
+                    .padding()
+                Divider()
+                Spacer()
                 leaveButton
                     .padding()
                 Divider()
                 Spacer()
+            }
+        }
+    }
+    
+    /// テーマカラー選択ボタン
+    private var selecteThemeColorButton: some View {
+        Button(action: {
+            
+        }) {
+            HStack {
+                // TODO: ボタンデザイン決める
+                Image(systemName: "rectangle.portrait.and.arrow.forward")
+                    .foregroundColor(.gray)
+                Text("Select Theme Color")
+                    .foregroundColor(.gray)
             }
         }
     }

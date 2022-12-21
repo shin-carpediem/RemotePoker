@@ -15,6 +15,10 @@ class SettingPresenter: SettingPresentation {
     
     // MARK: - SettingPresentation
     
+    func didTapSelectThemeColorButton() {
+        disableButton(true)
+    }
+    
     func didTapLeaveRoomButton() {
         disableButton(true)
         AppConfig.shared.resetLocalLogInData()

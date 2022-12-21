@@ -12,7 +12,7 @@ class RoomDataStore: RoomRepository {
     
     // MARK: - RoomRepository
     
-    var delegate: RoomDelegate?
+    weak var delegate: RoomDelegate?
     
     func checkRoomExist(roomId: Int) async -> Bool {
         guard let document = try? await Firestore.firestore().collection("rooms").document(String(roomId)).getDocument() else { return false }

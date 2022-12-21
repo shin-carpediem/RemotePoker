@@ -12,7 +12,7 @@ enum UserActionType {
     case unKnown
 }
 
-protocol RoomDelegate {
+protocol RoomDelegate: AnyObject {
     /// ルームにユーザーが追加/更新/削除された時
     func whenUserChanged(actionType: UserActionType)
 }

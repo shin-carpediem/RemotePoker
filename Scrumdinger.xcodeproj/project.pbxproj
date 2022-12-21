@@ -40,6 +40,9 @@
 		F571FA562896CA3B003531CE /* FirebaseAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA1A2896CA2C003531CE /* FirebaseAuth.xcframework */; };
 		F571FA5F2896CCA5003531CE /* gRPCCertificates-Cpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F571FA5E2896CCA5003531CE /* gRPCCertificates-Cpp.bundle */; };
 		F571FA682896D137003531CE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F571FA672896D137003531CE /* GoogleService-Info.plist */; };
+		F57C641A2950A91000CD55CD /* SelectThemeColorContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C64192950A91000CD55CD /* SelectThemeColorContract.swift */; };
+		F57C641C2950A99F00CD55CD /* SelectThemeColorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C641B2950A99F00CD55CD /* SelectThemeColorPresenter.swift */; };
+		F57C641E2950AA3400CD55CD /* SelectThemeColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C641D2950AA3400CD55CD /* SelectThemeColorView.swift */; };
 		F5802CFB2931E6E000955949 /* FirebaseRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFA2931E6E000955949 /* FirebaseRef.swift */; };
 		F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFD293207C700955949 /* CardListPresenter.swift */; };
 		F5802D0329320DEF00955949 /* ModuleAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D0229320DEF00955949 /* ModuleAssembler.swift */; };
@@ -115,6 +118,9 @@
 		F571FA282896CA2C003531CE /* BoringSSL-GRPC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "BoringSSL-GRPC.xcframework"; path = "Carthage/Build/BoringSSL-GRPC.xcframework"; sourceTree = "<group>"; };
 		F571FA5E2896CCA5003531CE /* gRPCCertificates-Cpp.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "gRPCCertificates-Cpp.bundle"; path = "Carthage/Build/gRPC-C++.xcframework/ios-arm64/gRPC-C++.framework/Resources/gRPCCertificates-Cpp.bundle"; sourceTree = "<group>"; };
 		F571FA672896D137003531CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F57C64192950A91000CD55CD /* SelectThemeColorContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorContract.swift; sourceTree = "<group>"; };
+		F57C641B2950A99F00CD55CD /* SelectThemeColorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorPresenter.swift; sourceTree = "<group>"; };
+		F57C641D2950AA3400CD55CD /* SelectThemeColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorView.swift; sourceTree = "<group>"; };
 		F5802CFA2931E6E000955949 /* FirebaseRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRef.swift; sourceTree = "<group>"; };
 		F5802CFD293207C700955949 /* CardListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListPresenter.swift; sourceTree = "<group>"; };
 		F5802D0229320DEF00955949 /* ModuleAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleAssembler.swift; sourceTree = "<group>"; };
@@ -214,6 +220,7 @@
 				F5E051682929B407006EA727 /* EnterRoom */,
 				F5E051672929B125006EA727 /* CardList */,
 				F50060F62944376D005923A7 /* Setting */,
+				F57C64152950A8A600CD55CD /* SelectThemeColor */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -270,6 +277,40 @@
 				F571FA272896CA2C003531CE /* PromisesObjC.xcframework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F57C64152950A8A600CD55CD /* SelectThemeColor */ = {
+			isa = PBXGroup;
+			children = (
+				F57C64162950A8E200CD55CD /* Contract */,
+				F57C64172950A8E800CD55CD /* View */,
+				F57C64182950A8ED00CD55CD /* Presenter */,
+			);
+			path = SelectThemeColor;
+			sourceTree = "<group>";
+		};
+		F57C64162950A8E200CD55CD /* Contract */ = {
+			isa = PBXGroup;
+			children = (
+				F57C64192950A91000CD55CD /* SelectThemeColorContract.swift */,
+			);
+			path = Contract;
+			sourceTree = "<group>";
+		};
+		F57C64172950A8E800CD55CD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F57C641D2950AA3400CD55CD /* SelectThemeColorView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F57C64182950A8ED00CD55CD /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				F57C641B2950A99F00CD55CD /* SelectThemeColorPresenter.swift */,
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 		F5802CF92931E6D000955949 /* Firebase */ = {
@@ -659,11 +700,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F57C641C2950A99F00CD55CD /* SelectThemeColorPresenter.swift in Sources */,
 				F5802CFB2931E6E000955949 /* FirebaseRef.swift in Sources */,
 				F5E05175292BB134006EA727 /* RoomDataStore.swift in Sources */,
 				F5C397E0289F420F008AEFF2 /* EnterRoomView.swift in Sources */,
 				F50060F529443436005923A7 /* AppConfig.swift in Sources */,
 				F52366A22896382F005B1F65 /* CardView.swift in Sources */,
+				F57C641E2950AA3400CD55CD /* SelectThemeColorView.swift in Sources */,
 				F5C397DC289F40C6008AEFF2 /* Room.swift in Sources */,
 				F5B2FAD92944768600592363 /* SettingContract.swift in Sources */,
 				F5B2FADB294476BA00592363 /* SettingPresenter.swift in Sources */,
@@ -674,6 +717,7 @@
 				F5125F2E292E755600C822FE /* EnterRoomPresenter.swift in Sources */,
 				F525301429364D5200727472 /* EnterRoomViewModel.swift in Sources */,
 				F5B2FAE22949423200592363 /* CardListInteractor.swift in Sources */,
+				F57C641A2950A91000CD55CD /* SelectThemeColorContract.swift in Sources */,
 				F50060F3294426EF005923A7 /* ActivityIndicator.swift in Sources */,
 				F5802D0329320DEF00955949 /* ModuleAssembler.swift in Sources */,
 				F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */,
