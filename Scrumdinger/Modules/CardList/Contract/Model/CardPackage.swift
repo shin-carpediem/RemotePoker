@@ -37,7 +37,7 @@ struct Card: Identifiable {
 }
 
 /// テーマカラー
-enum ThemeColor: String {
+enum ThemeColor: String, CaseIterable {
     case bubblegum
     case buttercup
     case indigo

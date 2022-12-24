@@ -1,13 +1,14 @@
 import Neumorphic
 import SwiftUI
 
-struct SettingView: View {
+struct SettingView: View, ModuleAssembler {
     @Environment(\.presentationMode) var presentation
    
     // MARK: - Dependency
     
     struct Dependency {
         var presenter: SettingPresenter
+        var room: Room
     }
     
     init(dependency: Dependency, viewModel: SettingViewModel) {
@@ -42,11 +43,10 @@ struct SettingView: View {
     /// テーマカラー選択ボタン
     private var selecteThemeColorButton: some View {
         Button(action: {
-            
+            dependency.presenter.didTapSelectThemeColorButton()
         }) {
             HStack {
-                // TODO: ボタンデザイン決める
-                Image(systemName: "rectangle.portrait.and.arrow.forward")
+                Image(systemName: "heart")
                     .foregroundColor(.gray)
                 Text("Select Theme Color")
                     .foregroundColor(.gray)
@@ -79,7 +79,8 @@ struct SettingView_Previews: PreviewProvider {
                 dependency: .init(
                     dataStore: .init(),
                     currentUser: CardListView_Previews.me,
-                    viewModel: .init()))),
+                    viewModel: .init())),
+            room: CardListView_Previews.room1),
                     viewModel: .init())
         .previewDisplayName("設定画面")
     }

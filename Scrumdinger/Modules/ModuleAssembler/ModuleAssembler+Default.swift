@@ -44,6 +44,20 @@ extension ModuleAssembler {
                 viewModel: viewModel))
         let view = SettingView(
             dependency: .init(
+                presenter: presenter,
+                room: room),
+            viewModel: viewModel)
+        return view
+    }
+    
+    func assembleSelectThemeColor(room: Room) -> SelectThemeColorView {
+        let viewModel = SelectThemeColorViewModel()
+        let presenter = SelectThemeColorPresenter(
+            dependency: .init(
+                dataStore: .init(roomId: room.id),
+                viewModel: viewModel))
+        let view = SelectThemeColorView(
+            dependency: .init(
                 presenter: presenter),
             viewModel: viewModel)
         return view

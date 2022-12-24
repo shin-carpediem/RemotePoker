@@ -26,8 +26,6 @@ class SettingPresenter: SettingPresentation {
         Task {
             await dependency.dataStore.removeUserFromRoom(userId: dependency.currentUser.id)
         }
-        
-        // TODO: ログイン画面に遷移
     }
     
     // MARK: - Private

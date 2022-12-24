@@ -10,18 +10,52 @@ struct SelectThemeColorView: View {
         var presenter: SelectThemeColorPresenter
     }
     
-    init(dependency: Dependency) {
+    init(dependency: Dependency, viewModel: SelectThemeColorViewModel) {
         self.dependency = dependency
+        self.viewModel = viewModel
+        
+        construct()
     }
     
     // MARK: - Private
     
     private var dependency: Dependency
     
+    @ObservedObject private var viewModel: SelectThemeColorViewModel
+    
+    /// View生成時
+    private func construct() {
+        dependency.presenter.outputColorList()
+    }
+    
     // MARK: - View
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color.Neumorphic.main.ignoresSafeArea()
+            VStack(alignment: .leading) {
+                ScrollView { colorList }
+            }
+        }
+    }
+    
+    /// カラー一覧
+    private var colorList: some View {
+        List {
+            Section {
+                ForEach(0 ..< viewModel.themeColorList.count) { index in
+                    let color = viewModel.themeColorList[index]
+                    Button {
+                        dependency.presenter.didTapColor(color: color)
+                    } label: {
+                        Text(color.rawValue)
+                    }
+                }
+            } header: {
+                Text("Theme Color")
+            }
+        }
+        .listStyle(.insetGrouped)
     }
 }
 
@@ -32,6 +66,8 @@ struct SelectThemeColorView_Previews: PreviewProvider {
         SelectThemeColorView(dependency: .init(
             presenter: .init(
                 dependency: .init(
-                    dataStore: .init()))))
+                    dataStore: .init(),
+                    viewModel: .init()))),
+                             viewModel: .init())
     }
 }
