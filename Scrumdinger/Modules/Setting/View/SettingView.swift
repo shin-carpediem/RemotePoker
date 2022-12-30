@@ -25,21 +25,23 @@ struct SettingView: View, ModuleAssembler {
     // MARK: - View
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color.Neumorphic.main.ignoresSafeArea()
-                VStack(alignment: .leading) {
-                    selecteThemeColorButton
-                        .padding()
-                    Divider()
-                    leaveButton
-                        .padding()
-                    Divider()
-                    Spacer()
-                }
-                navigationForSelectThemeColorView
+        ZStack {
+            Color.Neumorphic.main.ignoresSafeArea()
+            VStack(alignment: .leading) {
+                settingList
             }
+            navigationForSelectThemeColorView
         }
+        .navigationTitle("Setting")
+    }
+    
+    /// 設定リスト
+    private var settingList: some View {
+        List {
+            selecteThemeColorButton
+            leaveButton
+        }
+        .listStyle(.insetGrouped)
     }
     
     /// テーマカラー選択ボタン

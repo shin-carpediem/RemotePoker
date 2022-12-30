@@ -10,6 +10,7 @@ struct SelectThemeColorView: View {
         var presenter: SelectThemeColorPresenter
     }
     
+    /// View生成時
     init(dependency: Dependency, viewModel: SelectThemeColorViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
@@ -23,7 +24,6 @@ struct SelectThemeColorView: View {
     
     @ObservedObject private var viewModel: SelectThemeColorViewModel
     
-    /// View生成時
     private func construct() {
         dependency.presenter.outputColorList()
     }
@@ -34,14 +34,15 @@ struct SelectThemeColorView: View {
         ZStack {
             Color.Neumorphic.main.ignoresSafeArea()
             VStack(alignment: .leading) {
-                ScrollView { colorList }
+                colorList
             }
         }
+        .navigationTitle("ThemeColor")
     }
     
     /// カラー一覧
     private var colorList: some View {
-        return List(ThemeColor.allCases, id: \.self) { color in
+        List(viewModel.themeColorList, id: \.self) { color in
             colorCell(color)
         }
         .listStyle(.insetGrouped)
@@ -53,6 +54,7 @@ struct SelectThemeColorView: View {
             dependency.presenter.didTapColor(color: color)
         } label: {
             Text(color.rawValue)
+                .foregroundColor(.gray)
         }
     }
 }

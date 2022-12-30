@@ -8,6 +8,7 @@ struct EnterRoomView: View, ModuleAssembler {
         var presenter: EnterRoomPresenter
     }
     
+    /// View生成時
     init(dependency: Dependency, viewModel: EnterRoomViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
@@ -21,7 +22,6 @@ struct EnterRoomView: View, ModuleAssembler {
     
     @ObservedObject private var viewModel: EnterRoomViewModel
     
-    /// View生成時
     private func construct() {
         dependency.presenter.fetchCurrentUserLocalData()
         if AppConfig.shared.isCurrentUserLoggedIn {

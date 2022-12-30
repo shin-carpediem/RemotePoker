@@ -58,6 +58,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     
     func outputHeaderTitle() {
         Task {
+            // TODO: 後でリファクタする
             // Interactor→Firestore
             await dependency.interactor.fetchRoom()
 

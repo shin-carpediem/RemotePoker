@@ -26,7 +26,6 @@ struct CardListView: View, ModuleAssembler {
     
     @ObservedObject private var viewModel: CardListViewModel
     
-    /// View生成時
     private func construct() {
         dependency.presenter.subscribeUser()
         dependency.presenter.outputHeaderTitle()
@@ -36,37 +35,35 @@ struct CardListView: View, ModuleAssembler {
     // MARK: - View
     
     var body: some View {
-        NavigationView {
-            ZStack {
-                Color.Neumorphic.main.ignoresSafeArea()
-                VStack {
-                    ScrollView {
-                        Spacer()
-                        if viewModel.isShownSelectedCardList {
-                            selectedCardListView
-                                .padding()
-                        } else {
-                            cardListView
-                                .padding()
-                        }
-                    }
-                    HStack {
-                        Spacer()
-                        selectedCardPointView
-                        Spacer()
-                        buttonText
-                        floatingActionButton
+        ZStack {
+            Color.Neumorphic.main.ignoresSafeArea()
+            VStack {
+                ScrollView {
+                    Spacer()
+                    if viewModel.isShownSelectedCardList {
+                        selectedCardListView
+                            .padding()
+                    } else {
+                        cardListView
+                            .padding()
                     }
                 }
-                navigationForSettingView
+                HStack {
+                    Spacer()
+                    selectedCardPointView
+                    Spacer()
+                    buttonText
+                    floatingActionButton
+                }
             }
+            navigationForSettingView
         }
         .navigationTitle(viewModel.headerTitle)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(trailing: settingButton)
     }
-        
+    
     /// 設定ボタン
     private var settingButton: some View {
         Button(action: {
@@ -79,7 +76,7 @@ struct CardListView: View, ModuleAssembler {
 
     /// カード一覧
     private var cardListView: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 160))]) {
             ForEach(dependency.room.cardPackage.cardList) { card in
                 let themeColor = dependency.room.cardPackage.themeColor
                 let isSelected = card.id == dependency.currentUser.selectedCardId
