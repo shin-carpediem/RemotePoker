@@ -51,7 +51,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
                 // 既存ルーム
                 dependency.dataStore = RoomDataStore(roomId: roomId)
                 room = await dependency.dataStore.fetchRoom()
-                dependency.viewModel.isEnterLoggedInRoom = true
+                updateIsCurrentUserLogIn(true)
                 
                 pushCardListView()
             } else {
@@ -61,7 +61,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     }
     
     func didCancelEnterExistingRoomButton() {
-        dependency.viewModel.isEnterLoggedInRoom = false
+        updateIsCurrentUserLogIn(false)
     }
     
     func didTapEnterRoomButton(userName: String, roomId: Int) {
@@ -145,6 +145,13 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
         }
     }
     
+    /// カレントユーザーのログイン/ログアウトを更新する
+    private func updateIsCurrentUserLogIn(_ loggedIn: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel.isEnterLoggedInRoom = loggedIn
+        }
+    }
+    
     // MARK: - Router
     
     /// カード一覧画面に遷移する
@@ -152,6 +159,5 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.willPushCardListView = true
         }
-        disableButton(false)
     }
 }

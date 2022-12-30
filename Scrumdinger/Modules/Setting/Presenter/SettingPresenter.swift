@@ -17,6 +17,7 @@ class SettingPresenter: SettingPresentation {
     
     func didTapSelectThemeColorButton() {
         disableButton(true)
+        pushSelectThemeColorView()
     }
     
     func didTapLeaveRoomButton() {
@@ -36,6 +37,15 @@ class SettingPresenter: SettingPresentation {
     private func disableButton(_ disabled: Bool) {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.isButtonEnabled = !disabled
+        }
+    }
+    
+    // MARK: - Router
+    
+    /// テーマカラー選択画面に遷移する
+    private func pushSelectThemeColorView() {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel.willPushSelectThemeColorView = true
         }
     }
 }

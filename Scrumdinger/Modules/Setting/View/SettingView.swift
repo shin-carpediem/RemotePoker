@@ -25,17 +25,19 @@ struct SettingView: View, ModuleAssembler {
     // MARK: - View
     
     var body: some View {
-        ZStack {
-            Color.Neumorphic.main.ignoresSafeArea()
-            VStack(alignment: .leading) {
-                selecteThemeColorButton
-                    .padding()
-                Divider()
-                Spacer()
-                leaveButton
-                    .padding()
-                Divider()
-                Spacer()
+        NavigationView {
+            ZStack {
+                Color.Neumorphic.main.ignoresSafeArea()
+                VStack(alignment: .leading) {
+                    selecteThemeColorButton
+                        .padding()
+                    Divider()
+                    leaveButton
+                        .padding()
+                    Divider()
+                    Spacer()
+                }
+                navigationForSelectThemeColorView
             }
         }
     }
@@ -67,6 +69,17 @@ struct SettingView: View, ModuleAssembler {
                     .foregroundColor(.gray)
             }
         }
+    }
+    
+    // MARK: - Router
+    
+    /// テーマカラー選択画面へ遷移させるナビゲーション
+    private var navigationForSelectThemeColorView: some View {
+        NavigationLink(isActive: $viewModel.willPushSelectThemeColorView, destination: {
+            if viewModel.willPushSelectThemeColorView {
+                assembleSelectThemeColor(room: dependency.room)
+            } else { EmptyView() }
+        }) { EmptyView() }
     }
 }
 

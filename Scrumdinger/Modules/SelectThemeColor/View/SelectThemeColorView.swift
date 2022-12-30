@@ -41,21 +41,19 @@ struct SelectThemeColorView: View {
     
     /// カラー一覧
     private var colorList: some View {
-        List {
-            Section {
-                ForEach(0 ..< viewModel.themeColorList.count) { index in
-                    let color = viewModel.themeColorList[index]
-                    Button {
-                        dependency.presenter.didTapColor(color: color)
-                    } label: {
-                        Text(color.rawValue)
-                    }
-                }
-            } header: {
-                Text("Theme Color")
-            }
+        return List(ThemeColor.allCases, id: \.self) { color in
+            colorCell(color)
         }
         .listStyle(.insetGrouped)
+    }
+    
+    /// カラーセル
+    private func colorCell(_ color: ThemeColor) -> some View {
+        Button {
+            dependency.presenter.didTapColor(color: color)
+        } label: {
+            Text(color.rawValue)
+        }
     }
 }
 
@@ -69,5 +67,6 @@ struct SelectThemeColorView_Previews: PreviewProvider {
                     dataStore: .init(),
                     viewModel: .init()))),
                              viewModel: .init())
+        .previewDisplayName("テーマカラー選択画面")
     }
 }

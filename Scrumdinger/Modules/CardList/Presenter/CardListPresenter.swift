@@ -151,6 +151,5 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.willPushSettingView = true
         }
-        disableButton(false)
     }
 }
