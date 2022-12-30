@@ -76,7 +76,7 @@ struct CardListView: View, ModuleAssembler {
 
     /// カード一覧
     private var cardListView: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 160))]) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
             ForEach(dependency.room.cardPackage.cardList) { card in
                 let themeColor = dependency.room.cardPackage.themeColor
                 let isSelected = card.id == dependency.currentUser.selectedCardId
@@ -91,7 +91,7 @@ struct CardListView: View, ModuleAssembler {
     
     /// 選択済みカード一覧
     private var selectedCardListView: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 176))]) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
             ForEach(viewModel.userSelectStatus) { userSelect in
                 OpenCardView(userSelectStatus: userSelect)
             }

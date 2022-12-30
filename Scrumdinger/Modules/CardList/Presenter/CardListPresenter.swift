@@ -38,9 +38,14 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     func didTapResetSelectedCardListButton() {
         disableButton(true)
 
-        let userIdList: [String] = dependency.viewModel.userSelectStatus.map { $0.user.id }
-        var selectedCardDictionary: [String: String] = [:]
-        userIdList.forEach { selectedCardDictionary[$0] = "" }
+        // 全員の選択済みカードをリセットする
+//        let userIdList: [String] = dependency.viewModel.userSelectStatus.map { $0.user.id }
+//        var selectedCardDictionary: [String: String] = [:]
+//        userIdList.forEach { selectedCardDictionary[$0] = "" }
+        
+        // 自分の選択済みカードをリセットする
+        let selectedCardDictionary: [String: String] = [dependency.currentUser.id: ""]
+
         dependency.interactor.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
 
         hideSelectedCardList()
