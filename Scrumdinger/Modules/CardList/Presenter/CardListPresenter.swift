@@ -63,7 +63,6 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     
     func outputHeaderTitle() {
         Task {
-            // TODO: 後でリファクタする
             // Interactor→Firestore
             await dependency.interactor.fetchRoom()
 
@@ -138,16 +137,16 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     private func showSelectedCardList() {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.isShownSelectedCardList = true
+            self?.disableButton(false)
         }
-        disableButton(false)
     }
     
     /// 選択されたカード一覧を非表示にする
     private func hideSelectedCardList() {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.isShownSelectedCardList = false
+            self?.disableButton(false)
         }
-        disableButton(false)
     }
     
     // MARK: - Router
