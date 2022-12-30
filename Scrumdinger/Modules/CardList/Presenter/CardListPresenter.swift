@@ -79,7 +79,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
                 let s = otherUsersCount >= 2 ? "s" : ""
                 let otherUsersText = otherUsersCount >= 1 ? "and \(String(otherUsersCount)) guy\(s)" : ""
                 
-                let headerTitle = "\(only) \(currentUserName) \(otherUsersText) in Room: \(roomId)"
+                let headerTitle = "\(only) \(currentUserName) \(otherUsersText) in Room \(roomId)"
 
                 self.dependency.viewModel.headerTitle = headerTitle
             }

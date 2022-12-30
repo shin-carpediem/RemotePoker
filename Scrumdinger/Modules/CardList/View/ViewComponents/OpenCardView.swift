@@ -32,7 +32,7 @@ struct OpenCardView: View {
     /// 選択されたカードビュー
     private var selectedCardView: some View {
         Text(selectedCard!.point)
-            .frame(width: 170, height: 120)
+            .frame(width: 150, height: 100)
             .font(.system(size: 40, weight: .bold))
             .foregroundColor(selectedCard!.fontColor)
             .background(selectedCard!.outputBackgroundColor(color: userSelectStatus.themeColor))
@@ -42,8 +42,8 @@ struct OpenCardView: View {
     /// ユーザーが未選択時のビュー
     private var userNotSelectedView: some View {
         Text("Not Selected Yet")
-            .frame(width: 170, height: 120)
-            .font(.system(size: 18))
+            .frame(width: 150, height: 100)
+            .font(.system(size: 16))
             .foregroundColor(.black)
             .background(.gray)
             .cornerRadius(10)

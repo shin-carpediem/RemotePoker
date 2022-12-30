@@ -25,7 +25,7 @@ struct Card: Identifiable {
     var fontColor: Color {
         let number = index >= 10 ? 9 : index
         let opacity = Double("0.\(number)") ?? 1.0
-        return opacity >= 0.5 ? .white : .gray
+        return opacity >= 0.4 ? .white : .gray
     }
 
     /// 指定カードの背景色
