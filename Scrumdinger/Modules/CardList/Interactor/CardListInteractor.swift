@@ -61,7 +61,7 @@ extension CardListInteractor: RoomDelegate {
         switch actionType {
         case .modified:
             // カードパッケージのテーマカラーが変更された時
-            dependency.presenter?.outputCardList()
+            dependency.presenter?.outputThemeColor()
         case .added, .removed:
             return
         case .unKnown:

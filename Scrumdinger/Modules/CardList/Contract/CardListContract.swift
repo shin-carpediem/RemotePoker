@@ -1,15 +1,6 @@
 protocol CardListPresentation {
-    /// カードパッケージを購読する
-    func subscribeCardPackages()
-    
-    /// カードバッケージの購読を解除する
-    func unsubscribeCardPackages()
-    
-    /// ユーザーを購読する
-    func subscribeUsers()
-    
-    /// ユーザーの購読を解除する
-    func unsubscribeUsers()
+    /// View初期読み込み時
+    func viewDidLoad()
     
     /// カードを選択した
     /// - parameter card: カード
@@ -51,8 +42,8 @@ protocol CardListPresentationOutput {
     /// - parameter room: ルーム
     func outputRoom(_ room: Room)
     
-    /// カード一覧を出力する
-    func outputCardList()
+    /// テーマカラーを出力する
+    func outputThemeColor()
     
     /// ヘッダータイトルを出力する
     func outputHeaderTitle()

@@ -27,8 +27,7 @@ struct CardListView: View, ModuleAssembler {
     @ObservedObject private var viewModel: CardListViewModel
     
     private func construct() {
-        dependency.presenter.subscribeCardPackages()
-        dependency.presenter.subscribeUsers()
+        dependency.presenter.viewDidLoad()
         dependency.presenter.outputHeaderTitle()
         dependency.presenter.outputUserSelectStatus()
     }
@@ -79,7 +78,7 @@ struct CardListView: View, ModuleAssembler {
     private var cardListView: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
             ForEach(dependency.room.cardPackage.cardList) { card in
-                let themeColor = dependency.room.cardPackage.themeColor
+                let themeColor = viewModel.themeColor
                 let isSelected = card.id == dependency.currentUser.selectedCardId
                 CardView(card: card,
                          themeColor: themeColor,
@@ -141,11 +140,6 @@ struct CardListView: View, ModuleAssembler {
             return Image(systemName: systemName).foregroundColor(.gray)
         }
         .softButtonStyle(Circle())
-        // 一般的なFABの見た目
-//        .frame(width: 60, height: 60)
-//        .background(.white)
-//        .cornerRadius(30)
-//        .shadow(radius: 3)
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 16))
     }
     

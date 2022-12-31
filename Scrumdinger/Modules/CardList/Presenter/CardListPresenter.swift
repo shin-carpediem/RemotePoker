@@ -16,20 +16,9 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     
     // MARK: - CardListPresentation
     
-    func subscribeCardPackages() {
+    func viewDidLoad() {
         dependency.interactor.subscribeCardPackages()
-    }
-    
-    func unsubscribeCardPackages() {
-        dependency.interactor.unsubscribeCardPackages()
-    }
-    
-    func subscribeUsers() {
         dependency.interactor.subscribeUsers()
-    }
-    
-    func unsubscribeUsers() {
-        dependency.interactor.unsubscribeUsers()
     }
     
     func didSelectCard(card: Card) {
@@ -45,17 +34,9 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     
     func didTapResetSelectedCardListButton() {
         disableButton(true)
-
-        // 全員の選択済みカードをリセットする
-//        let userIdList: [String] = dependency.viewModel.userSelectStatus.map { $0.user.id }
-//        var selectedCardDictionary: [String: String] = [:]
-//        userIdList.forEach { selectedCardDictionary[$0] = "" }
-        
-        // 自分の選択済みカードをリセットする
+        // カレントユーザーの選択済みカードをリセットする
         let selectedCardDictionary: [String: String] = [dependency.currentUser.id: ""]
-
         dependency.interactor.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
-
         hideSelectedCardList()
     }
     
@@ -69,15 +50,14 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
         dependency.room = room
     }
     
-    func outputCardList() {
+    func outputThemeColor() {
         Task {
             // Interactor→Firestore
             await dependency.interactor.fetchRoom()
             dependency.currentUser.selectedCardId = dependency.room.userList.first(where: { $0.id == dependency.currentUser.id })?.selectedCardId ?? ""
             
             // PresententationOutput
-            // TODO: 色を選択したらViewが更新されるようにする
-            
+            applyThemeColor()
         }
     }
     
@@ -119,6 +99,15 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     private func disableButton(_ disabled: Bool) {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.isButtonEnabled = !disabled
+        }
+    }
+    
+    /// テーマカラーを適用する
+    private func applyThemeColor() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            // TODO: 色を選択したらViewが更新されるようにする
+            self.dependency.viewModel.themeColor = self.dependency.room.cardPackage.themeColor
         }
     }
     

@@ -1,6 +1,9 @@
 import SwiftUI
 
 class CardListViewModel: ObservableObject {
+    /// テーマカラー
+    @Published var themeColor: ThemeColor = .oxblood
+    
     /// ヘッダーテキスト
     @Published var headerTitle = ""
     
