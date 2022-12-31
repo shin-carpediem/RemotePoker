@@ -65,23 +65,10 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
         Task {
             // Interactor→Firestore
             await dependency.interactor.fetchRoom()
-
             dependency.currentUser.selectedCardId = dependency.room.userList.first(where: { $0.id == dependency.currentUser.id })?.selectedCardId ?? ""
             
             // PresententationOutput
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                let currentUserName = self.dependency.currentUser.name
-                let otherUsersCount = self.dependency.room.userList.count - 1
-                let roomId = self.dependency.room.id
-                let only = otherUsersCount >= 1 ? "" : "only"
-                let s = otherUsersCount >= 2 ? "s" : ""
-                let otherUsersText = otherUsersCount >= 1 ? "and \(String(otherUsersCount)) guy\(s)" : ""
-                
-                let headerTitle = "\(only) \(currentUserName) \(otherUsersText) in Room \(roomId)"
-
-                self.dependency.viewModel.headerTitle = headerTitle
-            }
+            showHeaderTitle()
         }
     }
     
@@ -89,28 +76,10 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
         Task {
             // Interactor→Firestore
             await dependency.interactor.fetchRoom()
-            
             dependency.currentUser.selectedCardId = dependency.room.userList.first(where: { $0.id == dependency.currentUser.id })?.selectedCardId ?? ""
             
             // PresententationOutput
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                let userSelectStatus: [UserSelectStatus] = self.dependency.room.userList.map { [weak self] user in
-                    let cardPackage = self!.dependency.room.cardPackage
-                    
-                    let id = Int.random(in: 0..<99999999)
-                    let themeColor = cardPackage.themeColor
-                    let selectedCard: Card? = cardPackage.cardList.first(where: { $0.id == user.selectedCardId })
-
-                    return UserSelectStatus(id: id,
-                                            user: user,
-                                            themeColor: themeColor,
-                                            selectedCard: selectedCard)
-                }
-                
-                self.dependency.viewModel.userSelectStatus = userSelectStatus
-                self.disableButton(false)
-            }
+            updateUserSelectStatus()
         }
     }
     
@@ -132,7 +101,46 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
             self?.dependency.viewModel.isButtonEnabled = !disabled
         }
     }
-     
+    
+    /// ヘッダータイトルを表示する
+    private func showHeaderTitle() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            let currentUserName = self.dependency.currentUser.name
+            let otherUsersCount = self.dependency.room.userList.count - 1
+            let roomId = self.dependency.room.id
+            let only = otherUsersCount >= 1 ? "" : "only"
+            let s = otherUsersCount >= 2 ? "s" : ""
+            let otherUsersText = otherUsersCount >= 1 ? "and \(String(otherUsersCount)) guy\(s)" : ""
+            
+            let headerTitle = "\(only) \(currentUserName) \(otherUsersText) in Room \(roomId)"
+
+            self.dependency.viewModel.headerTitle = headerTitle
+        }
+    }
+    
+    /// ユーザーのカード選択状況を更新する
+    private func updateUserSelectStatus() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            let userSelectStatus: [UserSelectStatus] = self.dependency.room.userList.map { [weak self] user in
+                let cardPackage = self!.dependency.room.cardPackage
+                
+                let id = Int.random(in: 0..<99999999)
+                let themeColor = cardPackage.themeColor
+                let selectedCard: Card? = cardPackage.cardList.first(where: { $0.id == user.selectedCardId })
+
+                return UserSelectStatus(id: id,
+                                        user: user,
+                                        themeColor: themeColor,
+                                        selectedCard: selectedCard)
+            }
+            
+            self.dependency.viewModel.userSelectStatus = userSelectStatus
+            self.disableButton(false)
+        }
+    }
+    
     /// 選択されたカード一覧を表示する
     private func showSelectedCardList() {
         DispatchQueue.main.async { [weak self] in
