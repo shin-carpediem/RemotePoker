@@ -139,10 +139,12 @@ struct CardListView: View, ModuleAssembler {
             }
             return Image(systemName: systemName).foregroundColor(.gray)
         }
-        .frame(width: 60, height: 60)
-        .background(.white)
-        .cornerRadius(30)
-        .shadow(radius: 3)
+        .softButtonStyle(Circle())
+        // 一般的なFABの見た目
+//        .frame(width: 60, height: 60)
+//        .background(.white)
+//        .cornerRadius(30)
+//        .shadow(radius: 3)
         .padding(EdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 16))
     }
     
