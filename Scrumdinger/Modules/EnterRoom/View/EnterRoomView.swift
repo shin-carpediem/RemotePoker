@@ -13,7 +13,7 @@ struct EnterRoomView: View, ModuleAssembler {
         self.dependency = dependency
         self.viewModel = viewModel
         
-        construct()
+        self.dependency.presenter.viewDidLoad()
     }
     
     // MARK: - Private
@@ -21,13 +21,6 @@ struct EnterRoomView: View, ModuleAssembler {
     private var dependency: Dependency
     
     @ObservedObject private var viewModel: EnterRoomViewModel
-    
-    private func construct() {
-        dependency.presenter.fetchCurrentUserLocalData()
-        if AppConfig.shared.isCurrentUserLoggedIn {
-            dependency.presenter.outputLoginAsCurrentUserAlert()
-        }
-    }
     
     // MARK: - View
     

@@ -17,7 +17,7 @@ struct CardListView: View, ModuleAssembler {
         self.dependency = dependency
         self.viewModel = viewModel
         
-        construct()
+        self.dependency.presenter.viewDidLoad()
     }
     
     // MARK: - Private
@@ -25,12 +25,6 @@ struct CardListView: View, ModuleAssembler {
     private var dependency: Dependency
     
     @ObservedObject private var viewModel: CardListViewModel
-    
-    private func construct() {
-        dependency.presenter.viewDidLoad()
-        dependency.presenter.outputHeaderTitle()
-        dependency.presenter.outputUserSelectStatus()
-    }
     
     // MARK: - View
     

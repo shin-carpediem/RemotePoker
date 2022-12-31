@@ -20,6 +20,13 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     
     // MARK: - EnterRoomPresentation
     
+    func viewDidLoad() {
+        fetchCurrentUserLocalData()
+        if AppConfig.shared.isCurrentUserLoggedIn {
+            outputLoginAsCurrentUserAlert()
+        }
+    }
+    
     func fetchCurrentUserLocalData() {
         let currentUserId = AppConfig.shared.currentUserId
         if !currentUserId.isEmpty {

@@ -19,6 +19,9 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     func viewDidLoad() {
         dependency.interactor.subscribeCardPackages()
         dependency.interactor.subscribeUsers()
+        outputThemeColor()
+        outputHeaderTitle()
+        outputUserSelectStatus()
     }
     
     func didSelectCard(card: Card) {

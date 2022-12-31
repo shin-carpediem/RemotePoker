@@ -1,4 +1,7 @@
 protocol EnterRoomPresentation {
+    /// View初期読み込み時
+    func viewDidLoad()
+    
     /// カレントユーザーのローカルデータを取得する
     func fetchCurrentUserLocalData()
         

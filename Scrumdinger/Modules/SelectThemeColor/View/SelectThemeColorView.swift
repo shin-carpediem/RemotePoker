@@ -15,7 +15,7 @@ struct SelectThemeColorView: View {
         self.dependency = dependency
         self.viewModel = viewModel
         
-        construct()
+        self.dependency.presenter.viewDidLoad()
     }
     
     // MARK: - Private
@@ -23,10 +23,6 @@ struct SelectThemeColorView: View {
     private var dependency: Dependency
     
     @ObservedObject private var viewModel: SelectThemeColorViewModel
-    
-    private func construct() {
-        dependency.presenter.outputColorList()
-    }
     
     // MARK: - View
     

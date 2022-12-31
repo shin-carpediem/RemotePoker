@@ -15,6 +15,10 @@ class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectThemeColorP
     
     // MARK: - SelectThemeColorPresentation
     
+    func viewDidLoad() {
+        outputColorList()
+    }
+    
     func didTapColor(themeColor: ThemeColor) {
         dependency.dataStore.updateThemeColor(cardPackageId: dependency.room.cardPackage.id,
                                               themeColor: themeColor)
