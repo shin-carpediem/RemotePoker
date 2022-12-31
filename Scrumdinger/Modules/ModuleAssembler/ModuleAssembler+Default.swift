@@ -55,6 +55,7 @@ extension ModuleAssembler {
         let presenter = SelectThemeColorPresenter(
             dependency: .init(
                 dataStore: .init(roomId: room.id),
+                room: room,
                 viewModel: viewModel))
         let view = SelectThemeColorView(
             dependency: .init(

@@ -67,6 +67,7 @@ struct SelectThemeColorView_Previews: PreviewProvider {
             presenter: .init(
                 dependency: .init(
                     dataStore: .init(),
+                    room: CardListView_Previews.room1,
                     viewModel: .init()))),
                              viewModel: .init())
         .previewDisplayName("テーマカラー選択画面")

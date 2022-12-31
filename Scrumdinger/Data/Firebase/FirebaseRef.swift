@@ -28,6 +28,11 @@ struct FirebaseRef {
         roomsCollection.document(String(roomId))
     }
     
+    /// rooms / { roomId } / cardPackages / { cardPackageId }
+    func cardPackageDocument(cardPackageId: String) -> DocumentReference {
+        cardPackagesCollection.document(cardPackageId)
+    }
+    
     /// rooms /  {roomId } / users / { userId }
     func userDocument(userId: String) -> DocumentReference {
         usersCollection.document(userId)
@@ -46,6 +51,11 @@ struct FirebaseRef {
     }
     
     // MARK: - Query
+    
+    /// rooms / { roomId } / cardPackages / *
+    var cardPackagesQuery: Query {
+        cardPackagesCollection.whereField("id", isNotEqualTo: "")
+    }
     
     /// rooms / { roomId } / users / *
     var usersQuery: Query {

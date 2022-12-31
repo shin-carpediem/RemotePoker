@@ -27,7 +27,8 @@ struct CardListView: View, ModuleAssembler {
     @ObservedObject private var viewModel: CardListViewModel
     
     private func construct() {
-        dependency.presenter.subscribeUser()
+        dependency.presenter.subscribeCardPackages()
+        dependency.presenter.subscribeUsers()
         dependency.presenter.outputHeaderTitle()
         dependency.presenter.outputUserSelectStatus()
     }

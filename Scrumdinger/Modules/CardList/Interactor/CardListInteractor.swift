@@ -12,18 +12,26 @@ class CardListInteractor: CardListUseCase {
     
     init(dependency: Dependency) {
         self.dependency = dependency
+        dependency.dataStore.delegate = self
     }
     
     var dependency: Dependency
     
     // MARK: - CardListUseCase
     
-    func subscribeUser() {
-        dependency.dataStore.delegate = self
+    func subscribeCardPackages() {
+        dependency.dataStore.subscribeCardPackage()
+    }
+    
+    func unsubscribeCardPackages() {
+        dependency.dataStore.unsubscribeCardPackage()
+    }
+    
+    func subscribeUsers() {
         dependency.dataStore.subscribeUser()
     }
     
-    func unsubscribeUser() {
+    func unsubscribeUsers() {
         dependency.dataStore.unsubscribeUser()
     }
     
@@ -49,6 +57,18 @@ class CardListInteractor: CardListUseCase {
 // MARK: - RoomDelegate
 
 extension CardListInteractor: RoomDelegate {
+    func whenCardPackageChanged(actionType: CardPackageActionType) {
+        switch actionType {
+        case .modified:
+            // カードパッケージのテーマカラーが変更された時
+            dependency.presenter?.outputCardList()
+        case .added, .removed:
+            return
+        case .unKnown:
+            fatalError()
+        }
+    }
+    
     func whenUserChanged(actionType: UserActionType) {
         switch actionType {
         case .added, .removed:

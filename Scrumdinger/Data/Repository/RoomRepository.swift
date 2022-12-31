@@ -1,6 +1,17 @@
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+enum CardPackageActionType {
+    /// カードパッケージが追加された時
+    case added
+    /// カードパッケージが更新された時
+    case modified
+    /// カードパッケージが削除された時
+    case removed
+    /// 不明
+    case unKnown
+}
+
 enum UserActionType {
     /// ユーザーが追加された時
     case added
@@ -13,6 +24,9 @@ enum UserActionType {
 }
 
 protocol RoomDelegate: AnyObject {
+    /// ルームのカードバッケージのテーマカラーが更新された時
+    func whenCardPackageChanged(actionType: CardPackageActionType)
+    
     /// ルームにユーザーが追加/更新/削除された時
     func whenUserChanged(actionType: UserActionType)
 }
@@ -45,6 +59,12 @@ protocol RoomRepository {
 //    /// ルームを削除する
 //    func deleteRoom() async
     
+    /// カードパッケージを購読する
+    func subscribeCardPackage()
+    
+    /// カードパッケージの購読を解除する
+    func unsubscribeCardPackage()
+    
     /// ユーザーを購読する
     func subscribeUser()
     
@@ -61,6 +81,8 @@ protocol RoomRepository {
     func updateSelectedCardId(selectedCardDictionary: [String: String])
     
     /// テーマカラーを変更する
+    /// - parameter cardPackageId: カードパッケージID
     /// - parameter themeColor: テーマカラー
-    func updateThemeColor(themeColor: ThemeColor)
+    func updateThemeColor(cardPackageId: String,
+                          themeColor: ThemeColor)
 }

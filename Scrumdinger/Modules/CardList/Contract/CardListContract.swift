@@ -1,9 +1,15 @@
 protocol CardListPresentation {
+    /// カードパッケージを購読する
+    func subscribeCardPackages()
+    
+    /// カードバッケージの購読を解除する
+    func unsubscribeCardPackages()
+    
     /// ユーザーを購読する
-    func subscribeUser()
+    func subscribeUsers()
     
     /// ユーザーの購読を解除する
-    func unsubscribeUser()
+    func unsubscribeUsers()
     
     /// カードを選択した
     /// - parameter card: カード
@@ -20,11 +26,17 @@ protocol CardListPresentation {
 }
 
 protocol CardListUseCase {
+    /// カードパッケージを購読する
+    func subscribeCardPackages()
+    
+    /// カードバッケージの購読を解除する
+    func unsubscribeCardPackages()
+    
     /// ユーザーを購読する
-    func subscribeUser()
+    func subscribeUsers()
     
     /// ユーザーの購読を解除する
-    func unsubscribeUser()
+    func unsubscribeUsers()
     
     /// 選択されたカードIDを更新する
     /// - parameter selectedCardDictionary: カレントユーザーIDと選択されたカードIDの辞書
@@ -38,6 +50,9 @@ protocol CardListPresentationOutput {
     /// ルームを出力する
     /// - parameter room: ルーム
     func outputRoom(_ room: Room)
+    
+    /// カード一覧を出力する
+    func outputCardList()
     
     /// ヘッダータイトルを出力する
     func outputHeaderTitle()

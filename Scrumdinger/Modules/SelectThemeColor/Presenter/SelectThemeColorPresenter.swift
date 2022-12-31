@@ -5,6 +5,7 @@ class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectThemeColorP
     
     struct Dependency {
         var dataStore: RoomDataStore
+        var room: Room
         var viewModel: SelectThemeColorViewModel
     }
     
@@ -15,7 +16,8 @@ class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectThemeColorP
     // MARK: - SelectThemeColorPresentation
     
     func didTapColor(themeColor: ThemeColor) {
-        dependency.dataStore.updateThemeColor(themeColor: themeColor)
+        dependency.dataStore.updateThemeColor(cardPackageId: dependency.room.cardPackage.id,
+                                              themeColor: themeColor)
     }
     
     // MARK: - SelectThemeColorPresentationOutput

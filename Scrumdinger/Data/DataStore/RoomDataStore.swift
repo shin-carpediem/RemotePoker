@@ -119,8 +119,31 @@ class RoomDataStore: RoomRepository {
 //        try? await firebaseRef?.roomDocument.delete()
 //    }
     
+    func subscribeCardPackage() {
+        cardPackagesListener = firebaseRef?.cardPackagesQuery.addSnapshotListener { querySnapshot, error in
+            querySnapshot?.documentChanges.forEach { [weak self] diff in
+                var actionType: CardPackageActionType
+                if (diff.type == .added) {
+                    actionType = .added
+                } else if (diff.type == .modified) {
+                    actionType = .modified
+                } else if (diff.type == .removed) {
+                    actionType = .removed
+                } else {
+                    actionType = .unKnown
+                }
+                
+                self?.delegate?.whenCardPackageChanged(actionType: actionType)
+            }
+        }
+    }
+    
+    func unsubscribeCardPackage() {
+        cardPackagesListener?.remove()
+    }
+    
     func subscribeUser() {
-        userListener = firebaseRef?.usersQuery.addSnapshotListener { querySnapshot, error in
+        usersListener = firebaseRef?.usersQuery.addSnapshotListener { querySnapshot, error in
             querySnapshot?.documentChanges.forEach { [weak self] diff in
                 var actionType: UserActionType
                 if (diff.type == .added) {
@@ -151,7 +174,7 @@ class RoomDataStore: RoomRepository {
     }
     
     func unsubscribeUser() {
-        userListener?.remove()
+        usersListener?.remove()
     }
     
     func updateSelectedCardId(selectedCardDictionary: [String: String]) {
@@ -163,13 +186,19 @@ class RoomDataStore: RoomRepository {
         }
     }
     
-    func updateThemeColor(themeColor: ThemeColor) {
-        
+    func updateThemeColor(cardPackageId: String,
+                          themeColor: ThemeColor) {
+        let cardPackageDocument = firebaseRef?.cardPackageDocument(cardPackageId: cardPackageId)
+        cardPackageDocument?.updateData([
+            "themeColor": themeColor.rawValue
+        ])
     }
     
     // MARK: - Private
         
     private var firebaseRef: FirebaseRef?
     
-    private var userListener: ListenerRegistration?
+    private var cardPackagesListener: ListenerRegistration?
+    
+    private var usersListener: ListenerRegistration?
 }

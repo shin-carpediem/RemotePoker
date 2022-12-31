@@ -16,12 +16,20 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     
     // MARK: - CardListPresentation
     
-    func subscribeUser() {
-        dependency.interactor.subscribeUser()
+    func subscribeCardPackages() {
+        dependency.interactor.subscribeCardPackages()
     }
     
-    func unsubscribeUser() {
-        dependency.interactor.unsubscribeUser()
+    func unsubscribeCardPackages() {
+        dependency.interactor.unsubscribeCardPackages()
+    }
+    
+    func subscribeUsers() {
+        dependency.interactor.subscribeUsers()
+    }
+    
+    func unsubscribeUsers() {
+        dependency.interactor.unsubscribeUsers()
     }
     
     func didSelectCard(card: Card) {
@@ -59,6 +67,18 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     
     func outputRoom(_ room: Room) {
         dependency.room = room
+    }
+    
+    func outputCardList() {
+        Task {
+            // Interactor→Firestore
+            await dependency.interactor.fetchRoom()
+            dependency.currentUser.selectedCardId = dependency.room.userList.first(where: { $0.id == dependency.currentUser.id })?.selectedCardId ?? ""
+            
+            // PresententationOutput
+            // TODO: 色を選択したらViewが更新されるようにする
+            
+        }
     }
     
     func outputHeaderTitle() {
