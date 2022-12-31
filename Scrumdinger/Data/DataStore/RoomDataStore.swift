@@ -163,6 +163,10 @@ class RoomDataStore: RoomRepository {
         }
     }
     
+    func updateThemeColor(themeColor: ThemeColor) {
+        
+    }
+    
     // MARK: - Private
         
     private var firebaseRef: FirebaseRef?

@@ -59,4 +59,8 @@ protocol RoomRepository {
     /// ユーザーの選択済みカードを更新する
     /// - parameter selectedCardDictionary: ユーザーIDと選択されたカードIDの辞書
     func updateSelectedCardId(selectedCardDictionary: [String: String])
+    
+    /// テーマカラーを変更する
+    /// - parameter themeColor: テーマカラー
+    func updateThemeColor(themeColor: ThemeColor)
 }

@@ -51,7 +51,7 @@ struct SelectThemeColorView: View {
     /// カラーセル
     private func colorCell(_ color: ThemeColor) -> some View {
         Button {
-            dependency.presenter.didTapColor(color: color)
+            dependency.presenter.didTapColor(themeColor: color)
         } label: {
             Text(color.rawValue)
                 .foregroundColor(.gray)

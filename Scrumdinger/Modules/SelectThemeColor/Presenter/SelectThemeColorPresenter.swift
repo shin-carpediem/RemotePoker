@@ -14,8 +14,8 @@ class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectThemeColorP
     
     // MARK: - SelectThemeColorPresentation
     
-    func didTapColor(color: ThemeColor) {
-        
+    func didTapColor(themeColor: ThemeColor) {
+        dependency.dataStore.updateThemeColor(themeColor: themeColor)
     }
     
     // MARK: - SelectThemeColorPresentationOutput

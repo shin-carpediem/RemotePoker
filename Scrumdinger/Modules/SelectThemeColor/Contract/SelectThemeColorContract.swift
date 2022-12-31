@@ -1,7 +1,7 @@
 protocol SelectThemeColorPresentation {
     /// カラーをタップした
-    /// - parameter color: 選択したカラー
-    func didTapColor(color: ThemeColor)
+    /// - parameter themeColor: 選択したカラー
+    func didTapColor(themeColor: ThemeColor)
 }
 
 protocol SelectThemeColorPresentationOutput {
