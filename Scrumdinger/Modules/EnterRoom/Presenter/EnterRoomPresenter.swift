@@ -158,6 +158,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     private func pushCardListView() {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.willPushCardListView = true
+            self?.disableButton(false)
         }
     }
 }
