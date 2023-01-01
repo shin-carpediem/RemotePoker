@@ -7,7 +7,6 @@ class CardListInteractor: CardListUseCase {
         var dataStore: RoomDataStore
         var presenter: CardListPresenter?
         var room: Room
-        var currentUser: User
     }
     
     init(dependency: Dependency) {

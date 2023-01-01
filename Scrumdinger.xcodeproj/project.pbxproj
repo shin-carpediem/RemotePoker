@@ -45,6 +45,7 @@
 		F57C641E2950AA3400CD55CD /* SelectThemeColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C641D2950AA3400CD55CD /* SelectThemeColorView.swift */; };
 		F57C64212956BB7C00CD55CD /* SelectThemeColorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C64202956BB7C00CD55CD /* SelectThemeColorViewModel.swift */; };
 		F57C642D295FF60600CD55CD /* SelectThemeColorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C642C295FF60600CD55CD /* SelectThemeColorInteractor.swift */; };
+		F57C6430296120BD00CD55CD /* SettingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C642F296120BD00CD55CD /* SettingInteractor.swift */; };
 		F5802CFB2931E6E000955949 /* FirebaseRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFA2931E6E000955949 /* FirebaseRef.swift */; };
 		F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFD293207C700955949 /* CardListPresenter.swift */; };
 		F5802D0329320DEF00955949 /* ModuleAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D0229320DEF00955949 /* ModuleAssembler.swift */; };
@@ -125,6 +126,7 @@
 		F57C641D2950AA3400CD55CD /* SelectThemeColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorView.swift; sourceTree = "<group>"; };
 		F57C64202956BB7C00CD55CD /* SelectThemeColorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorViewModel.swift; sourceTree = "<group>"; };
 		F57C642C295FF60600CD55CD /* SelectThemeColorInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorInteractor.swift; sourceTree = "<group>"; };
+		F57C642F296120BD00CD55CD /* SettingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingInteractor.swift; sourceTree = "<group>"; };
 		F5802CFA2931E6E000955949 /* FirebaseRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRef.swift; sourceTree = "<group>"; };
 		F5802CFD293207C700955949 /* CardListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListPresenter.swift; sourceTree = "<group>"; };
 		F5802D0229320DEF00955949 /* ModuleAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleAssembler.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				F5B2FAD62944766C00592363 /* Contract */,
 				F50060F72944378C005923A7 /* View */,
 				F5B2FAD72944767300592363 /* Presenter */,
+				F57C642E296120A800CD55CD /* Interactor */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -331,6 +334,14 @@
 			isa = PBXGroup;
 			children = (
 				F57C642C295FF60600CD55CD /* SelectThemeColorInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		F57C642E296120A800CD55CD /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				F57C642F296120BD00CD55CD /* SettingInteractor.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -747,6 +758,7 @@
 				F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */,
 				F52530162936560D00727472 /* CardListViewModel.swift in Sources */,
 				F5802D08293217D000955949 /* EnterRoomContract.swift in Sources */,
+				F57C6430296120BD00CD55CD /* SettingInteractor.swift in Sources */,
 				F5B2FADE2944773C00592363 /* SettingViewModel.swift in Sources */,
 				F5C397DA289E9342008AEFF2 /* CardPackage.swift in Sources */,
 				F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */,

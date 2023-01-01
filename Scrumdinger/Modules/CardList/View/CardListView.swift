@@ -207,8 +207,7 @@ struct CardListView_Previews: PreviewProvider {
                         interactor: .init(
                             dependency: .init(
                                 dataStore: .init(),
-                                room: room1,
-                                currentUser: me)),
+                                room: room1)),
                         room: room1,
                         currentUser: me,
                         viewModel: .init())),
@@ -223,8 +222,7 @@ struct CardListView_Previews: PreviewProvider {
                         interactor: .init(
                             dependency: .init(
                                 dataStore: .init(),
-                                room: room2,
-                                currentUser: me)),
+                                room: room2)),
                         room: room2,
                         currentUser: me,
                         viewModel: .init())),
@@ -239,8 +237,7 @@ struct CardListView_Previews: PreviewProvider {
                         interactor: .init(
                             dependency: .init(
                                 dataStore: .init(),
-                                room: room2,
-                                currentUser: me)),
+                                room: room2)),
                         room: room2,
                         currentUser: me,
                         viewModel: selectedCardListView)),

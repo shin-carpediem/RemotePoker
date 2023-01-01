@@ -4,8 +4,7 @@ class SettingPresenter: SettingPresentation {
     // MARK: - Dependency
     
     struct Dependency {
-        var dataStore: RoomDataStore
-        var currentUser: User
+        var interactor: SettingInteractor
         var viewModel: SettingViewModel
     }
     
@@ -21,11 +20,11 @@ class SettingPresenter: SettingPresentation {
     }
     
     func didTapLeaveRoomButton() {
-        disableButton(true)
-        AppConfig.shared.resetLocalLogInData()
-        dependency.dataStore.unsubscribeUser()
         Task {
-            await dependency.dataStore.removeUserFromRoom(userId: dependency.currentUser.id)
+            disableButton(true)
+            AppConfig.shared.resetLocalLogInData()
+            dependency.interactor.unsubscribeUser()
+            await dependency.interactor.leaveRoom()
         }
     }
     
