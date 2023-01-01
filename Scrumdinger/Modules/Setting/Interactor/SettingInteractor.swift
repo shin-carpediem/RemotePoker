@@ -5,6 +5,7 @@ class SettingInteractor: SettingUseCase {
     
     struct Dependency {
         var dataStore: RoomDataStore
+        var authDataStore: RoomAuthDataStore
         var presenter: SettingPresenter?
         var currentUser: User
     }
@@ -19,6 +20,7 @@ class SettingInteractor: SettingUseCase {
     
     func leaveRoom() async {
         await dependency.dataStore.removeUserFromRoom(userId: dependency.currentUser.id)
+        dependency.authDataStore.logout()
     }
     
     func unsubscribeUser() {

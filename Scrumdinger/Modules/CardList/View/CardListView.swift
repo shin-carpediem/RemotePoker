@@ -146,8 +146,8 @@ struct CardListView: View, ModuleAssembler {
                 assembleSetting(room: dependency.room,
                                 currrentUser: dependency.currentUser)
                 .onDisappear {
-                    // 設定画面から戻った時
-                    if !AppConfig.shared.isCurrentUserLoggedIn {
+                    if !dependency.presenter.viewWillDisAppear() {
+                        // ログアウトしている場合、ルート(=ひとつ前の画面)に遷移する
                         presentation.wrappedValue.dismiss()
                     }
                 }
@@ -207,6 +207,7 @@ struct CardListView_Previews: PreviewProvider {
                         interactor: .init(
                             dependency: .init(
                                 dataStore: .init(),
+                                authDataStore: .init(),
                                 room: room1)),
                         room: room1,
                         currentUser: me,
@@ -222,6 +223,7 @@ struct CardListView_Previews: PreviewProvider {
                         interactor: .init(
                             dependency: .init(
                                 dataStore: .init(),
+                                authDataStore: .init(),
                                 room: room2)),
                         room: room2,
                         currentUser: me,
@@ -237,6 +239,7 @@ struct CardListView_Previews: PreviewProvider {
                         interactor: .init(
                             dependency: .init(
                                 dataStore: .init(),
+                                authDataStore: .init(),
                                 room: room2)),
                         room: room2,
                         currentUser: me,

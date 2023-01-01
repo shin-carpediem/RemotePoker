@@ -4,8 +4,7 @@ protocol RoomAuthRepository {
     func isUserLogin() -> Bool
     
     /// ログインする
-    /// - returns ユーザーID(nilならログイン失敗)
-    func login() -> String?
+    func login()
     
     /// ログアウトする
     /// - returns 成功したか

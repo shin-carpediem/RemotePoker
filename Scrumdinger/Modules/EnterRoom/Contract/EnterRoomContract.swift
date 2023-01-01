@@ -28,4 +28,10 @@ protocol EnterRoomPresentationOutput {
     
     /// 入力内容が無効だと示すアラートを出力する
     func outputInputInvalidAlert()
+    
+    /// データ処理の成功を出力
+    func outputSuccess()
+    
+    /// エラーを出力
+    func outputError()
 }

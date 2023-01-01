@@ -7,7 +7,7 @@ class RoomDataStore: RoomRepository {
     
     convenience init(roomId: Int) {
         self.init()
-        firebaseRef = FirestoreRef(roomId: roomId)
+        firestoreRef = FirestoreRef(roomId: roomId)
     }
     
     // MARK: - RoomRepository
@@ -63,12 +63,12 @@ class RoomDataStore: RoomRepository {
     
     func fetchRoom() async -> Room {
         // ルーム取得
-        let roomSnapshot = await firebaseRef?.roomSnapshot()
+        let roomSnapshot = await firestoreRef?.roomSnapshot()
         let roomData = roomSnapshot?.data()
         let roomId = roomData!["id"] as! Int
         
         // ユーザー一覧取得
-        let usersSnapshot = await firebaseRef?.usersSnapshot()
+        let usersSnapshot = await firestoreRef?.usersSnapshot()
         let userList: [User] = usersSnapshot!.map { userDoc in
             let userData = userDoc.data()
             return User(id: userData["id"] as! String,
@@ -77,13 +77,13 @@ class RoomDataStore: RoomRepository {
         }
         
         // カードパッケージ取得
-        let cardPackagesSnapshot = await firebaseRef?.cardPackagesSnapshot()?.first
+        let cardPackagesSnapshot = await firestoreRef?.cardPackagesSnapshot()?.first
         let cardPackageData = cardPackagesSnapshot?.data()
         let cardPackageId = cardPackageData!["id"] as! String
         let themeColor = cardPackageData!["themeColor"] as! String
         
         // カード一覧取得
-        let cardsSnapshot = await firebaseRef?.cardsSnapshot(cardPackageId: cardPackageId)
+        let cardsSnapshot = await firestoreRef?.cardsSnapshot(cardPackageId: cardPackageId)
         let cardList: [Card] = cardsSnapshot!.map { cardDoc in
             let cardData = cardDoc.data()
             return Card(id: cardData["id"] as! String,
@@ -103,7 +103,7 @@ class RoomDataStore: RoomRepository {
     }
     
     func addUserToRoom(user: User) async {
-        let userDocument = firebaseRef?.usersCollection.document(user.id)
+        let userDocument = firestoreRef?.usersCollection.document(user.id)
         try? await userDocument?.setData([
             "id": user.id,
             "name": user.name,
@@ -112,7 +112,7 @@ class RoomDataStore: RoomRepository {
     }
     
     func removeUserFromRoom(userId: String) async {
-        try? await firebaseRef?.userDocument(userId: userId).delete()
+        try? await firestoreRef?.userDocument(userId: userId).delete()
     }
     
 //    func deleteRoom() async {
@@ -120,7 +120,7 @@ class RoomDataStore: RoomRepository {
 //    }
     
     func subscribeCardPackage() {
-        cardPackagesListener = firebaseRef?.cardPackagesQuery.addSnapshotListener { querySnapshot, error in
+        cardPackagesListener = firestoreRef?.cardPackagesQuery.addSnapshotListener { querySnapshot, error in
             querySnapshot?.documentChanges.forEach { [weak self] diff in
                 var actionType: CardPackageActionType
                 if (diff.type == .added) {
@@ -143,7 +143,7 @@ class RoomDataStore: RoomRepository {
     }
     
     func subscribeUser() {
-        usersListener = firebaseRef?.usersQuery.addSnapshotListener { querySnapshot, error in
+        usersListener = firestoreRef?.usersQuery.addSnapshotListener { querySnapshot, error in
             querySnapshot?.documentChanges.forEach { [weak self] diff in
                 var actionType: UserActionType
                 if (diff.type == .added) {
@@ -163,7 +163,7 @@ class RoomDataStore: RoomRepository {
     
     func fetchUser(id: String) -> User {
         var user: User = .init(id: "", name: "", selectedCardId: "")
-        let userDocument = firebaseRef?.userDocument(userId: id)
+        let userDocument = firestoreRef?.userDocument(userId: id)
         userDocument?.getDocument() { userSnapshot, _ in
             let userData = userSnapshot?.data()
             user = .init(id: userData?["id"] as! String,
@@ -179,7 +179,7 @@ class RoomDataStore: RoomRepository {
     
     func updateSelectedCardId(selectedCardDictionary: [String: String]) {
         selectedCardDictionary.forEach { userId, selectedCardId in
-            let userDocument = firebaseRef?.userDocument(userId: userId)
+            let userDocument = firestoreRef?.userDocument(userId: userId)
             userDocument?.updateData([
                 "selectedCardId": selectedCardId
             ])
@@ -188,7 +188,7 @@ class RoomDataStore: RoomRepository {
     
     func updateThemeColor(cardPackageId: String,
                           themeColor: ThemeColor) {
-        let cardPackageDocument = firebaseRef?.cardPackageDocument(cardPackageId: cardPackageId)
+        let cardPackageDocument = firestoreRef?.cardPackageDocument(cardPackageId: cardPackageId)
         cardPackageDocument?.updateData([
             "themeColor": themeColor.rawValue
         ])
@@ -196,7 +196,7 @@ class RoomDataStore: RoomRepository {
     
     // MARK: - Private
         
-    private var firebaseRef: FirestoreRef?
+    private var firestoreRef: FirestoreRef?
     
     private var cardPackagesListener: ListenerRegistration?
     

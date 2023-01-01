@@ -13,3 +13,11 @@ protocol SettingUseCase {
     /// ユーザーの購読を解除する
     func unsubscribeUser()
 }
+
+protocol SettingPresentationOutput {
+    /// データ処理の成功を出力
+    func outputSuccess()
+    
+    /// エラーを出力
+    func outputError()
+}

@@ -136,6 +136,7 @@ struct EnterRoomView_Previews: PreviewProvider {
             presenter: .init(
                 dependency: .init(
                     dataStore: .init(),
+                    authDataStore: .init(),
                     viewModel: .init()))),
                       viewModel: .init())
     }

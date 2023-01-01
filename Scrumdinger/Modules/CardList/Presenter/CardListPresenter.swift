@@ -24,6 +24,10 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
         outputUserSelectStatus()
     }
     
+    func viewWillDisAppear() -> Bool {
+        dependency.interactor.isUserLoggedIn()
+    }
+    
     func didSelectCard(card: Card) {
         disableButton(true)
         let selectedCardDictionary: [String : String] = [dependency.currentUser.id: card.id]

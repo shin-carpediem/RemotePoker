@@ -1,10 +1,6 @@
 import SwiftUI
 
 class EnterRoomViewModel: ObservableObject {
-    /// ログインしているか
-    // Firebaseではなくローカルで保持する
-    @Published var isLoggedIn = AppConfig.shared.isCurrentUserLoggedIn
-    
     /// ログイン中のルームに入るか
     @Published var isEnterLoggedInRoom: Bool?
     

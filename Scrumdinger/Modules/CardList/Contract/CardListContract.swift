@@ -2,6 +2,10 @@ protocol CardListPresentation {
     /// View初期読み込み時
     func viewDidLoad()
     
+    /// Viewが表示されなくなる時
+    /// - returns ログインしているか
+    func viewWillDisAppear() -> Bool
+    
     /// カードを選択した
     /// - parameter card: カード
     func didSelectCard(card: Card)
@@ -35,6 +39,10 @@ protocol CardListUseCase {
     
     /// ルームを取得する
     func fetchRoom() async
+    
+    /// ログインしているか
+    /// - returns ログインしているか
+    func isUserLoggedIn() -> Bool
 }
 
 protocol CardListPresentationOutput {

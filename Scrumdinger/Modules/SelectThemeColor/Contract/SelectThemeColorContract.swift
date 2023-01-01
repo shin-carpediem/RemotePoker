@@ -12,3 +12,11 @@ protocol SelectThemeColorUseCase {
     /// - parameter themeColor: テーマカラー
     func updateThemeColor(themeColor: ThemeColor)
 }
+
+protocol SelectThemeColorPresentationOutput {
+    /// データ処理の成功を出力
+    func outputSuccess()
+    
+    /// エラーを出力
+    func outputError()
+}

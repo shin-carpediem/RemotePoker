@@ -96,6 +96,7 @@ struct SettingView_Previews: PreviewProvider {
                         dependency: .init(
                             dataStore: .init(
                                 roomId: CardListView_Previews.room1.id),
+                            authDataStore: .init(),
                             currentUser: CardListView_Previews.me)),
                     viewModel: .init())),
             room: CardListView_Previews.room1),

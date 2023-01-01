@@ -1,6 +1,6 @@
 import Foundation
 
-class SettingPresenter: SettingPresentation {
+class SettingPresenter: SettingPresentation, SettingPresentationOutput {
     // MARK: - Dependency
     
     struct Dependency {
@@ -26,6 +26,16 @@ class SettingPresenter: SettingPresentation {
             dependency.interactor.unsubscribeUser()
             await dependency.interactor.leaveRoom()
         }
+    }
+    
+    // MARK: - SettingPresentationOutput
+    
+    func outputSuccess() {
+        
+    }
+    
+    func outputError() {
+        
     }
     
     // MARK: - Private

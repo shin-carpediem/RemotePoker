@@ -5,6 +5,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     
     struct Dependency {
         var dataStore: RoomDataStore
+        var authDataStore: RoomAuthDataStore
         var viewModel: EnterRoomViewModel
     }
     
@@ -22,7 +23,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     
     func viewDidLoad() {
         fetchCurrentUserLocalData()
-        if AppConfig.shared.isCurrentUserLoggedIn {
+        if dependency.authDataStore.isUserLogin() {
             outputLoginAsCurrentUserAlert()
         }
     }
@@ -58,7 +59,9 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
                 // 既存ルーム
                 dependency.dataStore = RoomDataStore(roomId: roomId)
                 room = await dependency.dataStore.fetchRoom()
-                updateIsCurrentUserLogIn(true)
+                updateWillLogInExistingRoom(true)
+                
+                dependency.authDataStore.login()
                 
                 pushCardListView()
             } else {
@@ -68,7 +71,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
     }
     
     func didCancelEnterExistingRoomButton() {
-        updateIsCurrentUserLogIn(false)
+        updateWillLogInExistingRoom(false)
     }
     
     func didTapEnterRoomButton(userName: String, roomId: Int) {
@@ -81,8 +84,8 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
                 // 既存ルーム
                 dependency.dataStore = RoomDataStore(roomId: roomId)
                 room = await dependency.dataStore.fetchRoom()
-
-                if AppConfig.shared.isCurrentUserLoggedIn {
+                
+                if dependency.authDataStore.isUserLogin() {
                     // ルームにログイン中
                     // TODO: ローカルで保持していたデータが消えたがFirestore上ではルームにログインしている場合も考慮する。
                     if let isEnterLoggedInRoom = dependency.viewModel.isEnterLoggedInRoom, isEnterLoggedInRoom {
@@ -116,6 +119,7 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
                 await dependency.dataStore.createRoom(room!)
             }
 
+            dependency.authDataStore.login()
             // ローカルにユーザーデータの一部を保存
             AppConfig.shared.addLocalLogInData(userId: currentUser.id,
                                                userName: currentUser.name,
@@ -140,6 +144,14 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
         }
     }
     
+    func outputSuccess() {
+        
+    }
+    
+    func outputError() {
+        
+    }
+    
     // MARK: - Private
     
     private var dependency: Dependency
@@ -152,8 +164,8 @@ class EnterRoomPresenter: EnterRoomPresentation, EnterRoomPresentationOutput {
         }
     }
     
-    /// カレントユーザーのログイン/ログアウトを更新する
-    private func updateIsCurrentUserLogIn(_ loggedIn: Bool) {
+    /// ログイン中のルームに入るかを更新する
+    private func updateWillLogInExistingRoom(_ loggedIn: Bool) {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel.isEnterLoggedInRoom = loggedIn
         }

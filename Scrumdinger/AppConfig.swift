@@ -7,22 +7,11 @@ class AppConfig {
         }
         return Static.instance
     }
-        
-    /// カレントユーザーがログイン中か
-    var isCurrentUserLoggedIn: Bool {
-        get {
-            UserDefaults.standard.bool(forKey: "isCurrentUserLoggedIn")
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: "isCurrentUserLoggedIn")
-        }
-    }
     
     /// カレントユーザーにローカルデータを追加する
     func addLocalLogInData(userId: String,
                            userName: String,
                            roomId: Int) {
-        AppConfig.shared.isCurrentUserLoggedIn = true
         AppConfig.shared.currentUserId = userId
         AppConfig.shared.currentUserName = userName
         AppConfig.shared.currentUserRoomId = roomId
@@ -30,7 +19,6 @@ class AppConfig {
     
     /// カレントユーザーからローカルデータをリセットする
     func resetLocalLogInData() {
-        AppConfig.shared.isCurrentUserLoggedIn = false
         AppConfig.shared.currentUserId = ""
         AppConfig.shared.currentUserName = ""
         AppConfig.shared.currentUserRoomId = 0

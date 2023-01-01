@@ -4,6 +4,7 @@ extension ModuleAssembler {
         let presenter = EnterRoomPresenter(
             dependency: .init(
                 dataStore: .init(),
+                authDataStore: .init(),
                 viewModel: viewModel))
         let view = EnterRoomView(
             dependency: .init(presenter: presenter),
@@ -16,6 +17,7 @@ extension ModuleAssembler {
         let interactor = CardListInteractor(
             dependency: .init(
                 dataStore: .init(roomId: room.id),
+                authDataStore: .init(),
                 room: room))
         let presenter = CardListPresenter(
             dependency: .init(
@@ -38,6 +40,7 @@ extension ModuleAssembler {
         let interactor = SettingInteractor(
             dependency: .init(
                 dataStore: .init(roomId: room.id),
+                authDataStore: .init(),
                 currentUser: currrentUser))
         let presenter = SettingPresenter(
             dependency: .init(

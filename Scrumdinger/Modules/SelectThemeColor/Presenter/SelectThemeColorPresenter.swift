@@ -1,6 +1,6 @@
 import Foundation
 
-class SelectThemeColorPresenter: SelectThemeColorPresentation {
+class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectThemeColorPresentationOutput {
     // MARK: - Dependency
     
     struct Dependency {
@@ -21,6 +21,16 @@ class SelectThemeColorPresenter: SelectThemeColorPresentation {
     
     func didTapColor(color: ThemeColor) {
         dependency.interactor.updateThemeColor(themeColor: color)
+    }
+    
+    // MARK: - SelectThemeColorPresentationOutput
+    
+    func outputSuccess() {
+        
+    }
+    
+    func outputError() {
+        
     }
 
     // MARK: - Private

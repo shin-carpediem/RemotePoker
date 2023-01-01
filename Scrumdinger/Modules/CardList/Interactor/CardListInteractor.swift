@@ -5,6 +5,7 @@ class CardListInteractor: CardListUseCase {
     
     struct Dependency {
         var dataStore: RoomDataStore
+        var authDataStore: RoomAuthDataStore
         var presenter: CardListPresenter?
         var room: Room
     }
@@ -50,6 +51,10 @@ class CardListInteractor: CardListUseCase {
         } catch {
             dependency.presenter?.outputError()
         }
+    }
+    
+    func isUserLoggedIn() -> Bool {
+        dependency.authDataStore.isUserLogin()
     }
 }
 
