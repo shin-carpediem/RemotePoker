@@ -46,7 +46,9 @@
 		F57C64212956BB7C00CD55CD /* SelectThemeColorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C64202956BB7C00CD55CD /* SelectThemeColorViewModel.swift */; };
 		F57C642D295FF60600CD55CD /* SelectThemeColorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C642C295FF60600CD55CD /* SelectThemeColorInteractor.swift */; };
 		F57C6430296120BD00CD55CD /* SettingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C642F296120BD00CD55CD /* SettingInteractor.swift */; };
-		F5802CFB2931E6E000955949 /* FirebaseRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFA2931E6E000955949 /* FirebaseRef.swift */; };
+		F57C64322961366500CD55CD /* RoomAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C64312961366500CD55CD /* RoomAuthRepository.swift */; };
+		F57C6434296136CC00CD55CD /* RoomAuthDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C6433296136CC00CD55CD /* RoomAuthDataStore.swift */; };
+		F5802CFB2931E6E000955949 /* FirestoreRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFA2931E6E000955949 /* FirestoreRef.swift */; };
 		F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFD293207C700955949 /* CardListPresenter.swift */; };
 		F5802D0329320DEF00955949 /* ModuleAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D0229320DEF00955949 /* ModuleAssembler.swift */; };
 		F5802D0529320F1B00955949 /* ModuleAssembler+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D0429320F1B00955949 /* ModuleAssembler+Default.swift */; };
@@ -127,7 +129,9 @@
 		F57C64202956BB7C00CD55CD /* SelectThemeColorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorViewModel.swift; sourceTree = "<group>"; };
 		F57C642C295FF60600CD55CD /* SelectThemeColorInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorInteractor.swift; sourceTree = "<group>"; };
 		F57C642F296120BD00CD55CD /* SettingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingInteractor.swift; sourceTree = "<group>"; };
-		F5802CFA2931E6E000955949 /* FirebaseRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRef.swift; sourceTree = "<group>"; };
+		F57C64312961366500CD55CD /* RoomAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomAuthRepository.swift; sourceTree = "<group>"; };
+		F57C6433296136CC00CD55CD /* RoomAuthDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomAuthDataStore.swift; sourceTree = "<group>"; };
+		F5802CFA2931E6E000955949 /* FirestoreRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRef.swift; sourceTree = "<group>"; };
 		F5802CFD293207C700955949 /* CardListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListPresenter.swift; sourceTree = "<group>"; };
 		F5802D0229320DEF00955949 /* ModuleAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleAssembler.swift; sourceTree = "<group>"; };
 		F5802D0429320F1B00955949 /* ModuleAssembler+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModuleAssembler+Default.swift"; sourceTree = "<group>"; };
@@ -349,7 +353,7 @@
 		F5802CF92931E6D000955949 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				F5802CFA2931E6E000955949 /* FirebaseRef.swift */,
+				F5802CFA2931E6E000955949 /* FirestoreRef.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -500,6 +504,7 @@
 			isa = PBXGroup;
 			children = (
 				F5E05170292BB05F006EA727 /* RoomRepository.swift */,
+				F57C64312961366500CD55CD /* RoomAuthRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -508,6 +513,7 @@
 			isa = PBXGroup;
 			children = (
 				F5E05174292BB134006EA727 /* RoomDataStore.swift */,
+				F57C6433296136CC00CD55CD /* RoomAuthDataStore.swift */,
 			);
 			path = DataStore;
 			sourceTree = "<group>";
@@ -734,7 +740,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F57C641C2950A99F00CD55CD /* SelectThemeColorPresenter.swift in Sources */,
-				F5802CFB2931E6E000955949 /* FirebaseRef.swift in Sources */,
+				F57C6434296136CC00CD55CD /* RoomAuthDataStore.swift in Sources */,
+				F5802CFB2931E6E000955949 /* FirestoreRef.swift in Sources */,
+				F57C64322961366500CD55CD /* RoomAuthRepository.swift in Sources */,
 				F5E05175292BB134006EA727 /* RoomDataStore.swift in Sources */,
 				F5C397E0289F420F008AEFF2 /* EnterRoomView.swift in Sources */,
 				F50060F529443436005923A7 /* AppConfig.swift in Sources */,

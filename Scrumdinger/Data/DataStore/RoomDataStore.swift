@@ -7,7 +7,7 @@ class RoomDataStore: RoomRepository {
     
     convenience init(roomId: Int) {
         self.init()
-        firebaseRef = FirebaseRef(roomId: roomId)
+        firebaseRef = FirestoreRef(roomId: roomId)
     }
     
     // MARK: - RoomRepository
@@ -196,7 +196,7 @@ class RoomDataStore: RoomRepository {
     
     // MARK: - Private
         
-    private var firebaseRef: FirebaseRef?
+    private var firebaseRef: FirestoreRef?
     
     private var cardPackagesListener: ListenerRegistration?
     
