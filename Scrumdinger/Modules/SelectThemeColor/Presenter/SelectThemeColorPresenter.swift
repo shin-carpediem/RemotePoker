@@ -1,10 +1,10 @@
 import Foundation
 
-class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectThemeColorPresentationOutput {
+class SelectThemeColorPresenter: SelectThemeColorPresentation {
     // MARK: - Dependency
     
     struct Dependency {
-        var dataStore: RoomDataStore
+        var interactor: SelectThemeColorInteractor
         var room: Room
         var viewModel: SelectThemeColorViewModel
     }
@@ -16,21 +16,19 @@ class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectThemeColorP
     // MARK: - SelectThemeColorPresentation
     
     func viewDidLoad() {
-        outputColorList()
+        showColorList()
     }
     
-    func didTapColor(themeColor: ThemeColor) {
-        dependency.dataStore.updateThemeColor(cardPackageId: dependency.room.cardPackage.id,
-                                              themeColor: themeColor)
+    func didTapColor(color: ThemeColor) {
+        dependency.interactor.updateThemeColor(themeColor: color)
     }
-    
-    // MARK: - SelectThemeColorPresentationOutput
-    
-    func outputColorList() {
-        dependency.viewModel.themeColorList = ThemeColor.allCases
-    }
-    
+
     // MARK: - Private
     
     private var dependency: Dependency
+    
+    /// カラー一覧を表示する
+    private func showColorList() {
+        dependency.viewModel.themeColorList = ThemeColor.allCases
+    }
 }

@@ -47,7 +47,7 @@ struct SelectThemeColorView: View {
     /// カラーセル
     private func colorCell(_ color: ThemeColor) -> some View {
         Button {
-            dependency.presenter.didTapColor(themeColor: color)
+            dependency.presenter.didTapColor(color: color)
         } label: {
             Text(color.rawValue)
                 .foregroundColor(.gray)
@@ -62,7 +62,11 @@ struct SelectThemeColorView_Previews: PreviewProvider {
         SelectThemeColorView(dependency: .init(
             presenter: .init(
                 dependency: .init(
-                    dataStore: .init(),
+                    interactor: .init(
+                        dependency: .init(
+                            dataStore: .init(
+                                roomId:  CardListView_Previews.room1.id),
+                            room:  CardListView_Previews.room1)),
                     room: CardListView_Previews.room1,
                     viewModel: .init()))),
                              viewModel: .init())

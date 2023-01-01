@@ -44,6 +44,7 @@
 		F57C641C2950A99F00CD55CD /* SelectThemeColorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C641B2950A99F00CD55CD /* SelectThemeColorPresenter.swift */; };
 		F57C641E2950AA3400CD55CD /* SelectThemeColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C641D2950AA3400CD55CD /* SelectThemeColorView.swift */; };
 		F57C64212956BB7C00CD55CD /* SelectThemeColorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C64202956BB7C00CD55CD /* SelectThemeColorViewModel.swift */; };
+		F57C642D295FF60600CD55CD /* SelectThemeColorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C642C295FF60600CD55CD /* SelectThemeColorInteractor.swift */; };
 		F5802CFB2931E6E000955949 /* FirebaseRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFA2931E6E000955949 /* FirebaseRef.swift */; };
 		F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFD293207C700955949 /* CardListPresenter.swift */; };
 		F5802D0329320DEF00955949 /* ModuleAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D0229320DEF00955949 /* ModuleAssembler.swift */; };
@@ -123,6 +124,7 @@
 		F57C641B2950A99F00CD55CD /* SelectThemeColorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorPresenter.swift; sourceTree = "<group>"; };
 		F57C641D2950AA3400CD55CD /* SelectThemeColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorView.swift; sourceTree = "<group>"; };
 		F57C64202956BB7C00CD55CD /* SelectThemeColorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorViewModel.swift; sourceTree = "<group>"; };
+		F57C642C295FF60600CD55CD /* SelectThemeColorInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorInteractor.swift; sourceTree = "<group>"; };
 		F5802CFA2931E6E000955949 /* FirebaseRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRef.swift; sourceTree = "<group>"; };
 		F5802CFD293207C700955949 /* CardListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListPresenter.swift; sourceTree = "<group>"; };
 		F5802D0229320DEF00955949 /* ModuleAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleAssembler.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				F57C64162950A8E200CD55CD /* Contract */,
 				F57C64172950A8E800CD55CD /* View */,
 				F57C64182950A8ED00CD55CD /* Presenter */,
+				F57C642B295FF5E100CD55CD /* Interactor */,
 			);
 			path = SelectThemeColor;
 			sourceTree = "<group>";
@@ -322,6 +325,14 @@
 				F57C64202956BB7C00CD55CD /* SelectThemeColorViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		F57C642B295FF5E100CD55CD /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				F57C642C295FF60600CD55CD /* SelectThemeColorInteractor.swift */,
+			);
+			path = Interactor;
 			sourceTree = "<group>";
 		};
 		F5802CF92931E6D000955949 /* Firebase */ = {
@@ -725,6 +736,7 @@
 				F5802D0B293218A800955949 /* CardListContract.swift in Sources */,
 				F523669A2891E837005B1F65 /* CardListView.swift in Sources */,
 				F5802D0529320F1B00955949 /* ModuleAssembler+Default.swift in Sources */,
+				F57C642D295FF60600CD55CD /* SelectThemeColorInteractor.swift in Sources */,
 				F5E05171292BB05F006EA727 /* RoomRepository.swift in Sources */,
 				F5125F2E292E755600C822FE /* EnterRoomPresenter.swift in Sources */,
 				F525301429364D5200727472 /* EnterRoomViewModel.swift in Sources */,

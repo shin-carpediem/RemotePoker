@@ -52,9 +52,12 @@ extension ModuleAssembler {
     
     func assembleSelectThemeColor(room: Room) -> SelectThemeColorView {
         let viewModel = SelectThemeColorViewModel()
+        let interactor = SelectThemeColorInteractor(
+            dependency: .init(dataStore: .init(roomId: room.id),
+                              room: room))
         let presenter = SelectThemeColorPresenter(
             dependency: .init(
-                dataStore: .init(roomId: room.id),
+                interactor: interactor,
                 room: room,
                 viewModel: viewModel))
         let view = SelectThemeColorView(

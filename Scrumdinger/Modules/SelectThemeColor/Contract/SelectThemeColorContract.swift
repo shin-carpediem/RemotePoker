@@ -3,11 +3,12 @@ protocol SelectThemeColorPresentation {
     func viewDidLoad()
     
     /// カラーをタップした
-    /// - parameter themeColor: 選択したカラー
-    func didTapColor(themeColor: ThemeColor)
+    /// - parameter color: 選択したカラー
+    func didTapColor(color: ThemeColor)
 }
 
-protocol SelectThemeColorPresentationOutput {
-    /// カラー一覧を出力する
-    func outputColorList()
+protocol SelectThemeColorUseCase {
+    /// テーマカラーを変更する
+    /// - parameter themeColor: テーマカラー
+    func updateThemeColor(themeColor: ThemeColor)
 }
