@@ -1,29 +1,37 @@
 import Foundation
 
-class SettingInteractor: SettingUseCase {
-    // MARK: - Dependency
+final class SettingInteractor: SettingUseCase, DependencyInjectable {
+    // MARK: - DependencyInjectable
     
     struct Dependency {
-        var dataStore: RoomDataStore
-        var authDataStore: RoomAuthDataStore
-        var presenter: SettingPresenter?
+        var roomRepository: RoomRepository
+        weak var output: SettingInteractorOutput?
         var currentUser: User
     }
     
-    init(dependency: Dependency) {
+    func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
-    
-    var dependency: Dependency
     
     // MARK: - SettingUseCase
     
     func leaveRoom() async {
-        await dependency.dataStore.removeUserFromRoom(userId: dependency.currentUser.id)
-        dependency.authDataStore.logout()
+        await dependency.roomRepository.removeUserFromRoom(userId: dependency.currentUser.id)
+        let result = RoomAuthDataStore.shared.logout()
+        switch result {
+        case .success(_):
+            dependency.output?.outputSuccess()
+            
+        case .failure(let error):
+            dependency.output?.outputError(error)
+        }
     }
     
     func unsubscribeUser() {
-        dependency.dataStore.unsubscribeUser()
+        dependency.roomRepository.unsubscribeUser()
     }
+    
+    // MARK: - Private
+    
+    private var dependency: Dependency!
 }

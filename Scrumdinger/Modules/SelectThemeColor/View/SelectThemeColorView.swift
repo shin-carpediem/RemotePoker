@@ -7,14 +7,13 @@ struct SelectThemeColorView: View {
     // MARK: - Dependency
     
     struct Dependency {
-        var presenter: SelectThemeColorPresenter
+        var presenter: SelectThemeColorPresentation
     }
     
     /// View生成時
     init(dependency: Dependency, viewModel: SelectThemeColorViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
-        
         self.dependency.presenter.viewDidLoad()
     }
     
@@ -34,6 +33,8 @@ struct SelectThemeColorView: View {
             }
         }
         .navigationTitle("ThemeColor")
+        .onAppear { dependency.presenter.viewDidResume() }
+        .onDisappear { dependency.presenter.viewDidSuspend() }
     }
     
     /// カラー一覧
@@ -46,11 +47,27 @@ struct SelectThemeColorView: View {
     
     /// カラーセル
     private func colorCell(_ color: ThemeColor) -> some View {
-        Button {
-            dependency.presenter.didTapColor(color: color)
-        } label: {
+        let isThemeColor = color == viewModel.selectedThemeColor
+        // TODO: 背景色がつかない
+        let themeLabel: some View = {
+            Text(color.rawValue)
+                .font(.system(size: 18, weight: .bold))
+                .foregroundColor(.gray)
+                .background(color.opacity(0.5))
+        }()
+        let label: some View = {
             Text(color.rawValue)
                 .foregroundColor(.gray)
+        }()
+        
+        return Button {
+            dependency.presenter.didTapColor(color: color)
+        } label: {
+            if isThemeColor {
+                themeLabel
+            } else {
+                label
+            }
         }
     }
 }
@@ -59,16 +76,7 @@ struct SelectThemeColorView: View {
 
 struct SelectThemeColorView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectThemeColorView(dependency: .init(
-            presenter: .init(
-                dependency: .init(
-                    interactor: .init(
-                        dependency: .init(
-                            dataStore: .init(
-                                roomId:  CardListView_Previews.room1.id),
-                            room:  CardListView_Previews.room1)),
-                    room: CardListView_Previews.room1,
-                    viewModel: .init()))),
+        SelectThemeColorView(dependency: .init(presenter: SelectThemeColorPresenter()),
                              viewModel: .init())
         .previewDisplayName("テーマカラー選択画面")
     }

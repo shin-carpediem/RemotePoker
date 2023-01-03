@@ -1,4 +1,4 @@
-protocol SettingPresentation {
+protocol SettingPresentation: AnyObject, Presentation {
     /// テーマカラー選択画面に遷移するボタンがタップされた
     func didTapSelectThemeColorButton()
     
@@ -6,7 +6,7 @@ protocol SettingPresentation {
     func didTapLeaveRoomButton()
 }
 
-protocol SettingUseCase {
+protocol SettingUseCase: AnyObject {
     /// ルームから退室する
     func leaveRoom() async
     
@@ -14,10 +14,10 @@ protocol SettingUseCase {
     func unsubscribeUser()
 }
 
-protocol SettingPresentationOutput {
+protocol SettingInteractorOutput: AnyObject {
     /// データ処理の成功を出力
     func outputSuccess()
     
     /// エラーを出力
-    func outputError()
+    func outputError(_ error: Error)
 }

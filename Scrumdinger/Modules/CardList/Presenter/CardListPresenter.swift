@@ -1,37 +1,25 @@
 import Foundation
 
-class CardListPresenter: CardListPresentation, CardListPresentationOutput {
-    // MARK: - Dependency
+final class CardListPresenter: CardListPresentation, CardListInteractorOutput, DependencyInjectable {
+    // MARK: - DependencyInjectable
     
     struct Dependency {
-        var interactor: CardListInteractor
+        var useCase: CardListUseCase
         var room: Room
         var currentUser: User
-        var viewModel: CardListViewModel
+        weak var viewModel: CardListViewModel?
     }
     
-    init(dependency: Dependency) {
+    func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
     
     // MARK: - CardListPresentation
     
-    func viewDidLoad() {
-        dependency.interactor.subscribeCardPackages()
-        dependency.interactor.subscribeUsers()
-        outputThemeColor()
-        outputHeaderTitle()
-        outputUserSelectStatus()
-    }
-    
-    func viewWillDisAppear() -> Bool {
-        dependency.interactor.isUserLoggedIn()
-    }
-    
     func didSelectCard(card: Card) {
         disableButton(true)
         let selectedCardDictionary: [String : String] = [dependency.currentUser.id: card.id]
-        dependency.interactor.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
+        dependency.useCase.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
     }
     
     func didTapOpenSelectedCardListButton() {
@@ -43,7 +31,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
         disableButton(true)
         // カレントユーザーの選択済みカードをリセットする
         let selectedCardDictionary: [String: String] = [dependency.currentUser.id: ""]
-        dependency.interactor.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
+        dependency.useCase.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
         hideSelectedCardList()
     }
     
@@ -51,61 +39,54 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
         pushSettingView()
     }
     
-    // MARK: - CardListPresentationOutput
+    // MARK: - Presentation
+
+    func viewDidLoad() {
+        dependency.useCase.activateRoomDelegate(self)
+        dependency.useCase.subscribeUsers()
+        dependency.useCase.subscribeCardPackages()
+    }
+    
+    func viewDidResume() {
+        requestRoom()
+        applyThemeColor()
+        showHeaderTitle()
+        updateUserSelectStatusList()
+    }
+
+    func viewDidSuspend() {}
+    
+    // MARK: - CardListInteractorOutput
     
     func outputRoom(_ room: Room) {
-        dependency.room = room
-    }
-    
-    func outputThemeColor() {
-        Task {
-            // Interactor→Firestore
-            await dependency.interactor.fetchRoom()
-            dependency.currentUser.selectedCardId = dependency.room.userList.first(where: { $0.id == dependency.currentUser.id })?.selectedCardId ?? ""
-            
-            // PresententationOutput
-            applyThemeColor()
-        }
-    }
-    
-    func outputHeaderTitle() {
-        Task {
-            // Interactor→Firestore
-            await dependency.interactor.fetchRoom()
-            dependency.currentUser.selectedCardId = dependency.room.userList.first(where: { $0.id == dependency.currentUser.id })?.selectedCardId ?? ""
-            
-            // PresententationOutput
-            showHeaderTitle()
-        }
-    }
-    
-    func outputUserSelectStatus() {
-        Task {
-            // Interactor→Firestore
-            await dependency.interactor.fetchRoom()
-            dependency.currentUser.selectedCardId = dependency.room.userList.first(where: { $0.id == dependency.currentUser.id })?.selectedCardId ?? ""
-            
-            // PresententationOutput
-            updateUserSelectStatus()
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel?.room = room
         }
     }
     
     func outputSuccess() {
-        // TODO: 成功メッセージ
+        
     }
     
-    func outputError() {
-        // TODO: エラーメッセージ
+    func outputError(_ error: CardListError) {
+        
     }
     
     // MARK: - Private
     
-    private var dependency: Dependency
+    private var dependency: Dependency!
+    
+    /// ルームを要求する
+    private func requestRoom() {
+        Task {
+            await dependency.useCase.requestRoom()
+        }
+    }
     
     /// ボタンを無効にする
     private func disableButton(_ disabled: Bool) {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.isButtonEnabled = !disabled
+            self?.dependency.viewModel?.isButtonEnabled = !disabled
         }
     }
     
@@ -113,17 +94,19 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     private func applyThemeColor() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            // TODO: 色を選択したらViewが更新されるようにする
-            self.dependency.viewModel.themeColor = self.dependency.room.cardPackage.themeColor
+
+            self.dependency.viewModel?.room?.cardPackage.themeColor = self.dependency.room.cardPackage.themeColor
         }
     }
     
-    /// ヘッダータイトルを表示する
+    /// ヘッダーテキストを表示する
     private func showHeaderTitle() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
+            guard let room = self.dependency.viewModel?.room else { return }
+
             let currentUserName = self.dependency.currentUser.name
-            let otherUsersCount = self.dependency.room.userList.count - 1
+            let otherUsersCount = room.userList.count - 1
             let roomId = self.dependency.room.id
             let only = otherUsersCount >= 1 ? "" : "only"
             let s = otherUsersCount >= 2 ? "s" : ""
@@ -131,16 +114,18 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
             
             let headerTitle = "\(only) \(currentUserName) \(otherUsersText) in Room \(roomId)"
 
-            self.dependency.viewModel.headerTitle = headerTitle
+            self.dependency.viewModel?.headerTitle = headerTitle
         }
     }
     
-    /// ユーザーのカード選択状況を更新する
-    private func updateUserSelectStatus() {
+    /// ユーザーの選択状況一覧を更新する
+    private func updateUserSelectStatusList() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            let userSelectStatus: [UserSelectStatus] = self.dependency.room.userList.map { [weak self] user in
-                let cardPackage = self!.dependency.room.cardPackage
+            guard let room = self.dependency.viewModel?.room else { return }
+
+            let userSelectStatusList: [UserSelectStatus] = room.userList.map { user in
+                let cardPackage = room.cardPackage
                 
                 let id = Int.random(in: 0..<99999999)
                 let themeColor = cardPackage.themeColor
@@ -152,7 +137,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
                                         selectedCard: selectedCard)
             }
             
-            self.dependency.viewModel.userSelectStatus = userSelectStatus
+            self.dependency.viewModel?.userSelectStatusList = userSelectStatusList
             self.disableButton(false)
         }
     }
@@ -160,7 +145,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     /// 選択されたカード一覧を表示する
     private func showSelectedCardList() {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.isShownSelectedCardList = true
+            self?.dependency.viewModel?.isShownSelectedCardList = true
             self?.disableButton(false)
         }
     }
@@ -168,7 +153,7 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     /// 選択されたカード一覧を非表示にする
     private func hideSelectedCardList() {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.isShownSelectedCardList = false
+            self?.dependency.viewModel?.isShownSelectedCardList = false
             self?.disableButton(false)
         }
     }
@@ -178,7 +163,44 @@ class CardListPresenter: CardListPresentation, CardListPresentationOutput {
     /// 設定画面に遷移する
     private func pushSettingView() {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.willPushSettingView = true
+            self?.dependency.viewModel?.willPushSettingView = true
+        }
+    }
+}
+
+// MARK: - RoomDelegate
+
+extension CardListPresenter: RoomDelegate {
+    func whenCardPackageChanged(action: CardPackageAction) {
+        switch action {
+        case .modified:
+            // カードパッケージのテーマカラーが変更された時
+            requestRoom()
+            applyThemeColor()
+
+        case .added, .removed:
+            ()
+
+        case .unKnown:
+            fatalError()
+        }
+    }
+    
+    func whenUserChanged(action: UserAction) {
+        switch action {
+        case .added, .removed:
+            // ユーザーが入室あるいは退室した時
+            requestRoom()
+            showHeaderTitle()
+            updateUserSelectStatusList()
+
+        case .modified:
+            // ユーザーの選択済みカードが更新された時
+            requestRoom()
+            updateUserSelectStatusList()
+
+        case .unKnown:
+            fatalError()
         }
     }
 }

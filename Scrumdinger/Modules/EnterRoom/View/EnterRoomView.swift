@@ -5,20 +5,19 @@ struct EnterRoomView: View, ModuleAssembler {
     // MARK: - Dependency
     
     struct Dependency {
-        var presenter: EnterRoomPresenter
+        var presenter: EnterRoomPresentation
     }
     
     /// View生成時
     init(dependency: Dependency, viewModel: EnterRoomViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
-        
         self.dependency.presenter.viewDidLoad()
     }
     
     // MARK: - Private
     
-    private var dependency: Dependency
+    private var dependency: Dependency!
     
     @ObservedObject private var viewModel: EnterRoomViewModel
     
@@ -39,22 +38,26 @@ struct EnterRoomView: View, ModuleAssembler {
                 navigationForCardListView
             }
         }
-        .alert(isPresented: $viewModel.isShownLoginAsCurrentUserAlert, content: {
-            Alert(title: Text("Enter Existing Room?"),
-                  primaryButton: .default(Text("OK"), action: {
-                dependency.presenter.didTapEnterExistingRoomButton()
-            }),
-                  secondaryButton: .cancel {
-                dependency.presenter.didCancelEnterExistingRoomButton()
-            })
-        })
+        .alert(isPresented: $viewModel.isShownEnterCurrentRoomAlert,
+               content: { enterCurrentRoomAlert })
         .alert("Name & 4 Digit Number Required",
                isPresented: $viewModel.isShownInputFormInvalidAlert,
                actions: {},
-               message: {
-            Text("If the number is new, a new room will be created.")
-        })
+               message: { Text("If the number is new, a new room will be created.") })
         .navigationTitle("RemotePoker")
+        .onAppear { dependency.presenter.viewDidResume() }
+        .onDisappear { dependency.presenter.viewDidSuspend() }
+    }
+    
+    /// 入室中のルームに入るか促すアラート
+    private var enterCurrentRoomAlert: Alert {
+        Alert(title: Text("Enter Existing Room?"),
+              primaryButton: .default(Text("OK"), action: {
+            dependency.presenter.didTapEnterCurrentRoomButton()
+        }),
+              secondaryButton: .cancel {
+            dependency.presenter.didCancelEnterCurrentRoomButton()
+        })
     }
     
     /// 入力フォーム
@@ -101,7 +104,7 @@ struct EnterRoomView: View, ModuleAssembler {
     private var sendButton: some View {
         Button {
             if !dependency.presenter.isInputFormValid() {
-                dependency.presenter.outputInputInvalidAlert()
+                dependency.presenter.showInputInvalidAlert()
             } else {
                 dependency.presenter.didTapEnterRoomButton(
                     userName: viewModel.inputName,
@@ -121,8 +124,8 @@ struct EnterRoomView: View, ModuleAssembler {
     private var navigationForCardListView: some View {
         NavigationLink(isActive: $viewModel.willPushCardListView, destination: {
             if viewModel.willPushCardListView {
-                assembleCardList(room: dependency.presenter.room!,
-                                 currrentUser: dependency.presenter.currentUser)
+                assembleCardList(room: dependency.presenter.currentRoom!,
+                                 currentUser: dependency.presenter.currentUser)
             } else { EmptyView() }
         }) { EmptyView() }
     }
@@ -132,12 +135,8 @@ struct EnterRoomView: View, ModuleAssembler {
 
 struct EnterRoomView_Previews: PreviewProvider {
     static var previews: some View {
-        EnterRoomView(dependency: .init(
-            presenter: .init(
-                dependency: .init(
-                    dataStore: .init(),
-                    authDataStore: .init(),
-                    viewModel: .init()))),
+        EnterRoomView(dependency: .init(presenter: EnterRoomPresenter()),
                       viewModel: .init())
+            .previewDisplayName("ルーム入室画面")
     }
 }

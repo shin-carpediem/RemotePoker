@@ -7,13 +7,14 @@ struct SettingView: View, ModuleAssembler {
     // MARK: - Dependency
     
     struct Dependency {
-        var presenter: SettingPresenter
+        var presenter: SettingPresentation
         var room: Room
     }
     
     init(dependency: Dependency, viewModel: SettingViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
+        self.dependency.presenter.viewDidLoad()
     }
     
     // MARK: - Private
@@ -33,6 +34,8 @@ struct SettingView: View, ModuleAssembler {
             navigationForSelectThemeColorView
         }
         .navigationTitle("Setting")
+        .onAppear { dependency.presenter.viewDidResume() }
+        .onDisappear { dependency.presenter.viewDidSuspend() }
     }
     
     /// 設定リスト
@@ -89,17 +92,8 @@ struct SettingView: View, ModuleAssembler {
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingView(dependency: .init(
-            presenter: .init(
-                dependency: .init(
-                    interactor: .init(
-                        dependency: .init(
-                            dataStore: .init(
-                                roomId: CardListView_Previews.room1.id),
-                            authDataStore: .init(),
-                            currentUser: CardListView_Previews.me)),
-                    viewModel: .init())),
-            room: CardListView_Previews.room1),
+        SettingView(dependency: .init(presenter: SettingPresenter(),
+                                      room: CardListView_Previews.room1),
                     viewModel: .init())
         .previewDisplayName("設定画面")
     }

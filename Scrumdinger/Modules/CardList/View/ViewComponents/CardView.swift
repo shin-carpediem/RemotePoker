@@ -24,6 +24,7 @@ struct CardView: View {
         Button(action: {
             selectCardHandler?(card)
         }) {
+            // TODO: ボーダーがつかない
             Text(card.point)
                 .frame(width: 150, height: 100)
                 .font(.system(size: 40, weight: .bold))
@@ -38,11 +39,11 @@ struct CardView: View {
 // MARK: - Preview
 
 struct CardView_Previews: PreviewProvider {
-    static let card1 = CardPackage.sampleCardList[0]
+    static let card1 = CardPackage.defaultCardList[0]
     
-    static let card2 = CardPackage.sampleCardList[4]
+    static let card2 = CardPackage.defaultCardList[6]
     
-    static let card3 = CardPackage.sampleCardList[9]
+    static let card3 = CardPackage.defaultCardList[10]
     
     static var previews: some View {
         Group {

@@ -2,7 +2,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Foundation
 
-class RoomDataStore: RoomRepository {
+final class RoomDataStore: RoomRepository {
     init() {}
     
     convenience init(roomId: Int) {
@@ -35,6 +35,7 @@ class RoomDataStore: RoomRepository {
             userDocument.setData([
                 "id": userId,
                 "name": user.name,
+                "currentRoomId": roomId,
                 "selectedCardId": user.selectedCardId,
                 "createdAt": Timestamp()
             ])
@@ -61,29 +62,34 @@ class RoomDataStore: RoomRepository {
         }
     }
     
+    // 以降のメソッドは、はルームIDを渡さずに初期化して呼んだらクラッシュさせる
+
     func fetchRoom() async -> Room {
+        guard let firestoreRef else { fatalError() }
+        
         // ルーム取得
-        let roomSnapshot = await firestoreRef?.roomSnapshot()
+        let roomSnapshot = await firestoreRef.roomSnapshot()
         let roomData = roomSnapshot?.data()
         let roomId = roomData!["id"] as! Int
         
         // ユーザー一覧取得
-        let usersSnapshot = await firestoreRef?.usersSnapshot()
+        let usersSnapshot = await firestoreRef.usersSnapshot()
         let userList: [User] = usersSnapshot!.map { userDoc in
             let userData = userDoc.data()
             return User(id: userData["id"] as! String,
                         name: userData["name"] as! String,
+                        currentRoomId: userData["currentRoomId"] as! Int,
                         selectedCardId: userData["selectedCardId"] as! String)
         }
         
         // カードパッケージ取得
-        let cardPackagesSnapshot = await firestoreRef?.cardPackagesSnapshot()?.first
+        let cardPackagesSnapshot = await firestoreRef.cardPackagesSnapshot()?.first
         let cardPackageData = cardPackagesSnapshot?.data()
         let cardPackageId = cardPackageData!["id"] as! String
         let themeColor = cardPackageData!["themeColor"] as! String
         
         // カード一覧取得
-        let cardsSnapshot = await firestoreRef?.cardsSnapshot(cardPackageId: cardPackageId)
+        let cardsSnapshot = await firestoreRef.cardsSnapshot(cardPackageId: cardPackageId)
         let cardList: [Card] = cardsSnapshot!.map { cardDoc in
             let cardData = cardDoc.data()
             return Card(id: cardData["id"] as! String,
@@ -103,37 +109,46 @@ class RoomDataStore: RoomRepository {
     }
     
     func addUserToRoom(user: User) async {
-        let userDocument = firestoreRef?.usersCollection.document(user.id)
-        try? await userDocument?.setData([
+        guard let firestoreRef else { fatalError() }
+        
+        let userDocument = firestoreRef.usersCollection.document(user.id)
+        try? await userDocument.setData([
             "id": user.id,
             "name": user.name,
+            "currentRoomId": user.currentRoomId,
             "selectedCardId": user.selectedCardId
         ])
     }
     
     func removeUserFromRoom(userId: String) async {
-        try? await firestoreRef?.userDocument(userId: userId).delete()
+        guard let firestoreRef else { fatalError() }
+        
+        try? await firestoreRef.userDocument(userId: userId).delete()
     }
     
 //    func deleteRoom() async {
-//        try? await firebaseRef?.roomDocument.delete()
+//        guard let firestoreRef else { fatalError() }
+    
+//        try? await firebaseRef.roomDocument.delete()
 //    }
     
     func subscribeCardPackage() {
-        cardPackagesListener = firestoreRef?.cardPackagesQuery.addSnapshotListener { querySnapshot, error in
+        guard let firestoreRef else { fatalError() }
+        
+        cardPackagesListener = firestoreRef.cardPackagesQuery.addSnapshotListener { querySnapshot, error in
             querySnapshot?.documentChanges.forEach { [weak self] diff in
-                var actionType: CardPackageActionType
+                var action: CardPackageAction
                 if (diff.type == .added) {
-                    actionType = .added
+                    action = .added
                 } else if (diff.type == .modified) {
-                    actionType = .modified
+                    action = .modified
                 } else if (diff.type == .removed) {
-                    actionType = .removed
+                    action = .removed
                 } else {
-                    actionType = .unKnown
+                    action = .unKnown
                 }
                 
-                self?.delegate?.whenCardPackageChanged(actionType: actionType)
+                self?.delegate?.whenCardPackageChanged(action: action)
             }
         }
     }
@@ -143,31 +158,36 @@ class RoomDataStore: RoomRepository {
     }
     
     func subscribeUser() {
-        usersListener = firestoreRef?.usersQuery.addSnapshotListener { querySnapshot, error in
+        guard let firestoreRef else { fatalError() }
+        
+        usersListener = firestoreRef.usersQuery.addSnapshotListener { querySnapshot, error in
             querySnapshot?.documentChanges.forEach { [weak self] diff in
-                var actionType: UserActionType
+                var action: UserAction
                 if (diff.type == .added) {
-                    actionType = .added
+                    action = .added
                 } else if (diff.type == .modified) {
-                    actionType = .modified
+                    action = .modified
                 } else if (diff.type == .removed) {
-                    actionType = .removed
+                    action = .removed
                 } else {
-                    actionType = .unKnown
+                    action = .unKnown
                 }
                 
-                self?.delegate?.whenUserChanged(actionType: actionType)
+                self?.delegate?.whenUserChanged(action: action)
             }
         }
     }
     
     func fetchUser(id: String) -> User {
-        var user: User = .init(id: "", name: "", selectedCardId: "")
-        let userDocument = firestoreRef?.userDocument(userId: id)
-        userDocument?.getDocument() { userSnapshot, _ in
+        guard let firestoreRef else { fatalError() }
+        
+        var user: User = .init(id: "", name: "", currentRoomId: 0, selectedCardId: "")
+        let userDocument = firestoreRef.userDocument(userId: id)
+        userDocument.getDocument() { userSnapshot, _ in
             let userData = userSnapshot?.data()
             user = .init(id: userData?["id"] as! String,
                          name: userData?["name"] as! String,
+                         currentRoomId: userData?["currentRoomId"] as! Int,
                          selectedCardId: userData?["selectedCardId"] as! String)
         }
         return user
@@ -178,18 +198,21 @@ class RoomDataStore: RoomRepository {
     }
     
     func updateSelectedCardId(selectedCardDictionary: [String: String]) {
+        guard let firestoreRef else { fatalError() }
+        
         selectedCardDictionary.forEach { userId, selectedCardId in
-            let userDocument = firestoreRef?.userDocument(userId: userId)
-            userDocument?.updateData([
+            let userDocument = firestoreRef.userDocument(userId: userId)
+            userDocument.updateData([
                 "selectedCardId": selectedCardId
             ])
         }
     }
     
-    func updateThemeColor(cardPackageId: String,
-                          themeColor: ThemeColor) {
-        let cardPackageDocument = firestoreRef?.cardPackageDocument(cardPackageId: cardPackageId)
-        cardPackageDocument?.updateData([
+    func updateThemeColor(cardPackageId: String, themeColor: ThemeColor) {
+        guard let firestoreRef else { fatalError() }
+        
+        let cardPackageDocument = firestoreRef.cardPackageDocument(cardPackageId: cardPackageId)
+        cardPackageDocument.updateData([
             "themeColor": themeColor.rawValue
         ])
     }
