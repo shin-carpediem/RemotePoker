@@ -71,7 +71,7 @@ protocol RoomRepository: AnyObject {
     /// 指定IDのユーザーを取得する
     /// - parameter id: ユーザーID
     /// - returns: ユーザー
-    func fetchUser(id: String) -> User
+    func fetchUser(id: String, completion: @escaping (User) -> Void)
     
     /// ユーザーの選択済みカードを更新する
     /// - parameter selectedCardDictionary: ユーザーIDと選択されたカードIDの辞書

@@ -178,19 +178,18 @@ final class RoomDataStore: RoomRepository {
         }
     }
     
-    func fetchUser(id: String) -> User {
+    func fetchUser(id: String, completion: @escaping (User) -> Void) {
         guard let firestoreRef else { fatalError() }
         
-        var user: User = .init(id: "", name: "", currentRoomId: 0, selectedCardId: "")
         let userDocument = firestoreRef.userDocument(userId: id)
         userDocument.getDocument() { userSnapshot, _ in
             let userData = userSnapshot?.data()
-            user = .init(id: userData?["id"] as! String,
-                         name: userData?["name"] as! String,
-                         currentRoomId: userData?["currentRoomId"] as! Int,
-                         selectedCardId: userData?["selectedCardId"] as! String)
+            let user: User = .init(id: userData?["id"] as! String,
+                                   name: userData?["name"] as! String,
+                                   currentRoomId: userData?["currentRoomId"] as! Int,
+                                   selectedCardId: userData?["selectedCardId"] as! String)
+            completion(user)
         }
-        return user
     }
     
     func unsubscribeUser() {

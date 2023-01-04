@@ -24,8 +24,9 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
     }
     
     func requestUser(userId: String) {
-        let user = dependency.roomRepository.fetchUser(id: userId)
-        dependency.output?.outputUser(user)
+        dependency.roomRepository.fetchUser(id: userId) { [weak self] user in
+            self?.dependency.output?.outputUser(user)
+        }
     }
     
     func requestRoom(roomId: Int) async {

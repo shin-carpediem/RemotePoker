@@ -39,6 +39,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         Task {
             disableButton(true)
             enterRoomAction = .enterCurrentRoom
+            dependency.useCase.setupRoomRepository(roomId: currentRoomId)
             setupCurrentUser(userName: nil, roomId: nil)
             await setupRoom(userName: currentUser.name, roomId: currentRoomId)
             pushCardListView()
@@ -53,8 +54,8 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         Task {
             disableButton(true)
             login()
-            dependency.useCase.setupRoomRepository(roomId: roomId)
             enterRoomAction = isUserInCurrentRoom ? .enterOtherExistingRoom : .enterNewRoom
+            dependency.useCase.setupRoomRepository(roomId: roomId)
             setupCurrentUser(userName: userName, roomId: roomId)
             await setupRoom(userName: userName, roomId: roomId)
             pushCardListView()
@@ -93,32 +94,29 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         }
     }
     
-    func outputSuccess() {
-        
-    }
+    func outputSuccess() {}
     
-    func outputError(_ error: Error) {
-        
-    }
+    func outputError(_ error: Error) {}
     
     // MARK: - Private
     
     private var dependency: Dependency!
     
     /// カレントルームID
-    private var currentRoomId = LocalStorage.shared.currentRoomId
+    private var currentRoomId: Int {
+        get { LocalStorage.shared.currentRoomId }
+        set { LocalStorage.shared.currentRoomId = newValue }
+    }
     
     /// ユーザーが、存在する既存のルーム(=カレントルーム)に存在するか
     private var isUserInCurrentRoom = false
     
     /// ユーザーに、存在するカレントルームがあるか確認する
-    private func checkUserInCurrentRoom() {
-        Task {
-            if currentRoomId == 0 {
-                isUserInCurrentRoom = false
-            } else {
-                await dependency.useCase.checkUserInCurrentRoom(roomId: currentRoomId)
-            }
+    private func checkUserInCurrentRoom() async {
+        if currentRoomId == 0 {
+            isUserInCurrentRoom = false
+        } else {
+            await dependency.useCase.checkUserInCurrentRoom(roomId: currentRoomId)
         }
     }
     
@@ -191,15 +189,18 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
 
 extension EnterRoomPresenter: RoomAuthDelegate {
     func whenSuccessLogin(userId: String) {
-        // 匿名ログイン後取得したユーザーIDをセットする
-        currentUser.id = userId
-        // LocalStorageに保存されているカレントルームIDを基にカレントルームが存在するか確認する
-        checkUserInCurrentRoom()
-        if isUserInCurrentRoom {
-            // 以後のFirestoreRefにルームIDをセットする
-            dependency.useCase.setupRoomRepository(roomId: currentRoomId)
-            // カレントルームに入室するか促すアラートを表示する
-            outputEnterCurrentRoomAlert()
+        Task {
+            // 匿名ログイン後取得したユーザーIDをカレントユーザーIDとする
+            currentUser.id = userId
+            // ローカルに保存されているカレントルームIDを基にカレントルームがFirestore上に存在するか確認する
+            await checkUserInCurrentRoom()
+            if isUserInCurrentRoom {
+                // 存在する場合
+                // ルームリポジトリにルームIDをセットする
+                dependency.useCase.setupRoomRepository(roomId: currentRoomId)
+                // カレントルームに入室するか促すアラートを表示する
+                outputEnterCurrentRoomAlert()
+            }
         }
     }
     
