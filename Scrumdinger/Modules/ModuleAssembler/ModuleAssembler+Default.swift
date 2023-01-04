@@ -1,75 +1,72 @@
 extension ModuleAssembler {
     func assmebleEnterRoom() -> EnterRoomView {
         let viewModel = EnterRoomViewModel()
-        let presenter = EnterRoomPresenter(
-            dependency: .init(
-                dataStore: .init(),
-                authDataStore: .init(),
-                viewModel: viewModel))
-        let view = EnterRoomView(
-            dependency: .init(presenter: presenter),
-            viewModel: viewModel)
+        let presenter = EnterRoomPresenter()
+        let interactor = EnterRoomInteractor()
+        
+        presenter.inject(.init(useCase: interactor, viewModel: viewModel))
+        interactor.inject(.init(roomRepository: RoomDataStore(), output: presenter))
+        
+        let view = EnterRoomView(dependency: .init(presenter: presenter),
+                                 viewModel: viewModel)
+        
         return view
     }
     
-    func assembleCardList(room: Room, currrentUser: User) -> CardListView {
+    func assembleCardList(room: Room, currentUser: User) -> CardListView {
         let viewModel = CardListViewModel()
-        let interactor = CardListInteractor(
-            dependency: .init(
-                dataStore: .init(roomId: room.id),
-                authDataStore: .init(),
-                room: room))
-        let presenter = CardListPresenter(
-            dependency: .init(
-                interactor: interactor,
-                room: room,
-                currentUser: currrentUser,
-                viewModel: viewModel))
+        let presenter = CardListPresenter()
+        let interactor = CardListInteractor()
+        
+        presenter.inject(.init(useCase: interactor,
+                               room: room,
+                               currentUser: currentUser,
+                               viewModel: viewModel))
+        interactor.inject(.init(roomRepository: RoomDataStore(roomId: room.id),
+                                output: presenter,
+                                room: room))
+
         let view = CardListView(
             dependency: .init(
                 presenter: presenter,
                 room: room,
-                currentUser: currrentUser),
+                currentUser: currentUser),
             viewModel: viewModel)
-        interactor.dependency.presenter = presenter
+        
         return view
     }
     
-    func assembleSetting(room: Room, currrentUser: User) -> SettingView {
+    func assembleSetting(room: Room, currentUser: User) -> SettingView {
         let viewModel = SettingViewModel()
-        let interactor = SettingInteractor(
-            dependency: .init(
-                dataStore: .init(roomId: room.id),
-                authDataStore: .init(),
-                currentUser: currrentUser))
-        let presenter = SettingPresenter(
-            dependency: .init(
-                interactor: interactor,
-                viewModel: viewModel))
-        let view = SettingView(
-            dependency: .init(
-                presenter: presenter,
-                room: room),
-            viewModel: viewModel)
-        interactor.dependency.presenter = presenter
+        let presenter = SettingPresenter()
+        let interactor = SettingInteractor()
+        
+        presenter.inject(.init(useCase: interactor, viewModel: viewModel))
+        interactor.inject(.init(roomRepository: RoomDataStore(roomId: room.id),
+                                output: presenter,
+                                currentUser: currentUser))
+        
+        let view = SettingView(dependency: .init(presenter: presenter, room: room),
+                               viewModel: viewModel)
+        
         return view
     }
     
     func assembleSelectThemeColor(room: Room) -> SelectThemeColorView {
         let viewModel = SelectThemeColorViewModel()
-        let interactor = SelectThemeColorInteractor(
-            dependency: .init(
-                dataStore: .init(roomId: room.id),
-                room: room))
-        let presenter = SelectThemeColorPresenter(
-            dependency: .init(
-                interactor: interactor,
-                room: room,
-                viewModel: viewModel))
-        let view = SelectThemeColorView(
-            dependency: .init(presenter: presenter),
-            viewModel: viewModel)
-        interactor.dependency.presenter = presenter
+        let presenter = SelectThemeColorPresenter()
+        let interactor = SelectThemeColorInteractor()
+        
+        presenter.inject(.init(useCase: interactor,
+                               room: room,
+                               viewModel: viewModel))
+        interactor.inject(.init(roomRepository: RoomDataStore(roomId: room.id),
+                                output: presenter,
+                                room: room))
+        
+        let view = SelectThemeColorView(dependency: .init(presenter: presenter),
+                                        viewModel: viewModel)
+        
         return view
     }
 }

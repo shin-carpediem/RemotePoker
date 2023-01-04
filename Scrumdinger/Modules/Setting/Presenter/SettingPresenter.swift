@@ -1,14 +1,14 @@
 import Foundation
 
-class SettingPresenter: SettingPresentation, SettingPresentationOutput {
-    // MARK: - Dependency
+final class SettingPresenter: SettingPresentation, SettingInteractorOutput, DependencyInjectable {
+    // MARK: - DependencyInjectable
     
     struct Dependency {
-        var interactor: SettingInteractor
-        var viewModel: SettingViewModel
+        var useCase: SettingUseCase
+        weak var viewModel: SettingViewModel?
     }
     
-    init(dependency: Dependency) {
+    func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
     
@@ -22,30 +22,34 @@ class SettingPresenter: SettingPresentation, SettingPresentationOutput {
     func didTapLeaveRoomButton() {
         Task {
             disableButton(true)
-            AppConfig.shared.resetLocalLogInData()
-            dependency.interactor.unsubscribeUser()
-            await dependency.interactor.leaveRoom()
+            LocalStorage.shared.currentRoomId = 0
+            dependency.useCase.unsubscribeUser()
+            await dependency.useCase.leaveRoom()
         }
     }
     
-    // MARK: - SettingPresentationOutput
+    // MARK: - Presentation
     
-    func outputSuccess() {
-        
-    }
+    func viewDidLoad() {}
     
-    func outputError() {
-        
-    }
+    func viewDidResume() {}
+    
+    func viewDidSuspend() {}
+    
+    // MARK: - SettingInteractorOutput
+    
+    func outputSuccess() {}
+    
+    func outputError(_ errror: Error) {}
     
     // MARK: - Private
     
-    private var dependency: Dependency
+    private var dependency: Dependency!
     
     /// ボタンを無効にする
     private func disableButton(_ disabled: Bool) {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.isButtonEnabled = !disabled
+            self?.dependency.viewModel?.isButtonEnabled = !disabled
         }
     }
     
@@ -54,7 +58,7 @@ class SettingPresenter: SettingPresentation, SettingPresentationOutput {
     /// テーマカラー選択画面に遷移する
     private func pushSelectThemeColorView() {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel.willPushSelectThemeColorView = true
+            self?.dependency.viewModel?.willPushSelectThemeColorView = true
         }
     }
 }

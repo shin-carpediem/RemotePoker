@@ -62,7 +62,7 @@ struct OpenCardView_Previews: PreviewProvider {
                 themeColor: .buttercup,
                 selectedCard: CardView_Previews.card2))
             .previewDisplayName("選択されたカード")
-            
+
             OpenCardView(userSelectStatus: .init(
                 id: 0,
                 user: CardListView_Previews.me,

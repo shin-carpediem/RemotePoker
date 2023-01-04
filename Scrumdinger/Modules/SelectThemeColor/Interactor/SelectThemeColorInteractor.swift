@@ -1,24 +1,28 @@
 import Foundation
 
-class SelectThemeColorInteractor: SelectThemeColorUseCase {
-    // MARK: - Dependency
+final class SelectThemeColorInteractor: SelectThemeColorUseCase, DependencyInjectable {
+    // MARK: - DependencyInjectable
     
     struct Dependency {
-        var dataStore: RoomDataStore
-        var presenter: SelectThemeColorPresenter?
+        var roomRepository: RoomRepository
+        weak var output: SelectThemeColorInteractorOutput?
         var room: Room
     }
     
-    init(dependency: Dependency) {
+    func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
-    
-    var dependency: Dependency
     
     // MARK: - CardListUseCase
     
     func updateThemeColor(themeColor: ThemeColor) {
-        dependency.dataStore.updateThemeColor(cardPackageId: dependency.room.cardPackage.id,
-                                              themeColor: themeColor)
+        dependency.roomRepository.updateThemeColor(cardPackageId: dependency.room.cardPackage.id,
+                                                   themeColor: themeColor)
+
+        dependency.output?.outputSelectedThemeColor(themeColor)
     }
+    
+    // MARK: - Private
+    
+    private var dependency: Dependency!
 }

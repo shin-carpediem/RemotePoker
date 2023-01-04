@@ -1,11 +1,4 @@
-protocol CardListPresentation {
-    /// View初期読み込み時
-    func viewDidLoad()
-    
-    /// Viewが表示されなくなる時
-    /// - returns ログインしているか
-    func viewWillDisAppear() -> Bool
-    
+protocol CardListPresentation: Presentation {
     /// カードを選択した
     /// - parameter card: カード
     func didSelectCard(card: Card)
@@ -20,12 +13,9 @@ protocol CardListPresentation {
     func didTapSettingButton()
 }
 
-protocol CardListUseCase {
-    /// カードパッケージを購読する
-    func subscribeCardPackages()
-    
-    /// カードバッケージの購読を解除する
-    func unsubscribeCardPackages()
+protocol CardListUseCase: AnyObject {
+    /// 購読に際しデリゲートを使えるようにする
+    func activateRoomDelegate(_ self: CardListPresenter)
     
     /// ユーザーを購読する
     func subscribeUsers()
@@ -33,35 +23,32 @@ protocol CardListUseCase {
     /// ユーザーの購読を解除する
     func unsubscribeUsers()
     
+    /// カードパッケージを購読する
+    func subscribeCardPackages()
+    
+    /// カードバッケージの購読を解除する
+    func unsubscribeCardPackages()
+    
     /// 選択されたカードIDを更新する
     /// - parameter selectedCardDictionary: カレントユーザーIDと選択されたカードIDの辞書
     func updateSelectedCardId(selectedCardDictionary: [String: String])
     
-    /// ルームを取得する
-    func fetchRoom() async
-    
-    /// ログインしているか
-    /// - returns ログインしているか
-    func isUserLoggedIn() -> Bool
+    /// ルームを要求する
+    func requestRoom() async
 }
 
-protocol CardListPresentationOutput {
+protocol CardListInteractorOutput: AnyObject {
     /// ルームを出力する
-    /// - parameter room: ルーム
     func outputRoom(_ room: Room)
-    
-    /// テーマカラーを出力する
-    func outputThemeColor()
-    
-    /// ヘッダータイトルを出力する
-    func outputHeaderTitle()
-    
-    /// ユーザーの選択されたカード一覧状況を出力する
-    func outputUserSelectStatus()
     
     /// データ処理の成功を出力
     func outputSuccess()
     
     /// エラーを出力
-    func outputError()
+    func outputError(_ error: CardListError)
+}
+
+enum CardListError: Error {
+    /// ルームの要求に失敗した
+    case failedToRequestRoom
 }

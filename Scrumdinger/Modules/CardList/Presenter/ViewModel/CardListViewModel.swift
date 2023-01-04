@@ -1,14 +1,14 @@
 import SwiftUI
 
 class CardListViewModel: ObservableObject {
-    /// テーマカラー
-    @Published var themeColor: ThemeColor = .oxblood
+    /// ルーム
+    @Published var room: Room?
     
     /// ヘッダーテキスト
     @Published var headerTitle = ""
     
-    /// ユーザーのカード選択状況
-    @Published var userSelectStatus: [UserSelectStatus] = []
+    /// ユーザーのカード選択状況一覧
+    @Published var userSelectStatusList: [UserSelectStatus] = []
     
     /// 選択済みカード一覧が公開されるか
     @Published var isShownSelectedCardList = false

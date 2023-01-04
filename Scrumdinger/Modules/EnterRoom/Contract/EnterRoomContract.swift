@@ -1,37 +1,74 @@
-protocol EnterRoomPresentation {
-    /// View初期読み込み時
-    func viewDidLoad()
+protocol EnterRoomPresentation: Presentation {
+    /// カレントユーザー
+    var currentUser: User { get }
     
-    /// カレントユーザーのローカルデータを取得する
-    func fetchCurrentUserLocalData()
-        
+    /// カレントルーム
+    var currentRoom: Room? { get }
+    
+    /// どのルームに入るか
+    var enterRoomAction: EnterRoomAction { get }
+    
     /// 入力フォームが有効か
     /// - returns: 有効か
     func isInputFormValid() -> Bool
     
-    /// ログイン済みのルームに入るボタンが押された
-    func didTapEnterExistingRoomButton()
+    /// 入力内容が無効だと示すアラートを表示する
+    func showInputInvalidAlert()
     
-    /// ログイン済みのルームに入るキャンセルが押された
-    func didCancelEnterExistingRoomButton()
+    /// 入室中のルームに入るボタンが押された
+    func didTapEnterCurrentRoomButton()
+    
+    /// 入室中のルームに入るキャンセルが押された
+    func didCancelEnterCurrentRoomButton()
     
     /// ルームに入るボタンが押された
     /// - parameter userName: ユーザー名
     /// - parameter roomId: ルームID:
-    func didTapEnterRoomButton(userName: String,
-                               roomId: Int)
+    func didTapEnterRoomButton(userName: String, roomId: Int)
 }
 
-protocol EnterRoomPresentationOutput {
-    /// ログイン済みのルームに入るか促すアラートを出力する
-    func outputLoginAsCurrentUserAlert()
+protocol EnterRoomUseCase: AnyObject {
+    /// ルームリポジトリを扱えるようにする
+    /// - parameter roomId: ルームID
+    func setupRoomRepository(roomId: Int)
     
-    /// 入力内容が無効だと示すアラートを出力する
-    func outputInputInvalidAlert()
+    /// 存在するカレントルームが ユーザーにあるか確認する
+    /// - parameter roomId: ルームID:
+    func checkUserInCurrentRoom(roomId: Int) async
+    
+    /// ユーザーを要求する
+    /// - parameter userId:　ユーザーID
+    func requestUser(userId: String)
+    
+    /// ルームを要求する
+    /// - parameter roomId: ルームID
+    func requestRoom(roomId: Int) async
+    
+    /// ルームにユーザーを追加する
+    /// - parameter user: ユーザー
+    func adduserToRoom(user: User) async
+    
+    /// ルームを新規作成する
+    /// - parameter room: ルーム
+    func createRoom(room: Room) async
+}
+
+protocol EnterRoomInteractorOutput: AnyObject {
+    /// ユーザーを出力する
+    func outputUser(_ user: User)
+    
+    /// ルームを出力する
+    func outputRoom(_ room: Room)
+    
+    /// 存在するカレントルームが ユーザーにあるかを出力する
+    func outputIsUserInCurrentRoom(_ isIn: Bool)
+    
+    /// 入室中のルームに入るか促すアラートを出力する
+    func outputEnterCurrentRoomAlert()
     
     /// データ処理の成功を出力
     func outputSuccess()
     
     /// エラーを出力
-    func outputError()
+    func outputError(_ error: Error)
 }

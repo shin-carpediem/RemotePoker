@@ -1,18 +1,4 @@
-import FirebaseFirestore
-import FirebaseFirestoreSwift
-
-enum CardPackageActionType {
-    /// カードパッケージが追加された時
-    case added
-    /// カードパッケージが更新された時
-    case modified
-    /// カードパッケージが削除された時
-    case removed
-    /// 不明
-    case unKnown
-}
-
-enum UserActionType {
+enum UserAction {
     /// ユーザーが追加された時
     case added
     /// ユーザーが更新された時
@@ -23,15 +9,26 @@ enum UserActionType {
     case unKnown
 }
 
-protocol RoomDelegate: AnyObject {
-    /// ルームのカードバッケージのテーマカラーが更新された時
-    func whenCardPackageChanged(actionType: CardPackageActionType)
-    
-    /// ルームにユーザーが追加/更新/削除された時
-    func whenUserChanged(actionType: UserActionType)
+enum CardPackageAction {
+    /// カードパッケージが追加された時
+    case added
+    /// カードパッケージが更新された時
+    case modified
+    /// カードパッケージが削除された時
+    case removed
+    /// 不明
+    case unKnown
 }
 
-protocol RoomRepository {
+protocol RoomDelegate: AnyObject {
+    /// ルームにユーザーが追加/更新/削除された時
+    func whenUserChanged(action: UserAction)
+    
+    /// ルームのカードバッケージのテーマカラーが更新された時
+    func whenCardPackageChanged(action: CardPackageAction)
+}
+
+protocol RoomRepository: AnyObject {
     /// デリゲート
     var delegate: RoomDelegate? { get set }
     
@@ -43,7 +40,7 @@ protocol RoomRepository {
     /// ルームを新規作成する
     /// - parameter room: ルーム
     func createRoom(_ room: Room) async
-        
+    
     /// ルームを取得する
     /// - returns: ルーム
     func fetchRoom() async -> Room
@@ -74,7 +71,7 @@ protocol RoomRepository {
     /// 指定IDのユーザーを取得する
     /// - parameter id: ユーザーID
     /// - returns: ユーザー
-    func fetchUser(id: String) -> User
+    func fetchUser(id: String, completion: @escaping (User) -> Void)
     
     /// ユーザーの選択済みカードを更新する
     /// - parameter selectedCardDictionary: ユーザーIDと選択されたカードIDの辞書
@@ -83,6 +80,5 @@ protocol RoomRepository {
     /// テーマカラーを変更する
     /// - parameter cardPackageId: カードパッケージID
     /// - parameter themeColor: テーマカラー
-    func updateThemeColor(cardPackageId: String,
-                          themeColor: ThemeColor)
+    func updateThemeColor(cardPackageId: String, themeColor: ThemeColor)
 }

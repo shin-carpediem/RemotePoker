@@ -7,7 +7,7 @@ struct CardListView: View, ModuleAssembler {
     // MARK: - Dependency
     
     struct Dependency {
-        var presenter: CardListPresenter
+        var presenter: CardListPresentation
         var room: Room
         var currentUser: User
     }
@@ -16,7 +16,6 @@ struct CardListView: View, ModuleAssembler {
     init(dependency: Dependency, viewModel: CardListViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
-        
         self.dependency.presenter.viewDidLoad()
     }
     
@@ -56,6 +55,8 @@ struct CardListView: View, ModuleAssembler {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(trailing: settingButton)
+        .onAppear { dependency.presenter.viewDidResume() }
+        .onDisappear { dependency.presenter.viewDidSuspend() }
     }
     
     /// 設定ボタン
@@ -70,9 +71,10 @@ struct CardListView: View, ModuleAssembler {
 
     /// カード一覧
     private var cardListView: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
-            ForEach(dependency.room.cardPackage.cardList) { card in
-                let themeColor = viewModel.themeColor
+        let cardList = viewModel.room?.cardPackage.cardList ?? dependency.room.cardPackage.cardList
+        return LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
+            ForEach(cardList) { card in
+                let themeColor = viewModel.room?.cardPackage.themeColor ?? .oxblood
                 let isSelected = card.id == dependency.currentUser.selectedCardId
                 CardView(card: card,
                          themeColor: themeColor,
@@ -86,7 +88,7 @@ struct CardListView: View, ModuleAssembler {
     /// 選択済みカード一覧
     private var selectedCardListView: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
-            ForEach(viewModel.userSelectStatus) { userSelect in
+            ForEach(viewModel.userSelectStatusList) { userSelect in
                 OpenCardView(userSelectStatus: userSelect)
             }
         }
@@ -94,7 +96,8 @@ struct CardListView: View, ModuleAssembler {
     
     /// 選択されたカードのポイント
     private var selectedCardPointView: some View {
-        let currentUserSelectStatus = viewModel.userSelectStatus.first(where: { $0.user.id == dependency.currentUser.id })
+        // TODO: 2人目？の画面だけ際描画されなくなっている
+        let currentUserSelectStatus = viewModel.userSelectStatusList.first(where: { $0.user.id == dependency.currentUser.id })
         let point = currentUserSelectStatus?.selectedCard?.point ?? ""
         return Text(point)
             .foregroundColor(.gray)
@@ -118,7 +121,7 @@ struct CardListView: View, ModuleAssembler {
                 dependency.presenter.didTapOpenSelectedCardListButton()
             }
         } label: {
-            let selectedCardCount = viewModel.userSelectStatus.map { $0.selectedCard }.count
+            let selectedCardCount = viewModel.userSelectStatusList.map { $0.selectedCard }.count
             let systemName: String
             if viewModel.isShownSelectedCardList {
                 systemName = "gobackward"
@@ -134,7 +137,7 @@ struct CardListView: View, ModuleAssembler {
             return Image(systemName: systemName).foregroundColor(.gray)
         }
         .softButtonStyle(Circle())
-        .padding(EdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 16))
+        .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
     }
     
     // MARK: - Router
@@ -144,9 +147,9 @@ struct CardListView: View, ModuleAssembler {
         NavigationLink(isActive: $viewModel.willPushSettingView, destination: {
             if viewModel.willPushSettingView {
                 assembleSetting(room: dependency.room,
-                                currrentUser: dependency.currentUser)
+                                currentUser: dependency.currentUser)
                 .onDisappear {
-                    if !dependency.presenter.viewWillDisAppear() {
+                    if !RoomAuthDataStore.shared.isUserLoggedIn() {
                         // ログアウトしている場合、ルート(=ひとつ前の画面)に遷移する
                         presentation.wrappedValue.dismiss()
                     }
@@ -161,7 +164,7 @@ struct CardListView: View, ModuleAssembler {
 struct CardListView_Previews: PreviewProvider {
     static let selectedCardListView: CardListViewModel = {
         let viewModel = CardListViewModel()
-        viewModel.userSelectStatus = [
+        viewModel.userSelectStatusList = [
             .init(id: 0,
                   user: CardListView_Previews.me,
                   themeColor: .navy,
@@ -169,83 +172,52 @@ struct CardListView_Previews: PreviewProvider {
             .init(id: 1,
                   user: CardListView_Previews.user1,
                   themeColor: .indigo,
-                  selectedCard: CardView_Previews.card2),
-            .init(id: 2,
-                  user: CardListView_Previews.user2,
-                  themeColor: .buttercup,
-                  selectedCard: CardView_Previews.card3)
+                  selectedCard: CardView_Previews.card2)
         ]
         viewModel.isShownSelectedCardList = true
         return viewModel
     }()
-    
+
     static let me: User = .init(id: "0",
                                 name: "ロイド フォージャ",
+                                currentRoomId: 0,
                                 selectedCardId: "")
-    
+
     static let user1: User = .init(id: "1",
                                    name: "ヨル フォージャ",
+                                   currentRoomId: 0,
                                    selectedCardId: "")
-    
+
     static let user2: User = .init(id: "2",
                                    name: "アーニャ フォージャ",
+                                   currentRoomId: 0,
                                    selectedCardId: "")
-    
+
     static let room1: Room = .init(id: 0,
                                    userList: [me],
-                                   cardPackage: .sampleCardPackage)
-    
+                                   cardPackage: .defaultCardPackage)
+
     static let room2: Room = .init(id: 1,
-                                   userList: [me, me],
-                                   cardPackage: .sampleCardPackage)
-    
+                                   userList: [me, user1],
+                                   cardPackage: .defaultCardPackage)
+
     static var previews: some View {
         Group {
-            CardListView(dependency: .init(
-                presenter: .init(
-                    dependency: .init(
-                        interactor: .init(
-                            dependency: .init(
-                                dataStore: .init(),
-                                authDataStore: .init(),
-                                room: room1)),
-                        room: room1,
-                        currentUser: me,
-                        viewModel: .init())),
-                room: room1,
-                currentUser: me),
+            CardListView(dependency: .init(presenter: CardListPresenter(),
+                                           room: room1,
+                                           currentUser: user1),
                          viewModel: .init())
             .previewDisplayName("カード一覧画面/ユーザーが自分のみ")
-            
-            CardListView(dependency: .init(
-                presenter: .init(
-                    dependency: .init(
-                        interactor: .init(
-                            dependency: .init(
-                                dataStore: .init(),
-                                authDataStore: .init(),
-                                room: room2)),
-                        room: room2,
-                        currentUser: me,
-                        viewModel: .init())),
-                room: room2,
-                currentUser: me),
+
+            CardListView(dependency: .init(presenter: CardListPresenter(),
+                                           room: room2,
+                                           currentUser: user1),
                          viewModel: .init())
             .previewDisplayName("カード一覧画面/ユーザーが2名以上")
-            
-            CardListView(dependency: .init(
-                presenter: .init(
-                    dependency: .init(
-                        interactor: .init(
-                            dependency: .init(
-                                dataStore: .init(),
-                                authDataStore: .init(),
-                                room: room2)),
-                        room: room2,
-                        currentUser: me,
-                        viewModel: selectedCardListView)),
-                room: room1,
-                currentUser: me),
+
+            CardListView(dependency: .init(presenter: CardListPresenter(),
+                                           room: room2,
+                                           currentUser: user1),
                          viewModel: selectedCardListView)
             .previewDisplayName("選択済みカード一覧画面")
         }

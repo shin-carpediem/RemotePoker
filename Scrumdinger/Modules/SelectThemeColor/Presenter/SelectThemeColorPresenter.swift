@@ -1,44 +1,55 @@
 import Foundation
 
-class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectThemeColorPresentationOutput {
-    // MARK: - Dependency
+final class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectThemeColorInteractorOutput, DependencyInjectable {
+    
+    // MARK: - DependencyInjectable
     
     struct Dependency {
-        var interactor: SelectThemeColorInteractor
+        var useCase: SelectThemeColorUseCase
         var room: Room
-        var viewModel: SelectThemeColorViewModel
+        weak var viewModel: SelectThemeColorViewModel?
     }
     
-    init(dependency: Dependency) {
+    func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
     
     // MARK: - SelectThemeColorPresentation
     
+    func didTapColor(color: ThemeColor) {
+        dependency.useCase.updateThemeColor(themeColor: color)
+    }
+    
+    // MARK: - Presentation
+    
     func viewDidLoad() {
         showColorList()
     }
     
-    func didTapColor(color: ThemeColor) {
-        dependency.interactor.updateThemeColor(themeColor: color)
+    func viewDidResume() {}
+    
+    func viewDidSuspend() {}
+    
+    // MARK: - SelectThemeColorInteractorOutput
+    
+    func outputSelectedThemeColor(_ themeColor: ThemeColor) {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel?.selectedThemeColor = themeColor
+        }
     }
     
-    // MARK: - SelectThemeColorPresentationOutput
+    func outputSuccess() {}
     
-    func outputSuccess() {
-        
-    }
-    
-    func outputError() {
-        
-    }
+    func outputError(_ error: Error) {}
 
     // MARK: - Private
     
-    private var dependency: Dependency
+    private var dependency: Dependency!
     
     /// カラー一覧を表示する
     private func showColorList() {
-        dependency.viewModel.themeColorList = ThemeColor.allCases
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel?.themeColorList = ThemeColor.allCases
+        }
     }
 }

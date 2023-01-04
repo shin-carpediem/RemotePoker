@@ -1,88 +1,58 @@
 import Foundation
 
-class CardListInteractor: CardListUseCase {
-    // MARK: - Dependency
+final class CardListInteractor: CardListUseCase, DependencyInjectable {
+    // MARK: - DependencyInjectable
     
     struct Dependency {
-        var dataStore: RoomDataStore
-        var authDataStore: RoomAuthDataStore
-        var presenter: CardListPresenter?
+        var roomRepository: RoomDataStore
+        weak var output: CardListInteractorOutput?
         var room: Room
     }
     
-    init(dependency: Dependency) {
+    func inject(_ dependency: Dependency) {
         self.dependency = dependency
-        dependency.dataStore.delegate = self
     }
-    
-    var dependency: Dependency
     
     // MARK: - CardListUseCase
     
-    func subscribeCardPackages() {
-        dependency.dataStore.subscribeCardPackage()
-    }
-    
-    func unsubscribeCardPackages() {
-        dependency.dataStore.unsubscribeCardPackage()
+    func activateRoomDelegate(_ self: CardListPresenter) {
+        dependency.roomRepository.delegate = self
     }
     
     func subscribeUsers() {
-        dependency.dataStore.subscribeUser()
+        dependency.roomRepository.subscribeUser()
     }
     
     func unsubscribeUsers() {
-        dependency.dataStore.unsubscribeUser()
+        dependency.roomRepository.unsubscribeUser()
+    }
+    
+    func subscribeCardPackages() {
+        dependency.roomRepository.subscribeCardPackage()
+    }
+    
+    func unsubscribeCardPackages() {
+        dependency.roomRepository.unsubscribeCardPackage()
     }
     
     func updateSelectedCardId(selectedCardDictionary: [String: String]) {
-        dependency.dataStore.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
+        dependency.roomRepository.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
     }
     
-    func fetchRoom() async {
+    func requestRoom() async {
         let task = Task { () -> Room in
-            await dependency.dataStore.fetchRoom()
+            await dependency.roomRepository.fetchRoom()
         }
         let result = await task.result
         do {
             let room = try result.get()
-            dependency.room = room
-            dependency.presenter?.outputRoom(room)
+            dependency.output?.outputRoom(room)
         } catch {
-            dependency.presenter?.outputError()
+            dependency.output?.outputError(.failedToRequestRoom)
         }
     }
     
-    func isUserLoggedIn() -> Bool {
-        dependency.authDataStore.isUserLogin()
-    }
-}
-
-// MARK: - RoomDelegate
-
-extension CardListInteractor: RoomDelegate {
-    func whenCardPackageChanged(actionType: CardPackageActionType) {
-        switch actionType {
-        case .modified:
-            // カードパッケージのテーマカラーが変更された時
-            dependency.presenter?.outputThemeColor()
-        case .added, .removed:
-            return
-        case .unKnown:
-            fatalError()
-        }
-    }
+    // MARK: - Private
     
-    func whenUserChanged(actionType: UserActionType) {
-        switch actionType {
-        case .added, .removed:
-            // ユーザーが入室あるいは退室した時
-            dependency.presenter?.outputHeaderTitle()
-        case .modified:
-            // ユーザーの選択済みカードが更新された時
-            dependency.presenter?.outputUserSelectStatus()
-        case .unKnown:
-            fatalError()
-        }
-    }
+    private var dependency: Dependency!
 }

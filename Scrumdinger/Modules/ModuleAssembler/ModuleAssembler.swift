@@ -4,13 +4,13 @@ protocol ModuleAssembler {
     
     /// カードリスト画面をアセンブルする
     /// - parameter room: ルーム
-    /// - parameter currrentUser: カレントユーザー
-    func assembleCardList(room: Room, currrentUser: User) -> CardListView
+    /// - parameter currentUser: カレントユーザー
+    func assembleCardList(room: Room, currentUser: User) -> CardListView
     
     /// 設定画面をアセンブルする
     /// - parameter room: ルーム
-    /// - parameter currrentUser: カレントユーザー
-    func assembleSetting(room: Room, currrentUser: User) -> SettingView
+    /// - parameter currentUser: カレントユーザー
+    func assembleSetting(room: Room, currentUser: User) -> SettingView
     
     /// テーマカラー選択画面をアセンブルする
     /// - parameter room: ルーム
