@@ -38,13 +38,9 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectTheme
         }
     }
     
-    func outputSuccess() {
-        
-    }
+    func outputSuccess() {}
     
-    func outputError(_ error: Error) {
-        
-    }
+    func outputError(_ error: Error) {}
 
     // MARK: - Private
     

@@ -38,9 +38,9 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     func didTapEnterCurrentRoomButton() {
         Task {
             disableButton(true)
-            enterRoomAction = .enterCurrentRoom
             dependency.useCase.setupRoomRepository(roomId: currentRoomId)
-            setupCurrentUser(userName: nil, roomId: nil)
+            setupExistingCurrentUser()
+            enterRoomAction = .enterCurrentRoom
             await setupRoom(userName: currentUser.name, roomId: currentRoomId)
             pushCardListView()
         }
@@ -53,22 +53,21 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     func didTapEnterRoomButton(userName: String, roomId: Int) {
         Task {
             disableButton(true)
-            login()
-            enterRoomAction = isUserInCurrentRoom ? .enterOtherExistingRoom : .enterNewRoom
             dependency.useCase.setupRoomRepository(roomId: roomId)
-            setupCurrentUser(userName: userName, roomId: roomId)
-            await setupRoom(userName: userName, roomId: roomId)
+            setupNewCurrentUser(userName: userName, roomId: roomId)
+            enterRoomAction = isUserInCurrentRoom ? .enterOtherExistingRoom : .enterNewRoom
+            await setupRoom(userName: currentUser.name, roomId: currentRoomId)
             pushCardListView()
         }
     }
     
     // MARK: - Presentation
     
-    func viewDidLoad() {
+    func viewDidLoad() {}
+    
+    func viewDidResume() {
         login()
     }
-    
-    func viewDidResume() {}
     
     func viewDidSuspend() {}
     
@@ -126,21 +125,20 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         RoomAuthDataStore.shared.login()
     }
     
-    /// カレントユーザーをセットアップする
-    private func setupCurrentUser(userName: String?, roomId: Int?) {
-        if isUserInCurrentRoom {
-            // 既存ユーザー
-            let userId = RoomAuthDataStore.shared.fetchUserId()
-            guard let userId else { fatalError() }
-            dependency.useCase.requestUser(userId: userId)
-        } else {
-            // 新規ユーザー
-            currentRoomId = roomId!
-            currentUser = .init(id: currentUser.id,
-                                name: userName!,
-                                currentRoomId: roomId!,
-                                selectedCardId: "")
-        }
+    /// 既存カレントユーザーをセットアップする
+    private func setupExistingCurrentUser() {
+        let userId = RoomAuthDataStore.shared.fetchUserId()
+        guard let userId else { fatalError() }
+        dependency.useCase.requestUser(userId: userId)
+    }
+    
+    /// 新規カレントユーザーをセットアップする
+    private func setupNewCurrentUser(userName: String, roomId: Int) {
+        currentRoomId = roomId
+        currentUser = .init(id: currentUser.id,
+                            name: userName,
+                            currentRoomId: roomId,
+                            selectedCardId: "")
     }
     
     /// ルームをセットアップする

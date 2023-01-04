@@ -38,13 +38,9 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
     
     // MARK: - SettingInteractorOutput
     
-    func outputSuccess() {
-        
-    }
+    func outputSuccess() {}
     
-    func outputError(_ errror: Error) {
-        
-    }
+    func outputError(_ errror: Error) {}
     
     // MARK: - Private
     

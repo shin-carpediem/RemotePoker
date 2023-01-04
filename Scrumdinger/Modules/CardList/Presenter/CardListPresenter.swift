@@ -66,13 +66,9 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         }
     }
     
-    func outputSuccess() {
-        
-    }
+    func outputSuccess() {}
     
-    func outputError(_ error: CardListError) {
-        
-    }
+    func outputError(_ error: CardListError) {}
     
     // MARK: - Private
     
