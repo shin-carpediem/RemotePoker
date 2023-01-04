@@ -7,9 +7,8 @@ extension ModuleAssembler {
         presenter.inject(.init(useCase: interactor, viewModel: viewModel))
         interactor.inject(.init(roomRepository: RoomDataStore(), output: presenter))
         
-        let view = EnterRoomView(
-            dependency: .init(presenter: presenter),
-            viewModel: viewModel)
+        let view = EnterRoomView(dependency: .init(presenter: presenter),
+                                 viewModel: viewModel)
         
         return view
     }
@@ -47,9 +46,8 @@ extension ModuleAssembler {
                                 output: presenter,
                                 currentUser: currentUser))
         
-        let view = SettingView(
-            dependency: .init(presenter: presenter, room: room),
-            viewModel: viewModel)
+        let view = SettingView(dependency: .init(presenter: presenter, room: room),
+                               viewModel: viewModel)
         
         return view
     }
@@ -66,9 +64,8 @@ extension ModuleAssembler {
                                 output: presenter,
                                 room: room))
         
-        let view = SelectThemeColorView(
-            dependency: .init(presenter: presenter),
-            viewModel: viewModel)
+        let view = SelectThemeColorView(dependency: .init(presenter: presenter),
+                                        viewModel: viewModel)
         
         return view
     }

@@ -502,9 +502,9 @@
 		F5E051692929B421006EA727 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F5C397DB289F40C6008AEFF2 /* Room.swift */,
 				F57C644029653F1500CD55CD /* User.swift */,
 				F5C397D9289E9342008AEFF2 /* CardPackage.swift */,
+				F5C397DB289F40C6008AEFF2 /* Room.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

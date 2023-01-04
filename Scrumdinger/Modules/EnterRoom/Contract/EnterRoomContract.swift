@@ -1,4 +1,4 @@
-protocol EnterRoomPresentation: AnyObject, Presentation {
+protocol EnterRoomPresentation: Presentation {
     /// カレントユーザー
     var currentUser: User { get }
     

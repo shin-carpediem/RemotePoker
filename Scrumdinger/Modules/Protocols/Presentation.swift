@@ -1,6 +1,4 @@
-import Foundation
-
-protocol Presentation {
+protocol Presentation: AnyObject {
     /// View開始時
     func viewDidLoad()
 

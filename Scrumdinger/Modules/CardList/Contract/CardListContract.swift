@@ -3,7 +3,7 @@ enum CardListError: Error {
     case failedToRequestRoom
 }
 
-protocol CardListPresentation: AnyObject, Presentation {
+protocol CardListPresentation: Presentation {
     /// カードを選択した
     /// - parameter card: カード
     func didSelectCard(card: Card)

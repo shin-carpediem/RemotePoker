@@ -1,4 +1,4 @@
-protocol SelectThemeColorPresentation: AnyObject, Presentation {
+protocol SelectThemeColorPresentation: Presentation {
     /// カラーをタップした
     /// - parameter color: 選択したカラー
     func didTapColor(color: ThemeColor)

@@ -1,4 +1,4 @@
-protocol SettingPresentation: AnyObject, Presentation {
+protocol SettingPresentation: Presentation {
     /// テーマカラー選択画面に遷移するボタンがタップされた
     func didTapSelectThemeColorButton()
     
