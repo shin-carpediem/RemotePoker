@@ -51,26 +51,26 @@ struct OpenCardView: View {
 }
 
 // MARK: - Preview
-//
-//// TODO: なぜか落ちる
-//struct OpenCardView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        Group {
-//            OpenCardView(userSelectStatus: .init(
-//                id: 0,
-//                user: CardListView_Previews.me,
-//                themeColor: .buttercup,
-//                selectedCard: CardView_Previews.card2))
-//            .previewDisplayName("選択されたカード")
-//
-//            OpenCardView(userSelectStatus: .init(
-//                id: 0,
-//                user: CardListView_Previews.me,
-//                themeColor: .buttercup,
-//                selectedCard: nil))
-//            .previewDisplayName("カード未選択")
-//        }
-//        .padding()
-//        .previewLayout(.sizeThatFits)
-//    }
-//}
+
+// TODO: なぜか落ちる
+struct OpenCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            OpenCardView(userSelectStatus: .init(
+                id: 0,
+                user: CardListView_Previews.me,
+                themeColor: .buttercup,
+                selectedCard: CardView_Previews.card2))
+            .previewDisplayName("選択されたカード")
+
+            OpenCardView(userSelectStatus: .init(
+                id: 0,
+                user: CardListView_Previews.me,
+                themeColor: .buttercup,
+                selectedCard: nil))
+            .previewDisplayName("カード未選択")
+        }
+        .padding()
+        .previewLayout(.sizeThatFits)
+    }
+}

@@ -10,7 +10,6 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     
     func inject(_ dependency: Dependency) {
         self.dependency = dependency
-        RoomAuthDataStore.shared.delegate = self
     }
     
     // MARK: - EnterRoomPresentation
@@ -37,11 +36,13 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     }
     
     func didTapEnterCurrentRoomButton() {
-        disableButton(true)
-        enterRoomAction = .enterCurrentRoom
-        setupCurrentUser(userName: nil, roomId: nil)
-        setupRoom(userName: currentUser.name, roomId: currentRoomId)
-        pushCardListView()
+        Task {
+            disableButton(true)
+            enterRoomAction = .enterCurrentRoom
+            setupCurrentUser(userName: nil, roomId: nil)
+            await setupRoom(userName: currentUser.name, roomId: currentRoomId)
+            pushCardListView()
+        }
     }
     
     func didCancelEnterCurrentRoomButton() {
@@ -49,27 +50,38 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     }
     
     func didTapEnterRoomButton(userName: String, roomId: Int) {
-        disableButton(true)
-        RoomAuthDataStore.shared.login()
-        enterRoomAction = isUserInCurrentRoom ? .enterOtherExistingRoom : .enterNewRoom
-        setupCurrentUser(userName: userName, roomId: roomId)
-        setupRoom(userName: userName, roomId: roomId)
-        pushCardListView()
+        Task {
+            disableButton(true)
+            login()
+            dependency.useCase.setupRoomRepository(roomId: roomId)
+            enterRoomAction = isUserInCurrentRoom ? .enterOtherExistingRoom : .enterNewRoom
+            setupCurrentUser(userName: userName, roomId: roomId)
+            await setupRoom(userName: userName, roomId: roomId)
+            pushCardListView()
+        }
     }
     
     // MARK: - Presentation
     
-    func viewDidLoad() {}
-    
-    func viewDidResume() {
-        RoomAuthDataStore.shared.login()
+    func viewDidLoad() {
+        login()
     }
+    
+    func viewDidResume() {}
     
     func viewDidSuspend() {}
     
     func viewDidStop() {}
     
-    // MARK: - EnterRoomPresentationOutput
+    // MARK: - EnterRoomInteractorOutput
+    
+    func outputUser(_ user: User) {
+        currentUser = user
+    }
+    
+    func outputRoom(_ room: Room) {
+        currentRoom = room
+    }
     
     func outputIsUserInCurrentRoom(_ isIn: Bool) {
         isUserInCurrentRoom = isIn
@@ -79,14 +91,6 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel?.isShownEnterCurrentRoomAlert = true
         }
-    }
-    
-    func outputUser(_ user: User) {
-        currentUser = user
-    }
-    
-    func outputRoom(_ room: Room) {
-        currentRoom = room
     }
     
     func outputSuccess() {
@@ -118,6 +122,12 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         }
     }
     
+    /// 匿名ログインする
+    private func login() {
+        RoomAuthDataStore.shared.delegate = self
+        RoomAuthDataStore.shared.login()
+    }
+    
     /// カレントユーザーをセットアップする
     private func setupCurrentUser(userName: String?, roomId: Int?) {
         if isUserInCurrentRoom {
@@ -136,27 +146,26 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     }
     
     /// ルームをセットアップする
-    private func setupRoom(userName: String, roomId: Int) {
-        Task {
-            currentRoomId = roomId
+    private func setupRoom(userName: String, roomId: Int) async {
+        currentRoomId = roomId
 
-            switch enterRoomAction {
-            case .enterCurrentRoom:
-                dependency.useCase.setupRoomRepository(roomId: roomId)
-            
-            case .enterOtherExistingRoom:
-                dependency.useCase.setupRoomRepository(roomId: roomId)
-                await dependency.useCase.adduserToRoom(user: currentUser)
-            
-            case .enterNewRoom:
-                currentRoom = .init(id: roomId,
-                                    userList: [currentUser],
-                                    cardPackage: .defaultCardPackage)
-                await dependency.useCase.createRoom(room: currentRoom!)
-            }
-            
-            await dependency.useCase.requestRoom(roomId: roomId)
+        switch enterRoomAction {
+        case .enterCurrentRoom:
+            dependency.useCase.setupRoomRepository(roomId: roomId)
+        
+        case .enterOtherExistingRoom:
+            dependency.useCase.setupRoomRepository(roomId: roomId)
+            await dependency.useCase.adduserToRoom(user: currentUser)
+        
+        case .enterNewRoom:
+            currentRoom = .init(id: roomId,
+                                userList: [currentUser],
+                                cardPackage: .defaultCardPackage)
+            await dependency.useCase.createRoom(room: currentRoom!)
+            dependency.useCase.setupRoomRepository(roomId: currentRoom!.id)
         }
+        
+        await dependency.useCase.requestRoom(roomId: roomId)
     }
     
     /// ボタンを無効にする

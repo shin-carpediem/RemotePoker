@@ -1,8 +1,3 @@
-enum CardListError: Error {
-    /// ルームの要求に失敗した
-    case failedToRequestRoom
-}
-
 protocol CardListPresentation: Presentation {
     /// カードを選択した
     /// - parameter card: カード
@@ -51,4 +46,9 @@ protocol CardListInteractorOutput: AnyObject {
     
     /// エラーを出力
     func outputError(_ error: CardListError)
+}
+
+enum CardListError: Error {
+    /// ルームの要求に失敗した
+    case failedToRequestRoom
 }

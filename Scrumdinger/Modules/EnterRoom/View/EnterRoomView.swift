@@ -70,8 +70,7 @@ struct EnterRoomView: View, ModuleAssembler {
     
     /// 入力項目/名前
     private var inputItemName: some View {
-        TextField("Name",
-                  text: $viewModel.inputName)
+        TextField("Name", text: $viewModel.inputName)
         .padding()
         .background(RoundedRectangle(cornerRadius: 20)
             .fill(Color.Neumorphic.main)
@@ -86,8 +85,7 @@ struct EnterRoomView: View, ModuleAssembler {
     
     /// 入力項目/ルームID
     private var inputRoomId: some View {
-        TextField("Room ID",
-                  text: $viewModel.inputRoomId)
+        TextField("Room ID", text: $viewModel.inputRoomId)
         .padding()
         .background(RoundedRectangle(cornerRadius: 20)
             .fill(Color.Neumorphic.main)

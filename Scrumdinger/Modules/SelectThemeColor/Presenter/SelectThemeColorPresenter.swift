@@ -23,7 +23,6 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectTheme
     // MARK: - Presentation
     
     func viewDidLoad() {
-//        dependency.useCase.updateThemeColor(themeColor: dependency.room.cardPackage.themeColor)
         showColorList()
     }
     

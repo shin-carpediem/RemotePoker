@@ -70,5 +70,6 @@ struct ActivityIndicator_Previews: PreviewProvider {
         ActivityIndicator()
             .frame(width: 200, height: 200)
             .foregroundColor(.gray)
+            .previewDisplayName("インジケータ")
     }
 }

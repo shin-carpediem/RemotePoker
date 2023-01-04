@@ -54,14 +54,14 @@ protocol EnterRoomUseCase: AnyObject {
 }
 
 protocol EnterRoomInteractorOutput: AnyObject {
-    /// 存在するカレントルームが ユーザーにあるかを出力する
-    func outputIsUserInCurrentRoom(_ isIn: Bool)
-    
     /// ユーザーを出力する
     func outputUser(_ user: User)
     
     /// ルームを出力する
     func outputRoom(_ room: Room)
+    
+    /// 存在するカレントルームが ユーザーにあるかを出力する
+    func outputIsUserInCurrentRoom(_ isIn: Bool)
     
     /// 入室中のルームに入るか促すアラートを出力する
     func outputEnterCurrentRoomAlert()

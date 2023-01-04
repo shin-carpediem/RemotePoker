@@ -48,10 +48,12 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     }
     
     func viewDidResume() {
-        requestRoom()
-        applyThemeColor()
-        showHeaderTitle()
-        updateUserSelectStatusList()
+        Task {
+            await requestRoom()
+            applyThemeColor()
+            showHeaderTitle()
+            updateUserSelectStatusList()
+        }
     }
 
     func viewDidSuspend() {}
@@ -77,10 +79,8 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     private var dependency: Dependency!
     
     /// ルームを要求する
-    private func requestRoom() {
-        Task {
-            await dependency.useCase.requestRoom()
-        }
+    private func requestRoom() async {
+        await dependency.useCase.requestRoom()
     }
     
     /// ボタンを無効にする
@@ -175,14 +175,18 @@ extension CardListPresenter: RoomDelegate {
         switch action {
         case .added, .removed:
             // ユーザーが入室あるいは退室した時
-            requestRoom()
-            showHeaderTitle()
-            updateUserSelectStatusList()
+            Task {
+                await requestRoom()
+                showHeaderTitle()
+                updateUserSelectStatusList()
+            }
 
         case .modified:
             // ユーザーの選択済みカードが更新された時
-            requestRoom()
-            updateUserSelectStatusList()
+            Task {
+                await requestRoom()
+                updateUserSelectStatusList()
+            }
 
         case .unKnown:
             fatalError()
@@ -193,8 +197,10 @@ extension CardListPresenter: RoomDelegate {
         switch action {
         case .modified:
             // カードパッケージのテーマカラーが変更された時
-            requestRoom()
-            applyThemeColor()
+            Task {
+                await requestRoom()
+                applyThemeColor()
+            }
 
         case .added, .removed:
             ()
