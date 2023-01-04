@@ -171,21 +171,6 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 // MARK: - RoomDelegate
 
 extension CardListPresenter: RoomDelegate {
-    func whenCardPackageChanged(action: CardPackageAction) {
-        switch action {
-        case .modified:
-            // カードパッケージのテーマカラーが変更された時
-            requestRoom()
-            applyThemeColor()
-
-        case .added, .removed:
-            ()
-
-        case .unKnown:
-            fatalError()
-        }
-    }
-    
     func whenUserChanged(action: UserAction) {
         switch action {
         case .added, .removed:
@@ -198,6 +183,21 @@ extension CardListPresenter: RoomDelegate {
             // ユーザーの選択済みカードが更新された時
             requestRoom()
             updateUserSelectStatusList()
+
+        case .unKnown:
+            fatalError()
+        }
+    }
+    
+    func whenCardPackageChanged(action: CardPackageAction) {
+        switch action {
+        case .modified:
+            // カードパッケージのテーマカラーが変更された時
+            requestRoom()
+            applyThemeColor()
+
+        case .added, .removed:
+            ()
 
         case .unKnown:
             fatalError()

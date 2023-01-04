@@ -51,6 +51,7 @@
 		F57C643A2963010E00CD55CD /* DependencyInjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C64392963010E00CD55CD /* DependencyInjectable.swift */; };
 		F57C643C2963134800CD55CD /* Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C643B2963134800CD55CD /* Presentation.swift */; };
 		F57C643F2963B53800CD55CD /* EnterRoomInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C643E2963B53800CD55CD /* EnterRoomInteractor.swift */; };
+		F57C644129653F1500CD55CD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C644029653F1500CD55CD /* User.swift */; };
 		F5802CFB2931E6E000955949 /* FirestoreRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFA2931E6E000955949 /* FirestoreRef.swift */; };
 		F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFD293207C700955949 /* CardListPresenter.swift */; };
 		F5802D0329320DEF00955949 /* ModuleAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D0229320DEF00955949 /* ModuleAssembler.swift */; };
@@ -137,6 +138,7 @@
 		F57C64392963010E00CD55CD /* DependencyInjectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjectable.swift; sourceTree = "<group>"; };
 		F57C643B2963134800CD55CD /* Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presentation.swift; sourceTree = "<group>"; };
 		F57C643E2963B53800CD55CD /* EnterRoomInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomInteractor.swift; sourceTree = "<group>"; };
+		F57C644029653F1500CD55CD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F5802CFA2931E6E000955949 /* FirestoreRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRef.swift; sourceTree = "<group>"; };
 		F5802CFD293207C700955949 /* CardListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListPresenter.swift; sourceTree = "<group>"; };
 		F5802D0229320DEF00955949 /* ModuleAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleAssembler.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 		F5125F26292DF92700C822FE /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				F5E051692929B421006EA727 /* Model */,
 				F57C6438296300F400CD55CD /* Protocols */,
 				F5802D0129320DDC00955949 /* ModuleAssembler */,
 				F5E051682929B407006EA727 /* EnterRoom */,
@@ -411,7 +414,6 @@
 		F5802D06293217C100955949 /* Contract */ = {
 			isa = PBXGroup;
 			children = (
-				F5E051692929B421006EA727 /* Model */,
 				F5802D07293217D000955949 /* EnterRoomContract.swift */,
 			);
 			path = Contract;
@@ -420,7 +422,6 @@
 		F5802D092932189C00955949 /* Contract */ = {
 			isa = PBXGroup;
 			children = (
-				F5E0516B2929B466006EA727 /* Model */,
 				F5802D0A293218A800955949 /* CardListContract.swift */,
 			);
 			path = Contract;
@@ -502,6 +503,8 @@
 			isa = PBXGroup;
 			children = (
 				F5C397DB289F40C6008AEFF2 /* Room.swift */,
+				F57C644029653F1500CD55CD /* User.swift */,
+				F5C397D9289E9342008AEFF2 /* CardPackage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -513,14 +516,6 @@
 				F52366992891E837005B1F65 /* CardListView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		F5E0516B2929B466006EA727 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				F5C397D9289E9342008AEFF2 /* CardPackage.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		F5E0516F292BAFF4006EA727 /* Data */ = {
@@ -795,6 +790,7 @@
 				F525301429364D5200727472 /* EnterRoomViewModel.swift in Sources */,
 				F5B2FAE22949423200592363 /* CardListInteractor.swift in Sources */,
 				F57C641A2950A91000CD55CD /* SelectThemeColorContract.swift in Sources */,
+				F57C644129653F1500CD55CD /* User.swift in Sources */,
 				F50060F3294426EF005923A7 /* ActivityIndicator.swift in Sources */,
 				F5802D0329320DEF00955949 /* ModuleAssembler.swift in Sources */,
 				F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */,

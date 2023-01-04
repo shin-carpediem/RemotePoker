@@ -1,14 +1,3 @@
-enum CardPackageAction {
-    /// カードパッケージが追加された時
-    case added
-    /// カードパッケージが更新された時
-    case modified
-    /// カードパッケージが削除された時
-    case removed
-    /// 不明
-    case unKnown
-}
-
 enum UserAction {
     /// ユーザーが追加された時
     case added
@@ -20,12 +9,23 @@ enum UserAction {
     case unKnown
 }
 
+enum CardPackageAction {
+    /// カードパッケージが追加された時
+    case added
+    /// カードパッケージが更新された時
+    case modified
+    /// カードパッケージが削除された時
+    case removed
+    /// 不明
+    case unKnown
+}
+
 protocol RoomDelegate: AnyObject {
-    /// ルームのカードバッケージのテーマカラーが更新された時
-    func whenCardPackageChanged(action: CardPackageAction)
-    
     /// ルームにユーザーが追加/更新/削除された時
     func whenUserChanged(action: UserAction)
+    
+    /// ルームのカードバッケージのテーマカラーが更新された時
+    func whenCardPackageChanged(action: CardPackageAction)
 }
 
 protocol RoomRepository: AnyObject {
