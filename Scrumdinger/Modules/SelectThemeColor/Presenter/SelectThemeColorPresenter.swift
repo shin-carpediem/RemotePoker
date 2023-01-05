@@ -14,12 +14,6 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectTheme
         self.dependency = dependency
     }
     
-    // MARK: - SelectThemeColorPresentation
-    
-    func didTapColor(color: ThemeColor) {
-        dependency.useCase.updateThemeColor(themeColor: color)
-    }
-    
     // MARK: - Presentation
     
     func viewDidLoad() {
@@ -29,6 +23,12 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectTheme
     func viewDidResume() {}
     
     func viewDidSuspend() {}
+    
+    // MARK: - SelectThemeColorPresentation
+    
+    func didTapColor(color: ThemeColor) {
+        dependency.useCase.updateThemeColor(themeColor: color)
+    }
     
     // MARK: - SelectThemeColorInteractorOutput
     

@@ -14,6 +14,25 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         self.dependency = dependency
     }
     
+    // MARK: - Presentation
+
+    func viewDidLoad() {
+        dependency.useCase.activateRoomDelegate(self)
+        dependency.useCase.subscribeUsers()
+        dependency.useCase.subscribeCardPackages()
+    }
+    
+    func viewDidResume() {
+        Task {
+            await requestRoom()
+            applyThemeColor()
+            showHeaderTitle()
+            updateUserSelectStatusList()
+        }
+    }
+
+    func viewDidSuspend() {}
+    
     // MARK: - CardListPresentation
     
     func didSelectCard(card: Card) {
@@ -38,25 +57,6 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     func didTapSettingButton() {
         pushSettingView()
     }
-    
-    // MARK: - Presentation
-
-    func viewDidLoad() {
-        dependency.useCase.activateRoomDelegate(self)
-        dependency.useCase.subscribeUsers()
-        dependency.useCase.subscribeCardPackages()
-    }
-    
-    func viewDidResume() {
-        Task {
-            await requestRoom()
-            applyThemeColor()
-            showHeaderTitle()
-            updateUserSelectStatusList()
-        }
-    }
-
-    func viewDidSuspend() {}
     
     // MARK: - CardListInteractorOutput
     

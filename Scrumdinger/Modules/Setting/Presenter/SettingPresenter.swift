@@ -12,6 +12,14 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
         self.dependency = dependency
     }
     
+    // MARK: - Presentation
+    
+    func viewDidLoad() {}
+    
+    func viewDidResume() {}
+    
+    func viewDidSuspend() {}
+    
     // MARK: - SettingPresentation
     
     func didTapSelectThemeColorButton() {
@@ -27,14 +35,6 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
             await dependency.useCase.leaveRoom()
         }
     }
-    
-    // MARK: - Presentation
-    
-    func viewDidLoad() {}
-    
-    func viewDidResume() {}
-    
-    func viewDidSuspend() {}
     
     // MARK: - SettingInteractorOutput
     

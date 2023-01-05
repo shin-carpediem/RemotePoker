@@ -12,6 +12,18 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         self.dependency = dependency
     }
     
+    // MARK: - Presentation
+    
+    func viewDidLoad() {}
+    
+    func viewDidResume() {
+        login()
+    }
+    
+    func viewDidSuspend() {}
+    
+    func viewDidStop() {}
+    
     // MARK: - EnterRoomPresentation
     
     var currentUser: User = .init(id: "", name: "", currentRoomId: 0, selectedCardId: "")
@@ -60,18 +72,6 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
             pushCardListView()
         }
     }
-    
-    // MARK: - Presentation
-    
-    func viewDidLoad() {}
-    
-    func viewDidResume() {
-        login()
-    }
-    
-    func viewDidSuspend() {}
-    
-    func viewDidStop() {}
     
     // MARK: - EnterRoomInteractorOutput
     
