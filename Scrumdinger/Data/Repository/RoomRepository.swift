@@ -53,9 +53,6 @@ protocol RoomRepository: AnyObject {
     /// - parameter userId: ユーザーID
     func removeUserFromRoom(userId: String) async
     
-//    /// ルームを削除する
-//    func deleteRoom() async
-    
     /// カードパッケージを購読する
     func subscribeCardPackage()
     

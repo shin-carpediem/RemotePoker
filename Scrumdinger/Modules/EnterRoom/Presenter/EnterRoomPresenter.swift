@@ -112,6 +112,10 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     
     /// ユーザーに、存在するカレントルームがあるか確認する
     private func checkUserInCurrentRoom() async {
+        guard let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else { return }
+        // アプリバージョンが1.1.0以下のユーザーデータはFirestoreから削除されているため、カレントルームは存在しない
+        if appVersion == "1.0.0" || appVersion == "1.1.0" { return }
+        
         if currentRoomId == 0 {
             isUserInCurrentRoom = false
         } else {

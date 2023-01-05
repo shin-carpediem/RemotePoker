@@ -126,12 +126,6 @@ final class RoomDataStore: RoomRepository {
         try? await firestoreRef.userDocument(userId: userId).delete()
     }
     
-//    func deleteRoom() async {
-//        guard let firestoreRef else { fatalError() }
-    
-//        try? await firebaseRef.roomDocument.delete()
-//    }
-    
     func subscribeCardPackage() {
         guard let firestoreRef else { fatalError() }
         
