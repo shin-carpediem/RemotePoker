@@ -45,10 +45,5 @@ protocol CardListInteractorOutput: AnyObject {
     func outputSuccess()
     
     /// エラーを出力
-    func outputError(_ error: CardListError)
-}
-
-enum CardListError: Error {
-    /// ルームの要求に失敗した
-    case failedToRequestRoom
+    func outputError(_ error: Error)
 }

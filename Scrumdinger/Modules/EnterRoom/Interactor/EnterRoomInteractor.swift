@@ -30,16 +30,36 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
     }
     
     func requestRoom(roomId: Int) async {
-        let room = await dependency.roomRepository.fetchRoom()
-        dependency.output?.outputRoom(room)
+        let result = await dependency.roomRepository.fetchRoom()
+        switch result {
+        case .success(let room):
+            dependency.output?.outputRoom(room)
+        
+        case .failure(let error):
+            dependency.output?.outputError(error)
+        }
     }
     
     func adduserToRoom(user: User) async {
-        await dependency.roomRepository.addUserToRoom(user: user)
+        let result = await dependency.roomRepository.addUserToRoom(user: user)
+        switch result {
+        case .success(_):
+            dependency.output?.outputSuccess()
+            
+        case .failure(let error):
+            dependency.output?.outputError(error)
+        }
     }
     
     func createRoom(room: Room) async {
-        await dependency.roomRepository.createRoom(room)
+        let result = await dependency.roomRepository.createRoom(room)
+        switch result {
+        case .success(_):
+            dependency.output?.outputSuccess()
+            
+        case .failure(let error):
+            dependency.output?.outputError(error)
+        }
     }
     
     // MARK: - Private

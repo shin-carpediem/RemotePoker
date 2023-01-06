@@ -39,19 +39,19 @@ protocol RoomRepository: AnyObject {
     
     /// ルームを新規作成する
     /// - parameter room: ルーム
-    func createRoom(_ room: Room) async
+    func createRoom(_ room: Room) async -> Result<Void, RoomError>
     
     /// ルームを取得する
     /// - returns: ルーム
-    func fetchRoom() async -> Room
+    func fetchRoom() async -> Result<Room, RoomError>
     
     /// ルームにユーザーを追加する
     /// - parameter user: ユーザー
-    func addUserToRoom(user: User) async
+    func addUserToRoom(user: User) async -> Result<Void, RoomError>
     
-    /// ルームから退出する
+    /// ルームからユーザーを削除する
     /// - parameter userId: ユーザーID
-    func removeUserFromRoom(userId: String) async
+    func removeUserFromRoom(userId: String) async -> Result<Void, RoomError>
     
     /// カードパッケージを購読する
     func subscribeCardPackage()
@@ -78,4 +78,21 @@ protocol RoomRepository: AnyObject {
     /// - parameter cardPackageId: カードパッケージID
     /// - parameter themeColor: テーマカラー
     func updateThemeColor(cardPackageId: String, themeColor: ThemeColor)
+}
+
+enum RoomError: Error {
+    /// ルームの新規作成に失敗した時
+    case failedToCreateRoom
+    
+    /// ルームの取得に失敗した時
+    case failedToFetchRoom
+    
+    /// ルームへのユーザー追加に失敗した時
+    case failedToAddUserToRoom
+    
+    /// ルームからの退出に失敗した時
+    case failedToRemoveUserFromRoom
+    
+    /// 指定IDのユーザー取得に失敗した時
+    case failedToFetchUser
 }

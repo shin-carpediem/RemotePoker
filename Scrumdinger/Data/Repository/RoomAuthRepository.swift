@@ -1,11 +1,3 @@
-enum RoomAuthError: Error {
-    /// ログインに失敗した
-    case failedToLogin
-    
-    /// ログアウトに失敗した
-    case failedToLogout
-}
-
 protocol RoomAuthDelegate: AnyObject {
     /// ログインに成功した時
     /// - parameter ユーザーID
@@ -36,4 +28,12 @@ protocol RoomAuthRepository: AnyObject {
     
     /// ログアウトする
     func logout() -> Result<Void, RoomAuthError>
+}
+
+enum RoomAuthError: Error {
+    /// ログインに失敗した
+    case failedToLogin
+    
+    /// ログアウトに失敗した
+    case failedToLogout
 }

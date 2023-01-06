@@ -19,53 +19,60 @@ final class RoomDataStore: RoomRepository {
         return document.exists
     }
     
-    func createRoom(_ room: Room) async {
-        // ルーム追加
-        let roomId = room.id
-        let roomDocument = Firestore.firestore().collection("rooms").document(String(roomId))
-        try? await roomDocument.setData([
-            "id": roomId,
-            "createdAt": Timestamp()
-        ])
-        
-        // ユーザー追加
-        room.userList.forEach { user in
-            let userId = user.id
-            let userDocument = roomDocument.collection("users").document(userId)
-            userDocument.setData([
-                "id": userId,
-                "name": user.name,
-                "currentRoomId": roomId,
-                "selectedCardId": user.selectedCardId,
+    func createRoom(_ room: Room) async -> Result<Void, RoomError> {
+        do {
+            // ルーム追加
+            let roomId = room.id
+            let roomDocument = Firestore.firestore().collection("rooms").document(String(roomId))
+            try await roomDocument.setData([
+                "id": roomId,
                 "createdAt": Timestamp()
             ])
-        }
-        
-        // カードパッケージ追加
-        let cardPackageId = room.cardPackage.id
-        let cardPackageDocument = roomDocument.collection("cardPackages").document(cardPackageId)
-        try? await cardPackageDocument.setData([
-            "id": cardPackageId,
-            "themeColor": room.cardPackage.themeColor.rawValue,
-            "createdAt": Timestamp()
-        ])
-        
-        // カード一覧追加
-        room.cardPackage.cardList.forEach { card in
-            let cardId = card.id
-            let cardDocument = cardPackageDocument.collection("cards").document(cardId)
-            cardDocument.setData([
-                "id": cardId,
-                "point": card.point,
-                "index": card.index
+            
+            // ユーザー追加
+            room.userList.forEach { user in
+                let userId = user.id
+                let userDocument = roomDocument.collection("users").document(userId)
+                userDocument.setData([
+                    "id": userId,
+                    "name": user.name,
+                    "currentRoomId": roomId,
+                    "selectedCardId": user.selectedCardId,
+                    "createdAt": Timestamp()
+                ])
+            }
+            
+            // カードパッケージ追加
+            let cardPackageId = room.cardPackage.id
+            let cardPackageDocument = roomDocument.collection("cardPackages").document(cardPackageId)
+            try await cardPackageDocument.setData([
+                "id": cardPackageId,
+                "themeColor": room.cardPackage.themeColor.rawValue,
+                "createdAt": Timestamp()
             ])
+            
+            // カード一覧追加
+            room.cardPackage.cardList.forEach { card in
+                let cardId = card.id
+                let cardDocument = cardPackageDocument.collection("cards").document(cardId)
+                cardDocument.setData([
+                    "id": cardId,
+                    "point": card.point,
+                    "index": card.index
+                ])
+            }
+            return .success(())
+        } catch {
+            return .failure(.failedToCreateRoom)
         }
     }
     
     // 以降のメソッドは、はルームIDを渡さずに初期化して呼んだらクラッシュさせる
 
-    func fetchRoom() async -> Room {
-        guard let firestoreRef else { fatalError() }
+    func fetchRoom() async -> Result<Room, RoomError> {
+        guard let firestoreRef else {
+            return .failure(.failedToFetchRoom)
+        }
         
         // ルーム取得
         let roomSnapshot = await firestoreRef.roomSnapshot()
@@ -105,25 +112,39 @@ final class RoomDataStore: RoomRepository {
                         userList: userList,
                         cardPackage: cardPackage)
 
-        return room
+        return .success(room)
     }
     
-    func addUserToRoom(user: User) async {
-        guard let firestoreRef else { fatalError() }
+    func addUserToRoom(user: User) async -> Result<Void, RoomError> {
+        guard let firestoreRef else {
+            return .failure(.failedToAddUserToRoom)
+        }
         
-        let userDocument = firestoreRef.usersCollection.document(user.id)
-        try? await userDocument.setData([
-            "id": user.id,
-            "name": user.name,
-            "currentRoomId": user.currentRoomId,
-            "selectedCardId": user.selectedCardId
-        ])
+        do {
+            let userDocument = firestoreRef.usersCollection.document(user.id)
+            try await userDocument.setData([
+                "id": user.id,
+                "name": user.name,
+                "currentRoomId": user.currentRoomId,
+                "selectedCardId": user.selectedCardId
+            ])
+            return .success(())
+        } catch {
+            return .failure(.failedToAddUserToRoom)
+        }
     }
     
-    func removeUserFromRoom(userId: String) async {
-        guard let firestoreRef else { fatalError() }
+    func removeUserFromRoom(userId: String) async -> Result<Void, RoomError> {
+        guard let firestoreRef else {
+            return .failure(.failedToRemoveUserFromRoom)
+        }
         
-        try? await firestoreRef.userDocument(userId: userId).delete()
+        do {
+            try await firestoreRef.userDocument(userId: userId).delete()
+            return .success(())
+        } catch {
+            return .failure(.failedToRemoveUserFromRoom)
+        }
     }
     
     func subscribeCardPackage() {

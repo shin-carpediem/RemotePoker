@@ -40,15 +40,13 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     }
     
     func requestRoom() async {
-        let task = Task { () -> Room in
-            await dependency.roomRepository.fetchRoom()
-        }
-        let result = await task.result
-        do {
-            let room = try result.get()
+        let result = await dependency.roomRepository.fetchRoom()
+        switch result {
+        case .success(let room):
             dependency.output?.outputRoom(room)
-        } catch {
-            dependency.output?.outputError(.failedToRequestRoom)
+        
+        case .failure(let error):
+            dependency.output?.outputError(error)
         }
     }
     

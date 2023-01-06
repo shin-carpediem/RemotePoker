@@ -16,11 +16,17 @@ final class SettingInteractor: SettingUseCase, DependencyInjectable {
     // MARK: - SettingUseCase
     
     func leaveRoom() async {
-        await dependency.roomRepository.removeUserFromRoom(userId: dependency.currentUser.id)
-        let result = RoomAuthDataStore.shared.logout()
+        let result = await dependency.roomRepository.removeUserFromRoom(userId: dependency.currentUser.id)
         switch result {
         case .success(_):
-            dependency.output?.outputSuccess()
+            let logoutResult = RoomAuthDataStore.shared.logout()
+            switch logoutResult {
+            case .success(_):
+                dependency.output?.outputSuccess()
+                
+            case .failure(let error):
+                dependency.output?.outputError(error)
+            }
             
         case .failure(let error):
             dependency.output?.outputError(error)
