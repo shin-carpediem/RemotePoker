@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "loaderui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ninjaprox/LoaderUI",
+      "state" : {
+        "revision" : "90ca7c0f9086d48c37057d7b71a1b1332d5c58e4",
+        "version" : "0.1.0"
+      }
+    },
+    {
       "identity" : "neumorphic",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/costachung/neumorphic/",

@@ -69,6 +69,7 @@
 		F5C397DA289E9342008AEFF2 /* CardPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397D9289E9342008AEFF2 /* CardPackage.swift */; };
 		F5C397DC289F40C6008AEFF2 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DB289F40C6008AEFF2 /* Room.swift */; };
 		F5C397E0289F420F008AEFF2 /* EnterRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */; };
+		F5CBD36B296A3EA7008BB8DE /* LoaderUI in Frameworks */ = {isa = PBXBuildFile; productRef = F5CBD36A296A3EA7008BB8DE /* LoaderUI */; };
 		F5E05171292BB05F006EA727 /* RoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E05170292BB05F006EA727 /* RoomRepository.swift */; };
 		F5E05175292BB134006EA727 /* RoomDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E05174292BB134006EA727 /* RoomDataStore.swift */; };
 		F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */; };
@@ -189,6 +190,7 @@
 				F571FA4B2896CA2D003531CE /* gRPC-Core.xcframework in Frameworks */,
 				F571FA352896CA2C003531CE /* GoogleUtilities.xcframework in Frameworks */,
 				F571FA562896CA3B003531CE /* FirebaseAuth.xcframework in Frameworks */,
+				F5CBD36B296A3EA7008BB8DE /* LoaderUI in Frameworks */,
 				F571FA3D2896CA2C003531CE /* FirebaseCoreDiagnostics.xcframework in Frameworks */,
 				F588E30728BB8E2800C5CA9A /* Neumorphic in Frameworks */,
 				F571FA3F2896CA2C003531CE /* FirebaseFirestoreSwift.xcframework in Frameworks */,
@@ -644,6 +646,7 @@
 			name = Scrumdinger;
 			packageProductDependencies = (
 				F588E30628BB8E2800C5CA9A /* Neumorphic */,
+				F5CBD36A296A3EA7008BB8DE /* LoaderUI */,
 			);
 			productName = Scrumdinger;
 			productReference = F5E917C7287114DC00AE8421 /* Scrumdinger.app */;
@@ -719,6 +722,7 @@
 			mainGroup = F5E917BE287114DC00AE8421;
 			packageReferences = (
 				F588E30528BB8E2800C5CA9A /* XCRemoteSwiftPackageReference "neumorphic" */,
+				F5CBD369296A3EA7008BB8DE /* XCRemoteSwiftPackageReference "LoaderUI" */,
 			);
 			productRefGroup = F5E917C8287114DC00AE8421 /* Products */;
 			projectDirPath = "";
@@ -1172,6 +1176,14 @@
 				minimumVersion = 2.0.5;
 			};
 		};
+		F5CBD369296A3EA7008BB8DE /* XCRemoteSwiftPackageReference "LoaderUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ninjaprox/LoaderUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1179,6 +1191,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F588E30528BB8E2800C5CA9A /* XCRemoteSwiftPackageReference "neumorphic" */;
 			productName = Neumorphic;
+		};
+		F5CBD36A296A3EA7008BB8DE /* LoaderUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F5CBD369296A3EA7008BB8DE /* XCRemoteSwiftPackageReference "LoaderUI" */;
+			productName = LoaderUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
