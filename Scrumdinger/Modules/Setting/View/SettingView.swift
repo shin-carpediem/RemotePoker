@@ -23,6 +23,10 @@ struct SettingView: View, ModuleAssembler {
     
     @ObservedObject private var viewModel: SettingViewModel
     
+    private var notificationBanner: NotificationBanner {
+        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
+    }
+    
     // MARK: - View
     
     var body: some View {
@@ -34,6 +38,7 @@ struct SettingView: View, ModuleAssembler {
             navigationForSelectThemeColorView
         }
         .navigationTitle("Setting")
+        .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }

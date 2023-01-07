@@ -21,9 +21,8 @@ struct EnterRoomView: View, ModuleAssembler {
     
     @ObservedObject private var viewModel: EnterRoomViewModel
     
-    /// 通知バナー
     private var notificationBanner: NotificationBanner {
-        .init(isShown: $viewModel.isShownBanner, message: viewModel.BannerMessgage)
+        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
     }
     
     // MARK: - View

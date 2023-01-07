@@ -25,6 +25,10 @@ struct CardListView: View, ModuleAssembler {
     
     @ObservedObject private var viewModel: CardListViewModel
     
+    private var notificationBanner: NotificationBanner {
+        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
+    }
+    
     // MARK: - View
     
     var body: some View {
@@ -55,6 +59,7 @@ struct CardListView: View, ModuleAssembler {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(trailing: settingButton)
+        .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }

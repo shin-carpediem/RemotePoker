@@ -66,9 +66,19 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         }
     }
     
-    func outputSuccess() {}
+    func outputSuccess(message: String) {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel?.isShownBanner = true
+            self?.dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
+        }
+    }
     
-    func outputError(_ error: Error) {}
+    func outputError(_ error: Error, message: String) {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel?.isShownBanner = true
+            self?.dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
+        }
+    }
     
     // MARK: - Private
     

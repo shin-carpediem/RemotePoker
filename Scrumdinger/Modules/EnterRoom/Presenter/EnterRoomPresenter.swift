@@ -96,14 +96,14 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     func outputSuccess(message: String) {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel?.isShownBanner = true
-            self?.dependency.viewModel?.BannerMessgage = .init(type: .onSuccess, text: message)
+            self?.dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
         }
     }
     
     func outputError(_ error: Error, message: String) {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel?.isShownBanner = true
-            self?.dependency.viewModel?.BannerMessgage = .init(type: .onFailure, text: message)
+            self?.dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
         }
     }
     

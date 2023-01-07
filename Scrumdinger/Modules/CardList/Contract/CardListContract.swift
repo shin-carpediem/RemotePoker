@@ -42,8 +42,8 @@ protocol CardListInteractorOutput: AnyObject {
     func outputRoom(_ room: Room)
     
     /// データ処理の成功を出力
-    func outputSuccess()
+    func outputSuccess(message: String)
     
     /// エラーを出力
-    func outputError(_ error: Error)
+    func outputError(_ error: Error, message: String)
 }

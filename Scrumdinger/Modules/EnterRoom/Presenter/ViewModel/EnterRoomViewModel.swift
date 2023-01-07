@@ -23,7 +23,7 @@ class EnterRoomViewModel: ObservableObject {
     @Published var isShownBanner = false
     
     /// 通知バナーのメッセージ
-    @Published var BannerMessgage = NotificationMessage(type: .onSuccess, text: "")
+    @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
     
     // MARK: - Router
     

@@ -16,6 +16,12 @@ class CardListViewModel: ObservableObject {
     /// ボタンが有効か
     @Published var isButtonEnabled = true
     
+    /// 通知バナーを表示するか
+    @Published var isShownBanner = false
+    
+    /// 通知バナーのメッセージ
+    @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
+    
     // MARK: - Router
     
     /// 設定画面に遷移するか

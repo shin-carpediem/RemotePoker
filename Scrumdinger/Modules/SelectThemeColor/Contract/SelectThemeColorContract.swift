@@ -15,8 +15,8 @@ protocol SelectThemeColorInteractorOutput: AnyObject {
     func outputSelectedThemeColor(_ themeColor: ThemeColor)
     
     /// データ処理の成功を出力
-    func outputSuccess()
+    func outputSuccess(message: String)
     
     /// エラーを出力
-    func outputError(_ error: Error)
+    func outputError(_ error: Error, message: String)
 }

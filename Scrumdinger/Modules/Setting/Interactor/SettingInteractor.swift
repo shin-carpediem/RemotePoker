@@ -22,14 +22,14 @@ final class SettingInteractor: SettingUseCase, DependencyInjectable {
             let logoutResult = RoomAuthDataStore.shared.logout()
             switch logoutResult {
             case .success(_):
-                dependency.output?.outputSuccess()
+                dependency.output?.outputSuccess(message: "Left the room.")
                 
             case .failure(let error):
-                dependency.output?.outputError(error)
+                dependency.output?.outputError(error, message: "Failed to leave the room.")
             }
             
         case .failure(let error):
-            dependency.output?.outputError(error)
+            dependency.output?.outputError(error, message: "Failed to leave the room.")
         }
     }
     
