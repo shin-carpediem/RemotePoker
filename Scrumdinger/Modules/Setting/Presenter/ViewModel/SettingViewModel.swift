@@ -1,13 +1,12 @@
 import Foundation
 
-class SettingViewModel: ObservableObject {
-    /// ボタンが有効か
+class SettingViewModel: ObservableObject, ViewModel {
+    // MARK: - ViewModel
+    
     @Published var isButtonEnabled = true
     
-    /// 通知バナーを表示するか
     @Published var isShownBanner = false
     
-    /// 通知バナーのメッセージ
     @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
     
     // MARK: - Router

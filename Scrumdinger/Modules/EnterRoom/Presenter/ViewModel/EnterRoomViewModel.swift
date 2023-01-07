@@ -1,6 +1,6 @@
 import SwiftUI
 
-class EnterRoomViewModel: ObservableObject {
+class EnterRoomViewModel: ObservableObject, ViewModel {
     /// 入力フォーム/名前
     @Published var inputName = ""
     
@@ -13,16 +13,15 @@ class EnterRoomViewModel: ObservableObject {
     /// 入力フォーム内容の無効を示すアラートを表示するか
     @Published var isShownInputFormInvalidAlert = false
     
-    /// ボタンが有効か
-    @Published var isButtonEnabled = true
-    
     /// インジケーター
     @Published var activityIndicator = ActivityIndicator()
     
-    /// 通知バナーを表示するか
+    // MARK: - ViewModel
+    
+    @Published var isButtonEnabled = true
+    
     @Published var isShownBanner = false
     
-    /// 通知バナーのメッセージ
     @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
     
     // MARK: - Router

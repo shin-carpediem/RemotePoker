@@ -1,6 +1,6 @@
 import SwiftUI
 
-class CardListViewModel: ObservableObject {
+class CardListViewModel: ObservableObject, ViewModel {
     /// ルーム
     @Published var room: Room?
     
@@ -13,13 +13,12 @@ class CardListViewModel: ObservableObject {
     /// 選択済みカード一覧が公開されるか
     @Published var isShownSelectedCardList = false
     
-    /// ボタンが有効か
+    // MARK: - ViewModel
+    
     @Published var isButtonEnabled = true
     
-    /// 通知バナーを表示するか
     @Published var isShownBanner = false
     
-    /// 通知バナーのメッセージ
     @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
     
     // MARK: - Router
