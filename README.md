@@ -18,4 +18,6 @@
 | :-- | :-- | :-- |
 | [swift-package-manager](https://github.com/apple/swift-package-manager) | [neumorphic](https://github.com/costachung/neumorphic) | Neumorphism UI |
 | | [LoaderUI](https://github.com/ninjaprox/LoaderUI) | Loading Animation |
-| [Carthage](https://github.com/Carthage/Carthage) | [Firebase](https://github.com/firebase/firebase-ios-sdk) | Firebase iOS SDK |
+| [Carthage](https://github.com/Carthage/Carthage) | [FirebaseAnalytics](https://github.com/firebase/firebase-ios-sdk) | FirebaseAnalytics for iOS |
+| | [FirebaseAnalytics](https://github.com/firebase/firebase-ios-sdk) | FirebaseAuth for iOS |
+| | [FirebaseAnalytics](https://github.com/firebase/firebase-ios-sdk) | FirebaseFirestore for iOS |
