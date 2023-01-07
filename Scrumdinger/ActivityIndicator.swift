@@ -3,13 +3,13 @@ import SwiftUI
 /// [参照元]: https://www.bokukoko.info/entry/2022/06/14/135629
 struct ActivityIndicator: View {
     /// インジケータを表示するか
-    @State var isAnimating: Bool = false
+    @Binding var isShown: Bool
     
     // MARK: - Private
     
     /// インジケータの大きさ
     private func outputScale(index: Int) -> CGFloat {
-        return (!isAnimating ? 1 - CGFloat(Float(index)) / 5 : 0.2 + CGFloat(index) / 5)
+        return (!isShown ? 1 - CGFloat(Float(index)) / 5 : 0.2 + CGFloat(index) / 5)
     }
 
     /// インジケータのY軸方向のオフセット
@@ -17,11 +17,11 @@ struct ActivityIndicator: View {
         return geometry.size.width / 10 - geometry.size.height / 2
     }
     
-    /// View生成時
+    /// View表示時
     private func construct() {
         // 初回ロード時にアイコンが左上に向かっていくアニメーションとなるため、処理を少し待つ。
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.isAnimating = true
+            self.isShown = true
         }
     }
     
@@ -37,7 +37,7 @@ struct ActivityIndicator: View {
     
     /// インジケータのアニメーションを表現するView
     func indicatorView(geometry: GeometryProxy, index: Int) -> some View {
-        let angle: Angle = !self.isAnimating ? .degrees(0) : .degrees(360)
+        let angle: Angle = !self.isShown ? .degrees(0) : .degrees(360)
         let animation = Animation
             .timingCurve(0.5, 0.15 + Double(index) / 5, 0.25, 1, duration: 1.5)
             .repeatForever(autoreverses: false)
@@ -67,7 +67,7 @@ struct ActivityIndicator: View {
 
 struct ActivityIndicator_Previews: PreviewProvider {
     static var previews: some View {
-        ActivityIndicator()
+        ActivityIndicator(isShown: .constant(true))
             .frame(width: 200, height: 200)
             .foregroundColor(.gray)
             .previewDisplayName("インジケータ")

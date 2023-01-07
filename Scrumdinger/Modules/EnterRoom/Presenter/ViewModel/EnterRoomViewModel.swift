@@ -13,12 +13,11 @@ class EnterRoomViewModel: ObservableObject, ViewModel {
     /// 入力フォーム内容の無効を示すアラートを表示するか
     @Published var isShownInputFormInvalidAlert = false
     
-    /// インジケーター
-    @Published var activityIndicator = ActivityIndicator()
-    
     // MARK: - ViewModel
     
     @Published var isButtonEnabled = true
+    
+    @Published var isShownIndicator = false
     
     @Published var isShownBanner = false
     

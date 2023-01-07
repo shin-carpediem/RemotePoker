@@ -43,11 +43,13 @@ struct NotificationBanner: View {
         }
     }
     
+    /// バナーを非表示にする
     private func hideBanner() {
         isShown = false
     }
     
-    private func onAppear() {
+    /// View表示時
+    private func construct() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             withAnimation {
                 hideBanner()
@@ -64,7 +66,7 @@ struct NotificationBanner: View {
                 .animation(.easeOut)
                 .transition(.move(edge: .top).combined(with: .opacity))
                 .onTapGesture { withAnimation { hideBanner() } }
-                .onAppear { onAppear() }
+                .onAppear { construct() }
         }
     }
     
@@ -73,7 +75,7 @@ struct NotificationBanner: View {
         return VStack {
             HStack {
                 Image(systemName: viewModel?.iconName ?? "")
-                Text(message.text).bold()
+                Text(message.text)
                 Spacer()
             }
             .foregroundColor(.white)

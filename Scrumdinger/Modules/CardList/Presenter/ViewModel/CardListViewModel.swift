@@ -17,6 +17,8 @@ class CardListViewModel: ObservableObject, ViewModel {
     
     @Published var isButtonEnabled = true
     
+    @Published var isShownIndicator = false
+    
     @Published var isShownBanner = false
     
     @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")

@@ -21,6 +21,10 @@ struct EnterRoomView: View, ModuleAssembler {
     
     @ObservedObject private var viewModel: EnterRoomViewModel
     
+    private var activityIndicator: ActivityIndicator {
+        .init(isShown: $viewModel.isShownIndicator)
+    }
+    
     private var notificationBanner: NotificationBanner {
         .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
     }
@@ -37,8 +41,6 @@ struct EnterRoomView: View, ModuleAssembler {
                         .padding()
                 }
                 .padding(.horizontal, 40)
-                // TODO: インジケーターがうまく作用しない
-                // viewModel.activityIndicator.body
                 navigationForCardListView
             }
         }
@@ -50,6 +52,7 @@ struct EnterRoomView: View, ModuleAssembler {
                actions: {},
                message: { Text("If the number is new, a new room will be created.") })
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
+        .modifier(Overlay(isShown: $viewModel.isShownIndicator, overlayView: activityIndicator))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
