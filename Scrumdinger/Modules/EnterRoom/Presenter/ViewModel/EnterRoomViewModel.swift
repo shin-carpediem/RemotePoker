@@ -19,6 +19,12 @@ class EnterRoomViewModel: ObservableObject {
     /// インジケーター
     @Published var activityIndicator = ActivityIndicator()
     
+    /// 通知バナーを表示するか
+    @Published var isShownBanner = false
+    
+    /// 通知バナーのメッセージ
+    @Published var BannerMessgage = NotificationMessage(type: .onSuccess, text: "")
+    
     // MARK: - Router
     
     /// カード一覧画面に遷移するか

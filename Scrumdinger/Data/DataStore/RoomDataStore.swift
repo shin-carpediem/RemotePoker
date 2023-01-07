@@ -66,8 +66,6 @@ final class RoomDataStore: RoomRepository {
             return .failure(.failedToCreateRoom)
         }
     }
-    
-    // 以降のメソッドは、はルームIDを渡さずに初期化して呼んだらクラッシュさせる
 
     func fetchRoom() async -> Result<Room, RoomError> {
         guard let firestoreRef else {
@@ -77,7 +75,10 @@ final class RoomDataStore: RoomRepository {
         // ルーム取得
         let roomSnapshot = await firestoreRef.roomSnapshot()
         let roomData = roomSnapshot?.data()
-        let roomId = roomData!["id"] as! Int
+        guard let roomData else {
+            return .failure(.failedToFetchRoom)
+        }
+        let roomId = roomData["id"] as! Int
         
         // ユーザー一覧取得
         let usersSnapshot = await firestoreRef.usersSnapshot()

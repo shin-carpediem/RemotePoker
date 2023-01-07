@@ -21,6 +21,11 @@ struct EnterRoomView: View, ModuleAssembler {
     
     @ObservedObject private var viewModel: EnterRoomViewModel
     
+    /// 通知バナー
+    private var notificationBanner: NotificationBanner {
+        .init(isShown: $viewModel.isShownBanner, message: viewModel.BannerMessgage)
+    }
+    
     // MARK: - View
     
     var body: some View {
@@ -38,20 +43,21 @@ struct EnterRoomView: View, ModuleAssembler {
                 navigationForCardListView
             }
         }
+        .navigationTitle("RemotePoker")
         .alert(isPresented: $viewModel.isShownEnterCurrentRoomAlert,
                content: { enterCurrentRoomAlert })
         .alert("Name & 4 Digit Number Required",
                isPresented: $viewModel.isShownInputFormInvalidAlert,
                actions: {},
                message: { Text("If the number is new, a new room will be created.") })
-        .navigationTitle("RemotePoker")
+        .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
     
     /// 入室中のルームに入るか促すアラート
     private var enterCurrentRoomAlert: Alert {
-        Alert(title: Text("Enter Existing Room?"),
+        .init(title: Text("Enter Existing Room?"),
               primaryButton: .default(Text("OK"), action: {
             dependency.presenter.didTapEnterCurrentRoomButton()
         }),
