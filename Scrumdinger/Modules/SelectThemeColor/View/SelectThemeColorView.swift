@@ -1,3 +1,4 @@
+import LoaderUI
 import Neumorphic
 import SwiftUI
 
@@ -34,6 +35,9 @@ struct SelectThemeColorView: View {
             Color.Neumorphic.main.ignoresSafeArea()
             VStack(alignment: .leading) {
                 colorList
+            }
+            if viewModel.isShownLoader {
+                BallClipRotate()
             }
         }
         .navigationTitle("ThemeColor")

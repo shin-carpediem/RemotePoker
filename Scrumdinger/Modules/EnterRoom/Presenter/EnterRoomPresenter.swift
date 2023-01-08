@@ -50,7 +50,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     func didTapEnterCurrentRoomButton() {
         Task {
             disableButton(true)
-            showIndicator(true)
+            showLoader(true)
             dependency.useCase.setupRoomRepository(roomId: currentRoomId)
             setupExistingCurrentUser()
             enterRoomAction = .enterCurrentRoom
@@ -66,7 +66,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     func didTapEnterRoomButton(userName: String, roomId: Int) {
         Task {
             disableButton(true)
-            showIndicator(true)
+            showLoader(true)
             dependency.useCase.setupRoomRepository(roomId: roomId)
             setupNewCurrentUser(userName: userName, roomId: roomId)
             enterRoomAction = isUserInCurrentRoom ? .enterOtherExistingRoom : .enterNewRoom
@@ -80,26 +80,26 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     func outputUser(_ user: User) {
         currentUser = user
         disableButton(false)
-        showIndicator(false)
+        showLoader(false)
     }
     
     func outputRoom(_ room: Room) {
         currentRoom = room
         disableButton(false)
-        showIndicator(false)
+        showLoader(false)
     }
     
     func outputIsUserInCurrentRoom(_ isIn: Bool) {
         isUserInCurrentRoom = isIn
         disableButton(false)
-        showIndicator(false)
+        showLoader(false)
     }
     
     func outputEnterCurrentRoomAlert() {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel?.isShownEnterCurrentRoomAlert = true
             self?.disableButton(false)
-            self?.showIndicator(false)
+            self?.showLoader(false)
         }
     }
     
@@ -195,10 +195,10 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         }
     }
     
-    /// インジケータを表示する
-    private func showIndicator(_ show: Bool) {
+    /// ローダーを表示する
+    private func showLoader(_ show: Bool) {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownIndicator = show
+            self?.dependency.viewModel?.isShownLoader = show
         }
     }
     

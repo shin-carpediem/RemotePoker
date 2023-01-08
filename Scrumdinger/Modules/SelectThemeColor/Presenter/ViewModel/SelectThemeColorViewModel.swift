@@ -11,7 +11,7 @@ class SelectThemeColorViewModel: ObservableObject, ViewModel {
     
     @Published var isButtonEnabled = true
     
-    @Published var isShownIndicator = false
+    @Published var isShownLoader = false
     
     @Published var isShownBanner = false
     

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F50060F3294426EF005923A7 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50060F2294426EF005923A7 /* ActivityIndicator.swift */; };
 		F50060F9294437A3005923A7 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50060F8294437A3005923A7 /* SettingView.swift */; };
 		F5125F2E292E755600C822FE /* EnterRoomPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5125F2D292E755600C822FE /* EnterRoomPresenter.swift */; };
 		F5150AFA2968E042008ADAD6 /* NotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5150AF92968E042008ADAD6 /* NotificationBanner.swift */; };
@@ -98,7 +97,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		F50060F2294426EF005923A7 /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		F50060F8294437A3005923A7 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		F5125F2D292E755600C822FE /* EnterRoomPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomPresenter.swift; sourceTree = "<group>"; };
 		F5150AF92968E042008ADAD6 /* NotificationBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBanner.swift; sourceTree = "<group>"; };
@@ -593,7 +591,6 @@
 				F5E0516F292BAFF4006EA727 /* Data */,
 				F5125F26292DF92700C822FE /* Modules */,
 				F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */,
-				F50060F2294426EF005923A7 /* ActivityIndicator.swift */,
 				F5150AF92968E042008ADAD6 /* NotificationBanner.swift */,
 				F5E917CE287114E900AE8421 /* Assets.xcassets */,
 				F571FA672896D137003531CE /* GoogleService-Info.plist */,
@@ -812,7 +809,6 @@
 				F5B2FAE22949423200592363 /* CardListInteractor.swift in Sources */,
 				F57C641A2950A91000CD55CD /* SelectThemeColorContract.swift in Sources */,
 				F57C644129653F1500CD55CD /* User.swift in Sources */,
-				F50060F3294426EF005923A7 /* ActivityIndicator.swift in Sources */,
 				F5802D0329320DEF00955949 /* ModuleAssembler.swift in Sources */,
 				F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */,
 				F57C643F2963B53800CD55CD /* EnterRoomInteractor.swift in Sources */,
