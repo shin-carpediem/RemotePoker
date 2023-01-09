@@ -85,7 +85,7 @@ struct CardListView: View, ModuleAssembler {
         return LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
             ForEach(cardList) { card in
                 let themeColor = viewModel.room?.cardPackage.themeColor ?? .oxblood
-                let isSelected = card.id == dependency.currentUser.selectedCardId
+                let isSelected = card.id == viewModel.userSelectStatusList.first(where: { $0.user.id == dependency.currentUser.id })?.selectedCard?.id
                 CardView(card: card,
                          themeColor: themeColor,
                          isSelected: isSelected) { selectedCard in

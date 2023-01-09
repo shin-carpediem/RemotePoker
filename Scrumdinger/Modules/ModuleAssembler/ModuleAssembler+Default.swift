@@ -26,12 +26,10 @@ extension ModuleAssembler {
                                 output: presenter,
                                 room: room))
 
-        let view = CardListView(
-            dependency: .init(
-                presenter: presenter,
-                room: room,
-                currentUser: currentUser),
-            viewModel: viewModel)
+        let view = CardListView(dependency: .init(presenter: presenter,
+                                                  room: room,
+                                                  currentUser: currentUser),
+                                viewModel: viewModel)
         
         return view
     }

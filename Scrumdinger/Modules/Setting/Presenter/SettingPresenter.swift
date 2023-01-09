@@ -23,8 +23,6 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
     // MARK: - SettingPresentation
     
     func didTapSelectThemeColorButton() {
-        disableButton(true)
-        showLoader(true)
         pushSelectThemeColorView()
     }
     

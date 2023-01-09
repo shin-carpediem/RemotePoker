@@ -1,3 +1,4 @@
+import Neumorphic
 import SwiftUI
 
 struct CardView: View {
@@ -35,6 +36,7 @@ struct CardView: View {
                         .stroke(isSelected ? .gray : .clear, lineWidth: 2)
                 }
         }
+        .softButtonStyle(RoundedRectangle(cornerRadius: 10))
     }
 }
 

@@ -20,7 +20,9 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectTheme
         showColorList()
     }
     
-    func viewDidResume() {}
+    func viewDidResume() {
+        showColorList()
+    }
     
     func viewDidSuspend() {}
     
@@ -35,6 +37,8 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectTheme
     func outputSelectedThemeColor(_ themeColor: ThemeColor) {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel?.selectedThemeColor = themeColor
+            self?.disableButton(false)
+            self?.showLoader(false)
         }
     }
     
@@ -60,6 +64,20 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectTheme
     private func showColorList() {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel?.themeColorList = ThemeColor.allCases
+        }
+    }
+    
+    /// ボタンを無効にする
+    private func disableButton(_ disabled: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel?.isButtonEnabled = !disabled
+        }
+    }
+    
+    /// ローダーを表示する
+    private func showLoader(_ show: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel?.isShownLoader = show
         }
     }
 }
