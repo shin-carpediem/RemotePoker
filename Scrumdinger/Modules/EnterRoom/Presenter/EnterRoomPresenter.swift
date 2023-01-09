@@ -41,7 +41,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     }
     
     func didCancelEnterCurrentRoomButton() {
-        enterRoomAction = .enterOtherExistingRoom
+        enterRoomAction = .enterOtherRoom(isNew: false)
     }
     
     func didTapEnterRoomButton(inputUserName: String, inputRoomId: String) {
@@ -54,7 +54,8 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
                 let roomId = Int(inputRoomId)!
                 dependency.useCase.setupRoomRepository(roomId: roomId)
                 setupNewCurrentUser(userName: inputUserName, roomId: roomId)
-                enterRoomAction = isUserInCurrentRoom ? .enterOtherExistingRoom : .enterNewRoom
+                await dependency.useCase.checkRoomExist(roomId: roomId)
+                enterRoomAction = .enterOtherRoom(isNew: !roomExist)
                 await setupRoom(userName: currentUser.name, roomId: currentRoomId)
                 pushCardListView()
             }
@@ -75,8 +76,8 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         showLoader(false)
     }
     
-    func outputIsUserInCurrentRoom(_ isIn: Bool) {
-        isUserInCurrentRoom = isIn
+    func outputRoomExist(_ exist: Bool) {
+        roomExist = exist
         disableButton(false)
         showLoader(false)
     }
@@ -106,23 +107,25 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     }
     
     /// どのルームに入るか
-    private var enterRoomAction: EnterRoomAction = .enterNewRoom
+    private var enterRoomAction: EnterRoomAction = .enterOtherRoom(isNew: true)
     
-    /// ユーザーが、存在する既存のルーム(=カレントルーム)に存在するか
-    private var isUserInCurrentRoom = false
+    /// ルームが存在するか
+    private var roomExist = false
     
     /// ユーザーに、存在するカレントルームがあるか確認する
     private func checkUserInCurrentRoom() async {
         if let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String, appVersion == "1.0.0" || appVersion == "1.1.0" {
             // アプリバージョンが1.1.0以下のユーザーデータはFirestoreから削除されているため、カレントルームは存在しない
-            isUserInCurrentRoom = false
+            enterRoomAction = .enterOtherRoom(isNew: true)
+            roomExist = false
             return
         }
         
         if currentRoomId == 0 {
-            isUserInCurrentRoom = false
+            enterRoomAction = .enterOtherRoom(isNew: true)
+            roomExist = false
         } else {
-            await dependency.useCase.checkUserInCurrentRoom(roomId: currentRoomId)
+            await dependency.useCase.checkRoomExist(roomId: currentRoomId)
         }
     }
     
@@ -165,11 +168,11 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         case .enterCurrentRoom:
             dependency.useCase.setupRoomRepository(roomId: roomId)
         
-        case .enterOtherExistingRoom:
+        case .enterOtherRoom(isNew: false):
             dependency.useCase.setupRoomRepository(roomId: roomId)
             await dependency.useCase.adduserToRoom(user: currentUser)
         
-        case .enterNewRoom:
+        case .enterOtherRoom(isNew: true):
             currentRoom = .init(id: roomId,
                                 userList: [currentUser],
                                 cardPackage: .defaultCardPackage)
@@ -233,7 +236,7 @@ extension EnterRoomPresenter: RoomAuthDelegate {
             currentUser.id = userId
             // ローカルに保存されているカレントルームIDを基にカレントルームがFirestore上に存在するか確認する
             await checkUserInCurrentRoom()
-            if isUserInCurrentRoom {
+            if roomExist {
                 // 存在する場合
                 // ルームリポジトリにルームIDをセットする
                 dependency.useCase.setupRoomRepository(roomId: currentRoomId)

@@ -22,9 +22,9 @@ protocol EnterRoomUseCase: AnyObject {
     /// - parameter roomId: ルームID
     func setupRoomRepository(roomId: Int)
     
-    /// 存在するカレントルームが ユーザーにあるか確認する
+    /// ルームが存在するか確認する
     /// - parameter roomId: ルームID:
-    func checkUserInCurrentRoom(roomId: Int) async
+    func checkRoomExist(roomId: Int) async
     
     /// ユーザーを要求する
     /// - parameter userId:　ユーザーID
@@ -50,8 +50,8 @@ protocol EnterRoomInteractorOutput: AnyObject {
     /// ルームを出力する
     func outputRoom(_ room: Room)
     
-    /// 存在するカレントルームが ユーザーにあるかを出力する
-    func outputIsUserInCurrentRoom(_ isIn: Bool)
+    /// ルームが存在するかを出力する
+    func outputRoomExist(_ exist: Bool)
     
     /// データ処理の成功を出力
     func outputSuccess(message: String)

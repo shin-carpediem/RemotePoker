@@ -18,9 +18,9 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
         dependency.roomRepository = RoomDataStore(roomId: roomId)
     }
     
-    func checkUserInCurrentRoom(roomId: Int) async {
+    func checkRoomExist(roomId: Int) async {
         let isUserInCurrentRoom = await dependency.roomRepository.checkRoomExist(roomId: roomId)
-        dependency.output?.outputIsUserInCurrentRoom(isUserInCurrentRoom)
+        dependency.output?.outputRoomExist(isUserInCurrentRoom)
     }
     
     func requestUser(userId: String) {

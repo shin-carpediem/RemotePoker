@@ -16,9 +16,6 @@ enum EnterRoomAction {
     /// 入室中のルームに入る
     case enterCurrentRoom
     
-    /// 入室中ではない既存ルームに入る
-    case enterOtherExistingRoom
-    
-    /// 新規ルームに入る
-    case enterNewRoom
+    /// 入室中ではないルームに入る
+    case enterOtherRoom(isNew: Bool)
 }
