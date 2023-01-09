@@ -1,4 +1,3 @@
-import Neumorphic
 import SwiftUI
 
 struct SettingView: View, ModuleAssembler {
@@ -31,10 +30,8 @@ struct SettingView: View, ModuleAssembler {
     
     var body: some View {
         ZStack {
-            Color.Neumorphic.main.ignoresSafeArea()
-            VStack(alignment: .leading) {
-                settingList
-            }
+            Colors.background
+            contentView
             navigationForSelectThemeColorView
             if viewModel.isShownLoader { Loader() }
         }
@@ -42,6 +39,13 @@ struct SettingView: View, ModuleAssembler {
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
+    }
+    
+    /// コンテンツビュー
+    private var contentView: some View {
+        VStack(alignment: .leading) {
+            settingList
+        }
     }
     
     /// 設定リスト

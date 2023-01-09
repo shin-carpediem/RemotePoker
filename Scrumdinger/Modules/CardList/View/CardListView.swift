@@ -1,4 +1,3 @@
-import Neumorphic
 import SwiftUI
 
 struct CardListView: View, ModuleAssembler {
@@ -33,26 +32,8 @@ struct CardListView: View, ModuleAssembler {
     
     var body: some View {
         ZStack {
-            Color.Neumorphic.main.ignoresSafeArea()
-            VStack {
-                ScrollView {
-                    Spacer()
-                    if viewModel.isShownSelectedCardList {
-                        selectedCardListView
-                            .padding()
-                    } else {
-                        cardListView
-                            .padding()
-                    }
-                }
-                HStack {
-                    Spacer()
-                    selectedCardPointView
-                    Spacer()
-                    buttonText
-                    floatingActionButton
-                }
-            }
+            Colors.background
+            contentView
             navigationForSettingView
             if viewModel.isShownLoader { Loader() }
         }
@@ -63,6 +44,29 @@ struct CardListView: View, ModuleAssembler {
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
+    }
+    
+    /// コンテンツビュー
+    private var contentView: some View {
+        VStack {
+            ScrollView {
+                Spacer()
+                if viewModel.isShownSelectedCardList {
+                    selectedCardListView
+                        .padding()
+                } else {
+                    cardListView
+                        .padding()
+                }
+            }
+            HStack {
+                Spacer()
+                selectedCardPointView
+                Spacer()
+                buttonText
+                floatingActionButton
+            }
+        }
     }
     
     /// 設定ボタン

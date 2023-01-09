@@ -1,4 +1,3 @@
-import Neumorphic
 import SwiftUI
 
 struct EnterRoomView: View, ModuleAssembler {
@@ -30,13 +29,8 @@ struct EnterRoomView: View, ModuleAssembler {
     var body: some View {
         NavigationView {
             ZStack {
-                Color.Neumorphic.main.ignoresSafeArea()
-                VStack(spacing: 28) {
-                    inputField
-                    sendButton
-                        .padding()
-                }
-                .padding(.horizontal, 40)
+                Colors.background
+                contentView
                 navigationForCardListView
                 if viewModel.isShownLoader { Loader() }
             }
@@ -51,6 +45,16 @@ struct EnterRoomView: View, ModuleAssembler {
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
+    }
+    
+    /// コンテンツビュー
+    private var contentView: some View {
+        VStack(spacing: 28) {
+            inputField
+            sendButton
+                .padding()
+        }
+        .padding(.horizontal, 40)
     }
     
     /// 入室中のルームに入るか促すアラート
@@ -75,31 +79,13 @@ struct EnterRoomView: View, ModuleAssembler {
     /// 入力項目/名前
     private var inputItemName: some View {
         TextField("Name", text: $viewModel.inputName)
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 20)
-            .fill(Color.Neumorphic.main)
-            .softInnerShadow(RoundedRectangle(cornerRadius: 20),
-                             darkShadow: Color.Neumorphic.darkShadow,
-                             lightShadow: Color.Neumorphic.lightShadow,
-                             spread: 0.2,
-                             radius: 2))
-        .tint(.gray)
-        .foregroundColor(.gray)
+            .modifier(FormStyle())
     }
     
     /// 入力項目/ルームID
     private var inputRoomId: some View {
         TextField("Room ID", text: $viewModel.inputRoomId)
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 20)
-            .fill(Color.Neumorphic.main)
-            .softInnerShadow(RoundedRectangle(cornerRadius: 20),
-                             darkShadow: Color.Neumorphic.darkShadow,
-                             lightShadow: Color.Neumorphic.lightShadow,
-                             spread: 0.2,
-                             radius: 2))
-        .tint(.gray)
-        .foregroundColor(.gray)
+            .modifier(FormStyle())
     }
     
     /// 送信ボタン

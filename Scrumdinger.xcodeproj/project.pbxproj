@@ -62,6 +62,8 @@
 		F5802D0B293218A800955949 /* CardListContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D0A293218A800955949 /* CardListContract.swift */; };
 		F588E30728BB8E2800C5CA9A /* Neumorphic in Frameworks */ = {isa = PBXBuildFile; productRef = F588E30628BB8E2800C5CA9A /* Neumorphic */; };
 		F5AFC1DA296BBCFD00A4FFCA /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1D9296BBCFD00A4FFCA /* Loader.swift */; };
+		F5AFC1DF296BC12200A4FFCA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1DE296BC12200A4FFCA /* Colors.swift */; };
+		F5AFC1E2296BC56500A4FFCA /* FormStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1E1296BC56500A4FFCA /* FormStyle.swift */; };
 		F5B2FAD92944768600592363 /* SettingContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FAD82944768600592363 /* SettingContract.swift */; };
 		F5B2FADB294476BA00592363 /* SettingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FADA294476BA00592363 /* SettingPresenter.swift */; };
 		F5B2FADE2944773C00592363 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FADD2944773C00592363 /* SettingViewModel.swift */; };
@@ -152,6 +154,8 @@
 		F5802D07293217D000955949 /* EnterRoomContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomContract.swift; sourceTree = "<group>"; };
 		F5802D0A293218A800955949 /* CardListContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListContract.swift; sourceTree = "<group>"; };
 		F5AFC1D9296BBCFD00A4FFCA /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
+		F5AFC1DE296BC12200A4FFCA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		F5AFC1E1296BC56500A4FFCA /* FormStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStyle.swift; sourceTree = "<group>"; };
 		F5B2FAD82944768600592363 /* SettingContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContract.swift; sourceTree = "<group>"; };
 		F5B2FADA294476BA00592363 /* SettingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPresenter.swift; sourceTree = "<group>"; };
 		F5B2FADD2944773C00592363 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
@@ -252,6 +256,7 @@
 				F50060F62944376D005923A7 /* Setting */,
 				F57C64152950A8A600CD55CD /* SelectThemeColor */,
 				F5AFC1DB296BBEBE00A4FFCA /* ViewComponents */,
+				F5AFC1E0296BC21500A4FFCA /* Resources */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -269,6 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				F5150AFC29694BB1008ADAD6 /* Overlay.swift */,
+				F5AFC1E1296BC56500A4FFCA /* FormStyle.swift */,
 			);
 			path = ViewModifier;
 			sourceTree = "<group>";
@@ -453,6 +459,14 @@
 				F5150AF92968E042008ADAD6 /* NotificationBanner.swift */,
 			);
 			path = ViewComponents;
+			sourceTree = "<group>";
+		};
+		F5AFC1E0296BC21500A4FFCA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F5AFC1DE296BC12200A4FFCA /* Colors.swift */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		F5B2FAD62944766C00592363 /* Contract */ = {
@@ -817,9 +831,11 @@
 				F5E05171292BB05F006EA727 /* RoomRepository.swift in Sources */,
 				F57C643A2963010E00CD55CD /* DependencyInjectable.swift in Sources */,
 				F5125F2E292E755600C822FE /* EnterRoomPresenter.swift in Sources */,
+				F5AFC1E2296BC56500A4FFCA /* FormStyle.swift in Sources */,
 				F525301429364D5200727472 /* EnterRoomViewModel.swift in Sources */,
 				F5B2FAE22949423200592363 /* CardListInteractor.swift in Sources */,
 				F57C641A2950A91000CD55CD /* SelectThemeColorContract.swift in Sources */,
+				F5AFC1DF296BC12200A4FFCA /* Colors.swift in Sources */,
 				F57C644129653F1500CD55CD /* User.swift in Sources */,
 				F5802D0329320DEF00955949 /* ModuleAssembler.swift in Sources */,
 				F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */,
