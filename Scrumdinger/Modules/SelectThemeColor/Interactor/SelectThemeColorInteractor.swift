@@ -6,7 +6,7 @@ final class SelectThemeColorInteractor: SelectThemeColorUseCase, DependencyInjec
     struct Dependency {
         var roomRepository: RoomRepository
         weak var output: SelectThemeColorInteractorOutput?
-        var room: Room
+        var cardPackageId: String
     }
     
     func inject(_ dependency: Dependency) {
@@ -16,7 +16,7 @@ final class SelectThemeColorInteractor: SelectThemeColorUseCase, DependencyInjec
     // MARK: - CardListUseCase
     
     func updateThemeColor(themeColor: ThemeColor) {
-        dependency.roomRepository.updateThemeColor(cardPackageId: dependency.room.cardPackage.id,
+        dependency.roomRepository.updateThemeColor(cardPackageId: dependency.cardPackageId,
                                                    themeColor: themeColor)
 
         dependency.output?.outputSelectedThemeColor(themeColor)

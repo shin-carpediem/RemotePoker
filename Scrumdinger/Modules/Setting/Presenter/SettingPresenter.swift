@@ -78,6 +78,8 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
     private func pushSelectThemeColorView() {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel?.willPushSelectThemeColorView = true
+            self?.disableButton(false)
+            self?.showLoader(false)
         }
     }
 }

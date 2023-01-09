@@ -6,7 +6,6 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectTheme
     
     struct Dependency {
         var useCase: SelectThemeColorUseCase
-        var room: Room
         weak var viewModel: SelectThemeColorViewModel?
     }
     

@@ -1,7 +1,7 @@
 protocol CardListPresentation: Presentation {
     /// カードを選択した
-    /// - parameter card: カード
-    func didSelectCard(card: Card)
+    /// - parameter cardId: カードID
+    func didSelectCard(cardId: String)
     
     /// 選択済みカード一覧を公開するボタンがタップされた
     func didTapOpenSelectedCardListButton()

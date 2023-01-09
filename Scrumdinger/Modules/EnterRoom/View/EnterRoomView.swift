@@ -96,8 +96,10 @@ struct EnterRoomView: View, ModuleAssembler {
     private var navigationForCardListView: some View {
         NavigationLink(isActive: $viewModel.willPushCardListView, destination: {
             if viewModel.willPushCardListView {
-                assembleCardList(room: dependency.presenter.currentRoom,
-                                 currentUser: dependency.presenter.currentUser)
+                assembleCardList(roomId: dependency.presenter.currentRoom.id,
+                                 currentUserId: dependency.presenter.currentUser.id,
+                                 currentUserName: dependency.presenter.currentUser.name,
+                                 cardPackageId: dependency.presenter.currentRoom.cardPackage.id)
             } else { EmptyView() }
         }) { EmptyView() }
     }
@@ -107,8 +109,7 @@ struct EnterRoomView: View, ModuleAssembler {
 
 struct EnterRoomView_Previews: PreviewProvider {
     static var previews: some View {
-        EnterRoomView(dependency: .init(presenter: EnterRoomPresenter()),
-                      viewModel: .init())
+        EnterRoomView(dependency: .init(presenter: EnterRoomPresenter()), viewModel: .init())
             .previewDisplayName("ルーム入室画面")
     }
 }

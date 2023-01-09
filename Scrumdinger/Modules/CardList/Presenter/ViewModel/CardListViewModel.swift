@@ -2,7 +2,7 @@ import SwiftUI
 
 class CardListViewModel: ObservableObject, ViewModel {
     /// ルーム
-    @Published var room: Room?
+    @Published var room = Room(id: 0, userList: [], cardPackage: .defaultCardPackage)
     
     /// ヘッダーテキスト
     @Published var headerTitle = ""

@@ -6,7 +6,6 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     struct Dependency {
         var roomRepository: RoomDataStore
         weak var output: CardListInteractorOutput?
-        var room: Room
     }
     
     func inject(_ dependency: Dependency) {

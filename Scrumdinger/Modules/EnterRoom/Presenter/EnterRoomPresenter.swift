@@ -221,6 +221,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel?.willPushCardListView = true
             self?.disableButton(false)
+            self?.showLoader(false)
         }
     }
 }

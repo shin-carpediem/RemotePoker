@@ -6,7 +6,7 @@ final class SettingInteractor: SettingUseCase, DependencyInjectable {
     struct Dependency {
         var roomRepository: RoomRepository
         weak var output: SettingInteractorOutput?
-        var currentUser: User
+        var currentUserId: String
     }
     
     func inject(_ dependency: Dependency) {
@@ -16,7 +16,7 @@ final class SettingInteractor: SettingUseCase, DependencyInjectable {
     // MARK: - SettingUseCase
     
     func leaveRoom() async {
-        let result = await dependency.roomRepository.removeUserFromRoom(userId: dependency.currentUser.id)
+        let result = await dependency.roomRepository.removeUserFromRoom(userId: dependency.currentUserId)
         switch result {
         case .success(_):
             let logoutResult = RoomAuthDataStore.shared.logout()

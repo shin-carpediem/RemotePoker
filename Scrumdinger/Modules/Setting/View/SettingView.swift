@@ -7,7 +7,8 @@ struct SettingView: View, ModuleAssembler {
     
     struct Dependency {
         var presenter: SettingPresentation
-        var room: Room
+        var roomId: Int
+        var cardPackageId: String
     }
     
     init(dependency: Dependency, viewModel: SettingViewModel) {
@@ -92,7 +93,8 @@ struct SettingView: View, ModuleAssembler {
     private var navigationForSelectThemeColorView: some View {
         NavigationLink(isActive: $viewModel.willPushSelectThemeColorView, destination: {
             if viewModel.willPushSelectThemeColorView {
-                assembleSelectThemeColor(room: dependency.room)
+                assembleSelectThemeColor(roomId: dependency.roomId,
+                                         cardPackageId: dependency.cardPackageId)
             } else { EmptyView() }
         }) { EmptyView() }
     }
@@ -102,8 +104,7 @@ struct SettingView: View, ModuleAssembler {
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingView(dependency: .init(presenter: SettingPresenter(),
-                                      room: CardListView_Previews.room1),
+        SettingView(dependency: .init(presenter: SettingPresenter(), roomId: 1, cardPackageId: "1"),
                     viewModel: .init())
         .previewDisplayName("設定画面")
     }

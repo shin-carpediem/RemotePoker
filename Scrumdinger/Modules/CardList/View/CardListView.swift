@@ -1,3 +1,4 @@
+import Neumorphic
 import SwiftUI
 
 struct CardListView: View, ModuleAssembler {
@@ -7,8 +8,9 @@ struct CardListView: View, ModuleAssembler {
     
     struct Dependency {
         var presenter: CardListPresentation
-        var room: Room
-        var currentUser: User
+        var roomId: Int
+        var currentUserId: String
+        var cardPackageId: String
     }
     
     /// View生成時
@@ -81,15 +83,15 @@ struct CardListView: View, ModuleAssembler {
 
     /// カード一覧
     private var cardListView: some View {
-        let cardList = viewModel.room?.cardPackage.cardList ?? dependency.room.cardPackage.cardList
+        let cardList = viewModel.room.cardPackage.cardList
         return LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
             ForEach(cardList) { card in
-                let themeColor = viewModel.room?.cardPackage.themeColor ?? .oxblood
-                let isSelected = card.id == viewModel.userSelectStatusList.first(where: { $0.user.id == dependency.currentUser.id })?.selectedCard?.id
+                let themeColor = viewModel.room.cardPackage.themeColor
+                let isSelected = card.id == viewModel.userSelectStatusList.first(where: { $0.user.id == dependency.currentUserId })?.selectedCard?.id
                 CardView(card: card,
                          themeColor: themeColor,
                          isSelected: isSelected) { selectedCard in
-                    dependency.presenter.didSelectCard(card: selectedCard)
+                    dependency.presenter.didSelectCard(cardId: selectedCard.id)
                 }
             }
         }
@@ -106,7 +108,7 @@ struct CardListView: View, ModuleAssembler {
     
     /// 選択されたカードのポイント
     private var selectedCardPointView: some View {
-        let currentUserSelectStatus = viewModel.userSelectStatusList.first(where: { $0.user.id == dependency.currentUser.id })
+        let currentUserSelectStatus = viewModel.userSelectStatusList.first(where: { $0.user.id == dependency.currentUserId })
         let point = currentUserSelectStatus?.selectedCard?.point ?? ""
         return Text(point)
             .foregroundColor(.gray)
@@ -155,8 +157,9 @@ struct CardListView: View, ModuleAssembler {
     private var navigationForSettingView: some View {
         NavigationLink(isActive: $viewModel.willPushSettingView, destination: {
             if viewModel.willPushSettingView {
-                assembleSetting(room: dependency.room,
-                                currentUser: dependency.currentUser)
+                assembleSetting(roomId: dependency.roomId,
+                                currentUserId: dependency.currentUserId,
+                                cardPackageId: dependency.cardPackageId)
                 .onDisappear {
                     if !RoomAuthDataStore.shared.isUserLoggedIn() {
                         // ログアウトしている場合、ルート(=ひとつ前の画面)に遷移する
@@ -174,11 +177,11 @@ struct CardListView_Previews: PreviewProvider {
     static let selectedCardListView: CardListViewModel = {
         let viewModel = CardListViewModel()
         viewModel.userSelectStatusList = [
-            .init(id: 0,
+            .init(id: 1,
                   user: CardListView_Previews.me,
                   themeColor: .navy,
                   selectedCard: CardView_Previews.card1),
-            .init(id: 1,
+            .init(id: 2,
                   user: CardListView_Previews.user1,
                   themeColor: .indigo,
                   selectedCard: CardView_Previews.card2)
@@ -187,46 +190,49 @@ struct CardListView_Previews: PreviewProvider {
         return viewModel
     }()
 
-    static let me: User = .init(id: "0",
+    static let me: User = .init(id: "1",
                                 name: "ロイド フォージャ",
                                 currentRoomId: 0,
                                 selectedCardId: "")
 
-    static let user1: User = .init(id: "1",
+    static let user1: User = .init(id: "2",
                                    name: "ヨル フォージャ",
                                    currentRoomId: 0,
                                    selectedCardId: "")
 
-    static let user2: User = .init(id: "2",
+    static let user2: User = .init(id: "3",
                                    name: "アーニャ フォージャ",
                                    currentRoomId: 0,
                                    selectedCardId: "")
 
-    static let room1: Room = .init(id: 0,
+    static let room1: Room = .init(id: 1,
                                    userList: [me],
                                    cardPackage: .defaultCardPackage)
 
-    static let room2: Room = .init(id: 1,
+    static let room2: Room = .init(id: 2,
                                    userList: [me, user1],
                                    cardPackage: .defaultCardPackage)
 
     static var previews: some View {
         Group {
             CardListView(dependency: .init(presenter: CardListPresenter(),
-                                           room: room1,
-                                           currentUser: user1),
+                                           roomId: 1,
+                                           currentUserId: "1",
+                                           cardPackageId: "1"),
                          viewModel: .init())
             .previewDisplayName("カード一覧画面/ユーザーが自分のみ")
 
             CardListView(dependency: .init(presenter: CardListPresenter(),
-                                           room: room2,
-                                           currentUser: user1),
+                                           roomId: 1,
+                                           currentUserId: "1",
+                                           cardPackageId: "1"),
                          viewModel: .init())
             .previewDisplayName("カード一覧画面/ユーザーが2名以上")
 
             CardListView(dependency: .init(presenter: CardListPresenter(),
-                                           room: room2,
-                                           currentUser: user1),
+                                           roomId: 1,
+                                           currentUserId: "1",
+                                           cardPackageId: "1"),
                          viewModel: selectedCardListView)
             .previewDisplayName("選択済みカード一覧画面")
         }

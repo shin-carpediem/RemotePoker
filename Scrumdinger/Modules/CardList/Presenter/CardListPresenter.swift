@@ -5,8 +5,9 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     
     struct Dependency {
         var useCase: CardListUseCase
-        var room: Room
-        var currentUser: User
+        var roomId: Int
+        var currentUserId: String
+        var currentUserName: String
         weak var viewModel: CardListViewModel?
     }
     
@@ -25,7 +26,6 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     func viewDidResume() {
         Task {
             await requestRoom()
-            applyThemeColor()
             showHeaderTitle()
             updateUserSelectStatusList()
         }
@@ -35,10 +35,10 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     
     // MARK: - CardListPresentation
     
-    func didSelectCard(card: Card) {
+    func didSelectCard(cardId: String) {
         disableButton(true)
         showLoader(true)
-        let selectedCardDictionary: [String : String] = [dependency.currentUser.id: card.id]
+        let selectedCardDictionary: [String : String] = [dependency.currentUserId: cardId]
         dependency.useCase.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
     }
     
@@ -52,7 +52,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         disableButton(true)
         showLoader(true)
         // カレントユーザーの選択済みカードをリセットする
-        let selectedCardDictionary: [String: String] = [dependency.currentUser.id: ""]
+        let selectedCardDictionary: [String: String] = [dependency.currentUserId: ""]
         dependency.useCase.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
         hideSelectedCardList()
     }
@@ -93,25 +93,15 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     private func requestRoom() async {
         await dependency.useCase.requestRoom()
     }
-    
-    /// テーマカラーを適用する
-    private func applyThemeColor() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-
-            self.dependency.viewModel?.room?.cardPackage.themeColor = self.dependency.room.cardPackage.themeColor
-        }
-    }
-    
     /// ヘッダーテキストを表示する
     private func showHeaderTitle() {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
             guard let room = self.dependency.viewModel?.room else { return }
 
-            let currentUserName = self.dependency.currentUser.name
+            let currentUserName = self.dependency.currentUserName
             let otherUsersCount = room.userList.count - 1
-            let roomId = self.dependency.room.id
+            let roomId = self.dependency.roomId
             let only = otherUsersCount >= 1 ? "" : "only"
             let s = otherUsersCount >= 2 ? "s" : ""
             let otherUsersText = otherUsersCount >= 1 ? "and \(String(otherUsersCount)) guy\(s)" : ""
@@ -119,6 +109,8 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
             let headerTitle = "\(only) \(currentUserName) \(otherUsersText) in Room \(roomId)"
 
             self.dependency.viewModel?.headerTitle = headerTitle
+            self.disableButton(false)
+            self.showLoader(false)
         }
     }
     
@@ -186,6 +178,8 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     private func pushSettingView() {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel?.willPushSettingView = true
+            self?.disableButton(false)
+            self?.showLoader(false)
         }
     }
 }
@@ -221,7 +215,6 @@ extension CardListPresenter: RoomDelegate {
             // カードパッケージのテーマカラーが変更された時
             Task {
                 await requestRoom()
-                applyThemeColor()
             }
 
         case .added, .removed:

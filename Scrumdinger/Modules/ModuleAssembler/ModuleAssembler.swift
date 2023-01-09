@@ -3,16 +3,20 @@ protocol ModuleAssembler {
     func assmebleEnterRoom() -> EnterRoomView
     
     /// カードリスト画面をアセンブルする
-    /// - parameter room: ルーム
-    /// - parameter currentUser: カレントユーザー
-    func assembleCardList(room: Room, currentUser: User) -> CardListView
+    /// - parameter roomId: ルームID
+    /// - parameter currentUserId: カレントユーザーID
+    /// - parameter currentUserName: カレントユーザー名
+    /// - parameter cardPackageId: カードパッケージID
+    func assembleCardList(roomId: Int, currentUserId: String, currentUserName: String, cardPackageId: String) -> CardListView
     
     /// 設定画面をアセンブルする
-    /// - parameter room: ルーム
-    /// - parameter currentUser: カレントユーザー
-    func assembleSetting(room: Room, currentUser: User) -> SettingView
+    /// - parameter roomId: ルームID
+    /// - parameter currentUserId: カレントユーザーID
+    /// - parameter cardPackageId: カードパッケージID
+    func assembleSetting(roomId: Int, currentUserId: String, cardPackageId: String) -> SettingView
     
     /// テーマカラー選択画面をアセンブルする
-    /// - parameter room: ルーム
-    func assembleSelectThemeColor(room: Room) -> SelectThemeColorView
+    /// - parameter roomId: ルームID
+    /// - parameter cardPackageId: カードパッケージID
+    func assembleSelectThemeColor(roomId: Int, cardPackageId: String) -> SelectThemeColorView
 }
