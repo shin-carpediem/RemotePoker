@@ -37,17 +37,20 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     
     func didSelectCard(card: Card) {
         disableButton(true)
+        showLoader(true)
         let selectedCardDictionary: [String : String] = [dependency.currentUser.id: card.id]
         dependency.useCase.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
     }
     
     func didTapOpenSelectedCardListButton() {
         disableButton(true)
+        showLoader(true)
         showSelectedCardList()
     }
     
     func didTapResetSelectedCardListButton() {
         disableButton(true)
+        showLoader(true)
         // カレントユーザーの選択済みカードをリセットする
         let selectedCardDictionary: [String: String] = [dependency.currentUser.id: ""]
         dependency.useCase.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
@@ -63,20 +66,22 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     func outputRoom(_ room: Room) {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel?.room = room
+            self?.disableButton(false)
+            self?.showLoader(false)
         }
     }
     
     func outputSuccess(message: String) {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownBanner = true
             self?.dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
+            self?.dependency.viewModel?.isShownBanner = true
         }
     }
     
     func outputError(_ error: Error, message: String) {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownBanner = true
             self?.dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
+            self?.dependency.viewModel?.isShownBanner = true
         }
     }
     
@@ -87,13 +92,6 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     /// ルームを要求する
     private func requestRoom() async {
         await dependency.useCase.requestRoom()
-    }
-    
-    /// ボタンを無効にする
-    private func disableButton(_ disabled: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isButtonEnabled = !disabled
-        }
     }
     
     /// テーマカラーを適用する
@@ -145,6 +143,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
             
             self.dependency.viewModel?.userSelectStatusList = userSelectStatusList
             self.disableButton(false)
+            self.showLoader(false)
         }
     }
     
@@ -153,6 +152,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel?.isShownSelectedCardList = true
             self?.disableButton(false)
+            self?.showLoader(false)
         }
     }
     
@@ -161,6 +161,22 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel?.isShownSelectedCardList = false
             self?.disableButton(false)
+            self?.showLoader(false)
+        }
+    }
+    
+    
+    /// ボタンを無効にする
+    private func disableButton(_ disabled: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel?.isButtonEnabled = !disabled
+        }
+    }
+    
+    /// ローダーを表示する
+    private func showLoader(_ show: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel?.isShownLoader = show
         }
     }
     

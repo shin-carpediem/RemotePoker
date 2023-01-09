@@ -24,15 +24,19 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
     
     func didTapSelectThemeColorButton() {
         disableButton(true)
+        showLoader(true)
         pushSelectThemeColorView()
     }
     
     func didTapLeaveRoomButton() {
         Task {
             disableButton(true)
+            showLoader(true)
             LocalStorage.shared.currentRoomId = 0
             dependency.useCase.unsubscribeUser()
             await dependency.useCase.leaveRoom()
+            disableButton(false)
+            showLoader(false)
         }
     }
     
@@ -40,15 +44,15 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
     
     func outputSuccess(message: String) {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownBanner = true
             self?.dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
+            self?.dependency.viewModel?.isShownBanner = true
         }
     }
     
     func outputError(_ errror: Error, message: String) {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownBanner = true
             self?.dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
+            self?.dependency.viewModel?.isShownBanner = true
         }
     }
     
@@ -60,6 +64,13 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
     private func disableButton(_ disabled: Bool) {
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel?.isButtonEnabled = !disabled
+        }
+    }
+    
+    /// ローダーを表示する
+    private func showLoader(_ show: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel?.isShownLoader = show
         }
     }
     

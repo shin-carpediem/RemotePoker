@@ -5,9 +5,6 @@ protocol EnterRoomPresentation: Presentation {
     /// カレントルーム
     var currentRoom: Room? { get }
     
-    /// どのルームに入るか
-    var enterRoomAction: EnterRoomAction { get }
-    
     /// 入力フォームが有効か
     /// - returns: 有効か
     func isInputFormValid() -> Bool

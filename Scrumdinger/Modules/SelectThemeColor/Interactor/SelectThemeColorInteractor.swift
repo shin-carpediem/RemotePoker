@@ -20,6 +20,8 @@ final class SelectThemeColorInteractor: SelectThemeColorUseCase, DependencyInjec
                                                    themeColor: themeColor)
 
         dependency.output?.outputSelectedThemeColor(themeColor)
+        let message = "Switched theme color to \(themeColor)"
+        dependency.output?.outputSuccess(message: message)
     }
     
     // MARK: - Private

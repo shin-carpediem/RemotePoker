@@ -22,21 +22,18 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     
     func viewDidSuspend() {}
     
-    func viewDidStop() {}
-    
     // MARK: - EnterRoomPresentation
     
     var currentUser: User = .init(id: "", name: "", currentRoomId: 0, selectedCardId: "")
     
     var currentRoom: Room?
     
-    var enterRoomAction: EnterRoomAction = .enterNewRoom
-    
     func isInputFormValid() -> Bool {
-        guard let viewModel = dependency.viewModel else { return false }
-        guard !viewModel.inputName.isEmpty else { return false }
-        guard let inputInt = Int(viewModel.inputRoomId) else { return false }
-        return String(inputInt).count == 4
+        if let viewModel = dependency.viewModel, !viewModel.inputName.isEmpty, let inputInt = Int(viewModel.inputRoomId) {
+            return String(inputInt).count == 4
+        } else {
+            return false
+        }
     }
     
     func showInputInvalidAlert() {
@@ -105,15 +102,15 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     
     func outputSuccess(message: String) {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownBanner = true
             self?.dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
+            self?.dependency.viewModel?.isShownBanner = true
         }
     }
     
     func outputError(_ error: Error, message: String) {
         DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownBanner = true
             self?.dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
+            self?.dependency.viewModel?.isShownBanner = true
         }
     }
     
@@ -127,14 +124,19 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         set { LocalStorage.shared.currentRoomId = newValue }
     }
     
+    /// どのルームに入るか
+    private var enterRoomAction: EnterRoomAction = .enterNewRoom
+    
     /// ユーザーが、存在する既存のルーム(=カレントルーム)に存在するか
     private var isUserInCurrentRoom = false
     
     /// ユーザーに、存在するカレントルームがあるか確認する
     private func checkUserInCurrentRoom() async {
-        guard let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else { return }
-        // アプリバージョンが1.1.0以下のユーザーデータはFirestoreから削除されているため、カレントルームは存在しない
-        if appVersion == "1.0.0" || appVersion == "1.1.0" { return }
+        if let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String, appVersion == "1.0.0" || appVersion == "1.1.0" {
+            // アプリバージョンが1.1.0以下のユーザーデータはFirestoreから削除されているため、カレントルームは存在しない
+            isUserInCurrentRoom = false
+            return
+        }
         
         if currentRoomId == 0 {
             isUserInCurrentRoom = false
