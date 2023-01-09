@@ -1,7 +1,7 @@
 import Neumorphic
 import SwiftUI
 
-struct FormStyle: ViewModifier {
+struct InputFormStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding()

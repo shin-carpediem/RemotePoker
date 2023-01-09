@@ -79,13 +79,13 @@ struct EnterRoomView: View, ModuleAssembler {
     /// 入力項目/名前
     private var inputItemName: some View {
         TextField("Name", text: $viewModel.inputName)
-            .modifier(FormStyle())
+            .modifier(InputFormStyle())
     }
     
     /// 入力項目/ルームID
     private var inputRoomId: some View {
         TextField("Room ID", text: $viewModel.inputRoomId)
-            .modifier(FormStyle())
+            .modifier(InputFormStyle())
     }
     
     /// 送信ボタン
