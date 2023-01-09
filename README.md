@@ -14,7 +14,7 @@
 
 #### Dependent with App
 
-| Package Manager | package | Usage |
+| Package Manager | package Name | Usage |
 | :-- | :-- | :-- |
 | [swift-package-manager](https://github.com/apple/swift-package-manager) | [neumorphic](https://github.com/costachung/neumorphic) | Neumorphism UI |
 | | [LoaderUI](https://github.com/ninjaprox/LoaderUI) | Loading Animation |
