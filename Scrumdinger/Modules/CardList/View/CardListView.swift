@@ -95,18 +95,17 @@ struct CardListView: View, ModuleAssembler {
         }
     }
     
-    /// 選択済みカード一覧
+    /// 選択されたカード一覧
     private var selectedCardListView: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
-            ForEach(viewModel.userSelectStatusList) { userSelect in
-                OpenCardView(userSelectStatus: userSelect)
+            ForEach(viewModel.userSelectStatusList) { userSelectStatus in
+                OpenCardView(userSelectStatus: userSelectStatus)
             }
         }
     }
     
     /// 選択されたカードのポイント
     private var selectedCardPointView: some View {
-        // TODO: 2人目？の画面だけ際描画されなくなっている
         let currentUserSelectStatus = viewModel.userSelectStatusList.first(where: { $0.user.id == dependency.currentUser.id })
         let point = currentUserSelectStatus?.selectedCard?.point ?? ""
         return Text(point)

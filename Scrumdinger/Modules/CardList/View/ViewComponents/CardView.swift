@@ -24,14 +24,16 @@ struct CardView: View {
         Button(action: {
             selectCardHandler?(card)
         }) {
-            // TODO: ボーダーがつかない
             Text(card.point)
                 .frame(width: 150, height: 100)
                 .font(.system(size: 40, weight: .bold))
                 .foregroundColor(card.fontColor)
                 .background(card.outputBackgroundColor(color: themeColor))
-                .border(isSelected ? .orange : .clear)
                 .cornerRadius(10)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(isSelected ? .gray : .clear, lineWidth: 2)
+                }
         }
     }
 }
@@ -39,11 +41,11 @@ struct CardView: View {
 // MARK: - Preview
 
 struct CardView_Previews: PreviewProvider {
-    static let card1 = CardPackage.defaultCardList[0]
+    static let card1 = CardPackage.defaultCardList.first!
     
-    static let card2 = CardPackage.defaultCardList[6]
+    static let card2 = CardPackage.defaultCardList[Int(floor(CGFloat((card1.index + card3.index)) / 2))]
     
-    static let card3 = CardPackage.defaultCardList[10]
+    static let card3 = CardPackage.defaultCardList.last!
     
     static var previews: some View {
         Group {

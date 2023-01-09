@@ -52,7 +52,6 @@ struct OpenCardView: View {
 
 // MARK: - Preview
 
-// TODO: なぜか落ちる
 struct OpenCardView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
