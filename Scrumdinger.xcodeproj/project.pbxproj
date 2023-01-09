@@ -61,6 +61,7 @@
 		F5802D08293217D000955949 /* EnterRoomContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D07293217D000955949 /* EnterRoomContract.swift */; };
 		F5802D0B293218A800955949 /* CardListContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D0A293218A800955949 /* CardListContract.swift */; };
 		F588E30728BB8E2800C5CA9A /* Neumorphic in Frameworks */ = {isa = PBXBuildFile; productRef = F588E30628BB8E2800C5CA9A /* Neumorphic */; };
+		F5AFC1DA296BBCFD00A4FFCA /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1D9296BBCFD00A4FFCA /* Loader.swift */; };
 		F5B2FAD92944768600592363 /* SettingContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FAD82944768600592363 /* SettingContract.swift */; };
 		F5B2FADB294476BA00592363 /* SettingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FADA294476BA00592363 /* SettingPresenter.swift */; };
 		F5B2FADE2944773C00592363 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FADD2944773C00592363 /* SettingViewModel.swift */; };
@@ -150,6 +151,7 @@
 		F5802D0429320F1B00955949 /* ModuleAssembler+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModuleAssembler+Default.swift"; sourceTree = "<group>"; };
 		F5802D07293217D000955949 /* EnterRoomContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomContract.swift; sourceTree = "<group>"; };
 		F5802D0A293218A800955949 /* CardListContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListContract.swift; sourceTree = "<group>"; };
+		F5AFC1D9296BBCFD00A4FFCA /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		F5B2FAD82944768600592363 /* SettingContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContract.swift; sourceTree = "<group>"; };
 		F5B2FADA294476BA00592363 /* SettingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPresenter.swift; sourceTree = "<group>"; };
 		F5B2FADD2944773C00592363 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				F5E051672929B125006EA727 /* CardList */,
 				F50060F62944376D005923A7 /* Setting */,
 				F57C64152950A8A600CD55CD /* SelectThemeColor */,
+				F5AFC1DB296BBEBE00A4FFCA /* ViewComponents */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -443,6 +446,15 @@
 			path = Contract;
 			sourceTree = "<group>";
 		};
+		F5AFC1DB296BBEBE00A4FFCA /* ViewComponents */ = {
+			isa = PBXGroup;
+			children = (
+				F5AFC1D9296BBCFD00A4FFCA /* Loader.swift */,
+				F5150AF92968E042008ADAD6 /* NotificationBanner.swift */,
+			);
+			path = ViewComponents;
+			sourceTree = "<group>";
+		};
 		F5B2FAD62944766C00592363 /* Contract */ = {
 			isa = PBXGroup;
 			children = (
@@ -591,7 +603,6 @@
 				F5E0516F292BAFF4006EA727 /* Data */,
 				F5125F26292DF92700C822FE /* Modules */,
 				F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */,
-				F5150AF92968E042008ADAD6 /* NotificationBanner.swift */,
 				F5E917CE287114E900AE8421 /* Assets.xcassets */,
 				F571FA672896D137003531CE /* GoogleService-Info.plist */,
 				F5E917D0287114E900AE8421 /* Preview Content */,
@@ -799,6 +810,7 @@
 				F57C64212956BB7C00CD55CD /* SelectThemeColorViewModel.swift in Sources */,
 				F5B2FADB294476BA00592363 /* SettingPresenter.swift in Sources */,
 				F5802D0B293218A800955949 /* CardListContract.swift in Sources */,
+				F5AFC1DA296BBCFD00A4FFCA /* Loader.swift in Sources */,
 				F523669A2891E837005B1F65 /* CardListView.swift in Sources */,
 				F5802D0529320F1B00955949 /* ModuleAssembler+Default.swift in Sources */,
 				F57C642D295FF60600CD55CD /* SelectThemeColorInteractor.swift in Sources */,

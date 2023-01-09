@@ -1,4 +1,3 @@
-import LoaderUI
 import Neumorphic
 import SwiftUI
 
@@ -39,9 +38,7 @@ struct EnterRoomView: View, ModuleAssembler {
                 }
                 .padding(.horizontal, 40)
                 navigationForCardListView
-                if viewModel.isShownLoader {
-                    BallClipRotate()
-                }
+                if viewModel.isShownLoader { Loader() }
             }
         }
         .navigationTitle("RemotePoker")

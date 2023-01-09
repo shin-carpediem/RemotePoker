@@ -1,4 +1,3 @@
-import LoaderUI
 import Neumorphic
 import SwiftUI
 
@@ -55,9 +54,7 @@ struct CardListView: View, ModuleAssembler {
                 }
             }
             navigationForSettingView
-            if viewModel.isShownLoader {
-                BallClipRotate()
-            }
+            if viewModel.isShownLoader { Loader() }
         }
         .navigationTitle(viewModel.headerTitle)
         .navigationBarTitleDisplayMode(.inline)

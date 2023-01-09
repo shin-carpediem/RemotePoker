@@ -1,4 +1,3 @@
-import LoaderUI
 import Neumorphic
 import SwiftUI
 
@@ -37,9 +36,7 @@ struct SettingView: View, ModuleAssembler {
                 settingList
             }
             navigationForSelectThemeColorView
-            if viewModel.isShownLoader {
-                BallClipRotate()
-            }
+            if viewModel.isShownLoader { Loader() }
         }
         .navigationTitle("Setting")
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
