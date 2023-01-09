@@ -63,7 +63,7 @@
 		F588E30728BB8E2800C5CA9A /* Neumorphic in Frameworks */ = {isa = PBXBuildFile; productRef = F588E30628BB8E2800C5CA9A /* Neumorphic */; };
 		F5AFC1DA296BBCFD00A4FFCA /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1D9296BBCFD00A4FFCA /* Loader.swift */; };
 		F5AFC1DF296BC12200A4FFCA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1DE296BC12200A4FFCA /* Colors.swift */; };
-		F5AFC1E2296BC56500A4FFCA /* InputFormStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1E1296BC56500A4FFCA /* InputFormStyle.swift */; };
+		F5AFC1E5296BF22700A4FFCA /* InputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1E4296BF22700A4FFCA /* InputText.swift */; };
 		F5B2FAD92944768600592363 /* SettingContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FAD82944768600592363 /* SettingContract.swift */; };
 		F5B2FADB294476BA00592363 /* SettingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FADA294476BA00592363 /* SettingPresenter.swift */; };
 		F5B2FADE2944773C00592363 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FADD2944773C00592363 /* SettingViewModel.swift */; };
@@ -155,7 +155,7 @@
 		F5802D0A293218A800955949 /* CardListContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListContract.swift; sourceTree = "<group>"; };
 		F5AFC1D9296BBCFD00A4FFCA /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		F5AFC1DE296BC12200A4FFCA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		F5AFC1E1296BC56500A4FFCA /* InputFormStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFormStyle.swift; sourceTree = "<group>"; };
+		F5AFC1E4296BF22700A4FFCA /* InputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputText.swift; sourceTree = "<group>"; };
 		F5B2FAD82944768600592363 /* SettingContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContract.swift; sourceTree = "<group>"; };
 		F5B2FADA294476BA00592363 /* SettingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPresenter.swift; sourceTree = "<group>"; };
 		F5B2FADD2944773C00592363 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
@@ -270,7 +270,6 @@
 			isa = PBXGroup;
 			children = (
 				F5150AFC29694BB1008ADAD6 /* Overlay.swift */,
-				F5AFC1E1296BC56500A4FFCA /* InputFormStyle.swift */,
 			);
 			path = ViewModifier;
 			sourceTree = "<group>";
@@ -465,6 +464,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		F5AFC1E3296BF21800A4FFCA /* ViewComponents */ = {
+			isa = PBXGroup;
+			children = (
+				F5AFC1E4296BF22700A4FFCA /* InputText.swift */,
+			);
+			path = ViewComponents;
+			sourceTree = "<group>";
+		};
 		F5B2FAD62944766C00592363 /* Contract */ = {
 			isa = PBXGroup;
 			children = (
@@ -510,6 +517,7 @@
 		F5E051662929B116006EA727 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F5AFC1E3296BF21800A4FFCA /* ViewComponents */,
 				F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */,
 			);
 			path = View;
@@ -828,10 +836,10 @@
 				F523669A2891E837005B1F65 /* CardListView.swift in Sources */,
 				F5802D0529320F1B00955949 /* ModuleAssembler+Default.swift in Sources */,
 				F57C642D295FF60600CD55CD /* SelectThemeColorInteractor.swift in Sources */,
+				F5AFC1E5296BF22700A4FFCA /* InputText.swift in Sources */,
 				F5E05171292BB05F006EA727 /* RoomRepository.swift in Sources */,
 				F57C643A2963010E00CD55CD /* DependencyInjectable.swift in Sources */,
 				F5125F2E292E755600C822FE /* EnterRoomPresenter.swift in Sources */,
-				F5AFC1E2296BC56500A4FFCA /* InputFormStyle.swift in Sources */,
 				F525301429364D5200727472 /* EnterRoomViewModel.swift in Sources */,
 				F5B2FAE22949423200592363 /* CardListInteractor.swift in Sources */,
 				F57C641A2950A91000CD55CD /* SelectThemeColorContract.swift in Sources */,

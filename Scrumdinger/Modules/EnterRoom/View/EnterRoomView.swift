@@ -1,3 +1,4 @@
+import Neumorphic
 import SwiftUI
 
 struct EnterRoomView: View, ModuleAssembler {
@@ -71,21 +72,9 @@ struct EnterRoomView: View, ModuleAssembler {
     /// 入力フォーム
     private var inputField: some View {
         HStack(spacing: 14) {
-            inputItemName
-            inputRoomId
+            InputText(placeholder: "Name", text: $viewModel.inputName)
+            InputText(placeholder: "Room ID", text: $viewModel.inputRoomId)
         }
-    }
-    
-    /// 入力項目/名前
-    private var inputItemName: some View {
-        TextField("Name", text: $viewModel.inputName)
-            .modifier(InputFormStyle())
-    }
-    
-    /// 入力項目/ルームID
-    private var inputRoomId: some View {
-        TextField("Room ID", text: $viewModel.inputRoomId)
-            .modifier(InputFormStyle())
     }
     
     /// 送信ボタン
