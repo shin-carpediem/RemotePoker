@@ -3,14 +3,7 @@ protocol EnterRoomPresentation: Presentation {
     var currentUser: User { get }
     
     /// カレントルーム
-    var currentRoom: Room? { get }
-    
-    /// 入力フォームが有効か
-    /// - returns: 有効か
-    func isInputFormValid() -> Bool
-    
-    /// 入力内容が無効だと示すアラートを表示する
-    func showInputInvalidAlert()
+    var currentRoom: Room { get }
     
     /// 入室中のルームに入るボタンが押された
     func didTapEnterCurrentRoomButton()
@@ -19,9 +12,9 @@ protocol EnterRoomPresentation: Presentation {
     func didCancelEnterCurrentRoomButton()
     
     /// ルームに入るボタンが押された
-    /// - parameter userName: ユーザー名
-    /// - parameter roomId: ルームID:
-    func didTapEnterRoomButton(userName: String, roomId: Int)
+    /// - parameter inputUserName: 入力されたユーザー名
+    /// - parameter inputRoomId: 入力されたルームID
+    func didTapEnterRoomButton(inputUserName: String, inputRoomId: String)
 }
 
 protocol EnterRoomUseCase: AnyObject {
@@ -59,9 +52,6 @@ protocol EnterRoomInteractorOutput: AnyObject {
     
     /// 存在するカレントルームが ユーザーにあるかを出力する
     func outputIsUserInCurrentRoom(_ isIn: Bool)
-    
-    /// 入室中のルームに入るか促すアラートを出力する
-    func outputEnterCurrentRoomAlert()
     
     /// データ処理の成功を出力
     func outputSuccess(message: String)

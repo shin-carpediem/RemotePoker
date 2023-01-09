@@ -91,13 +91,8 @@ struct EnterRoomView: View, ModuleAssembler {
     /// 送信ボタン
     private var sendButton: some View {
         Button {
-            if !dependency.presenter.isInputFormValid() {
-                dependency.presenter.showInputInvalidAlert()
-            } else {
-                dependency.presenter.didTapEnterRoomButton(
-                    userName: viewModel.inputName,
-                    roomId: Int(viewModel.inputRoomId)!)
-            }
+            dependency.presenter.didTapEnterRoomButton(
+                inputUserName: viewModel.inputName, inputRoomId: viewModel.inputRoomId)
         } label: {
             Text("Enter")
                 .frame(width: 140, height: 20)
@@ -112,7 +107,7 @@ struct EnterRoomView: View, ModuleAssembler {
     private var navigationForCardListView: some View {
         NavigationLink(isActive: $viewModel.willPushCardListView, destination: {
             if viewModel.willPushCardListView {
-                assembleCardList(room: dependency.presenter.currentRoom!,
+                assembleCardList(room: dependency.presenter.currentRoom,
                                  currentUser: dependency.presenter.currentUser)
             } else { EmptyView() }
         }) { EmptyView() }

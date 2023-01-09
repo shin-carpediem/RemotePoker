@@ -26,23 +26,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     
     var currentUser: User = .init(id: "", name: "", currentRoomId: 0, selectedCardId: "")
     
-    var currentRoom: Room?
-    
-    func isInputFormValid() -> Bool {
-        if let viewModel = dependency.viewModel, !viewModel.inputName.isEmpty, let inputInt = Int(viewModel.inputRoomId) {
-            return String(inputInt).count == 4
-        } else {
-            return false
-        }
-    }
-    
-    func showInputInvalidAlert() {
-        // TODO: Actorで置き換える
-        // https://qiita.com/uhooi/items/1d2c94df69c75fcfbdbf
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownInputFormInvalidAlert = true
-        }
-    }
+    var currentRoom: Room = .init(id: 0, userList: [], cardPackage: .defaultCardPackage)
     
     func didTapEnterCurrentRoomButton() {
         Task {
@@ -60,15 +44,20 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         enterRoomAction = .enterOtherExistingRoom
     }
     
-    func didTapEnterRoomButton(userName: String, roomId: Int) {
+    func didTapEnterRoomButton(inputUserName: String, inputRoomId: String) {
         Task {
             disableButton(true)
             showLoader(true)
-            dependency.useCase.setupRoomRepository(roomId: roomId)
-            setupNewCurrentUser(userName: userName, roomId: roomId)
-            enterRoomAction = isUserInCurrentRoom ? .enterOtherExistingRoom : .enterNewRoom
-            await setupRoom(userName: currentUser.name, roomId: currentRoomId)
-            pushCardListView()
+            if !isInputFormValid() {
+                showInputInvalidAlert()
+            } else {
+                let roomId = Int(inputRoomId)!
+                dependency.useCase.setupRoomRepository(roomId: roomId)
+                setupNewCurrentUser(userName: inputUserName, roomId: roomId)
+                enterRoomAction = isUserInCurrentRoom ? .enterOtherExistingRoom : .enterNewRoom
+                await setupRoom(userName: currentUser.name, roomId: currentRoomId)
+                pushCardListView()
+            }
         }
     }
     
@@ -92,15 +81,9 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         showLoader(false)
     }
     
-    func outputEnterCurrentRoomAlert() {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownEnterCurrentRoomAlert = true
-            self?.disableButton(false)
-            self?.showLoader(false)
-        }
-    }
-    
     func outputSuccess(message: String) {
+        // TODO: Actorで置き換える
+        // https://qiita.com/uhooi/items/1d2c94df69c75fcfbdbf
         DispatchQueue.main.async { [weak self] in
             self?.dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
             self?.dependency.viewModel?.isShownBanner = true
@@ -145,6 +128,15 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         }
     }
     
+    /// 入力フォーム内容が有効か
+    private func isInputFormValid() -> Bool {
+        if let viewModel = dependency.viewModel, !viewModel.inputName.isEmpty, let inputInt = Int(viewModel.inputRoomId) {
+            return String(inputInt).count == 4
+        } else {
+            return false
+        }
+    }
+    
     /// 匿名ログインする
     private func login() {
         RoomAuthDataStore.shared.delegate = self
@@ -183,11 +175,29 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
             currentRoom = .init(id: roomId,
                                 userList: [currentUser],
                                 cardPackage: .defaultCardPackage)
-            await dependency.useCase.createRoom(room: currentRoom!)
-            dependency.useCase.setupRoomRepository(roomId: currentRoom!.id)
+            await dependency.useCase.createRoom(room: currentRoom)
+            dependency.useCase.setupRoomRepository(roomId: currentRoom.id)
         }
         
         await dependency.useCase.requestRoom(roomId: roomId)
+    }
+    
+    /// カレントルームに入るか促すアラートを表示する
+    private func showEnterCurrentRoomAlert() {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel?.isShownEnterCurrentRoomAlert = true
+            self?.disableButton(false)
+            self?.showLoader(false)
+        }
+    }
+    
+    /// フォームが無効だと示すアラートを表示する
+    private func showInputInvalidAlert() {
+        DispatchQueue.main.async { [weak self] in
+            self?.dependency.viewModel?.isShownInputFormInvalidAlert = true
+            self?.disableButton(false)
+            self?.showLoader(false)
+        }
     }
     
     /// ボタンを無効にする
@@ -229,12 +239,13 @@ extension EnterRoomPresenter: RoomAuthDelegate {
                 // ルームリポジトリにルームIDをセットする
                 dependency.useCase.setupRoomRepository(roomId: currentRoomId)
                 // カレントルームに入室するか促すアラートを表示する
-                outputEnterCurrentRoomAlert()
+                showEnterCurrentRoomAlert()
             }
         }
     }
     
     func whenFailedToLogin(error: RoomAuthError) {
-        outputError(error, message: "Failed to login. Please re-install app.")
+        let message = "Failed to login. Please re-install app."
+        outputError(error, message: message)
     }
 }
