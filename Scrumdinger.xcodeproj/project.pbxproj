@@ -249,14 +249,10 @@
 			children = (
 				F5802D0129320DDC00955949 /* ModuleAssembler */,
 				F57C6438296300F400CD55CD /* Protocols */,
-				F5E051692929B421006EA727 /* Model */,
-				F5150AFB29694B95008ADAD6 /* ViewModifier */,
 				F5E051682929B407006EA727 /* EnterRoom */,
 				F5E051672929B125006EA727 /* CardList */,
 				F50060F62944376D005923A7 /* Setting */,
 				F57C64152950A8A600CD55CD /* SelectThemeColor */,
-				F5AFC1DB296BBEBE00A4FFCA /* ViewComponents */,
-				F5AFC1E0296BC21500A4FFCA /* Resources */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -615,7 +611,11 @@
 			isa = PBXGroup;
 			children = (
 				F5E0516F292BAFF4006EA727 /* Data */,
+				F5E051692929B421006EA727 /* Model */,
 				F5125F26292DF92700C822FE /* Modules */,
+				F5150AFB29694B95008ADAD6 /* ViewModifier */,
+				F5AFC1DB296BBEBE00A4FFCA /* ViewComponents */,
+				F5AFC1E0296BC21500A4FFCA /* Resources */,
 				F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */,
 				F5E917CE287114E900AE8421 /* Assets.xcassets */,
 				F571FA672896D137003531CE /* GoogleService-Info.plist */,
