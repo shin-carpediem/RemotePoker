@@ -64,24 +64,24 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     // MARK: - CardListInteractorOutput
     
     func outputRoom(_ room: Room) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.room = room
-            self?.disableButton(false)
-            self?.showLoader(false)
+        Task { @MainActor in
+            dependency.viewModel?.room = room
+            disableButton(false)
+            showLoader(false)
         }
     }
     
     func outputSuccess(message: String) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
-            self?.dependency.viewModel?.isShownBanner = true
+        Task { @MainActor in
+            dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
+            dependency.viewModel?.isShownBanner = true
         }
     }
     
     func outputError(_ error: Error, message: String) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
-            self?.dependency.viewModel?.isShownBanner = true
+        Task { @MainActor in
+            dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
+            dependency.viewModel?.isShownBanner = true
         }
     }
     
@@ -95,30 +95,28 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     }
     /// ヘッダーテキストを表示する
     private func showHeaderTitle() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            guard let room = self.dependency.viewModel?.room else { return }
+        Task { @MainActor in
+            guard let room = dependency.viewModel?.room else { return }
 
-            let currentUserName = self.dependency.currentUserName
+            let currentUserName = dependency.currentUserName
             let otherUsersCount = room.userList.count - 1
-            let roomId = self.dependency.roomId
+            let roomId = dependency.roomId
             let only = otherUsersCount >= 1 ? "" : "only"
             let s = otherUsersCount >= 2 ? "s" : ""
             let otherUsersText = otherUsersCount >= 1 ? "and \(String(otherUsersCount)) guy\(s)" : ""
             
             let headerTitle = "\(only) \(currentUserName) \(otherUsersText) in Room \(roomId)"
 
-            self.dependency.viewModel?.headerTitle = headerTitle
-            self.disableButton(false)
-            self.showLoader(false)
+            dependency.viewModel?.headerTitle = headerTitle
+            disableButton(false)
+            showLoader(false)
         }
     }
     
     /// ユーザーの選択状況一覧を更新する
     private func updateUserSelectStatusList() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            guard let room = self.dependency.viewModel?.room else { return }
+        Task { @MainActor in
+            guard let room = dependency.viewModel?.room else { return }
 
             let userSelectStatusList: [UserSelectStatus] = room.userList.map { user in
                 let cardPackage = room.cardPackage
@@ -133,42 +131,42 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
                                         selectedCard: selectedCard)
             }
             
-            self.dependency.viewModel?.userSelectStatusList = userSelectStatusList
-            self.disableButton(false)
-            self.showLoader(false)
+            dependency.viewModel?.userSelectStatusList = userSelectStatusList
+            disableButton(false)
+            showLoader(false)
         }
     }
     
     /// 選択されたカード一覧を表示する
     private func showSelectedCardList() {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownSelectedCardList = true
-            self?.disableButton(false)
-            self?.showLoader(false)
+        Task { @MainActor in
+            dependency.viewModel?.isShownSelectedCardList = true
+            disableButton(false)
+            showLoader(false)
         }
     }
     
     /// 選択されたカード一覧を非表示にする
     private func hideSelectedCardList() {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownSelectedCardList = false
-            self?.disableButton(false)
-            self?.showLoader(false)
+        Task { @MainActor in
+            dependency.viewModel?.isShownSelectedCardList = false
+            disableButton(false)
+            showLoader(false)
         }
     }
     
     
     /// ボタンを無効にする
     private func disableButton(_ disabled: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isButtonEnabled = !disabled
+        Task { @MainActor in
+            dependency.viewModel?.isButtonEnabled = !disabled
         }
     }
     
     /// ローダーを表示する
     private func showLoader(_ show: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownLoader = show
+        Task { @MainActor in
+            dependency.viewModel?.isShownLoader = show
         }
     }
     
@@ -176,10 +174,10 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     
     /// 設定画面に遷移する
     private func pushSettingView() {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.willPushSettingView = true
-            self?.disableButton(false)
-            self?.showLoader(false)
+        Task { @MainActor in
+            dependency.viewModel?.willPushSettingView = true
+            disableButton(false)
+            showLoader(false)
         }
     }
 }

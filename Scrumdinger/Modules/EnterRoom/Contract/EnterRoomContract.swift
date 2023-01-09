@@ -18,7 +18,7 @@ protocol EnterRoomPresentation: Presentation {
 }
 
 protocol EnterRoomUseCase: AnyObject {
-    /// ルームリポジトリを扱えるようにする
+    /// ルームIDを必要とするルームリポジトリを有効にする
     /// - parameter roomId: ルームID
     func setupRoomRepository(roomId: Int)
     

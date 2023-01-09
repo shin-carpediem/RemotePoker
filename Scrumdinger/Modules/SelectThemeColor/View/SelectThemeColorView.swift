@@ -9,7 +9,6 @@ struct SelectThemeColorView: View {
         var presenter: SelectThemeColorPresentation
     }
     
-    /// View生成時
     init(dependency: Dependency, viewModel: SelectThemeColorViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
@@ -79,6 +78,7 @@ struct SelectThemeColorView: View {
                 label
             }
         }
+        .disabled(!viewModel.isButtonEnabled)
     }
 }
 

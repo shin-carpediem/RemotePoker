@@ -82,18 +82,16 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     }
     
     func outputSuccess(message: String) {
-        // TODO: Actorで置き換える
-        // https://qiita.com/uhooi/items/1d2c94df69c75fcfbdbf
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
-            self?.dependency.viewModel?.isShownBanner = true
+        Task { @MainActor in
+            dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
+            dependency.viewModel?.isShownBanner = true
         }
     }
     
     func outputError(_ error: Error, message: String) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
-            self?.dependency.viewModel?.isShownBanner = true
+        Task { @MainActor in
+            dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
+            dependency.viewModel?.isShownBanner = true
         }
     }
     
@@ -184,33 +182,33 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     
     /// カレントルームに入るか促すアラートを表示する
     private func showEnterCurrentRoomAlert() {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownEnterCurrentRoomAlert = true
-            self?.disableButton(false)
-            self?.showLoader(false)
+        Task { @MainActor in
+            dependency.viewModel?.isShownEnterCurrentRoomAlert = true
+            disableButton(false)
+            showLoader(false)
         }
     }
     
     /// フォームが無効だと示すアラートを表示する
     private func showInputInvalidAlert() {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownInputFormInvalidAlert = true
-            self?.disableButton(false)
-            self?.showLoader(false)
+        Task { @MainActor in
+            dependency.viewModel?.isShownInputFormInvalidAlert = true
+            disableButton(false)
+            showLoader(false)
         }
     }
     
     /// ボタンを無効にする
     private func disableButton(_ disabled: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isButtonEnabled = !disabled
+        Task { @MainActor in
+            dependency.viewModel?.isButtonEnabled = !disabled
         }
     }
     
     /// ローダーを表示する
     private func showLoader(_ show: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownLoader = show
+        Task { @MainActor in
+            dependency.viewModel?.isShownLoader = show
         }
     }
     
@@ -218,10 +216,10 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     
     /// カード一覧画面に遷移する
     private func pushCardListView() {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.willPushCardListView = true
-            self?.disableButton(false)
-            self?.showLoader(false)
+        Task { @MainActor in
+            dependency.viewModel?.willPushCardListView = true
+            disableButton(false)
+            showLoader(false)
         }
     }
 }

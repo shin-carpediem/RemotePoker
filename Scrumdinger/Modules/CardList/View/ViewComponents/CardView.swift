@@ -8,6 +8,9 @@ struct CardView: View {
     /// テーマカラー
     var themeColor: ThemeColor
     
+    /// 有効か
+    var isEnabled: Bool
+    
     /// 選択されているか
     var isSelected: Bool
     
@@ -37,6 +40,7 @@ struct CardView: View {
                 }
         }
         .softButtonStyle(RoundedRectangle(cornerRadius: 10))
+        .disabled(!isEnabled)
     }
 }
 
@@ -53,21 +57,25 @@ struct CardView_Previews: PreviewProvider {
         Group {
             CardView(card: card1,
                      themeColor: .bubblegum,
+                     isEnabled: true,
                      isSelected: false)
             .previewDisplayName("色/薄い")
             
             CardView(card: card2,
                      themeColor: .bubblegum,
+                     isEnabled: true,
                      isSelected: false)
             .previewDisplayName("色/中間")
 
             CardView(card: card3,
                      themeColor: .bubblegum,
+                     isEnabled: true,
                      isSelected: false)
             .previewDisplayName("色/濃い")
             
             CardView(card: card1,
                      themeColor: .bubblegum,
+                     isEnabled: true,
                      isSelected: true)
             .previewDisplayName("選択されている")
         }

@@ -13,7 +13,6 @@ struct CardListView: View, ModuleAssembler {
         var cardPackageId: String
     }
     
-    /// View生成時
     init(dependency: Dependency, viewModel: CardListViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
@@ -90,6 +89,7 @@ struct CardListView: View, ModuleAssembler {
                 let isSelected = card.id == viewModel.userSelectStatusList.first(where: { $0.user.id == dependency.currentUserId })?.selectedCard?.id
                 CardView(card: card,
                          themeColor: themeColor,
+                         isEnabled: viewModel.isButtonEnabled,
                          isSelected: isSelected) { selectedCard in
                     dependency.presenter.didSelectCard(cardId: selectedCard.id)
                 }
@@ -149,6 +149,7 @@ struct CardListView: View, ModuleAssembler {
         }
         .softButtonStyle(Circle())
         .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
+        .disabled(!viewModel.isButtonEnabled)
     }
     
     // MARK: - Router

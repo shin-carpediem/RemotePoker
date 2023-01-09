@@ -10,8 +10,14 @@ protocol SettingUseCase: AnyObject {
     /// ルームから退室する
     func leaveRoom() async
     
+    /// ルームIDを必要とするルームリポジトリを無効にする
+    func disposeRoomRepository()
+    
     /// ユーザーの購読を解除する
     func unsubscribeUser()
+    
+    /// カードパッケージの購読を解除する
+    func unsubscribeCardPackages()
 }
 
 protocol SettingInteractorOutput: AnyObject {

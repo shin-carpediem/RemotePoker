@@ -85,6 +85,7 @@ struct SettingView: View, ModuleAssembler {
                     .foregroundColor(.gray)
             }
         }
+        .disabled(!viewModel.isButtonEnabled)
     }
     
     // MARK: - Router

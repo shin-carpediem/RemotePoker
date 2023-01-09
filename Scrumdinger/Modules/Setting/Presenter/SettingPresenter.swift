@@ -31,8 +31,10 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
             disableButton(true)
             showLoader(true)
             LocalStorage.shared.currentRoomId = 0
-            dependency.useCase.unsubscribeUser()
             await dependency.useCase.leaveRoom()
+            dependency.useCase.unsubscribeUser()
+            dependency.useCase.unsubscribeCardPackages()
+            dependency.useCase.disposeRoomRepository()
             disableButton(false)
             showLoader(false)
         }
@@ -41,16 +43,16 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
     // MARK: - SettingInteractorOutput
     
     func outputSuccess(message: String) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
-            self?.dependency.viewModel?.isShownBanner = true
+        Task { @MainActor in
+            dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
+            dependency.viewModel?.isShownBanner = true
         }
     }
     
     func outputError(_ errror: Error, message: String) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
-            self?.dependency.viewModel?.isShownBanner = true
+        Task { @MainActor in
+            dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
+            dependency.viewModel?.isShownBanner = true
         }
     }
     
@@ -60,15 +62,15 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
     
     /// ボタンを無効にする
     private func disableButton(_ disabled: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isButtonEnabled = !disabled
+        Task { @MainActor in
+            dependency.viewModel?.isButtonEnabled = !disabled
         }
     }
     
     /// ローダーを表示する
     private func showLoader(_ show: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownLoader = show
+        Task { @MainActor in
+            dependency.viewModel?.isShownLoader = show
         }
     }
     
@@ -76,10 +78,10 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
     
     /// テーマカラー選択画面に遷移する
     private func pushSelectThemeColorView() {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.willPushSelectThemeColorView = true
-            self?.disableButton(false)
-            self?.showLoader(false)
+        Task { @MainActor in
+            dependency.viewModel?.willPushSelectThemeColorView = true
+            disableButton(false)
+            showLoader(false)
         }
     }
 }

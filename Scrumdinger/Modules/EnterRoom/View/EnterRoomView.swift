@@ -8,7 +8,6 @@ struct EnterRoomView: View, ModuleAssembler {
         var presenter: EnterRoomPresentation
     }
     
-    /// View生成時
     init(dependency: Dependency, viewModel: EnterRoomViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel

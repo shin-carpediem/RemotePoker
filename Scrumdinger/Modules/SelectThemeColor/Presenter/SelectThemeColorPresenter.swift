@@ -34,24 +34,24 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectTheme
     // MARK: - SelectThemeColorInteractorOutput
     
     func outputSelectedThemeColor(_ themeColor: ThemeColor) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.selectedThemeColor = themeColor
-            self?.disableButton(false)
-            self?.showLoader(false)
+        Task { @MainActor in
+            dependency.viewModel?.selectedThemeColor = themeColor
+            disableButton(false)
+            showLoader(false)
         }
     }
     
     func outputSuccess(message: String) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
-            self?.dependency.viewModel?.isShownBanner = true
+        Task { @MainActor in
+            dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
+            dependency.viewModel?.isShownBanner = true
         }
     }
     
     func outputError(_ error: Error, message: String) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
-            self?.dependency.viewModel?.isShownBanner = true
+        Task { @MainActor in
+            dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
+            dependency.viewModel?.isShownBanner = true
         }
     }
 
@@ -61,22 +61,22 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectTheme
     
     /// カラー一覧を表示する
     private func showColorList() {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.themeColorList = ThemeColor.allCases
+        Task { @MainActor in
+            dependency.viewModel?.themeColorList = ThemeColor.allCases
         }
     }
     
     /// ボタンを無効にする
     private func disableButton(_ disabled: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isButtonEnabled = !disabled
+        Task { @MainActor in
+            dependency.viewModel?.isButtonEnabled = !disabled
         }
     }
     
     /// ローダーを表示する
     private func showLoader(_ show: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            self?.dependency.viewModel?.isShownLoader = show
+        Task { @MainActor in
+            dependency.viewModel?.isShownLoader = show
         }
     }
 }

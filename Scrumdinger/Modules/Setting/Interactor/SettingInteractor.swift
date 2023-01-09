@@ -36,8 +36,16 @@ final class SettingInteractor: SettingUseCase, DependencyInjectable {
         }
     }
     
+    func disposeRoomRepository() {
+        dependency.roomRepository = RoomDataStore()
+    }
+    
     func unsubscribeUser() {
         dependency.roomRepository.unsubscribeUser()
+    }
+    
+    func unsubscribeCardPackages() {
+        dependency.roomRepository.unsubscribeCardPackage()
     }
     
     // MARK: - Private
