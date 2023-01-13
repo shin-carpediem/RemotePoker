@@ -45,19 +45,14 @@ struct SettingView: View, ModuleAssembler {
     /// コンテンツビュー
     private var contentView: some View {
         VStack(alignment: .leading) {
-            settingList
+            List {
+                selecteThemeColorButton
+                leaveButton
+            }
+            .listStyle(.insetGrouped)
         }
     }
-    
-    /// 設定リスト
-    private var settingList: some View {
-        List {
-            selecteThemeColorButton
-            leaveButton
-        }
-        .listStyle(.insetGrouped)
-    }
-    
+        
     /// テーマカラー選択ボタン
     private var selecteThemeColorButton: some View {
         Button(action: {

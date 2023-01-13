@@ -63,7 +63,7 @@ struct NotificationBanner: View {
         if let message {
             banner(message)
                 .padding()
-                .animation(.easeOut)
+                .animation(.easeOut, value: isShown)
                 .transition(.move(edge: .top).combined(with: .opacity))
                 .onTapGesture { withAnimation { hideBanner() } }
                 .onAppear { construct() }

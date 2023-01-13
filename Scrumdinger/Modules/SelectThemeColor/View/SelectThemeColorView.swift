@@ -42,18 +42,13 @@ struct SelectThemeColorView: View {
     /// コンテンツビュー
     private var contentView: some View {
         VStack(alignment: .leading) {
-            colorList
+            List(viewModel.themeColorList, id: \.self) { color in
+                colorCell(color)
+            }
+            .listStyle(.insetGrouped)
         }
     }
-    
-    /// カラー一覧
-    private var colorList: some View {
-        List(viewModel.themeColorList, id: \.self) { color in
-            colorCell(color)
-        }
-        .listStyle(.insetGrouped)
-    }
-    
+        
     /// カラーセル
     private func colorCell(_ color: ThemeColor) -> some View {
         let isThemeColor = color == viewModel.selectedThemeColor

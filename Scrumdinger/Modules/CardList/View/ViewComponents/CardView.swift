@@ -20,11 +20,6 @@ struct CardView: View {
     // MARK: - View
     
     var body: some View {
-        cardView
-    }
-    
-    /// カードビュー
-    private var cardView: some View {
         Button(action: {
             selectCardHandler?(card)
         }) {
