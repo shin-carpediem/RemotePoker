@@ -33,7 +33,7 @@ struct CardListView: View, ModuleAssembler {
     
     var body: some View {
         ZStack {
-            Colors.background
+            Colors.screenBackground
             contentView
             navigationForSettingView
             if viewModel.isShownLoader { Loader() }

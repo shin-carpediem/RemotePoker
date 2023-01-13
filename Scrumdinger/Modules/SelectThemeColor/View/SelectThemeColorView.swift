@@ -29,7 +29,7 @@ struct SelectThemeColorView: View {
     
     var body: some View {
         ZStack {
-            Colors.background
+            Colors.screenBackground
             contentView
             if viewModel.isShownLoader { Loader() }
         }

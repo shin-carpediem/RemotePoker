@@ -31,7 +31,7 @@ struct SettingView: View, ModuleAssembler {
     
     var body: some View {
         ZStack {
-            Colors.background
+            Colors.screenBackground
             contentView
             navigationForSelectThemeColorView
             if viewModel.isShownLoader { Loader() }
