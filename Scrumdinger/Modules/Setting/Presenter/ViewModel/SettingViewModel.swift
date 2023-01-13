@@ -1,6 +1,6 @@
 import Foundation
 
-class SettingViewModel: ObservableObject, ViewModel {
+final class SettingViewModel: ObservableObject, ViewModel {
     // MARK: - ViewModel
     
     @Published var isButtonEnabled = true

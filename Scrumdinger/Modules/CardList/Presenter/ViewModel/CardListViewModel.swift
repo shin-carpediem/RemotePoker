@@ -1,6 +1,6 @@
 import SwiftUI
 
-class CardListViewModel: ObservableObject, ViewModel {
+final class CardListViewModel: ObservableObject, ViewModel {
     /// ルーム
     @Published var room = Room(id: 0, userList: [], cardPackage: .defaultCardPackage)
     

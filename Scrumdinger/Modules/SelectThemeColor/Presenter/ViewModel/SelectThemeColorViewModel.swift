@@ -1,6 +1,6 @@
 import Foundation
 
-class SelectThemeColorViewModel: ObservableObject, ViewModel {
+final class SelectThemeColorViewModel: ObservableObject, ViewModel {
     /// テーマカラー一覧
     @Published var themeColorList: [ThemeColor] = []
     

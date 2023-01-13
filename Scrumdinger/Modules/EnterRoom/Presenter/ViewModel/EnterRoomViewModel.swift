@@ -1,6 +1,6 @@
 import SwiftUI
 
-class EnterRoomViewModel: ObservableObject, ViewModel {
+final class EnterRoomViewModel: ObservableObject, ViewModel {
     /// 入力フォーム/名前
     @Published var inputName = ""
     
