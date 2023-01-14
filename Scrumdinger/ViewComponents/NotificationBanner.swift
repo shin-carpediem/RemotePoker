@@ -50,10 +50,9 @@ struct NotificationBanner: View {
 
     /// View表示時
     private func construct() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            withAnimation {
-                hideBanner()
-            }
+        Task {
+            try? await Task.sleep(nanoseconds: 2_000_000_000)
+            hideBanner()
         }
     }
 
