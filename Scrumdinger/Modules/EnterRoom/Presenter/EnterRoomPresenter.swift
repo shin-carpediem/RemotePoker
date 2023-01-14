@@ -49,10 +49,10 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     func didTapEnterRoomButton(inputUserName: String, inputRoomId: String) {
         Task {
             await disableButton(true)
-            await showLoader(true)
-            if await !isInputFormValid() {
-                await showInputInvalidAlert()
+            if let viewModel = dependency.viewModel, await !viewModel.isInputFormValid {
+                await disableButton(false)
             } else {
+                await showLoader(true)
                 let roomId = Int(inputRoomId)!
                 dependency.useCase.setupRoomRepository(roomId: roomId)
                 setupNewCurrentUser(userName: inputUserName, roomId: roomId)
@@ -135,17 +135,6 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         }
     }
 
-    /// 入力フォーム内容が有効か
-    @MainActor private func isInputFormValid() -> Bool {
-        if let viewModel = dependency.viewModel, !viewModel.inputName.isEmpty,
-            let inputInt = Int(viewModel.inputRoomId)
-        {
-            return String(inputInt).count == 4
-        } else {
-            return false
-        }
-    }
-
     /// 匿名ログインする
     private func login() {
         RoomAuthDataStore.shared.delegate = self
@@ -196,13 +185,6 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     /// カレントルームに入るか促すアラートを表示する
     @MainActor private func showEnterCurrentRoomAlert() {
         dependency.viewModel?.isShownEnterCurrentRoomAlert = true
-        disableButton(false)
-        showLoader(false)
-    }
-
-    /// フォームが無効だと示すアラートを表示する
-    @MainActor private func showInputInvalidAlert() {
-        dependency.viewModel?.isShownInputFormInvalidAlert = true
         disableButton(false)
         showLoader(false)
     }

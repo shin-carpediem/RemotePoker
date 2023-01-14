@@ -40,12 +40,6 @@ struct EnterRoomView: View, ModuleAssembler {
             isPresented: $viewModel.isShownEnterCurrentRoomAlert,
             content: { enterCurrentRoomAlert }
         )
-        .alert(
-            "名前と4桁の数字が必要です",
-            isPresented: $viewModel.isShownInputFormInvalidAlert,
-            actions: {},
-            message: { Text("数字が新しければ新規のルームが作成されます") }
-        )
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
@@ -55,6 +49,7 @@ struct EnterRoomView: View, ModuleAssembler {
     private var contentView: some View {
         VStack(spacing: 28) {
             inputField
+            validatedMessage
             sendButton
                 .padding()
         }
@@ -81,6 +76,12 @@ struct EnterRoomView: View, ModuleAssembler {
             InputText(placeholder: "名前", text: $viewModel.inputName)
             InputText(placeholder: "ルームID", text: $viewModel.inputRoomId)
         }
+    }
+
+    private var validatedMessage: some View {
+        let textColor: Color = viewModel.isInputFormValid ? .green : .red
+        return Text(viewModel.inputFormvalidatedMessage)
+            .foregroundColor(textColor.opacity(0.7))
     }
 
     /// 送信ボタン

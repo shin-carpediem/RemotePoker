@@ -103,11 +103,9 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         let currentUserName = dependency.currentUserName
         let otherUsersCount = room.userList.count - 1
         let roomId = dependency.roomId
-        let only = otherUsersCount >= 1 ? "" : "only"
-        let s = otherUsersCount >= 2 ? "s" : ""
-        let otherUsersText = otherUsersCount >= 1 ? "and \(String(otherUsersCount)) guy\(s)" : ""
+        let otherUsersText = ( otherUsersCount >= 1 ? "と \(String(otherUsersCount))名" : "" )
 
-        let headerTitle = "\(only) \(currentUserName) \(otherUsersText) in Room \(roomId)"
+        let headerTitle = "\(currentUserName) \(otherUsersText)が ルームID\(roomId) に入室中"
 
         dependency.viewModel?.headerTitle = headerTitle
         disableButton(false)

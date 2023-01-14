@@ -12,7 +12,7 @@ protocol CardListObservable: ObservableObject, ViewModel {
 
     /// 選択済みカード一覧が公開されるか
     @MainActor var isShownSelectedCardList: Bool { get set }
-    
+
     /// 設定画面に遷移するか
     @MainActor var willPushSettingView: Bool { get set }
 }

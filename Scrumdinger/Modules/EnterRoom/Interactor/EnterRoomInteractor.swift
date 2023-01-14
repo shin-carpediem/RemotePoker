@@ -45,7 +45,7 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
         let result = await dependency.roomRepository.addUserToRoom(user: user)
         switch result {
         case .success(_):
-            let message = "Added you to the room."
+            let message = "ルームに追加されました"
             await dependency.output?.outputSuccess(message: message)
 
         case .failure(let error):
@@ -58,7 +58,7 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
         let result = await dependency.roomRepository.createRoom(room)
         switch result {
         case .success(_):
-            let message = "Created a new room."
+            let message = "新しいルームを作成しました"
             await dependency.output?.outputSuccess(message: message)
 
         case .failure(let error):

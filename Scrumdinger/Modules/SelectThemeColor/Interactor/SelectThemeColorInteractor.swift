@@ -22,7 +22,7 @@ final class SelectThemeColorInteractor: SelectThemeColorUseCase, DependencyInjec
                 themeColor: themeColor)
 
             dependency.output?.outputSelectedThemeColor(themeColor)
-            let message = "Switched theme color to \(themeColor)"
+            let message = "テーマカラーを\(themeColor)に変更しました"
             dependency.output?.outputSuccess(message: message)
         }
     }
