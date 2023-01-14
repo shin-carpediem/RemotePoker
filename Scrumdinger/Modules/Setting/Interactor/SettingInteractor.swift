@@ -27,12 +27,12 @@ final class SettingInteractor: SettingUseCase, DependencyInjectable {
                 await dependency.output?.outputSuccess(message: message)
 
             case .failure(let error):
-                let message = "Failed to leave the room."
+                let message = "ルームから退出できませんでした"
                 await dependency.output?.outputError(error, message: message)
             }
 
         case .failure(let error):
-            let message = "Failed to leave the room."
+            let message = "ルームから退出できませんでした"
             await dependency.output?.outputError(error, message: message)
         }
     }

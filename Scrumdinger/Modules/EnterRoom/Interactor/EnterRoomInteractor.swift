@@ -36,7 +36,7 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
             dependency.output?.outputRoom(room)
 
         case .failure(let error):
-            let message = "Failed to find the room."
+            let message = "ルームを見つけられませんでした"
             await dependency.output?.outputError(error, message: message)
         }
     }
@@ -49,7 +49,7 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
             await dependency.output?.outputSuccess(message: message)
 
         case .failure(let error):
-            let message = "Failed to add you to the room."
+            let message = "ルームに追加できませんでした"
             await dependency.output?.outputError(error, message: message)
         }
     }
@@ -58,11 +58,11 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
         let result = await dependency.roomRepository.createRoom(room)
         switch result {
         case .success(_):
-            let message = "新しいルームを作成しました"
+            let message = "新しいルームを作りました"
             await dependency.output?.outputSuccess(message: message)
 
         case .failure(let error):
-            let message = "Failed to create a new room."
+            let message = "新しいルームを作れませんでした"
             await dependency.output?.outputError(error, message: message)
         }
     }

@@ -46,7 +46,7 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
             await dependency.output?.outputRoom(room)
 
         case .failure(let error):
-            let message = "Failed to find room."
+            let message = "ルームを見つけられませんでした"
             await dependency.output?.outputError(error, message: message)
         }
     }

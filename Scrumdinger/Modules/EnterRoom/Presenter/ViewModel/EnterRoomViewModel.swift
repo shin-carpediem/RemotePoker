@@ -29,7 +29,7 @@ final class EnterRoomViewModel: EnterRoomObservable {
     @MainActor @Published private(set) var isInputFormValid = true
 
     @MainActor var inputFormvalidatedMessage: String {
-        isInputFormValid ? "数字が新しければ新しいルームが作成されます" : "名前と4桁の数字が必要です"
+        isInputFormValid ? "数字が新しければ新しいルームが作られます" : "名前と4桁の数字が必要です"
     }
 
     @MainActor @Published var isShownEnterCurrentRoomAlert = false
@@ -54,7 +54,8 @@ final class EnterRoomViewModel: EnterRoomObservable {
             .receive(on: DispatchQueue.main)
             .map { [weak self] inputName -> Bool in
                 if let self = self {
-                   return self.isInputNameValid(inputName) && self.isInputRoomIdValid(self.inputRoomId)
+                    return self.isInputNameValid(inputName)
+                        && self.isInputRoomIdValid(self.inputRoomId)
                 } else {
                     return false
                 }
@@ -69,7 +70,8 @@ final class EnterRoomViewModel: EnterRoomObservable {
             .receive(on: DispatchQueue.main)
             .map { [weak self] inputRoomId -> Bool in
                 if let self = self {
-                    return self.isInputNameValid(self.inputName) && self.isInputRoomIdValid(inputRoomId)
+                    return self.isInputNameValid(self.inputName)
+                        && self.isInputRoomIdValid(inputRoomId)
                 } else {
                     return false
                 }
@@ -77,12 +79,12 @@ final class EnterRoomViewModel: EnterRoomObservable {
             .assign(to: \.isInputFormValid, on: self)
             .store(in: &cancellables)
     }
-    
+
     /// 入力フォーム/名前が有効か
     private func isInputNameValid(_ name: String) -> Bool {
         !name.isEmpty
     }
-    
+
     /// 入力フォーム/ルームIDが有効か
     private func isInputRoomIdValid(_ roomId: String) -> Bool {
         if let inputInt = Int(roomId) {

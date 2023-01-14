@@ -230,7 +230,7 @@ extension EnterRoomPresenter: RoomAuthDelegate {
 
     func whenFailedToLogin(error: RoomAuthError) {
         Task {
-            let message = "Failed to login. Please re-install app."
+            let message = "ログインできませんでした。アプリを再インストールしてください"
             await outputError(error, message: message)
         }
     }

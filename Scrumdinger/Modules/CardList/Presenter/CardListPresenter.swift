@@ -103,7 +103,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         let currentUserName = dependency.currentUserName
         let otherUsersCount = room.userList.count - 1
         let roomId = dependency.roomId
-        let otherUsersText = ( otherUsersCount >= 1 ? "と \(String(otherUsersCount))名" : "" )
+        let otherUsersText = (otherUsersCount >= 1 ? "と \(String(otherUsersCount))名" : "")
 
         let headerTitle = "\(currentUserName) \(otherUsersText)が ルームID\(roomId) に入室中"
 
