@@ -44,7 +44,7 @@ struct NotificationBanner: View {
     }
 
     /// バナーを非表示にする
-    private func hideBanner() {
+    @MainActor private func hideBanner() {
         isShown = false
     }
 
@@ -52,7 +52,7 @@ struct NotificationBanner: View {
     private func construct() {
         Task {
             try? await Task.sleep(nanoseconds: 2_000_000_000)
-            hideBanner()
+            await hideBanner()
         }
     }
 
