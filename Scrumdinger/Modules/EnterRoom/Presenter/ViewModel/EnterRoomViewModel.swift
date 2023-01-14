@@ -43,41 +43,20 @@ final class EnterRoomViewModel: EnterRoomObservable {
     /// 入力フォーム内容を購読する
     private func subscribeInputForm() {
         Task {
-            await subscribeInputName()
-            await subscribeInputRoomId()
+            $inputName
+                .combineLatest($inputRoomId)
+                .receive(on: DispatchQueue.main)
+                .map { [weak self] inputName, inputRoomId -> Bool in
+                    if let self = self {
+                        return self.isInputNameValid(inputName)
+                            && self.isInputRoomIdValid(inputRoomId)
+                    } else {
+                        return false
+                    }
+                }
+                .assign(to: \.isInputFormValid, on: self)
+                .store(in: &cancellables)
         }
-    }
-
-    /// 入力フォーム/名前を購読する
-    @MainActor private func subscribeInputName() {
-        $inputName
-            .receive(on: DispatchQueue.main)
-            .map { [weak self] inputName -> Bool in
-                if let self = self {
-                    return self.isInputNameValid(inputName)
-                        && self.isInputRoomIdValid(self.inputRoomId)
-                } else {
-                    return false
-                }
-            }
-            .assign(to: \.isInputFormValid, on: self)
-            .store(in: &cancellables)
-    }
-
-    /// 入力フォーム/ルームIDを購読する
-    @MainActor private func subscribeInputRoomId() {
-        $inputRoomId
-            .receive(on: DispatchQueue.main)
-            .map { [weak self] inputRoomId -> Bool in
-                if let self = self {
-                    return self.isInputNameValid(self.inputName)
-                        && self.isInputRoomIdValid(inputRoomId)
-                } else {
-                    return false
-                }
-            }
-            .assign(to: \.isInputFormValid, on: self)
-            .store(in: &cancellables)
     }
 
     /// 入力フォーム/名前が有効か
