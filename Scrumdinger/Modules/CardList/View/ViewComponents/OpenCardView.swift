@@ -3,16 +3,16 @@ import SwiftUI
 struct OpenCardView: View {
     /// ユーザーのカード選択状況
     var userSelectStatus: UserSelectStatus
-    
+
     // MARK: - Private
-    
+
     /// 選択されたカード
     private var selectedCard: Card? {
         userSelectStatus.selectedCard
     }
-    
+
     // MARK: - View
-    
+
     var body: some View {
         VStack {
             userName
@@ -23,12 +23,12 @@ struct OpenCardView: View {
             }
         }
     }
-    
+
     /// ユーザーネーム
     private var userName: some View {
         Text(userSelectStatus.user.name)
     }
-    
+
     /// 選択されたカードビュー
     private var selectedCardView: some View {
         Text(selectedCard!.point)
@@ -38,7 +38,7 @@ struct OpenCardView: View {
             .background(selectedCard!.outputBackgroundColor(color: userSelectStatus.themeColor))
             .cornerRadius(10)
     }
-    
+
     /// ユーザーが未選択時のビュー
     private var userNotSelectedView: some View {
         Text("Not Selected Yet")
@@ -55,18 +55,22 @@ struct OpenCardView: View {
 struct OpenCardView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            OpenCardView(userSelectStatus: .init(
-                id: 0,
-                user: CardListView_Previews.me,
-                themeColor: .buttercup,
-                selectedCard: CardView_Previews.card2))
+            OpenCardView(
+                userSelectStatus: .init(
+                    id: 0,
+                    user: CardListView_Previews.me,
+                    themeColor: .buttercup,
+                    selectedCard: CardView_Previews.card2)
+            )
             .previewDisplayName("選択されたカード")
 
-            OpenCardView(userSelectStatus: .init(
-                id: 0,
-                user: CardListView_Previews.me,
-                themeColor: .buttercup,
-                selectedCard: nil))
+            OpenCardView(
+                userSelectStatus: .init(
+                    id: 0,
+                    user: CardListView_Previews.me,
+                    themeColor: .buttercup,
+                    selectedCard: nil)
+            )
             .previewDisplayName("カード未選択")
         }
         .padding()

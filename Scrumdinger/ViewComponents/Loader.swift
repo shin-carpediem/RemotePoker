@@ -3,11 +3,11 @@ import SwiftUI
 
 struct Loader: View {
     // MARK: - Private
-    
+
     private var loader = BallClipRotate()
-    
+
     // MARK: - View
-    
+
     var body: some View {
         loader
             .frame(width: 60, height: 60)

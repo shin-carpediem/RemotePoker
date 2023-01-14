@@ -1,7 +1,7 @@
 protocol SettingPresentation: Presentation {
     /// テーマカラー選択画面に遷移するボタンがタップされた
     func didTapSelectThemeColorButton()
-    
+
     /// ルームから退室するボタンがタップされた
     func didTapLeaveRoomButton()
 }
@@ -9,13 +9,13 @@ protocol SettingPresentation: Presentation {
 protocol SettingUseCase: AnyObject {
     /// ルームから退室する
     func leaveRoom() async
-    
+
     /// ルームIDを必要とするルームリポジトリを無効にする
     func disposeRoomRepository()
-    
+
     /// ユーザーの購読を解除する
     func unsubscribeUser()
-    
+
     /// カードパッケージの購読を解除する
     func unsubscribeCardPackages()
 }
@@ -23,7 +23,7 @@ protocol SettingUseCase: AnyObject {
 protocol SettingInteractorOutput: AnyObject {
     /// データ処理の成功を出力
     @MainActor func outputSuccess(message: String)
-    
+
     /// エラーを出力
     @MainActor func outputError(_ error: Error, message: String)
 }

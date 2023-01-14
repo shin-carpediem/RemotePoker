@@ -3,29 +3,29 @@ import SwiftUI
 
 struct EnterRoomView: View, ModuleAssembler {
     // MARK: - Dependency
-    
+
     struct Dependency {
         var presenter: EnterRoomPresentation
     }
-    
+
     init(dependency: Dependency, viewModel: EnterRoomViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
         self.dependency.presenter.viewDidLoad()
     }
-    
+
     // MARK: - Private
-    
+
     private var dependency: Dependency!
-    
+
     @ObservedObject private var viewModel: EnterRoomViewModel
-    
+
     private var notificationBanner: NotificationBanner {
         .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
     }
-    
+
     // MARK: - View
-    
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -36,17 +36,21 @@ struct EnterRoomView: View, ModuleAssembler {
             }
         }
         .navigationTitle("RemotePoker")
-        .alert(isPresented: $viewModel.isShownEnterCurrentRoomAlert,
-               content: { enterCurrentRoomAlert })
-        .alert("Name & 4 Digit Number Required",
-               isPresented: $viewModel.isShownInputFormInvalidAlert,
-               actions: {},
-               message: { Text("If the number is new, a new room will be created.") })
+        .alert(
+            isPresented: $viewModel.isShownEnterCurrentRoomAlert,
+            content: { enterCurrentRoomAlert }
+        )
+        .alert(
+            "Name & 4 Digit Number Required",
+            isPresented: $viewModel.isShownInputFormInvalidAlert,
+            actions: {},
+            message: { Text("If the number is new, a new room will be created.") }
+        )
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
-    
+
     /// コンテンツビュー
     private var contentView: some View {
         VStack(spacing: 28) {
@@ -56,18 +60,21 @@ struct EnterRoomView: View, ModuleAssembler {
         }
         .padding(.horizontal, 40)
     }
-    
+
     /// 入室中のルームに入るか促すアラート
     private var enterCurrentRoomAlert: Alert {
-        .init(title: Text("Enter Existing Room?"),
-              primaryButton: .default(Text("OK"), action: {
-            dependency.presenter.didTapEnterCurrentRoomButton()
-        }),
-              secondaryButton: .cancel {
-            dependency.presenter.didCancelEnterCurrentRoomButton()
-        })
+        .init(
+            title: Text("Enter Existing Room?"),
+            primaryButton: .default(
+                Text("OK"),
+                action: {
+                    dependency.presenter.didTapEnterCurrentRoomButton()
+                }),
+            secondaryButton: .cancel {
+                dependency.presenter.didCancelEnterCurrentRoomButton()
+            })
     }
-    
+
     /// 入力フォーム
     private var inputField: some View {
         HStack(spacing: 14) {
@@ -75,7 +82,7 @@ struct EnterRoomView: View, ModuleAssembler {
             InputText(placeholder: "Room ID", text: $viewModel.inputRoomId)
         }
     }
-    
+
     /// 送信ボタン
     private var sendButton: some View {
         Button {
@@ -88,19 +95,25 @@ struct EnterRoomView: View, ModuleAssembler {
         .softButtonStyle(RoundedRectangle(cornerRadius: 20))
         .disabled(!viewModel.isButtonEnabled)
     }
-    
+
     // MARK: - Router
-    
+
     /// カード一覧画面に遷移させるナビゲーション
     private var navigationForCardListView: some View {
-        NavigationLink(isActive: $viewModel.willPushCardListView, destination: {
-            if viewModel.willPushCardListView {
-                assembleCardList(roomId: dependency.presenter.currentRoom.id,
-                                 currentUserId: dependency.presenter.currentUser.id,
-                                 currentUserName: dependency.presenter.currentUser.name,
-                                 cardPackageId: dependency.presenter.currentRoom.cardPackage.id)
-            } else { EmptyView() }
-        }) { EmptyView() }
+        NavigationLink(
+            isActive: $viewModel.willPushCardListView,
+            destination: {
+                if viewModel.willPushCardListView {
+                    assembleCardList(
+                        roomId: dependency.presenter.currentRoom.id,
+                        currentUserId: dependency.presenter.currentUser.id,
+                        currentUserName: dependency.presenter.currentUser.name,
+                        cardPackageId: dependency.presenter.currentRoom.cardPackage.id)
+                } else {
+                    EmptyView()
+                }
+            }
+        ) { EmptyView() }
     }
 }
 
