@@ -1,18 +1,6 @@
 import SwiftUI
 
-actor EnterRoomViewModel: ObservableObject, ViewModel {
-    /// 入力フォーム/名前
-    @MainActor @Published var inputName = ""
-
-    /// 入力フォーム/ルームID
-    @MainActor @Published var inputRoomId = ""
-
-    /// 入室中のルームに入るか促すアラートを表示するか
-    @MainActor @Published var isShownEnterCurrentRoomAlert = false
-
-    /// 入力フォーム内容の無効を示すアラートを表示するか
-    @MainActor @Published var isShownInputFormInvalidAlert = false
-
+actor EnterRoomViewModel: EnterRoomObservable {
     // MARK: - ViewModel
 
     @MainActor @Published var isButtonEnabled = true
@@ -23,8 +11,15 @@ actor EnterRoomViewModel: ObservableObject, ViewModel {
 
     @MainActor @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
 
-    // MARK: - Router
+    // MARK: - EnterRoomObservable
 
-    /// カード一覧画面に遷移するか
+    @MainActor @Published var inputName = ""
+
+    @MainActor @Published var inputRoomId = ""
+
+    @MainActor @Published var isShownEnterCurrentRoomAlert = false
+
+    @MainActor @Published var isShownInputFormInvalidAlert = false
+
     @MainActor @Published var willPushCardListView = false
 }

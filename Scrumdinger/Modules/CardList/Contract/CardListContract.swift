@@ -1,3 +1,22 @@
+import Foundation
+
+protocol CardListObservable: ObservableObject, ViewModel {
+    /// ルーム
+    @MainActor var room: Room { get set }
+
+    /// ヘッダーテキスト
+    @MainActor var headerTitle: String { get set }
+
+    /// ユーザーのカード選択状況一覧
+    @MainActor var userSelectStatusList: [UserSelectStatus] { get set }
+
+    /// 選択済みカード一覧が公開されるか
+    @MainActor var isShownSelectedCardList: Bool { get set }
+    
+    /// 設定画面に遷移するか
+    @MainActor var willPushSettingView: Bool { get set }
+}
+
 protocol CardListPresentation: Presentation {
     /// カードを選択した
     /// - parameter cardId: カードID

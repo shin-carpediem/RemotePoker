@@ -1,3 +1,10 @@
+import Foundation
+
+protocol SettingObservable: ObservableObject, ViewModel {
+    /// テーマカラー選択画面に遷移するか
+    @MainActor var willPushSelectThemeColorView: Bool { get set }
+}
+
 protocol SettingPresentation: Presentation {
     /// テーマカラー選択画面に遷移するボタンがタップされた
     func didTapSelectThemeColorButton()

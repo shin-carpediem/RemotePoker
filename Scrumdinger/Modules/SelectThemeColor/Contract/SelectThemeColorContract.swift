@@ -1,3 +1,13 @@
+import Foundation
+
+protocol SelectThemeColorObservable: ObservableObject, ViewModel {
+    /// テーマカラー一覧
+    @MainActor var themeColorList: [ThemeColor] { get set }
+
+    /// 選択されたテーマカラー
+    @MainActor var selectedThemeColor: ThemeColor? { get set }
+}
+
 protocol SelectThemeColorPresentation: Presentation {
     /// カラーをタップした
     /// - parameter color: 選択したカラー

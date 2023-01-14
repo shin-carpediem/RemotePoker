@@ -1,3 +1,22 @@
+import Foundation
+
+protocol EnterRoomObservable: ObservableObject, ViewModel {
+    /// 入力フォーム/名前
+    @MainActor var inputName: String { get set }
+
+    /// 入力フォーム/ルームID
+    @MainActor var inputRoomId: String { get set }
+
+    /// 入室中のルームに入るか促すアラートを表示するか
+    @MainActor var isShownEnterCurrentRoomAlert: Bool { get set }
+
+    /// 入力フォーム内容の無効を示すアラートを表示するか
+    @MainActor var isShownInputFormInvalidAlert: Bool { get set }
+
+    /// カード一覧画面に遷移するか
+    @MainActor var willPushCardListView: Bool { get set }
+}
+
 protocol EnterRoomPresentation: Presentation {
     /// カレントユーザー
     var currentUser: User { get }

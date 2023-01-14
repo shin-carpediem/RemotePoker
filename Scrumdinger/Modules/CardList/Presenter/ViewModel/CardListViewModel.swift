@@ -1,18 +1,6 @@
 import SwiftUI
 
-actor CardListViewModel: ObservableObject, ViewModel {
-    /// ルーム
-    @MainActor @Published var room = Room(id: 0, userList: [], cardPackage: .defaultCardPackage)
-
-    /// ヘッダーテキスト
-    @MainActor @Published var headerTitle = ""
-
-    /// ユーザーのカード選択状況一覧
-    @MainActor @Published var userSelectStatusList: [UserSelectStatus] = []
-
-    /// 選択済みカード一覧が公開されるか
-    @MainActor @Published var isShownSelectedCardList = false
-
+actor CardListViewModel: CardListObservable {
     // MARK: - ViewModel
 
     @MainActor @Published var isButtonEnabled = true
@@ -23,9 +11,16 @@ actor CardListViewModel: ObservableObject, ViewModel {
 
     @MainActor @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
 
-    // MARK: - Router
+    // MARK: - CardListObservable
 
-    /// 設定画面に遷移するか
+    @MainActor @Published var room = Room(id: 0, userList: [], cardPackage: .defaultCardPackage)
+
+    @MainActor @Published var headerTitle = ""
+
+    @MainActor @Published var userSelectStatusList: [UserSelectStatus] = []
+
+    @MainActor @Published var isShownSelectedCardList = false
+
     @MainActor @Published var willPushSettingView = false
 }
 

@@ -1,12 +1,6 @@
 import Foundation
 
-actor SelectThemeColorViewModel: ObservableObject, ViewModel {
-    /// テーマカラー一覧
-    @MainActor @Published var themeColorList: [ThemeColor] = []
-
-    /// 選択されたテーマカラー
-    @MainActor @Published var selectedThemeColor: ThemeColor?
-
+actor SelectThemeColorViewModel: SelectThemeColorObservable {
     // MARK: - ViewModel
 
     @MainActor @Published var isButtonEnabled = true
@@ -16,4 +10,10 @@ actor SelectThemeColorViewModel: ObservableObject, ViewModel {
     @MainActor @Published var isShownBanner = false
 
     @MainActor @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
+    
+    // MARK: - SelectThemeColorObservable
+    
+    @MainActor @Published var themeColorList: [ThemeColor] = []
+
+    @MainActor @Published var selectedThemeColor: ThemeColor?
 }
