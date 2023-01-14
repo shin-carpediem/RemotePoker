@@ -1,18 +1,18 @@
 import Foundation
 
-final class SettingViewModel: ObservableObject, ViewModel {
+actor SettingViewModel: ObservableObject, ViewModel {
     // MARK: - ViewModel
     
-    @Published var isButtonEnabled = true
+    @MainActor @Published var isButtonEnabled = true
     
-    @Published var isShownLoader = false
+    @MainActor @Published var isShownLoader = false
     
-    @Published var isShownBanner = false
+    @MainActor @Published var isShownBanner = false
     
-    @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
+    @MainActor @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
     
     // MARK: - Router
     
     /// テーマカラー選択画面に遷移するか
-    @Published var willPushSelectThemeColorView = false
+    @MainActor @Published var willPushSelectThemeColorView = false
 }

@@ -30,13 +30,13 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     
     func didTapEnterCurrentRoomButton() {
         Task {
-            disableButton(true)
-            showLoader(true)
+            await disableButton(true)
+            await showLoader(true)
             dependency.useCase.setupRoomRepository(roomId: currentRoomId)
             setupExistingCurrentUser()
             enterRoomAction = .enterCurrentRoom
             await setupRoom(userName: currentUser.name, roomId: currentRoomId)
-            pushCardListView()
+            await pushCardListView()
         }
     }
     
@@ -46,10 +46,10 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     
     func didTapEnterRoomButton(inputUserName: String, inputRoomId: String) {
         Task {
-            disableButton(true)
-            showLoader(true)
-            if !isInputFormValid() {
-                showInputInvalidAlert()
+            await disableButton(true)
+            await showLoader(true)
+            if await !isInputFormValid() {
+                await showInputInvalidAlert()
             } else {
                 let roomId = Int(inputRoomId)!
                 dependency.useCase.setupRoomRepository(roomId: roomId)
@@ -57,7 +57,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
                 await dependency.useCase.checkRoomExist(roomId: roomId)
                 enterRoomAction = .enterOtherRoom(isNew: !roomExist)
                 await setupRoom(userName: currentUser.name, roomId: currentRoomId)
-                pushCardListView()
+                await pushCardListView()
             }
         }
     }
@@ -65,35 +65,37 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     // MARK: - EnterRoomInteractorOutput
     
     func outputUser(_ user: User) {
-        currentUser = user
-        disableButton(false)
-        showLoader(false)
+        Task {
+            currentUser = user
+            await disableButton(false)
+            await showLoader(false)
+        }
     }
     
     func outputRoom(_ room: Room) {
-        currentRoom = room
-        disableButton(false)
-        showLoader(false)
+        Task {
+            currentRoom = room
+            await disableButton(false)
+            await showLoader(false)
+        }
     }
     
     func outputRoomExist(_ exist: Bool) {
-        roomExist = exist
-        disableButton(false)
-        showLoader(false)
-    }
-    
-    func outputSuccess(message: String) {
-        Task { @MainActor in
-            dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
-            dependency.viewModel?.isShownBanner = true
+        Task {
+            roomExist = exist
+            await disableButton(false)
+            await showLoader(false)
         }
     }
     
-    func outputError(_ error: Error, message: String) {
-        Task { @MainActor in
-            dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
-            dependency.viewModel?.isShownBanner = true
-        }
+    @MainActor func outputSuccess(message: String) {
+        dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
+        dependency.viewModel?.isShownBanner = true
+    }
+    
+    @MainActor func outputError(_ error: Error, message: String) {
+        dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
+        dependency.viewModel?.isShownBanner = true
     }
     
     // MARK: - Private
@@ -130,7 +132,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     }
     
     /// 入力フォーム内容が有効か
-    private func isInputFormValid() -> Bool {
+    @MainActor private func isInputFormValid() -> Bool {
         if let viewModel = dependency.viewModel, !viewModel.inputName.isEmpty, let inputInt = Int(viewModel.inputRoomId) {
             return String(inputInt).count == 4
         } else {
@@ -184,46 +186,36 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     }
     
     /// カレントルームに入るか促すアラートを表示する
-    private func showEnterCurrentRoomAlert() {
-        Task { @MainActor in
-            dependency.viewModel?.isShownEnterCurrentRoomAlert = true
-            disableButton(false)
-            showLoader(false)
-        }
+    @MainActor private func showEnterCurrentRoomAlert() {
+        dependency.viewModel?.isShownEnterCurrentRoomAlert = true
+        disableButton(false)
+        showLoader(false)
     }
     
     /// フォームが無効だと示すアラートを表示する
-    private func showInputInvalidAlert() {
-        Task { @MainActor in
-            dependency.viewModel?.isShownInputFormInvalidAlert = true
-            disableButton(false)
-            showLoader(false)
-        }
+    @MainActor private func showInputInvalidAlert() {
+        dependency.viewModel?.isShownInputFormInvalidAlert = true
+        disableButton(false)
+        showLoader(false)
     }
     
     /// ボタンを無効にする
-    private func disableButton(_ disabled: Bool) {
-        Task { @MainActor in
-            dependency.viewModel?.isButtonEnabled = !disabled
-        }
+    @MainActor private func disableButton(_ disabled: Bool) {
+        dependency.viewModel?.isButtonEnabled = !disabled
     }
     
     /// ローダーを表示する
-    private func showLoader(_ show: Bool) {
-        Task { @MainActor in
-            dependency.viewModel?.isShownLoader = show
-        }
+    @MainActor private func showLoader(_ show: Bool) {
+        dependency.viewModel?.isShownLoader = show
     }
     
     // MARK: - Router
     
     /// カード一覧画面に遷移する
-    private func pushCardListView() {
-        Task { @MainActor in
-            dependency.viewModel?.willPushCardListView = true
-            disableButton(false)
-            showLoader(false)
-        }
+    @MainActor private func pushCardListView() {
+        dependency.viewModel?.willPushCardListView = true
+        disableButton(false)
+        showLoader(false)
     }
 }
 
@@ -241,13 +233,15 @@ extension EnterRoomPresenter: RoomAuthDelegate {
                 // ルームリポジトリにルームIDをセットする
                 dependency.useCase.setupRoomRepository(roomId: currentRoomId)
                 // カレントルームに入室するか促すアラートを表示する
-                showEnterCurrentRoomAlert()
+                await showEnterCurrentRoomAlert()
             }
         }
     }
     
     func whenFailedToLogin(error: RoomAuthError) {
-        let message = "Failed to login. Please re-install app."
-        outputError(error, message: message)
+        Task {
+            let message = "Failed to login. Please re-install app."
+            await outputError(error, message: message)
+        }
     }
 }

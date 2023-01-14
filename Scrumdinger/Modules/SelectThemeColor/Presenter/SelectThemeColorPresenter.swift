@@ -16,11 +16,15 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectTheme
     // MARK: - Presentation
     
     func viewDidLoad() {
-        showColorList()
+        Task {
+           await showColorList()
+        }
     }
     
     func viewDidResume() {
-        showColorList()
+        Task {
+           await showColorList()
+        }
     }
     
     func viewDidSuspend() {}
@@ -33,26 +37,20 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectTheme
     
     // MARK: - SelectThemeColorInteractorOutput
     
-    func outputSelectedThemeColor(_ themeColor: ThemeColor) {
-        Task { @MainActor in
-            dependency.viewModel?.selectedThemeColor = themeColor
-            disableButton(false)
-            showLoader(false)
-        }
+    @MainActor func outputSelectedThemeColor(_ themeColor: ThemeColor) {
+        dependency.viewModel?.selectedThemeColor = themeColor
+        disableButton(false)
+        showLoader(false)
     }
     
-    func outputSuccess(message: String) {
-        Task { @MainActor in
-            dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
-            dependency.viewModel?.isShownBanner = true
-        }
+    @MainActor func outputSuccess(message: String) {
+        dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
+        dependency.viewModel?.isShownBanner = true
     }
     
-    func outputError(_ error: Error, message: String) {
-        Task { @MainActor in
-            dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
-            dependency.viewModel?.isShownBanner = true
-        }
+    @MainActor func outputError(_ error: Error, message: String) {
+        dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
+        dependency.viewModel?.isShownBanner = true
     }
 
     // MARK: - Private
@@ -60,23 +58,17 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation, SelectTheme
     private var dependency: Dependency!
     
     /// カラー一覧を表示する
-    private func showColorList() {
-        Task { @MainActor in
-            dependency.viewModel?.themeColorList = ThemeColor.allCases
-        }
+    @MainActor private func showColorList() {
+        dependency.viewModel?.themeColorList = ThemeColor.allCases
     }
     
     /// ボタンを無効にする
-    private func disableButton(_ disabled: Bool) {
-        Task { @MainActor in
-            dependency.viewModel?.isButtonEnabled = !disabled
-        }
+    @MainActor private func disableButton(_ disabled: Bool) {
+        dependency.viewModel?.isButtonEnabled = !disabled
     }
     
     /// ローダーを表示する
-    private func showLoader(_ show: Bool) {
-        Task { @MainActor in
-            dependency.viewModel?.isShownLoader = show
-        }
+    @MainActor private func showLoader(_ show: Bool) {
+        dependency.viewModel?.isShownLoader = show
     }
 }

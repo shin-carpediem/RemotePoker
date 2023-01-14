@@ -12,11 +12,11 @@ protocol SelectThemeColorUseCase: AnyObject {
 
 protocol SelectThemeColorInteractorOutput: AnyObject {
     /// 選択せれたテーマカラーを出力
-    func outputSelectedThemeColor(_ themeColor: ThemeColor)
+    @MainActor func outputSelectedThemeColor(_ themeColor: ThemeColor)
     
     /// データ処理の成功を出力
-    func outputSuccess(message: String)
+    @MainActor func outputSuccess(message: String)
     
     /// エラーを出力
-    func outputError(_ error: Error, message: String)
+    @MainActor func outputError(_ error: Error, message: String)
 }

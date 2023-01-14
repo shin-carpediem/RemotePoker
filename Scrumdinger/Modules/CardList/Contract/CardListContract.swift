@@ -39,11 +39,11 @@ protocol CardListUseCase: AnyObject {
 
 protocol CardListInteractorOutput: AnyObject {
     /// ルームを出力する
-    func outputRoom(_ room: Room)
+    @MainActor func outputRoom(_ room: Room)
     
     /// データ処理の成功を出力
-    func outputSuccess(message: String)
+    @MainActor func outputSuccess(message: String)
     
     /// エラーを出力
-    func outputError(_ error: Error, message: String)
+    @MainActor func outputError(_ error: Error, message: String)
 }

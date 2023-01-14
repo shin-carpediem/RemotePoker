@@ -54,8 +54,8 @@ protocol EnterRoomInteractorOutput: AnyObject {
     func outputRoomExist(_ exist: Bool)
     
     /// データ処理の成功を出力
-    func outputSuccess(message: String)
+    @MainActor func outputSuccess(message: String)
     
     /// エラーを出力
-    func outputError(_ error: Error, message: String)
+    @MainActor func outputError(_ error: Error, message: String)
 }

@@ -42,11 +42,11 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
         let result = await dependency.roomRepository.fetchRoom()
         switch result {
         case .success(let room):
-            dependency.output?.outputRoom(room)
+            await dependency.output?.outputRoom(room)
         
         case .failure(let error):
             let message = "Failed to find room."
-            dependency.output?.outputError(error, message: message)
+            await dependency.output?.outputError(error, message: message)
         }
     }
     

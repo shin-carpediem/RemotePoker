@@ -23,16 +23,16 @@ final class SettingInteractor: SettingUseCase, DependencyInjectable {
             switch logoutResult {
             case .success(_):
                 let message = "Left the room."
-                dependency.output?.outputSuccess(message: message)
+                await dependency.output?.outputSuccess(message: message)
                 
             case .failure(let error):
                 let message = "Failed to leave the room."
-                dependency.output?.outputError(error, message: message)
+                await dependency.output?.outputError(error, message: message)
             }
             
         case .failure(let error):
             let message = "Failed to leave the room."
-            dependency.output?.outputError(error, message: message)
+            await dependency.output?.outputError(error, message: message)
         }
     }
     
