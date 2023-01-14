@@ -808,10 +808,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${BUILD_DIR}/COPY_FRAMEWORKS_DUMMY_OUTPUT",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n\n# Xcode 14から、Output Filesがない場合も空ファイルを生成してパス指定するか、\n# Based on dependency analysis のチェックを外す必要があるので、\n# ワークアラウンドとして、ビルド時に生成されるファイル内に空ファイルを生成する事で対応\ntouch ${BUILD_DIR}/COPY_FRAMEWORKS_DUMMY_OUTPUT\n";
 		};
 		F5F277AB2972744F00166F88 /* Run swift-format */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -826,10 +827,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${BUILD_DIR}/RUN_SWIFT_FORMAT_DUMMY_OUTPUT",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd /Users/aokishinichiro/develop/Scrumdinger\nswift-format -r . -i\n";
+			shellScript = "USERNAME = $(whoami)\ncd /Users/USERNAME/develop/Scrumdinger\nswift-format -r . -i\n\n# Xcode 14から、Output Filesがない場合も空ファイルを生成してパス指定するか、\n# Based on dependency analysis のチェックを外す必要があるので、\n# ワークアラウンドとして、ビルド時に生成されるファイル内に空ファイルを生成する事で対応\ntouch ${BUILD_DIR}/RUN_SWIFT_FORMAT_DUMMY_OUTPUT\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
