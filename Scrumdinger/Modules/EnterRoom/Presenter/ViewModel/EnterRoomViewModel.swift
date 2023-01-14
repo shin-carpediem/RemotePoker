@@ -38,7 +38,7 @@ final class EnterRoomViewModel: EnterRoomObservable {
 
     // MARK: - Private
 
-    private var cancellables: [AnyCancellable] = []
+    private var subscriptions: Set<AnyCancellable> = []
 
     /// 入力フォーム内容を購読する
     private func subscribeInputForm() {
@@ -55,7 +55,7 @@ final class EnterRoomViewModel: EnterRoomObservable {
                     }
                 }
                 .assign(to: \.isInputFormValid, on: self)
-                .store(in: &cancellables)
+                .store(in: &subscriptions)
         }
     }
 
@@ -75,8 +75,8 @@ final class EnterRoomViewModel: EnterRoomObservable {
 
     /// 入力フォーム内容の購読を解除する
     private func unsubscribeInputForm() {
-        cancellables.forEach { cancellable in
-            cancellable.cancel()
+        subscriptions.forEach { subscription in
+            subscription.cancel()
         }
     }
 }

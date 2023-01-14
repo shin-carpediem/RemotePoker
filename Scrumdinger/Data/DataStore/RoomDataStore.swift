@@ -157,32 +157,6 @@ final class RoomDataStore: RoomRepository {
         }
     }
 
-    func subscribeCardPackage() {
-        guard let firestoreRef = firestoreRef else { fatalError() }
-
-        cardPackagesListener = firestoreRef.cardPackagesQuery.addSnapshotListener {
-            querySnapshot, error in
-            querySnapshot?.documentChanges.forEach { [weak self] diff in
-                var action: CardPackageAction
-                if diff.type == .added {
-                    action = .added
-                } else if diff.type == .modified {
-                    action = .modified
-                } else if diff.type == .removed {
-                    action = .removed
-                } else {
-                    action = .unKnown
-                }
-
-                self?.delegate?.whenCardPackageChanged(action: action)
-            }
-        }
-    }
-
-    func unsubscribeCardPackage() {
-        cardPackagesListener?.remove()
-    }
-
     func subscribeUser() {
         guard let firestoreRef = firestoreRef else { fatalError() }
 
@@ -221,6 +195,32 @@ final class RoomDataStore: RoomRepository {
 
     func unsubscribeUser() {
         usersListener?.remove()
+    }
+    
+    func subscribeCardPackage() {
+        guard let firestoreRef = firestoreRef else { fatalError() }
+
+        cardPackagesListener = firestoreRef.cardPackagesQuery.addSnapshotListener {
+            querySnapshot, error in
+            querySnapshot?.documentChanges.forEach { [weak self] diff in
+                var action: CardPackageAction
+                if diff.type == .added {
+                    action = .added
+                } else if diff.type == .modified {
+                    action = .modified
+                } else if diff.type == .removed {
+                    action = .removed
+                } else {
+                    action = .unKnown
+                }
+
+                self?.delegate?.whenCardPackageChanged(action: action)
+            }
+        }
+    }
+
+    func unsubscribeCardPackage() {
+        cardPackagesListener?.remove()
     }
 
     func updateSelectedCardId(selectedCardDictionary: [String: String]) {

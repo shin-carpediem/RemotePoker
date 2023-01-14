@@ -53,17 +53,17 @@ protocol RoomRepository: AnyObject {
     /// - parameter userId: ユーザーID
     func removeUserFromRoom(userId: String) async -> Result<Void, RoomError>
 
-    /// カードパッケージを購読する
-    func subscribeCardPackage()
-
-    /// カードパッケージの購読を解除する
-    func unsubscribeCardPackage()
-
     /// ユーザーを購読する
     func subscribeUser()
 
     /// ユーザーの購読を解除する
     func unsubscribeUser()
+    
+    /// カードパッケージを購読する
+    func subscribeCardPackage()
+
+    /// カードパッケージの購読を解除する
+    func unsubscribeCardPackage()
 
     /// 指定IDのユーザーを取得する
     /// - parameter id: ユーザーID
