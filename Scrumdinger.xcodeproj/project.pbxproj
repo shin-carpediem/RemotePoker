@@ -667,7 +667,8 @@
 				F5E917C3287114DC00AE8421 /* Sources */,
 				F5E917C4287114DC00AE8421 /* Frameworks */,
 				F5E917C5287114DC00AE8421 /* Resources */,
-				F571FA602896CCC5003531CE /* ShellScript */,
+				F571FA602896CCC5003531CE /* Copy Frameworks */,
+				F5F277AB2972744F00166F88 /* Run swift-format */,
 			);
 			buildRules = (
 			);
@@ -794,7 +795,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		F571FA602896CCC5003531CE /* ShellScript */ = {
+		F571FA602896CCC5003531CE /* Copy Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -803,13 +804,32 @@
 			);
 			inputPaths = (
 			);
+			name = "Copy Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+		F5F277AB2972744F00166F88 /* Run swift-format */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run swift-format";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd /Users/aokishinichiro/develop/Scrumdinger\nswift-format -r . -i\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

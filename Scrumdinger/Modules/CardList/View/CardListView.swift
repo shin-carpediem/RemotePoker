@@ -87,10 +87,10 @@ struct CardListView: View, ModuleAssembler {
             ForEach(cardList) { card in
                 let themeColor = viewModel.room.cardPackage.themeColor
                 let isSelected =
-                    ( card.id
-                    == viewModel.userSelectStatusList.first(where: {
-                        $0.user.id == dependency.currentUserId
-                    })?.selectedCard?.id )
+                    (card.id
+                        == viewModel.userSelectStatusList.first(where: {
+                            $0.user.id == dependency.currentUserId
+                        })?.selectedCard?.id)
                 CardView(
                     card: card,
                     themeColor: themeColor,
