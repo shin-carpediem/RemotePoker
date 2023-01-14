@@ -41,10 +41,10 @@ struct EnterRoomView: View, ModuleAssembler {
             content: { enterCurrentRoomAlert }
         )
         .alert(
-            "Name & 4 Digit Number Required",
+            "名前と4桁の数字が必要です",
             isPresented: $viewModel.isShownInputFormInvalidAlert,
             actions: {},
-            message: { Text("If the number is new, a new room will be created.") }
+            message: { Text("数字が新しければ新規のルームが作成されます") }
         )
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
@@ -64,9 +64,9 @@ struct EnterRoomView: View, ModuleAssembler {
     /// 入室中のルームに入るか促すアラート
     private var enterCurrentRoomAlert: Alert {
         .init(
-            title: Text("Enter Existing Room?"),
+            title: Text("既存のルームに入りますか？"),
             primaryButton: .default(
-                Text("OK"),
+                Text("入る"),
                 action: {
                     dependency.presenter.didTapEnterCurrentRoomButton()
                 }),
@@ -78,8 +78,8 @@ struct EnterRoomView: View, ModuleAssembler {
     /// 入力フォーム
     private var inputField: some View {
         HStack(spacing: 14) {
-            InputText(placeholder: "Name", text: $viewModel.inputName)
-            InputText(placeholder: "Room ID", text: $viewModel.inputRoomId)
+            InputText(placeholder: "名前", text: $viewModel.inputName)
+            InputText(placeholder: "ルームID", text: $viewModel.inputRoomId)
         }
     }
 
@@ -89,7 +89,7 @@ struct EnterRoomView: View, ModuleAssembler {
             dependency.presenter.didTapEnterRoomButton(
                 inputUserName: viewModel.inputName, inputRoomId: viewModel.inputRoomId)
         } label: {
-            Text("Enter")
+            Text("入る")
                 .frame(width: 140, height: 20)
         }
         .softButtonStyle(RoundedRectangle(cornerRadius: 20))

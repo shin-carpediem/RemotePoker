@@ -33,7 +33,7 @@ struct SelectThemeColorView: View {
             contentView
             if viewModel.isShownLoader { Loader() }
         }
-        .navigationTitle("ThemeColor")
+        .navigationTitle("テーマカラー")
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }

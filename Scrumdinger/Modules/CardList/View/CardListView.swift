@@ -126,7 +126,7 @@ struct CardListView: View, ModuleAssembler {
     /// ボタンの説明テキスト
     private var buttonText: some View {
         let text =
-            viewModel.isShownSelectedCardList ? "Reset Selected Cards" : "Open Selected Cards"
+            viewModel.isShownSelectedCardList ? "自分の選択したカードをリセット" : "全員の選択されたカードを見る"
         return Text(text)
             .foregroundColor(.gray)
             .font(.system(size: 14, weight: .regular))

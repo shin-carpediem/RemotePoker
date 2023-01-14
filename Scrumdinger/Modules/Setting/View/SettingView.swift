@@ -36,7 +36,7 @@ struct SettingView: View, ModuleAssembler {
             navigationForSelectThemeColorView
             if viewModel.isShownLoader { Loader() }
         }
-        .navigationTitle("Setting")
+        .navigationTitle("設定")
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
@@ -61,7 +61,7 @@ struct SettingView: View, ModuleAssembler {
             HStack {
                 Image(systemName: "heart")
                     .foregroundColor(.gray)
-                Text("Select Theme Color")
+                Text("テーマカラーの変更")
                     .foregroundColor(.gray)
             }
         }
@@ -76,7 +76,7 @@ struct SettingView: View, ModuleAssembler {
             HStack {
                 Image(systemName: "rectangle.portrait.and.arrow.forward")
                     .foregroundColor(.gray)
-                Text("Leave Room")
+                Text("ルームから退出")
                     .foregroundColor(.gray)
             }
         }
