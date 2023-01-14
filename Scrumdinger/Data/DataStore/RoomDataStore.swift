@@ -196,7 +196,7 @@ final class RoomDataStore: RoomRepository {
     func unsubscribeUser() {
         usersListener?.remove()
     }
-    
+
     func subscribeCardPackage() {
         guard let firestoreRef = firestoreRef else { fatalError() }
 

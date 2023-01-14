@@ -58,7 +58,7 @@ protocol RoomRepository: AnyObject {
 
     /// ユーザーの購読を解除する
     func unsubscribeUser()
-    
+
     /// カードパッケージを購読する
     func subscribeCardPackage()
 
