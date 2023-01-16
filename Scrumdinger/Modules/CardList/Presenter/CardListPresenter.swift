@@ -19,16 +19,44 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     // MARK: - Presentation
 
     func viewDidLoad() {
-        dependency.useCase.activateRoomDelegate(self)
-        dependency.useCase.subscribeUsers()
-        dependency.useCase.subscribeCardPackages()
+        Task {
+            await disableButton(true)
+            await showLoader(true)
+        }
+        RoomAuthDataStore.shared.isUserLoggedIn { [weak self] isUserLoggedIn in
+            guard let self = self else { return }
+            Task {
+                if isUserLoggedIn {
+                    // 前の画面でログインしている(ローカルにルームID(0以外)を保持していない：新規ユーザー)
+                    if let userId = RoomAuthDataStore.shared.fetchUserId() {
+                        await self.setupData(userId: userId)
+                    }
+                } else {
+                    // 前の画面でログインしていない(ローカルにルームID(0以外)を保持：既存ユーザー)
+                    self.login()
+                }
+            }
+        }
     }
 
     func viewDidResume() {
         Task {
-            await requestRoom()
-            await showHeaderTitle()
-            await updateUserSelectStatusList()
+            await disableButton(true)
+            await showLoader(true)
+        }
+        RoomAuthDataStore.shared.isUserLoggedIn { [weak self] isUserLoggedIn in
+            guard let self = self else { return }
+            Task {
+                if isUserLoggedIn {
+                    // 前の画面でログインしている(ローカルにルームID(0以外)を保持していない：新規ユーザー)
+                    if let userId = RoomAuthDataStore.shared.fetchUserId() {
+                        await self.setupData(userId: userId)
+                    }
+                } else {
+                    // 前の画面でログインしていない(ローカルにルームID(0以外)を保持：既存ユーザー)
+                    self.login()
+                }
+            }
         }
     }
 
@@ -72,32 +100,22 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 
     // MARK: - CardListInteractorOutput
 
+    func outputUser(_ user: User) {
+        Task {
+            dependency.currentUserId = user.id
+            dependency.currentUserName = user.name
+            await disableButton(false)
+            await showLoader(false)
+        }
+    }
+
     @MainActor func outputRoom(_ room: Room) {
         dependency.viewModel?.room = room
         disableButton(false)
         showLoader(false)
     }
 
-    @MainActor func outputSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
-        dependency.viewModel?.isShownBanner = true
-    }
-
-    @MainActor func outputError(_ error: Error, message: String) {
-        dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
-        dependency.viewModel?.isShownBanner = true
-    }
-
-    // MARK: - Private
-
-    private var dependency: Dependency!
-
-    /// ルームを要求する
-    private func requestRoom() async {
-        await dependency.useCase.requestRoom()
-    }
-    /// ヘッダーテキストを表示する
-    @MainActor private func showHeaderTitle() {
+    @MainActor func showHeaderTitle() {
         guard let room = dependency.viewModel?.room else { return }
 
         let currentUserName = dependency.currentUserName
@@ -112,8 +130,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         showLoader(false)
     }
 
-    /// ユーザーの選択状況一覧を更新する
-    @MainActor private func updateUserSelectStatusList() {
+    @MainActor func updateUserSelectStatusList() {
         guard let room = dependency.viewModel?.room else { return }
 
         let userSelectStatusList: [UserSelectStatus] = room.userList.map { user in
@@ -135,6 +152,69 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         dependency.viewModel?.userSelectStatusList = userSelectStatusList
         disableButton(false)
         showLoader(false)
+    }
+
+    @MainActor func outputSuccess(message: String) {
+        dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
+        dependency.viewModel?.isShownBanner = true
+    }
+
+    @MainActor func outputError(_ error: Error, message: String) {
+        dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
+        dependency.viewModel?.isShownBanner = true
+    }
+
+    // MARK: - Private
+
+    private var dependency: Dependency!
+
+    /// 匿名ログインする
+    private func login() {
+        RoomAuthDataStore.shared.login { [weak self] result in
+            guard let self = self else { return }
+            Task {
+                switch result {
+                case .success(let userId):
+                    // ログインに成功した
+                    await self.setupData(userId: userId)
+
+                case .failure(let error):
+                    // ログインに失敗した
+                    let message = "ログインできませんでした。アプリを再インストールしてください"
+                    await self.outputError(error, message: message)
+                }
+            }
+        }
+    }
+
+    /// 各種データをセットアップする
+    private func setupData(userId: String) async {
+        dependency.useCase.requestUser(userId: userId)
+        // ユーザーのカレントルームがFirestore上に存在するか確認する
+        if await checkUserInCurrentRoom() {
+            // 存在する場合
+            // ルームリポジトリにルームIDをセットし、各種データの購読を開始する
+            dependency.useCase.setupRoomRepository(roomId: dependency.roomId)
+            dependency.useCase.subscribeUsers()
+            dependency.useCase.subscribeCardPackages()
+            await requestRoom()
+            await showHeaderTitle()
+            await updateUserSelectStatusList()
+        }
+    }
+
+    /// ユーザーに、存在するカレントルームがあるか確認する
+    private func checkUserInCurrentRoom() async -> Bool {
+        if dependency.roomId == 0 {
+            return false
+        } else {
+            return await dependency.useCase.checkRoomExist(roomId: dependency.roomId)
+        }
+    }
+
+    /// ルームを要求する
+    private func requestRoom() async {
+        await dependency.useCase.requestRoom()
     }
 
     /// 選択されたカード一覧を表示する
@@ -168,47 +248,5 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         dependency.viewModel?.willPushSettingView = true
         disableButton(false)
         showLoader(false)
-    }
-}
-
-// MARK: - RoomDelegate
-
-extension CardListPresenter: RoomDelegate {
-    func whenUserChanged(action: UserAction) {
-        switch action {
-        case .added, .removed:
-            // ユーザーが入室あるいは退室した時
-            Task {
-                await requestRoom()
-                await showHeaderTitle()
-                await updateUserSelectStatusList()
-            }
-
-        case .modified:
-            // ユーザーの選択済みカードが更新された時
-            Task {
-                await requestRoom()
-                await updateUserSelectStatusList()
-            }
-
-        case .unKnown:
-            fatalError()
-        }
-    }
-
-    func whenCardPackageChanged(action: CardPackageAction) {
-        switch action {
-        case .modified:
-            // カードパッケージのテーマカラーが変更された時
-            Task {
-                await requestRoom()
-            }
-
-        case .added, .removed:
-            ()
-
-        case .unKnown:
-            fatalError()
-        }
     }
 }

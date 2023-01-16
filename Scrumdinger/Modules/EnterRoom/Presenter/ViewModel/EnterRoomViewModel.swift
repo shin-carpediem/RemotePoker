@@ -32,12 +32,11 @@ final class EnterRoomViewModel: EnterRoomObservable {
         isInputFormValid ? "数字が新しければ新しいルームが作られます" : "名前と4桁の数字が必要です"
     }
 
-    @MainActor @Published var isShownEnterCurrentRoomAlert = false
-
     @MainActor @Published var willPushCardListView = false
 
     // MARK: - Private
 
+    /// 購読対象一覧
     private var subscriptions: Set<AnyCancellable> = []
 
     /// 入力フォーム内容を購読する

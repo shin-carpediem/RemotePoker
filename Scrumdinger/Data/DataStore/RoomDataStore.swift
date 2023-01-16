@@ -12,8 +12,6 @@ final class RoomDataStore: RoomRepository {
 
     // MARK: - RoomRepository
 
-    weak var delegate: RoomDelegate?
-
     func checkRoomExist(roomId: Int) async -> Bool {
         guard
             let document = try? await Firestore.firestore().collection("rooms").document(
@@ -157,11 +155,14 @@ final class RoomDataStore: RoomRepository {
         }
     }
 
-    func subscribeUser() {
-        guard let firestoreRef = firestoreRef else { fatalError() }
+    func subscribeUser(completion: @escaping (Result<UserAction, RoomError>) -> Void) {
+        guard let firestoreRef = firestoreRef else {
+            completion(.failure(.failedToSubscribeUser))
+            return
+        }
 
         usersListener = firestoreRef.usersQuery.addSnapshotListener { querySnapshot, error in
-            querySnapshot?.documentChanges.forEach { [weak self] diff in
+            querySnapshot?.documentChanges.forEach { diff in
                 var action: UserAction
                 if diff.type == .added {
                     action = .added
@@ -170,10 +171,11 @@ final class RoomDataStore: RoomRepository {
                 } else if diff.type == .removed {
                     action = .removed
                 } else {
-                    action = .unKnown
+                    completion(.failure(.failedToSubscribeUser))
+                    return
                 }
 
-                self?.delegate?.whenUserChanged(action: action)
+                completion(.success(action))
             }
         }
     }
@@ -197,12 +199,16 @@ final class RoomDataStore: RoomRepository {
         usersListener?.remove()
     }
 
-    func subscribeCardPackage() {
-        guard let firestoreRef = firestoreRef else { fatalError() }
+    func subscribeCardPackage(completion: @escaping (Result<CardPackageAction, RoomError>) -> Void)
+    {
+        guard let firestoreRef = firestoreRef else {
+            completion(.failure(.failedToSubscribeCardPackage))
+            return
+        }
 
         cardPackagesListener = firestoreRef.cardPackagesQuery.addSnapshotListener {
             querySnapshot, error in
-            querySnapshot?.documentChanges.forEach { [weak self] diff in
+            querySnapshot?.documentChanges.forEach { diff in
                 var action: CardPackageAction
                 if diff.type == .added {
                     action = .added
@@ -211,10 +217,11 @@ final class RoomDataStore: RoomRepository {
                 } else if diff.type == .removed {
                     action = .removed
                 } else {
-                    action = .unKnown
+                    completion(.failure(.failedToSubscribeCardPackage))
+                    return
                 }
 
-                self?.delegate?.whenCardPackageChanged(action: action)
+                completion(.success(action))
             }
         }
     }

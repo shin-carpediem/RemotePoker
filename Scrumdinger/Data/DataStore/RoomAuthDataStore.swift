@@ -5,31 +5,25 @@ final class RoomAuthDataStore: RoomAuthRepository {
 
     static var shared = RoomAuthDataStore()
 
-    weak var delegate: RoomAuthDelegate?
-
     func fetchUserId() -> String? {
         Auth.auth().currentUser?.uid
     }
 
-    func isUserLoggedIn() -> Bool {
+    func isUserLoggedIn(completion: @escaping (Bool) -> Void) {
         if let isUserLogin = Auth.auth().currentUser?.isAnonymous {
-            return isUserLogin
+            completion(isUserLogin)
         } else {
-            return false
+            completion(false)
         }
     }
 
-    func login() {
-        Auth.auth().signInAnonymously { [weak self] authResult, error in
-            if error != nil {
-                self?.delegate?.whenFailedToLogin(error: .failedToLogin)
-                return
+    func login(completion: @escaping (Result<String, RoomAuthError>) -> Void) {
+        Auth.auth().signInAnonymously { authResult, error in
+            if let userId = authResult?.user.uid {
+                completion(.success(userId))
+            } else {
+                completion(.failure(.failedToLogin))
             }
-            guard let authResult = authResult else {
-                self?.delegate?.whenFailedToLogin(error: .failedToLogin)
-                return
-            }
-            self?.delegate?.whenSuccessLogin(userId: authResult.user.uid)
         }
     }
 

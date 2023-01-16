@@ -65,6 +65,7 @@ struct SettingView: View, ModuleAssembler {
                     .foregroundColor(.gray)
             }
         }
+        .disabled(!viewModel.isButtonEnabled)
     }
 
     /// 退出ボタン

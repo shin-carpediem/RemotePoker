@@ -35,11 +35,8 @@ struct EnterRoomView: View, ModuleAssembler {
                 if viewModel.isShownLoader { Loader() }
             }
         }
-        .navigationTitle("RemotePoker")
-        .alert(
-            isPresented: $viewModel.isShownEnterCurrentRoomAlert,
-            content: { enterCurrentRoomAlert }
-        )
+        //        .navigationTitle("RemotePoker")
+        //        .navigationViewStyle(StackNavigationViewStyle())
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
@@ -56,20 +53,6 @@ struct EnterRoomView: View, ModuleAssembler {
         .padding(.horizontal, 40)
     }
 
-    /// 入室中のルームに入るか促すアラート
-    private var enterCurrentRoomAlert: Alert {
-        .init(
-            title: Text("既存のルームに入りますか？"),
-            primaryButton: .default(
-                Text("入る"),
-                action: {
-                    dependency.presenter.didTapEnterCurrentRoomButton()
-                }),
-            secondaryButton: .cancel {
-                dependency.presenter.didCancelEnterCurrentRoomButton()
-            })
-    }
-
     /// 入力フォーム
     private var inputField: some View {
         HStack(spacing: 14) {
@@ -78,6 +61,7 @@ struct EnterRoomView: View, ModuleAssembler {
         }
     }
 
+    /// 入力フォーム内容が有効か評価されて表示されるメッセージ
     private var validatedMessage: some View {
         let textColor: Color = viewModel.isInputFormValid ? .green : .red
         return Text(viewModel.inputFormvalidatedMessage)

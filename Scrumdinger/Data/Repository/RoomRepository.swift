@@ -5,8 +5,6 @@ enum UserAction {
     case modified
     /// ユーザーが削除された時
     case removed
-    /// 不明
-    case unKnown
 }
 
 enum CardPackageAction {
@@ -16,22 +14,9 @@ enum CardPackageAction {
     case modified
     /// カードパッケージが削除された時
     case removed
-    /// 不明
-    case unKnown
-}
-
-protocol RoomDelegate: AnyObject {
-    /// ルームにユーザーが追加/更新/削除された時
-    func whenUserChanged(action: UserAction)
-
-    /// ルームのカードバッケージのテーマカラーが更新された時
-    func whenCardPackageChanged(action: CardPackageAction)
 }
 
 protocol RoomRepository: AnyObject {
-    /// デリゲート
-    var delegate: RoomDelegate? { get set }
-
     /// ルームが存在するか確認する
     /// - parameter roomId: ルームID
     /// - returns: 存在するか
@@ -54,13 +39,15 @@ protocol RoomRepository: AnyObject {
     func removeUserFromRoom(userId: String) async -> Result<Void, RoomError>
 
     /// ユーザーを購読する
-    func subscribeUser()
+    /// - returns: ユーザーへのCRUOの種類
+    func subscribeUser(completion: @escaping (Result<UserAction, RoomError>) -> Void)
 
     /// ユーザーの購読を解除する
     func unsubscribeUser()
 
     /// カードパッケージを購読する
-    func subscribeCardPackage()
+    /// - returns: カードパッケージへのCRUDの種類
+    func subscribeCardPackage(completion: @escaping (Result<CardPackageAction, RoomError>) -> Void)
 
     /// カードパッケージの購読を解除する
     func unsubscribeCardPackage()
@@ -93,6 +80,12 @@ enum RoomError: Error {
     /// ルームからの退出に失敗した時
     case failedToRemoveUserFromRoom
 
+    /// ユーザーの購読に失敗した時
+    case failedToSubscribeUser
+
     /// 指定IDのユーザー取得に失敗した時
     case failedToFetchUser
+
+    /// カードパッケージの購読に失敗した時
+    case failedToSubscribeCardPackage
 }

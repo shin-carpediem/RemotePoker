@@ -11,11 +11,3 @@ struct User {
     /// 選択済みカードID(未選択は空文字)
     var selectedCardId: String
 }
-
-enum EnterRoomAction {
-    /// 入室中のルームに入る
-    case enterCurrentRoom
-
-    /// 入室中ではないルームに入る
-    case enterOtherRoom(isNew: Bool)
-}

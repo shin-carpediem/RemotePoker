@@ -5,7 +5,7 @@ extension ModuleAssembler {
         let interactor = EnterRoomInteractor()
 
         presenter.inject(.init(useCase: interactor, viewModel: viewModel))
-        interactor.inject(.init(roomRepository: RoomDataStore(), output: presenter))
+        interactor.inject(.init(repository: RoomDataStore(), output: presenter))
 
         let view = EnterRoomView(dependency: .init(presenter: presenter), viewModel: viewModel)
 
@@ -26,7 +26,7 @@ extension ModuleAssembler {
                 currentUserId: currentUserId,
                 currentUserName: currentUserName,
                 viewModel: viewModel))
-        interactor.inject(.init(roomRepository: RoomDataStore(roomId: roomId), output: presenter))
+        interactor.inject(.init(repository: RoomDataStore(roomId: roomId), output: presenter))
 
         let view = CardListView(
             dependency: .init(
@@ -47,7 +47,7 @@ extension ModuleAssembler {
         presenter.inject(.init(useCase: interactor, viewModel: viewModel))
         interactor.inject(
             .init(
-                roomRepository: RoomDataStore(roomId: roomId),
+                repository: RoomDataStore(roomId: roomId),
                 output: presenter,
                 currentUserId: currentUserId))
 
@@ -69,7 +69,7 @@ extension ModuleAssembler {
         presenter.inject(.init(useCase: interactor, viewModel: viewModel))
         interactor.inject(
             .init(
-                roomRepository: RoomDataStore(roomId: roomId),
+                repository: RoomDataStore(roomId: roomId),
                 output: presenter,
                 cardPackageId: cardPackageId))
 

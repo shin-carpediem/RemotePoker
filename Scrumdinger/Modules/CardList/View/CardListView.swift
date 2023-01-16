@@ -175,9 +175,11 @@ struct CardListView: View, ModuleAssembler {
                         cardPackageId: dependency.cardPackageId
                     )
                     .onDisappear {
-                        if !RoomAuthDataStore.shared.isUserLoggedIn() {
-                            // ログアウトしている場合、ルート(=ひとつ前の画面)に遷移する
-                            presentation.wrappedValue.dismiss()
+                        RoomAuthDataStore.shared.isUserLoggedIn { isUserLoggedIn in
+                            if !isUserLoggedIn {
+                                // ログアウトしている場合、ルート(=ひとつ前の画面)に遷移する
+                                presentation.wrappedValue.dismiss()
+                            }
                         }
                     }
                 } else {

@@ -1,19 +1,6 @@
-protocol RoomAuthDelegate: AnyObject {
-    /// ログインに成功した時
-    /// - parameter ユーザーID
-    func whenSuccessLogin(userId: String)
-
-    /// ログインに失敗した時
-    /// - parameter error: エラー
-    func whenFailedToLogin(error: RoomAuthError)
-}
-
 protocol RoomAuthRepository: AnyObject {
     /// 共有インスタンス
     static var shared: RoomAuthDataStore { get }
-
-    /// デリゲート
-    var delegate: RoomAuthDelegate? { get set }
 
     /// ユーザーIDを取得する
     /// - returns: ユーザーID
@@ -21,10 +8,11 @@ protocol RoomAuthRepository: AnyObject {
 
     /// ログインしているか
     /// - returns: ログインしているか
-    func isUserLoggedIn() -> Bool
+    func isUserLoggedIn(completion: @escaping (Bool) -> Void)
 
     /// ログインする
-    func login()
+    /// - returns  ユーザーID
+    func login(completion: @escaping (Result<String, RoomAuthError>) -> Void)
 
     /// ログアウトする
     func logout() -> Result<Void, RoomAuthError>

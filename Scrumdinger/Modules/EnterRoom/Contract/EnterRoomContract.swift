@@ -13,9 +13,6 @@ protocol EnterRoomObservable: ObservableObject, ViewModel {
     /// 入力フォーム内容が有効か評価されて表示されるメッセージ
     @MainActor var inputFormvalidatedMessage: String { get }
 
-    /// 入室中のルームに入るか促すアラートを表示するか
-    @MainActor var isShownEnterCurrentRoomAlert: Bool { get set }
-
     /// カード一覧画面に遷移するか
     @MainActor var willPushCardListView: Bool { get set }
 }
@@ -26,12 +23,6 @@ protocol EnterRoomPresentation: Presentation {
 
     /// カレントルーム
     var currentRoom: Room { get }
-
-    /// 入室中のルームに入るボタンが押された
-    func didTapEnterCurrentRoomButton()
-
-    /// 入室中のルームに入るキャンセルが押された
-    func didCancelEnterCurrentRoomButton()
 
     /// ルームに入るボタンが押された
     /// - parameter inputUserName: 入力されたユーザー名
@@ -46,15 +37,8 @@ protocol EnterRoomUseCase: AnyObject {
 
     /// ルームが存在するか確認する
     /// - parameter roomId: ルームID:
-    func checkRoomExist(roomId: Int) async
-
-    /// ユーザーを要求する
-    /// - parameter userId:　ユーザーID
-    func requestUser(userId: String)
-
-    /// ルームを要求する
-    /// - parameter roomId: ルームID
-    func requestRoom(roomId: Int) async
+    /// - returns ルームが存在するか
+    func checkRoomExist(roomId: Int) async -> Bool
 
     /// ルームにユーザーを追加する
     /// - parameter user: ユーザー
@@ -66,15 +50,6 @@ protocol EnterRoomUseCase: AnyObject {
 }
 
 protocol EnterRoomInteractorOutput: AnyObject {
-    /// ユーザーを出力する
-    func outputUser(_ user: User)
-
-    /// ルームを出力する
-    func outputRoom(_ room: Room)
-
-    /// ルームが存在するかを出力する
-    func outputRoomExist(_ exist: Bool)
-
     /// データ処理の成功を出力
     @MainActor func outputSuccess(message: String)
 

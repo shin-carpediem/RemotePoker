@@ -33,8 +33,14 @@ protocol CardListPresentation: Presentation {
 }
 
 protocol CardListUseCase: AnyObject {
-    /// 購読に際しデリゲートを使えるようにする
-    func activateRoomDelegate(_ self: CardListPresenter)
+    /// ルームIDを必要とするルームリポジトリを有効にする
+    /// - parameter roomId: ルームID
+    func setupRoomRepository(roomId: Int)
+
+    /// ルームが存在するか確認する
+    /// - parameter roomId: ルームID:
+    /// - returns ルームが存在するか
+    func checkRoomExist(roomId: Int) async -> Bool
 
     /// ユーザーを購読する
     func subscribeUsers()
@@ -52,13 +58,26 @@ protocol CardListUseCase: AnyObject {
     /// - parameter selectedCardDictionary: カレントユーザーIDと選択されたカードIDの辞書
     func updateSelectedCardId(selectedCardDictionary: [String: String])
 
+    /// ユーザーを要求する
+    /// - parameter userId:　ユーザーID
+    func requestUser(userId: String)
+
     /// ルームを要求する
     func requestRoom() async
 }
 
 protocol CardListInteractorOutput: AnyObject {
+    /// ユーザーを出力する
+    func outputUser(_ user: User)
+
     /// ルームを出力する
     @MainActor func outputRoom(_ room: Room)
+
+    /// ヘッダーテキストを表示する
+    @MainActor func showHeaderTitle()
+
+    /// ユーザーの選択状況一覧を更新する
+    @MainActor func updateUserSelectStatusList()
 
     /// データ処理の成功を出力
     @MainActor func outputSuccess(message: String)

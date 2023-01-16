@@ -578,8 +578,8 @@
 		F5E05172292BB0EF006EA727 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				F5E05170292BB05F006EA727 /* RoomRepository.swift */,
 				F57C64312961366500CD55CD /* RoomAuthRepository.swift */,
+				F5E05170292BB05F006EA727 /* RoomRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -587,8 +587,8 @@
 		F5E05173292BB0FA006EA727 /* DataStore */ = {
 			isa = PBXGroup;
 			children = (
-				F5E05174292BB134006EA727 /* RoomDataStore.swift */,
 				F57C6433296136CC00CD55CD /* RoomAuthDataStore.swift */,
+				F5E05174292BB134006EA727 /* RoomDataStore.swift */,
 			);
 			path = DataStore;
 			sourceTree = "<group>";
