@@ -91,13 +91,6 @@ struct SettingView: View, ModuleAssembler {
         NavigationLink(
             isActive: $viewModel.willPushSelectThemeColorView,
             destination: {
-                //                if viewModel.willPushSelectThemeColorView {
-                //                    assembleSelectThemeColor(
-                //                        roomId: dependency.roomId,
-                //                        cardPackageId: dependency.cardPackageId)
-                //                } else {
-                //                    EmptyView()
-                //                }
                 assembleSelectThemeColor(
                     roomId: dependency.roomId,
                     cardPackageId: dependency.cardPackageId)

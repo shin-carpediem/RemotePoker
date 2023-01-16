@@ -168,21 +168,6 @@ struct CardListView: View, ModuleAssembler {
         NavigationLink(
             isActive: $viewModel.willPushSettingView,
             destination: {
-                //                if viewModel.willPushSettingView {
-                //                    assembleSetting(
-                //                        roomId: dependency.roomId,
-                //                        currentUserId: dependency.currentUserId,
-                //                        cardPackageId: dependency.cardPackageId
-                //                    )
-                //                    .onDisappear {
-                //                        if !RoomAuthDataStore.shared.isUsrLoggedIn {
-                //                            // ログアウトしている場合、ルート(=ひとつ前の画面)に遷移する
-                //                            presentation.wrappedValue.dismiss()
-                //                        }
-                //                    }
-                //                } else {
-                //                    EmptyView()
-                //                }
                 assembleSetting(
                     roomId: dependency.roomId,
                     currentUserId: dependency.currentUserId,
