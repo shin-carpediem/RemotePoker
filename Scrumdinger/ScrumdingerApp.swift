@@ -19,8 +19,10 @@ struct ScrumdingerApp: App, ModuleAssembler {
 
         // MARK: - Private
 
+        /// Firebaseをセットアップする
         private func setupFirebase() {
             FirebaseApp.configure()
+            RoomAuthDataStore.shared.subscribeAuth()
         }
     }
 
@@ -30,11 +32,12 @@ struct ScrumdingerApp: App, ModuleAssembler {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                if LocalStorage.shared.currentRoomId != 0 {
+                //                if LocalStorage.shared.currentRoomId != 0 {
+                if RoomAuthDataStore.shared.isUsrLoggedIn {
                     // ログイン中(currentUserId, currentUserNameは後で取得)
                     assembleCardList(
                         roomId: LocalStorage.shared.currentRoomId,
-                        currentUserId: "",
+                        currentUserId: RoomAuthDataStore.shared.fetchUserId() ?? "",
                         currentUserName: "",
                         cardPackageId: "")
                 } else {

@@ -27,13 +27,8 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     var currentUser: User = .init(
         id: "",
         name: "",
-        currentRoomId: LocalStorage.shared.currentRoomId,
+        currentRoomId: 0,
         selectedCardId: "")
-    {
-        didSet {
-            LocalStorage.shared.currentRoomId = currentUser.currentRoomId
-        }
-    }
 
     var currentRoom: Room = .init(id: 0, userList: [], cardPackage: .defaultCardPackage)
 
@@ -47,8 +42,9 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
                 login(userName: inputUserName, roomId: roomId)
             } else {
                 // フォーム内容が有効ではない
-                await disableButton(false)
             }
+            await disableButton(false)
+            await showLoader(false)
         }
     }
 
@@ -60,12 +56,8 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
                 switch result {
                 case .success(let userId):
                     // ログインに成功した
-                    self.currentUser = .init(
-                        id: userId,
-                        name: userName,
-                        currentRoomId: roomId,
-                        selectedCardId: "")
-                    await self.setupRoom(userName: userName, roomId: roomId)
+                    await self.setupUserAndRoom(
+                        userId: userId, userName: userName, roomId: roomId)
                     await self.pushCardListView()
 
                 case .failure(let error):
@@ -112,11 +104,18 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         }
     }
 
-    /// ルームをセットアップする
-    private func setupRoom(userName: String, roomId: Int) async {
-        currentUser.currentRoomId = roomId
+    /// ユーザーとルームをセットアップする
+    private func setupUserAndRoom(
+        userId: String, userName: String, roomId: Int
+    ) async {
+        currentUser = .init(
+            id: userId,
+            name: userName,
+            currentRoomId: roomId,
+            selectedCardId: "")
+        LocalStorage.shared.currentRoomId = roomId
 
-        // 既存ルームが存在するか確認
+        // 入力ルームIDに合致する既存ルームが存在するか確認
         if await dependency.useCase.checkRoomExist(roomId: roomId) {
             // 既存ルーム
             dependency.useCase.setupRoomRepository(roomId: roomId)

@@ -29,6 +29,7 @@ final class RoomDataStore: RoomRepository {
             try await roomDocument.setData([
                 "id": roomId,
                 "createdAt": Timestamp(),
+                "updatedAt": Date(),
             ])
 
             // ユーザー追加
@@ -41,6 +42,7 @@ final class RoomDataStore: RoomRepository {
                     "currentRoomId": roomId,
                     "selectedCardId": user.selectedCardId,
                     "createdAt": Timestamp(),
+                    "updatedAt": Date(),
                 ])
             }
 
@@ -52,6 +54,7 @@ final class RoomDataStore: RoomRepository {
                 "id": cardPackageId,
                 "themeColor": room.cardPackage.themeColor.rawValue,
                 "createdAt": Timestamp(),
+                "updatedAt": Date(),
             ])
 
             // カード一覧追加
@@ -62,6 +65,8 @@ final class RoomDataStore: RoomRepository {
                     "id": cardId,
                     "point": card.point,
                     "index": card.index,
+                    "createdAt": Timestamp(),
+                    "updatedAt": Date(),
                 ])
             }
             return .success(())
@@ -135,6 +140,8 @@ final class RoomDataStore: RoomRepository {
                 "name": user.name,
                 "currentRoomId": user.currentRoomId,
                 "selectedCardId": user.selectedCardId,
+                "createdAt": Timestamp(),
+                "updatedAt": Date(),
             ])
             return .success(())
         } catch {
@@ -236,7 +243,8 @@ final class RoomDataStore: RoomRepository {
         selectedCardDictionary.forEach { userId, selectedCardId in
             let userDocument = firestoreRef.userDocument(userId: userId)
             userDocument.updateData([
-                "selectedCardId": selectedCardId
+                "selectedCardId": selectedCardId,
+                "updatedAt": Date(),
             ])
         }
     }
@@ -246,15 +254,19 @@ final class RoomDataStore: RoomRepository {
 
         let cardPackageDocument = firestoreRef.cardPackageDocument(cardPackageId: cardPackageId)
         cardPackageDocument.updateData([
-            "themeColor": themeColor.rawValue
+            "themeColor": themeColor.rawValue,
+            "updatedAt": Date(),
         ])
     }
 
     // MARK: - Private
 
+    /// Firestoreのリファレンス一覧
     private var firestoreRef: FirestoreRef?
 
-    private var cardPackagesListener: ListenerRegistration?
-
+    /// ルーム内ユーザーのリスナー
     private var usersListener: ListenerRegistration?
+
+    /// ルームのカードパッケージのリスナー
+    private var cardPackagesListener: ListenerRegistration?
 }

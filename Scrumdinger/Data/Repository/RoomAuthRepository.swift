@@ -2,13 +2,18 @@ protocol RoomAuthRepository: AnyObject {
     /// 共有インスタンス
     static var shared: RoomAuthDataStore { get }
 
+    /// ログインしているか
+    var isUsrLoggedIn: Bool { get }
+
     /// ユーザーIDを取得する
     /// - returns: ユーザーID
     func fetchUserId() -> String?
 
-    /// ログインしているか
-    /// - returns: ログインしているか
-    func isUserLoggedIn(completion: @escaping (Bool) -> Void)
+    /// 認証状況を購読する
+    func subscribeAuth()
+
+    /// 認証状況の購読を解除する
+    func unsubscribeAuth() -> Result<Void, RoomAuthError>
 
     /// ログインする
     /// - returns  ユーザーID
@@ -19,6 +24,9 @@ protocol RoomAuthRepository: AnyObject {
 }
 
 enum RoomAuthError: Error {
+    /// 認証状況の購読解除に失敗した
+    case failedToUnsubscibeAuth
+
     /// ログインに失敗した
     case failedToLogin
 

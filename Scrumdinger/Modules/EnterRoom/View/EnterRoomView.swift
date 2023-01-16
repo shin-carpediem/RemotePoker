@@ -35,8 +35,6 @@ struct EnterRoomView: View, ModuleAssembler {
                 if viewModel.isShownLoader { Loader() }
             }
         }
-        //        .navigationTitle("RemotePoker")
-        //        .navigationViewStyle(StackNavigationViewStyle())
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
@@ -88,6 +86,8 @@ struct EnterRoomView: View, ModuleAssembler {
         NavigationLink(
             isActive: $viewModel.willPushCardListView,
             destination: {
+                // Viewの表示時に、以下の存在しないルームIDも以下に代入されてクラッシュするのを防ぐため、
+                // willPushCardListView が評価されるタイミングで値を見るようにする
                 if viewModel.willPushCardListView {
                     assembleCardList(
                         roomId: dependency.presenter.currentRoom.id,

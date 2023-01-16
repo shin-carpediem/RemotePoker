@@ -22,19 +22,14 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         Task {
             await disableButton(true)
             await showLoader(true)
-        }
-        RoomAuthDataStore.shared.isUserLoggedIn { [weak self] isUserLoggedIn in
-            guard let self = self else { return }
-            Task {
-                if isUserLoggedIn {
-                    // 前の画面でログインしている(ローカルにルームID(0以外)を保持していない：新規ユーザー)
-                    if let userId = RoomAuthDataStore.shared.fetchUserId() {
-                        await self.setupData(userId: userId)
-                    }
-                } else {
-                    // 前の画面でログインしていない(ローカルにルームID(0以外)を保持：既存ユーザー)
-                    self.login()
+            if RoomAuthDataStore.shared.isUsrLoggedIn {
+                // 新規ユーザー（EnterRoom画面が初期画面）
+                if let userId = RoomAuthDataStore.shared.fetchUserId() {
+                    await self.setupData(userId: userId)
                 }
+            } else {
+                // 既存ユーザー（この画面が初期画面）
+                self.login()
             }
         }
     }
@@ -43,19 +38,14 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         Task {
             await disableButton(true)
             await showLoader(true)
-        }
-        RoomAuthDataStore.shared.isUserLoggedIn { [weak self] isUserLoggedIn in
-            guard let self = self else { return }
-            Task {
-                if isUserLoggedIn {
-                    // 前の画面でログインしている(ローカルにルームID(0以外)を保持していない：新規ユーザー)
-                    if let userId = RoomAuthDataStore.shared.fetchUserId() {
-                        await self.setupData(userId: userId)
-                    }
-                } else {
-                    // 前の画面でログインしていない(ローカルにルームID(0以外)を保持：既存ユーザー)
-                    self.login()
+            if RoomAuthDataStore.shared.isUsrLoggedIn {
+                // 新規ユーザー（EnterRoom画面が初期画面）
+                if let userId = RoomAuthDataStore.shared.fetchUserId() {
+                    await self.setupData(userId: userId)
                 }
+            } else {
+                // 既存ユーザー（この画面が初期画面）
+                self.login()
             }
         }
     }

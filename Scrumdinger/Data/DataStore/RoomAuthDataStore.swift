@@ -5,16 +5,24 @@ final class RoomAuthDataStore: RoomAuthRepository {
 
     static var shared = RoomAuthDataStore()
 
+    private(set) var isUsrLoggedIn = false
+
     func fetchUserId() -> String? {
         Auth.auth().currentUser?.uid
     }
 
-    func isUserLoggedIn(completion: @escaping (Bool) -> Void) {
-        if let isUserLogin = Auth.auth().currentUser?.isAnonymous {
-            completion(isUserLogin)
-        } else {
-            completion(false)
+    func subscribeAuth() {
+        authListner = Auth.auth().addStateDidChangeListener { auth, user in
+            self.isUsrLoggedIn = (user != nil)
         }
+    }
+
+    func unsubscribeAuth() -> Result<Void, RoomAuthError> {
+        guard let authListner = authListner else {
+            return .failure(.failedToUnsubscibeAuth)
+        }
+        Auth.auth().removeStateDidChangeListener(authListner)
+        return .success(())
     }
 
     func login(completion: @escaping (Result<String, RoomAuthError>) -> Void) {
@@ -37,6 +45,9 @@ final class RoomAuthDataStore: RoomAuthRepository {
     }
 
     // MARK: - Private
+
+    /// 認証状況のリスナー
+    private var authListner: AuthStateDidChangeListenerHandle?
 
     // 外部からのインスタンス生成をコンパイルレベルで禁止
     private init() {}
