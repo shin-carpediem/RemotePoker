@@ -44,7 +44,8 @@ struct NotificationBanner: View {
     }
 
     /// バナーを非表示にする
-    @MainActor private func hideBanner() {
+    @MainActor
+    private func hideBanner() {
         isShown = false
     }
 

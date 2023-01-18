@@ -2,19 +2,24 @@ import Foundation
 
 protocol EnterRoomObservable: ObservableObject, ViewModel {
     /// 入力フォーム/名前
-    @MainActor var inputName: String { get set }
+    @MainActor
+    var inputName: String { get set }
 
     /// 入力フォーム/ルームID
-    @MainActor var inputRoomId: String { get set }
+    @MainActor
+    var inputRoomId: String { get set }
 
     /// 入力フォーム内容が有効か
-    @MainActor var isInputFormValid: Bool { get }
+    @MainActor
+    var isInputFormValid: Bool { get }
 
     /// 入力フォーム内容が有効か評価されて表示されるメッセージ
-    @MainActor var inputFormvalidatedMessage: String { get }
+    @MainActor
+    var inputFormvalidatedMessage: String { get }
 
     /// カード一覧画面に遷移するか
-    @MainActor var willPushCardListView: Bool { get set }
+    @MainActor
+    var willPushCardListView: Bool { get set }
 }
 
 protocol EnterRoomPresentation: Presentation {
@@ -51,8 +56,10 @@ protocol EnterRoomUseCase: AnyObject {
 
 protocol EnterRoomInteractorOutput: AnyObject {
     /// データ処理の成功を出力
-    @MainActor func outputSuccess(message: String)
+    @MainActor
+    func outputSuccess(message: String)
 
     /// エラーを出力
-    @MainActor func outputError(_ error: Error, message: String)
+    @MainActor
+    func outputError(_ error: Error, message: String)
 }

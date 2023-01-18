@@ -2,7 +2,8 @@ import Foundation
 
 protocol SettingObservable: ObservableObject, ViewModel {
     /// テーマカラー選択画面に遷移するか
-    @MainActor var willPushSelectThemeColorView: Bool { get set }
+    @MainActor
+    var willPushSelectThemeColorView: Bool { get set }
 }
 
 protocol SettingPresentation: Presentation {
@@ -29,8 +30,10 @@ protocol SettingUseCase: AnyObject {
 
 protocol SettingInteractorOutput: AnyObject {
     /// データ処理の成功を出力
-    @MainActor func outputSuccess(message: String)
+    @MainActor
+    func outputSuccess(message: String)
 
     /// エラーを出力
-    @MainActor func outputError(_ error: Error, message: String)
+    @MainActor
+    func outputError(_ error: Error, message: String)
 }

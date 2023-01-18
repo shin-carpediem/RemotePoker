@@ -2,19 +2,24 @@ import Foundation
 
 protocol CardListObservable: ObservableObject, ViewModel {
     /// ルーム
-    @MainActor var room: Room { get set }
+    @MainActor
+    var room: Room { get set }
 
     /// ヘッダーテキスト
-    @MainActor var headerTitle: String { get set }
+    @MainActor
+    var headerTitle: String { get set }
 
     /// ユーザーのカード選択状況一覧
-    @MainActor var userSelectStatusList: [UserSelectStatus] { get set }
+    @MainActor
+    var userSelectStatusList: [UserSelectStatus] { get set }
 
     /// 選択済みカード一覧が公開されるか
-    @MainActor var isShownSelectedCardList: Bool { get set }
+    @MainActor
+    var isShownSelectedCardList: Bool { get set }
 
     /// 設定画面に遷移するか
-    @MainActor var willPushSettingView: Bool { get set }
+    @MainActor
+    var willPushSettingView: Bool { get set }
 }
 
 protocol CardListPresentation: Presentation {
@@ -71,17 +76,22 @@ protocol CardListInteractorOutput: AnyObject {
     func outputUser(_ user: User)
 
     /// ルームを出力する
-    @MainActor func outputRoom(_ room: Room)
+    @MainActor
+    func outputRoom(_ room: Room)
 
     /// ヘッダーテキストを表示する
-    @MainActor func showHeaderTitle()
+    @MainActor
+    func showHeaderTitle()
 
     /// ユーザーの選択状況一覧を更新する
-    @MainActor func updateUserSelectStatusList()
+    @MainActor
+    func updateUserSelectStatusList()
 
     /// データ処理の成功を出力
-    @MainActor func outputSuccess(message: String)
+    @MainActor
+    func outputSuccess(message: String)
 
     /// エラーを出力
-    @MainActor func outputError(_ error: Error, message: String)
+    @MainActor
+    func outputError(_ error: Error, message: String)
 }

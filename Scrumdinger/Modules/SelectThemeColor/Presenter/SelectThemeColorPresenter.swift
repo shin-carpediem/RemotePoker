@@ -39,18 +39,21 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation,
 
     // MARK: - SelectThemeColorInteractorOutput
 
-    @MainActor func outputSelectedThemeColor(_ themeColor: ThemeColor) {
+    @MainActor
+    func outputSelectedThemeColor(_ themeColor: ThemeColor) {
         dependency.viewModel?.selectedThemeColor = themeColor
         disableButton(false)
         showLoader(false)
     }
 
-    @MainActor func outputSuccess(message: String) {
+    @MainActor
+    func outputSuccess(message: String) {
         dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 
-    @MainActor func outputError(_ error: Error, message: String) {
+    @MainActor
+    func outputError(_ error: Error, message: String) {
         dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
         dependency.viewModel?.isShownBanner = true
     }
@@ -60,17 +63,20 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation,
     private var dependency: Dependency!
 
     /// カラー一覧を表示する
-    @MainActor private func showColorList() {
+    @MainActor
+    private func showColorList() {
         dependency.viewModel?.themeColorList = ThemeColor.allCases
     }
 
     /// ボタンを無効にする
-    @MainActor private func disableButton(_ disabled: Bool) {
+    @MainActor
+    private func disableButton(_ disabled: Bool) {
         dependency.viewModel?.isButtonEnabled = !disabled
     }
 
     /// ローダーを表示する
-    @MainActor private func showLoader(_ show: Bool) {
+    @MainActor
+    private func showLoader(_ show: Bool) {
         dependency.viewModel?.isShownLoader = show
     }
 }

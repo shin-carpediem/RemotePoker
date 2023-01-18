@@ -12,27 +12,36 @@ final class EnterRoomViewModel: EnterRoomObservable {
 
     // MARK: - ViewModel
 
-    @MainActor @Published var isButtonEnabled = true
+    @MainActor
+    @Published var isButtonEnabled = true
 
-    @MainActor @Published var isShownLoader = false
+    @MainActor
+    @Published var isShownLoader = false
 
-    @MainActor @Published var isShownBanner = false
+    @MainActor
+    @Published var isShownBanner = false
 
-    @MainActor @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
+    @MainActor
+    @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
 
     // MARK: - EnterRoomObservable
 
-    @MainActor @Published var inputName = ""
+    @MainActor
+    @Published var inputName = ""
 
-    @MainActor @Published var inputRoomId = ""
+    @MainActor
+    @Published var inputRoomId = ""
 
-    @MainActor @Published private(set) var isInputFormValid = true
+    @MainActor
+    @Published private(set) var isInputFormValid = true
 
-    @MainActor var inputFormvalidatedMessage: String {
+    @MainActor
+    var inputFormvalidatedMessage: String {
         isInputFormValid ? "数字が新しければ新しいルームが作られます" : "6文字以下の名前と4桁の数字が必要です"
     }
 
-    @MainActor @Published var willPushCardListView = false
+    @MainActor
+    @Published var willPushCardListView = false
 
     // MARK: - Private
 

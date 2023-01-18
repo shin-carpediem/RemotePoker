@@ -99,13 +99,15 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         }
     }
 
-    @MainActor func outputRoom(_ room: Room) {
+    @MainActor
+    func outputRoom(_ room: Room) {
         dependency.viewModel?.room = room
         disableButton(false)
         showLoader(false)
     }
 
-    @MainActor func showHeaderTitle() {
+    @MainActor
+    func showHeaderTitle() {
         guard let room = dependency.viewModel?.room else { return }
 
         let currentUserName = dependency.currentUserName
@@ -120,7 +122,8 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         showLoader(false)
     }
 
-    @MainActor func updateUserSelectStatusList() {
+    @MainActor
+    func updateUserSelectStatusList() {
         guard let room = dependency.viewModel?.room else { return }
 
         let userSelectStatusList: [UserSelectStatus] = room.userList.map { user in
@@ -144,12 +147,14 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         showLoader(false)
     }
 
-    @MainActor func outputSuccess(message: String) {
+    @MainActor
+    func outputSuccess(message: String) {
         dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 
-    @MainActor func outputError(_ error: Error, message: String) {
+    @MainActor
+    func outputError(_ error: Error, message: String) {
         dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
         dependency.viewModel?.isShownBanner = true
     }
@@ -208,33 +213,38 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     }
 
     /// 選択されたカード一覧を表示する
-    @MainActor private func showSelectedCardList() {
+    @MainActor
+    private func showSelectedCardList() {
         dependency.viewModel?.isShownSelectedCardList = true
         disableButton(false)
         showLoader(false)
     }
 
     /// 選択されたカード一覧を非表示にする
-    @MainActor private func hideSelectedCardList() {
+    @MainActor
+    private func hideSelectedCardList() {
         dependency.viewModel?.isShownSelectedCardList = false
         disableButton(false)
         showLoader(false)
     }
 
     /// ボタンを無効にする
-    @MainActor private func disableButton(_ disabled: Bool) {
+    @MainActor
+    private func disableButton(_ disabled: Bool) {
         dependency.viewModel?.isButtonEnabled = !disabled
     }
 
     /// ローダーを表示する
-    @MainActor private func showLoader(_ show: Bool) {
+    @MainActor
+    private func showLoader(_ show: Bool) {
         dependency.viewModel?.isShownLoader = show
     }
 
     // MARK: - Router
 
     /// 設定画面に遷移する
-    @MainActor private func pushSettingView() {
+    @MainActor
+    private func pushSettingView() {
         dependency.viewModel?.willPushSettingView = true
         disableButton(false)
         showLoader(false)
