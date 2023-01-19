@@ -22,7 +22,8 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         Task {
             await disableButton(true)
             await showLoader(true)
-            if RoomAuthDataStore.shared.isUsrLoggedIn {
+            let isUserLoggedIn = RoomAuthDataStore.shared.isUsrLoggedIn
+            if isUserLoggedIn {
                 // 新規ユーザー（EnterRoom画面が初期画面）
                 if let userId = RoomAuthDataStore.shared.fetchUserId() {
                     await self.setupData(userId: userId)
@@ -34,21 +35,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         }
     }
 
-    func viewDidResume() {
-        Task {
-            await disableButton(true)
-            await showLoader(true)
-            if RoomAuthDataStore.shared.isUsrLoggedIn {
-                // 新規ユーザー（EnterRoom画面が初期画面）
-                if let userId = RoomAuthDataStore.shared.fetchUserId() {
-                    await self.setupData(userId: userId)
-                }
-            } else {
-                // 既存ユーザー（この画面が初期画面）
-                self.login()
-            }
-        }
-    }
+    func viewDidResume() {}
 
     func viewDidSuspend() {}
 
@@ -169,7 +156,10 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
                 switch result {
                 case .success(let userId):
                     // ログインに成功した
-                    await self.setupData(userId: userId)
+                    // ユーザーのカレントルームがFirestore上に存在するか確認する
+                    if await self.checkUserInCurrentRoom() {
+                        await self.setupData(userId: userId)
+                    }
 
                 case .failure(let error):
                     // ログインに失敗した
@@ -182,18 +172,14 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 
     /// 各種データをセットアップする
     private func setupData(userId: String) async {
-        // ユーザーのカレントルームがFirestore上に存在するか確認する
-        if await checkUserInCurrentRoom() {
-            // 存在する場合
-            // ルームリポジトリにルームIDをセットし、各種データの購読を開始する
-            dependency.useCase.setupRoomRepository(roomId: dependency.roomId)
-            dependency.useCase.subscribeUsers()
-            dependency.useCase.subscribeCardPackages()
-            dependency.useCase.requestUser(userId: userId)
-            await requestRoom()
-            await showHeaderTitle()
-            await updateUserSelectStatusList()
-        }
+        // ルームリポジトリにルームIDをセットし、各種データの購読を開始する
+        dependency.useCase.setupRoomRepository(roomId: dependency.roomId)
+        dependency.useCase.subscribeUsers()
+        dependency.useCase.subscribeCardPackages()
+        dependency.useCase.requestUser(userId: userId)
+        await requestRoom()
+        await showHeaderTitle()
+        await updateUserSelectStatusList()
     }
 
     /// ユーザーに、存在するカレントルームがあるか確認する
