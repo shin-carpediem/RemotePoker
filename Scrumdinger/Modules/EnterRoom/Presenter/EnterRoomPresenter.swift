@@ -14,15 +14,13 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         self.dependency = dependency
     }
 
-    // MARK: - Presentation
+    // MARK: - EnterRoomPresentation
 
     func viewDidLoad() {}
 
     func viewDidResume() {}
 
     func viewDidSuspend() {}
-
-    // MARK: - EnterRoomPresentation
 
     var currentUser: User = .init(
         id: "",

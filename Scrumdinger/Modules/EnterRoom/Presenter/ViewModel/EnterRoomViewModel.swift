@@ -10,7 +10,7 @@ final class EnterRoomViewModel: EnterRoomObservable {
         disposeInputForm()
     }
 
-    // MARK: - ViewModel
+    // MARK: - EnterRoomObservable
 
     @MainActor
     @Published var isButtonEnabled = true
@@ -23,8 +23,6 @@ final class EnterRoomViewModel: EnterRoomObservable {
 
     @MainActor
     @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
-
-    // MARK: - EnterRoomObservable
 
     @MainActor
     @Published var inputName = ""

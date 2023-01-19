@@ -16,7 +16,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         self.dependency = dependency
     }
 
-    // MARK: - Presentation
+    // MARK: - CardListPresentation
 
     func viewDidLoad() {
         Task {
@@ -51,8 +51,6 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     }
 
     func viewDidSuspend() {}
-
-    // MARK: - CardListPresentation
 
     func didSelectCard(cardId: String) {
         Task {
@@ -184,7 +182,6 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 
     /// 各種データをセットアップする
     private func setupData(userId: String) async {
-        dependency.useCase.requestUser(userId: userId)
         // ユーザーのカレントルームがFirestore上に存在するか確認する
         if await checkUserInCurrentRoom() {
             // 存在する場合
@@ -192,6 +189,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
             dependency.useCase.setupRoomRepository(roomId: dependency.roomId)
             dependency.useCase.subscribeUsers()
             dependency.useCase.subscribeCardPackages()
+            dependency.useCase.requestUser(userId: userId)
             await requestRoom()
             await showHeaderTitle()
             await updateUserSelectStatusList()

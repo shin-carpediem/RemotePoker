@@ -1,7 +1,7 @@
 import Foundation
 
 actor SettingViewModel: SettingObservable {
-    // MARK: - ViewModel
+    // MARK: - SettingObservable
 
     @MainActor
     @Published var isButtonEnabled = true
@@ -14,8 +14,6 @@ actor SettingViewModel: SettingObservable {
 
     @MainActor
     @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
-
-    // MARK: - SettingObservable
 
     /// テーマカラー選択画面に遷移するか
     @MainActor

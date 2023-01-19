@@ -1,7 +1,7 @@
 import Foundation
 
 actor SelectThemeColorViewModel: SelectThemeColorObservable {
-    // MARK: - ViewModel
+    // MARK: - SelectThemeColorObservable
 
     @MainActor
     @Published var isButtonEnabled = true
@@ -14,8 +14,6 @@ actor SelectThemeColorViewModel: SelectThemeColorObservable {
 
     @MainActor
     @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
-
-    // MARK: - SelectThemeColorObservable
 
     @MainActor
     @Published var themeColorList: [ThemeColor] = []

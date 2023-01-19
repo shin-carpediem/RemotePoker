@@ -1,7 +1,7 @@
 import SwiftUI
 
 actor CardListViewModel: CardListObservable {
-    // MARK: - ViewModel
+    // MARK: - CardListObservable
 
     @MainActor
     @Published var isButtonEnabled = true
@@ -14,8 +14,6 @@ actor CardListViewModel: CardListObservable {
 
     @MainActor
     @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
-
-    // MARK: - CardListObservable
 
     @MainActor
     @Published var room = Room(id: 0, userList: [], cardPackage: .defaultCardPackage)

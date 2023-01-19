@@ -12,15 +12,13 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
         self.dependency = dependency
     }
 
-    // MARK: - Presentation
+    // MARK: - SettingPresentation
 
     func viewDidLoad() {}
 
     func viewDidResume() {}
 
     func viewDidSuspend() {}
-
-    // MARK: - SettingPresentation
 
     func didTapSelectThemeColorButton() {
         Task {
