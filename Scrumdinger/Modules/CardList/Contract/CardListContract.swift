@@ -17,13 +17,17 @@ protocol CardListObservable: ObservableObject, ViewModel {
     @MainActor
     var isShownSelectedCardList: Bool { get set }
 
-    /// 設定画面に遷移するか
+    /// ボタンの説明テキスト
     @MainActor
-    var willPushSettingView: Bool { get set }
+    var buttonText: String { get }
 
     @MainActor
     /// フローティングアクションボタンのシンボル名
     var fabIconName: String { get }
+
+    /// 設定画面に遷移するか
+    @MainActor
+    var willPushSettingView: Bool { get set }
 }
 
 protocol CardListPresentation: Presentation {
@@ -42,10 +46,6 @@ protocol CardListPresentation: Presentation {
 }
 
 protocol CardListUseCase: AnyObject {
-    /// ルームIDを必要とするルームリポジトリを有効にする
-    /// - parameter roomId: ルームID
-    func setupRoomRepository(roomId: Int)
-
     /// ルームが存在するか確認する
     /// - parameter roomId: ルームID:
     /// - returns ルームが存在するか
@@ -77,6 +77,7 @@ protocol CardListUseCase: AnyObject {
 
 protocol CardListInteractorOutput: AnyObject {
     /// ユーザーを出力する
+    @MainActor
     func outputUser(_ user: User)
 
     /// ルームを出力する

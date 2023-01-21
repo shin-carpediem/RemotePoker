@@ -36,22 +36,19 @@ protocol EnterRoomPresentation: Presentation {
 }
 
 protocol EnterRoomUseCase: AnyObject {
-    /// ルームIDを必要とするルームリポジトリを有効にする
-    /// - parameter roomId: ルームID
-    func setupRoomRepository(roomId: Int)
-
     /// ルームが存在するか確認する
-    /// - parameter roomId: ルームID:
+    /// - parameter roomId: ルームID
     /// - returns ルームが存在するか
     func checkRoomExist(roomId: Int) async -> Bool
-
-    /// ルームにユーザーを追加する
-    /// - parameter user: ユーザー
-    func adduserToRoom(user: User) async
 
     /// ルームを新規作成する
     /// - parameter room: ルーム
     func createRoom(room: Room) async
+
+    /// ルームにユーザーを追加する
+    /// - parameter roomId: ルームID
+    /// - parameter user: ユーザー
+    func adduserToRoom(roomId: Int, user: User) async
 }
 
 protocol EnterRoomInteractorOutput: AnyObject {

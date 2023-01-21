@@ -31,10 +31,10 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
             await disableButton(true)
             await showLoader(true)
             LocalStorage.shared.currentRoomId = 0
-            await dependency.useCase.leaveRoom()
+            LocalStorage.shared.currentUserId = ""
             dependency.useCase.unsubscribeUser()
             dependency.useCase.unsubscribeCardPackages()
-            dependency.useCase.disposeRoomRepository()
+            await dependency.useCase.leaveRoom()
             await disableButton(false)
             await showLoader(false)
         }

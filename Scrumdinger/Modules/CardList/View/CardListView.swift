@@ -85,7 +85,6 @@ struct CardListView: View, ModuleAssembler {
         let cardList = viewModel.room.cardPackage.cardList
         return LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
             ForEach(cardList) { card in
-                let themeColor = viewModel.room.cardPackage.themeColor
                 let isSelected =
                     (card.id
                         == viewModel.userSelectStatusList.first(where: {
@@ -93,7 +92,7 @@ struct CardListView: View, ModuleAssembler {
                         })?.selectedCard?.id)
                 CardView(
                     card: card,
-                    themeColor: themeColor,
+                    themeColor: viewModel.room.cardPackage.themeColor,
                     isEnabled: viewModel.isButtonEnabled,
                     isSelected: isSelected
                 ) { selectedCard in
@@ -125,9 +124,7 @@ struct CardListView: View, ModuleAssembler {
 
     /// ボタンの説明テキスト
     private var buttonText: some View {
-        let text =
-            viewModel.isShownSelectedCardList ? "自分の選択したカードをリセット" : "全員の選択されたカードを見る"
-        return Text(text)
+        Text(viewModel.buttonText)
             .foregroundColor(.gray)
             .font(.system(size: 14, weight: .regular))
     }
@@ -161,7 +158,7 @@ struct CardListView: View, ModuleAssembler {
                     cardPackageId: dependency.cardPackageId
                 )
                 .onDisappear {
-                    if !RoomAuthDataStore.shared.isUsrLoggedIn {
+                    if LocalStorage.shared.currentRoomId == 0 {
                         // ログアウトしている場合、ルート(=ひとつ前の画面)に遷移する
                         presentation.wrappedValue.dismiss()
                     }
@@ -178,12 +175,12 @@ struct CardListView_Previews: PreviewProvider {
         let viewModel = CardListViewModel()
         viewModel.userSelectStatusList = [
             .init(
-                id: 1,
+                id: "1",
                 user: CardListView_Previews.me,
                 themeColor: .navy,
                 selectedCard: CardView_Previews.card1),
             .init(
-                id: 2,
+                id: "2",
                 user: CardListView_Previews.user1,
                 themeColor: .indigo,
                 selectedCard: CardView_Previews.card2),

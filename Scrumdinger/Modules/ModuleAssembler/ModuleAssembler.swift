@@ -7,8 +7,10 @@ protocol ModuleAssembler {
     /// - parameter currentUserId: カレントユーザーID
     /// - parameter currentUserName: カレントユーザー名
     /// - parameter cardPackageId: カードパッケージID
+    /// - parameter isExisingUser: 既存ユーザーか
     func assembleCardList(
-        roomId: Int, currentUserId: String, currentUserName: String, cardPackageId: String
+        roomId: Int, currentUserId: String, currentUserName: String, cardPackageId: String,
+        isExisingUser: Bool
     ) -> CardListView
 
     /// 設定画面をアセンブルする

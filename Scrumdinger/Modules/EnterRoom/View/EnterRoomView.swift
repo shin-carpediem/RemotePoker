@@ -93,7 +93,8 @@ struct EnterRoomView: View, ModuleAssembler {
                         roomId: dependency.presenter.currentRoom.id,
                         currentUserId: dependency.presenter.currentUser.id,
                         currentUserName: dependency.presenter.currentUser.name,
-                        cardPackageId: dependency.presenter.currentRoom.cardPackage.id)
+                        cardPackageId: dependency.presenter.currentRoom.cardPackage.id,
+                        isExisingUser: false)
                 } else {
                     EmptyView()
                 }

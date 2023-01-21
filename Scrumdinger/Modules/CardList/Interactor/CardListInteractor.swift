@@ -4,7 +4,8 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     // MARK: - DependencyInjectable
 
     struct Dependency {
-        var repository: RoomDataStore
+        var undefinedRepository: UndefinedRoomRepository
+        var repository: RoomRepository
         weak var output: CardListInteractorOutput?
     }
 
@@ -14,38 +15,30 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
 
     // MARK: - CardListUseCase
 
-    func setupRoomRepository(roomId: Int) {
-        dependency.repository = RoomDataStore(roomId: roomId)
-    }
-
     func checkRoomExist(roomId: Int) async -> Bool {
-        await dependency.repository.checkRoomExist(roomId: roomId)
+        await dependency.undefinedRepository.checkRoomExist(roomId: roomId)
     }
 
     func subscribeUsers() {
         dependency.repository.subscribeUser { [weak self] result in
             guard let self = self else { return }
-            switch result {
-            case .success(let action):
-                switch action {
-                case .added, .removed:
-                    // ユーザーが入室あるいは退室した時
-                    Task {
+            Task {
+                switch result {
+                case .success(let action):
+                    switch action {
+                    case .added, .removed:
+                        // ユーザーが入室あるいは退室した時
                         await self.requestRoom()
                         await self.dependency.output?.showHeaderTitle()
                         await self.dependency.output?.updateUserSelectStatusList()
-                    }
 
-                case .modified:
-                    // ユーザーの選択済みカードが更新された時
-                    Task {
+                    case .modified:
+                        // ユーザーの選択済みカードが更新された時
                         await self.requestRoom()
                         await self.dependency.output?.updateUserSelectStatusList()
                     }
-                }
 
-            case .failure(let error):
-                Task {
+                case .failure(let error):
                     let message = "アプリ内に問題が発生しました。再度起動してください"
                     await self.dependency.output?.outputError(error, message: message)
                 }
@@ -60,21 +53,19 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     func subscribeCardPackages() {
         dependency.repository.subscribeCardPackage { [weak self] result in
             guard let self = self else { return }
-            switch result {
-            case .success(let action):
-                switch action {
-                case .modified:
-                    // カードパッケージのテーマカラーが変更された時
-                    Task {
+            Task {
+                switch result {
+                case .success(let action):
+                    switch action {
+                    case .modified:
+                        // カードパッケージのテーマカラーが変更された時
                         await self.requestRoom()
+
+                    case .added, .removed:
+                        return
                     }
 
-                case .added, .removed:
-                    return
-                }
-
-            case .failure(let error):
-                Task {
+                case .failure(let error):
                     let message = "アプリ内に問題が発生しました。再度起動してください"
                     await self.dependency.output?.outputError(error, message: message)
                 }
@@ -93,7 +84,10 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
 
     func requestUser(userId: String) {
         dependency.repository.fetchUser(id: userId) { [weak self] user in
-            self?.dependency.output?.outputUser(user)
+            guard let self = self else { return }
+            Task {
+                await self.dependency.output?.outputUser(user)
+            }
         }
     }
 

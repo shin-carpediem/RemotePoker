@@ -9,6 +9,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         var roomId: Int
         var currentUserId: String
         var currentUserName: String
+        var isExisingUser: Bool
         weak var viewModel: CardListViewModel?
     }
 
@@ -22,18 +23,23 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         Task {
             await disableButton(true)
             await showLoader(true)
-            let isUserLoggedIn = RoomAuthDataStore.shared.isUsrLoggedIn
-            if isUserLoggedIn {
-                // 新規ユーザー（EnterRoom画面が初期画面）
-                await self.setupData(userId: dependency.currentUserId)
-            } else {
+            if dependency.isExisingUser {
                 // 既存ユーザー（この画面が初期画面）
                 self.login()
+            } else {
+                // 新規ユーザー（EnterRoom画面が初期画面）
+                await self.setupData(userId: dependency.currentUserId)
             }
         }
     }
 
-    func viewDidResume() {}
+    func viewDidResume() {
+        Task {
+            await disableButton(true)
+            await showLoader(true)
+            await requestRoom()
+        }
+    }
 
     func viewDidSuspend() {}
 
@@ -73,18 +79,18 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 
     // MARK: - CardListInteractorOutput
 
+    @MainActor
     func outputUser(_ user: User) {
-        Task {
-            dependency.currentUserId = user.id
-            dependency.currentUserName = user.name
-            await disableButton(false)
-            await showLoader(false)
-        }
+        dependency.currentUserId = user.id
+        dependency.currentUserName = user.name
+        disableButton(false)
+        showLoader(false)
     }
 
     @MainActor
     func outputRoom(_ room: Room) {
         dependency.viewModel?.room = room
+        dependency.roomId = room.id
         disableButton(false)
         showLoader(false)
     }
@@ -111,17 +117,14 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 
         let userSelectStatusList: [UserSelectStatus] = room.userList.map { user in
             let cardPackage = room.cardPackage
-
-            let id = Int.random(in: 0..<99_999_999)
-            let themeColor = cardPackage.themeColor
             let selectedCard: Card? = cardPackage.cardList.first(where: {
                 $0.id == user.selectedCardId
             })
 
             return UserSelectStatus(
-                id: id,
+                id: UUID().uuidString,
                 user: user,
-                themeColor: themeColor,
+                themeColor: cardPackage.themeColor,
                 selectedCard: selectedCard)
         }
 
@@ -170,11 +173,9 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 
     /// 各種データをセットアップする
     private func setupData(userId: String) async {
-        // ルームリポジトリにルームIDをセットし、各種データの購読を開始する
-        dependency.useCase.setupRoomRepository(roomId: dependency.roomId)
         dependency.useCase.subscribeUsers()
         dependency.useCase.subscribeCardPackages()
-        dependency.useCase.requestUser(userId: userId)
+//        dependency.useCase.requestUser(userId: userId)
         await requestRoom()
         await showHeaderTitle()
         await updateUserSelectStatusList()

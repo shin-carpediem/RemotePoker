@@ -28,10 +28,12 @@ actor CardListViewModel: CardListObservable {
     @Published var isShownSelectedCardList = false
 
     @MainActor
-    @Published var willPushSettingView = false
+    var buttonText: String {
+        isShownSelectedCardList ? "自分の選択したカードをリセット" : "全員の選択されたカードを見る"
+    }
 
     @MainActor
-    lazy var fabIconName: String = {
+    var fabIconName: String {
         let selectedCardCount = userSelectStatusList.map { $0.selectedCard }.count
         let systemName: String = {
             if isShownSelectedCardList {
@@ -47,19 +49,8 @@ actor CardListViewModel: CardListObservable {
             }
         }()
         return systemName
-    }()
-}
+    }
 
-struct UserSelectStatus: Identifiable {
-    /// ID
-    var id: Int
-
-    /// ユーザー
-    var user: User
-
-    /// テーマカラー
-    var themeColor: ThemeColor
-
-    /// 選択済みカード
-    var selectedCard: Card?
+    @MainActor
+    @Published var willPushSettingView = false
 }

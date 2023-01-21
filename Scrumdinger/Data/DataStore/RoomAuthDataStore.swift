@@ -1,31 +1,11 @@
 import FirebaseAuth
 
 final class RoomAuthDataStore: RoomAuthRepository {
+    static let shared = RoomAuthDataStore()
+
     // MARK: - RoomAuthRepository
 
-    static var shared = RoomAuthDataStore()
-
-    private(set) var isUsrLoggedIn = false
-
-    func fetchUserId() -> String? {
-        Auth.auth().currentUser?.uid
-    }
-
-    func subscribeAuth() {
-        authListner = Auth.auth().addStateDidChangeListener { auth, user in
-            self.isUsrLoggedIn = (user != nil)
-        }
-    }
-
-    func unsubscribeAuth() -> Result<Void, RoomAuthError> {
-        guard let authListner = authListner else {
-            return .failure(.failedToUnsubscibeAuth)
-        }
-        Auth.auth().removeStateDidChangeListener(authListner)
-        return .success(())
-    }
-
-    func login(completion: @escaping (Result<String, RoomAuthError>) -> Void) {
+    func login(completion: @escaping (Result<String, FirebaseError>) -> Void) {
         Auth.auth().signInAnonymously { authResult, error in
             if let userId = authResult?.user.uid {
                 completion(.success(userId))
@@ -35,7 +15,7 @@ final class RoomAuthDataStore: RoomAuthRepository {
         }
     }
 
-    func logout() -> Result<Void, RoomAuthError> {
+    func logout() -> Result<Void, FirebaseError> {
         do {
             try Auth.auth().signOut()
             return .success(())
@@ -45,9 +25,6 @@ final class RoomAuthDataStore: RoomAuthRepository {
     }
 
     // MARK: - Private
-
-    /// 認証状況のリスナー
-    private var authListner: AuthStateDidChangeListenerHandle?
 
     // 外部からのインスタンス生成をコンパイルレベルで禁止
     private init() {}

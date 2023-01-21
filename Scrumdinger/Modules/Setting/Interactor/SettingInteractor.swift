@@ -4,7 +4,7 @@ final class SettingInteractor: SettingUseCase, DependencyInjectable {
     // MARK: - DependencyInjectable
 
     struct Dependency {
-        var repository: RoomRepository
+        var repository: RoomRepository?
         weak var output: SettingInteractorOutput?
         var currentUserId: String
     }
@@ -16,13 +16,15 @@ final class SettingInteractor: SettingUseCase, DependencyInjectable {
     // MARK: - SettingUseCase
 
     func leaveRoom() async {
-        let result = await dependency.repository.removeUserFromRoom(
+        guard let repository = dependency.repository else { return }
+        let result = await repository.removeUserFromRoom(
             userId: dependency.currentUserId)
         switch result {
         case .success(_):
             let logoutResult = RoomAuthDataStore.shared.logout()
             switch logoutResult {
             case .success(_):
+                dependency.repository = nil
                 let message = "ルームから退出しました"
                 await dependency.output?.outputSuccess(message: message)
 
@@ -37,16 +39,12 @@ final class SettingInteractor: SettingUseCase, DependencyInjectable {
         }
     }
 
-    func disposeRoomRepository() {
-        dependency.repository = RoomDataStore()
-    }
-
     func unsubscribeUser() {
-        dependency.repository.unsubscribeUser()
+        dependency.repository?.unsubscribeUser()
     }
 
     func unsubscribeCardPackages() {
-        dependency.repository.unsubscribeCardPackage()
+        dependency.repository?.unsubscribeCardPackage()
     }
 
     // MARK: - Private

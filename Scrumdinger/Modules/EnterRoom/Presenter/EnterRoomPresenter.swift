@@ -115,13 +115,13 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
             currentRoomId: roomId,
             selectedCardId: "")
         LocalStorage.shared.currentRoomId = roomId
+        LocalStorage.shared.currentUserId = userId
 
         // 入力ルームIDに合致する既存ルームが存在するか確認
         let roomExist = await dependency.useCase.checkRoomExist(roomId: roomId)
         if roomExist {
             // 既存ルーム
-            dependency.useCase.setupRoomRepository(roomId: roomId)
-            await dependency.useCase.adduserToRoom(user: currentUser)
+            await dependency.useCase.adduserToRoom(roomId: roomId, user: currentUser)
         } else {
             // 新規ルーム
             currentRoom = .init(
@@ -129,7 +129,6 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
                 userList: [currentUser],
                 cardPackage: .defaultCardPackage)
             await dependency.useCase.createRoom(room: currentRoom)
-            dependency.useCase.setupRoomRepository(roomId: currentRoom.id)
         }
     }
 

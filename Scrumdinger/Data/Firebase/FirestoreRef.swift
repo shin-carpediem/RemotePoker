@@ -2,6 +2,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct FirestoreRef {
+    /// ルームID
     var roomId: Int
 
     // MARK: - CollectionReference
