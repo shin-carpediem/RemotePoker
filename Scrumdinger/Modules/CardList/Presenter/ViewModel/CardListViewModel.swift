@@ -29,6 +29,25 @@ actor CardListViewModel: CardListObservable {
 
     @MainActor
     @Published var willPushSettingView = false
+
+    @MainActor
+    lazy var fabIconName: String = {
+        let selectedCardCount = userSelectStatusList.map { $0.selectedCard }.count
+        let systemName: String = {
+            if isShownSelectedCardList {
+                return "gobackward"
+            } else {
+                if selectedCardCount >= 3 {
+                    return "person.3.sequence"
+                } else if selectedCardCount == 2 {
+                    return "person.2"
+                } else {
+                    return "person"
+                }
+            }
+        }()
+        return systemName
+    }()
 }
 
 struct UserSelectStatus: Identifiable {

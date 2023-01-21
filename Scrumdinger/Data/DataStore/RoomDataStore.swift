@@ -13,11 +13,8 @@ final class RoomDataStore: RoomRepository {
     // MARK: - RoomRepository
 
     func checkRoomExist(roomId: Int) async -> Bool {
-        guard
-            let document = try? await Firestore.firestore().collection("rooms").document(
-                String(roomId)
-            ).getDocument()
-        else { return false }
+        let roomDocument = Firestore.firestore().collection("rooms").document(String(roomId))
+        guard let document = try? await roomDocument.getDocument() else { return false }
         return document.exists
     }
 

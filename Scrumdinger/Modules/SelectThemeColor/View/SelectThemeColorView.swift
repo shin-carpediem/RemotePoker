@@ -29,7 +29,6 @@ struct SelectThemeColorView: View {
 
     var body: some View {
         ZStack {
-            Colors.screenBackground
             contentView
             if viewModel.isShownLoader { Loader() }
         }
@@ -45,6 +44,7 @@ struct SelectThemeColorView: View {
             List(viewModel.themeColorList, id: \.self) { color in
                 colorCell(color)
             }
+            .listBackground(Colors.background)
             .listStyle(.insetGrouped)
         }
     }
@@ -52,28 +52,29 @@ struct SelectThemeColorView: View {
     /// カラーセル
     private func colorCell(_ color: ThemeColor) -> some View {
         let isThemeColor = color == viewModel.selectedThemeColor
-        // TODO: 背景色がつかない
-        let themeLabel: some View = {
-            Text(color.rawValue)
-                .font(.system(size: 18, weight: .bold))
-                .foregroundColor(.gray)
-                .background(color.opacity(0.5))
-        }()
-        let label: some View = {
-            Text(color.rawValue)
-                .foregroundColor(.gray)
-        }()
-
         return Button {
             dependency.presenter.didTapColor(color: color)
         } label: {
             if isThemeColor {
-                themeLabel
+                themeLabel(color)
             } else {
-                label
+                label(color)
             }
         }
         .disabled(!viewModel.isButtonEnabled)
+    }
+
+    /// テーマラベル
+    private func themeLabel(_ color: ThemeColor) -> some View {
+        Text(color.rawValue)
+            .font(.system(size: 18, weight: .bold))
+            .foregroundColor(.gray)
+    }
+
+    /// ラベル
+    private func label(_ color: ThemeColor) -> some View {
+        Text(color.rawValue)
+            .foregroundColor(.gray)
     }
 }
 

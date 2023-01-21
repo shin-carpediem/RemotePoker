@@ -29,7 +29,7 @@ struct EnterRoomView: View, ModuleAssembler {
     var body: some View {
         NavigationView {
             ZStack {
-                Colors.screenBackground
+                Colors.background.ignoresSafeArea()
                 contentView
                 navigationForCardListView
                 if viewModel.isShownLoader { Loader() }

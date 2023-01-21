@@ -25,9 +25,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
             let isUserLoggedIn = RoomAuthDataStore.shared.isUsrLoggedIn
             if isUserLoggedIn {
                 // 新規ユーザー（EnterRoom画面が初期画面）
-                if let userId = RoomAuthDataStore.shared.fetchUserId() {
-                    await self.setupData(userId: userId)
-                }
+                await self.setupData(userId: dependency.currentUserId)
             } else {
                 // 既存ユーザー（この画面が初期画面）
                 self.login()

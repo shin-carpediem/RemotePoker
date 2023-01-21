@@ -32,7 +32,6 @@ struct ScrumdingerApp: App, ModuleAssembler {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                //                if LocalStorage.shared.currentRoomId != 0 {
                 if RoomAuthDataStore.shared.isUsrLoggedIn {
                     // ログイン中(currentUserId, currentUserNameは後で取得)
                     assembleCardList(

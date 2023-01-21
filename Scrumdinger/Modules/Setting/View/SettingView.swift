@@ -31,7 +31,6 @@ struct SettingView: View, ModuleAssembler {
 
     var body: some View {
         ZStack {
-            Colors.screenBackground
             contentView
             navigationForSelectThemeColorView
             if viewModel.isShownLoader { Loader() }
@@ -49,6 +48,7 @@ struct SettingView: View, ModuleAssembler {
                 selecteThemeColorButton
                 leaveButton
             }
+            .listBackground(Colors.background)
             .listStyle(.insetGrouped)
         }
     }

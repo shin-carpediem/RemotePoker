@@ -20,6 +20,10 @@ protocol CardListObservable: ObservableObject, ViewModel {
     /// 設定画面に遷移するか
     @MainActor
     var willPushSettingView: Bool { get set }
+
+    @MainActor
+    /// フローティングアクションボタンのシンボル名
+    var fabIconName: String { get }
 }
 
 protocol CardListPresentation: Presentation {

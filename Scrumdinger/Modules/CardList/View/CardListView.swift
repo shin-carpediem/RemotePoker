@@ -33,7 +33,7 @@ struct CardListView: View, ModuleAssembler {
 
     var body: some View {
         ZStack {
-            Colors.screenBackground
+            Colors.background.ignoresSafeArea()
             contentView
             navigationForSettingView
             if viewModel.isShownLoader { Loader() }
@@ -141,20 +141,7 @@ struct CardListView: View, ModuleAssembler {
                 dependency.presenter.didTapOpenSelectedCardListButton()
             }
         } label: {
-            let selectedCardCount = viewModel.userSelectStatusList.map { $0.selectedCard }.count
-            let systemName: String
-            if viewModel.isShownSelectedCardList {
-                systemName = "gobackward"
-            } else {
-                if selectedCardCount >= 3 {
-                    systemName = "person.3.sequence"
-                } else if selectedCardCount == 2 {
-                    systemName = "person.2"
-                } else {
-                    systemName = "person"
-                }
-            }
-            return Image(systemName: systemName).foregroundColor(.gray)
+            Image(systemName: viewModel.fabIconName).foregroundColor(.gray)
         }
         .softButtonStyle(Circle())
         .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))

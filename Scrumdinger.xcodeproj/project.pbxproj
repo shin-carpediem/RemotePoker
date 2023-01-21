@@ -72,6 +72,7 @@
 		F5C397DC289F40C6008AEFF2 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DB289F40C6008AEFF2 /* Room.swift */; };
 		F5C397E0289F420F008AEFF2 /* EnterRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */; };
 		F5CBD36B296A3EA7008BB8DE /* LoaderUI in Frameworks */ = {isa = PBXBuildFile; productRef = F5CBD36A296A3EA7008BB8DE /* LoaderUI */; };
+		F5DDCD1B297B86B300786C35 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1A297B86B300786C35 /* List.swift */; };
 		F5E05171292BB05F006EA727 /* RoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E05170292BB05F006EA727 /* RoomRepository.swift */; };
 		F5E05175292BB134006EA727 /* RoomDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E05174292BB134006EA727 /* RoomDataStore.swift */; };
 		F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */; };
@@ -163,6 +164,7 @@
 		F5C397D9289E9342008AEFF2 /* CardPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPackage.swift; sourceTree = "<group>"; };
 		F5C397DB289F40C6008AEFF2 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomView.swift; sourceTree = "<group>"; };
+		F5DDCD1A297B86B300786C35 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		F5E05170292BB05F006EA727 /* RoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomRepository.swift; sourceTree = "<group>"; };
 		F5E05174292BB134006EA727 /* RoomDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDataStore.swift; sourceTree = "<group>"; };
 		F5E917C7287114DC00AE8421 /* Scrumdinger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrumdinger.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -514,6 +516,14 @@
 			path = Interactor;
 			sourceTree = "<group>";
 		};
+		F5DDCD19297B869F00786C35 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				F5DDCD1A297B86B300786C35 /* List.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		F5E051662929B116006EA727 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -623,6 +633,7 @@
 				F5125F26292DF92700C822FE /* Modules */,
 				F5150AFB29694B95008ADAD6 /* ViewModifier */,
 				F5AFC1DB296BBEBE00A4FFCA /* ViewComponents */,
+				F5DDCD19297B869F00786C35 /* Extension */,
 				F5AFC1E0296BC21500A4FFCA /* Resources */,
 				F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */,
 				F5E917CE287114E900AE8421 /* Assets.xcassets */,
@@ -854,6 +865,7 @@
 				F57C64212956BB7C00CD55CD /* SelectThemeColorViewModel.swift in Sources */,
 				F5B2FADB294476BA00592363 /* SettingPresenter.swift in Sources */,
 				F5802D0B293218A800955949 /* CardListContract.swift in Sources */,
+				F5DDCD1B297B86B300786C35 /* List.swift in Sources */,
 				F5AFC1DA296BBCFD00A4FFCA /* Loader.swift in Sources */,
 				F523669A2891E837005B1F65 /* CardListView.swift in Sources */,
 				F5802D0529320F1B00955949 /* ModuleAssembler+Default.swift in Sources */,

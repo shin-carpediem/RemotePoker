@@ -97,7 +97,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
             return false
         }
 
-        let isRoomIdSavedAtLocal: Bool = ( currentUser.currentRoomId != 0 )
+        let isRoomIdSavedAtLocal: Bool = (currentUser.currentRoomId != 0)
         if isRoomIdSavedAtLocal {
             return await dependency.useCase.checkRoomExist(roomId: currentUser.currentRoomId)
         } else {
@@ -123,7 +123,6 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
             dependency.useCase.setupRoomRepository(roomId: roomId)
             await dependency.useCase.adduserToRoom(user: currentUser)
         } else {
-            // TODO: 2人目のユーザーもこっちに遷移しまう
             // 新規ルーム
             currentRoom = .init(
                 id: roomId,
