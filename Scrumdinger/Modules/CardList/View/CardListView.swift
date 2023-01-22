@@ -158,7 +158,10 @@ struct CardListView: View, ModuleAssembler {
                     cardPackageId: dependency.cardPackageId
                 )
                 .onDisappear {
-                    if LocalStorage.shared.currentRoomId == 0 {
+                    let isUserLoggedOut =
+                        (LocalStorage.shared.currentRoomId == 0
+                            && LocalStorage.shared.currentUserId == "")
+                    if isUserLoggedOut {
                         // ログアウトしている場合、ルート(=ひとつ前の画面)に遷移する
                         presentation.wrappedValue.dismiss()
                     }

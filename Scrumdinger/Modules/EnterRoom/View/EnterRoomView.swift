@@ -90,6 +90,7 @@ struct EnterRoomView: View, ModuleAssembler {
                 // willPushCardListView が評価されるタイミングで値を見るようにする
                 if viewModel.willPushCardListView {
                     assembleCardList(
+                        // TODO: ルーム2人目はroomIdが0になってしまう
                         roomId: dependency.presenter.currentRoom.id,
                         currentUserId: dependency.presenter.currentUser.id,
                         currentUserName: dependency.presenter.currentUser.name,

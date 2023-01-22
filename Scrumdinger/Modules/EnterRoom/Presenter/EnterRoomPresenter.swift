@@ -121,6 +121,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         let roomExist = await dependency.useCase.checkRoomExist(roomId: roomId)
         if roomExist {
             // 既存ルーム
+            currentRoom.id = roomId
             await dependency.useCase.adduserToRoom(roomId: roomId, user: currentUser)
         } else {
             // 新規ルーム
