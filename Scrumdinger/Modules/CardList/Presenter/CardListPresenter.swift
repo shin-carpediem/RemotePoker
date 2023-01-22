@@ -9,6 +9,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         var roomId: Int
         var currentUserId: String
         var currentUserName: String
+        var isExisingUser: Bool
         weak var viewModel: CardListViewModel?
     }
 
@@ -16,25 +17,27 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         self.dependency = dependency
     }
 
-    // MARK: - Presentation
+    // MARK: - CardListPresentation
 
     func viewDidLoad() {
-        dependency.useCase.activateRoomDelegate(self)
-        dependency.useCase.subscribeUsers()
-        dependency.useCase.subscribeCardPackages()
-    }
-
-    func viewDidResume() {
         Task {
-            await requestRoom()
-            await showHeaderTitle()
-            await updateUserSelectStatusList()
+            await disableButton(true)
+            await showLoader(true)
+            if dependency.isExisingUser {
+                // 既存ユーザー（この画面が初期画面）
+                self.login()
+            } else {
+                // 新規ユーザー（EnterRoom画面が初期画面）
+                await self.setupData(
+                    userId: dependency.currentUserId, shouldFetchData: self.dependency.isExisingUser
+                )
+            }
         }
     }
 
-    func viewDidSuspend() {}
+    func viewDidResume() {}
 
-    // MARK: - CardListPresentation
+    func viewDidSuspend() {}
 
     func didSelectCard(cardId: String) {
         Task {
@@ -72,32 +75,24 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 
     // MARK: - CardListInteractorOutput
 
-    @MainActor func outputRoom(_ room: Room) {
-        dependency.viewModel?.room = room
+    @MainActor
+    func outputUser(_ user: User) {
+        dependency.currentUserId = user.id
+        dependency.currentUserName = user.name
         disableButton(false)
         showLoader(false)
     }
 
-    @MainActor func outputSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
-        dependency.viewModel?.isShownBanner = true
+    @MainActor
+    func outputRoom(_ room: Room) {
+        dependency.viewModel?.room = room
+        dependency.roomId = room.id
+        disableButton(false)
+        showLoader(false)
     }
 
-    @MainActor func outputError(_ error: Error, message: String) {
-        dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
-        dependency.viewModel?.isShownBanner = true
-    }
-
-    // MARK: - Private
-
-    private var dependency: Dependency!
-
-    /// ルームを要求する
-    private func requestRoom() async {
-        await dependency.useCase.requestRoom()
-    }
-    /// ヘッダーテキストを表示する
-    @MainActor private func showHeaderTitle() {
+    @MainActor
+    func showHeaderTitle() {
         guard let room = dependency.viewModel?.room else { return }
 
         let currentUserName = dependency.currentUserName
@@ -112,23 +107,20 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         showLoader(false)
     }
 
-    /// ユーザーの選択状況一覧を更新する
-    @MainActor private func updateUserSelectStatusList() {
+    @MainActor
+    func updateUserSelectStatusList() {
         guard let room = dependency.viewModel?.room else { return }
 
         let userSelectStatusList: [UserSelectStatus] = room.userList.map { user in
             let cardPackage = room.cardPackage
-
-            let id = Int.random(in: 0..<99_999_999)
-            let themeColor = cardPackage.themeColor
             let selectedCard: Card? = cardPackage.cardList.first(where: {
                 $0.id == user.selectedCardId
             })
 
             return UserSelectStatus(
-                id: id,
+                id: UUID().uuidString,
                 user: user,
-                themeColor: themeColor,
+                themeColor: cardPackage.themeColor,
                 selectedCard: selectedCard)
         }
 
@@ -137,78 +129,99 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         showLoader(false)
     }
 
+    @MainActor
+    func outputSuccess(message: String) {
+        dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
+        dependency.viewModel?.isShownBanner = true
+    }
+
+    @MainActor
+    func outputError(_ error: Error, message: String) {
+        dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
+        dependency.viewModel?.isShownBanner = true
+    }
+
+    // MARK: - Private
+
+    private var dependency: Dependency!
+
+    /// 匿名ログインする
+    private func login() {
+        RoomAuthDataStore.shared.login { [weak self] result in
+            guard let self = self else { return }
+            Task {
+                switch result {
+                case .success(let userId):
+                    // ログインに成功した
+                    // ユーザーのカレントルームがFirestore上に存在するか確認する
+                    if await self.checkUserInCurrentRoom() {
+                        await self.setupData(
+                            userId: userId, shouldFetchData: self.dependency.isExisingUser)
+                    }
+
+                case .failure(let error):
+                    // ログインに失敗した
+                    let message = "ログインできませんでした。アプリを再インストールしてください"
+                    await self.outputError(error, message: message)
+                }
+            }
+        }
+    }
+
+    /// 各種データをセットアップする
+    private func setupData(userId: String, shouldFetchData: Bool) async {
+        dependency.useCase.subscribeUsers()
+        dependency.useCase.subscribeCardPackages()
+        if shouldFetchData {
+            dependency.useCase.requestUser(userId: userId)
+            await dependency.useCase.requestRoom()
+        }
+        await showHeaderTitle()
+        await updateUserSelectStatusList()
+    }
+
+    /// ユーザーに、存在するカレントルームがあるか確認する
+    private func checkUserInCurrentRoom() async -> Bool {
+        if dependency.roomId == 0 {
+            return false
+        } else {
+            return await dependency.useCase.checkRoomExist(roomId: dependency.roomId)
+        }
+    }
+
     /// 選択されたカード一覧を表示する
-    @MainActor private func showSelectedCardList() {
+    @MainActor
+    private func showSelectedCardList() {
         dependency.viewModel?.isShownSelectedCardList = true
         disableButton(false)
         showLoader(false)
     }
 
     /// 選択されたカード一覧を非表示にする
-    @MainActor private func hideSelectedCardList() {
+    @MainActor
+    private func hideSelectedCardList() {
         dependency.viewModel?.isShownSelectedCardList = false
         disableButton(false)
         showLoader(false)
     }
 
     /// ボタンを無効にする
-    @MainActor private func disableButton(_ disabled: Bool) {
+    @MainActor
+    private func disableButton(_ disabled: Bool) {
         dependency.viewModel?.isButtonEnabled = !disabled
     }
 
     /// ローダーを表示する
-    @MainActor private func showLoader(_ show: Bool) {
+    @MainActor
+    private func showLoader(_ show: Bool) {
         dependency.viewModel?.isShownLoader = show
     }
 
     // MARK: - Router
 
     /// 設定画面に遷移する
-    @MainActor private func pushSettingView() {
+    @MainActor
+    private func pushSettingView() {
         dependency.viewModel?.willPushSettingView = true
-        disableButton(false)
-        showLoader(false)
-    }
-}
-
-// MARK: - RoomDelegate
-
-extension CardListPresenter: RoomDelegate {
-    func whenUserChanged(action: UserAction) {
-        switch action {
-        case .added, .removed:
-            // ユーザーが入室あるいは退室した時
-            Task {
-                await requestRoom()
-                await showHeaderTitle()
-                await updateUserSelectStatusList()
-            }
-
-        case .modified:
-            // ユーザーの選択済みカードが更新された時
-            Task {
-                await requestRoom()
-                await updateUserSelectStatusList()
-            }
-
-        case .unKnown:
-            fatalError()
-        }
-    }
-
-    func whenCardPackageChanged(action: CardPackageAction) {
-        switch action {
-        case .modified:
-            // カードパッケージのテーマカラーが変更された時
-            Task {
-                await requestRoom()
-            }
-
-        case .added, .removed:
-            ()
-
-        case .unKnown:
-            fatalError()
-        }
     }
 }

@@ -4,7 +4,7 @@ final class SelectThemeColorInteractor: SelectThemeColorUseCase, DependencyInjec
     // MARK: - DependencyInjectable
 
     struct Dependency {
-        var roomRepository: RoomRepository
+        var repository: RoomRepository
         weak var output: SelectThemeColorInteractorOutput?
         var cardPackageId: String
     }
@@ -17,7 +17,7 @@ final class SelectThemeColorInteractor: SelectThemeColorUseCase, DependencyInjec
 
     func updateThemeColor(themeColor: ThemeColor) {
         Task { @MainActor in
-            dependency.roomRepository.updateThemeColor(
+            dependency.repository.updateThemeColor(
                 cardPackageId: dependency.cardPackageId,
                 themeColor: themeColor)
 

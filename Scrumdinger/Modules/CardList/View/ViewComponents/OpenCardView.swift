@@ -57,7 +57,7 @@ struct OpenCardView_Previews: PreviewProvider {
         Group {
             OpenCardView(
                 userSelectStatus: .init(
-                    id: 0,
+                    id: "0",
                     user: CardListView_Previews.me,
                     themeColor: .buttercup,
                     selectedCard: CardView_Previews.card2)
@@ -66,7 +66,7 @@ struct OpenCardView_Previews: PreviewProvider {
 
             OpenCardView(
                 userSelectStatus: .init(
-                    id: 0,
+                    id: "0",
                     user: CardListView_Previews.me,
                     themeColor: .buttercup,
                     selectedCard: nil)

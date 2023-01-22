@@ -5,8 +5,6 @@ enum UserAction {
     case modified
     /// ユーザーが削除された時
     case removed
-    /// 不明
-    case unKnown
 }
 
 enum CardPackageAction {
@@ -16,51 +14,32 @@ enum CardPackageAction {
     case modified
     /// カードパッケージが削除された時
     case removed
-    /// 不明
-    case unKnown
-}
-
-protocol RoomDelegate: AnyObject {
-    /// ルームにユーザーが追加/更新/削除された時
-    func whenUserChanged(action: UserAction)
-
-    /// ルームのカードバッケージのテーマカラーが更新された時
-    func whenCardPackageChanged(action: CardPackageAction)
 }
 
 protocol RoomRepository: AnyObject {
-    /// デリゲート
-    var delegate: RoomDelegate? { get set }
-
-    /// ルームが存在するか確認する
-    /// - parameter roomId: ルームID
-    /// - returns: 存在するか
-    func checkRoomExist(roomId: Int) async -> Bool
-
-    /// ルームを新規作成する
-    /// - parameter room: ルーム
-    func createRoom(_ room: Room) async -> Result<Void, RoomError>
-
     /// ルームを取得する
     /// - returns: ルーム
-    func fetchRoom() async -> Result<Room, RoomError>
+    func fetchRoom() async -> Result<Room, FirebaseError>
 
     /// ルームにユーザーを追加する
     /// - parameter user: ユーザー
-    func addUserToRoom(user: User) async -> Result<Void, RoomError>
+    func addUserToRoom(user: User) async -> Result<Void, FirebaseError>
 
     /// ルームからユーザーを削除する
     /// - parameter userId: ユーザーID
-    func removeUserFromRoom(userId: String) async -> Result<Void, RoomError>
+    func removeUserFromRoom(userId: String) async -> Result<Void, FirebaseError>
 
     /// ユーザーを購読する
-    func subscribeUser()
+    /// - returns: ユーザーへのCRUOの種類
+    func subscribeUser(completion: @escaping (Result<UserAction, FirebaseError>) -> Void)
 
     /// ユーザーの購読を解除する
     func unsubscribeUser()
 
     /// カードパッケージを購読する
-    func subscribeCardPackage()
+    /// - returns: カードパッケージへのCRUDの種類
+    func subscribeCardPackage(
+        completion: @escaping (Result<CardPackageAction, FirebaseError>) -> Void)
 
     /// カードパッケージの購読を解除する
     func unsubscribeCardPackage()
@@ -78,21 +57,4 @@ protocol RoomRepository: AnyObject {
     /// - parameter cardPackageId: カードパッケージID
     /// - parameter themeColor: テーマカラー
     func updateThemeColor(cardPackageId: String, themeColor: ThemeColor)
-}
-
-enum RoomError: Error {
-    /// ルームの新規作成に失敗した時
-    case failedToCreateRoom
-
-    /// ルームの取得に失敗した時
-    case failedToFetchRoom
-
-    /// ルームへのユーザー追加に失敗した時
-    case failedToAddUserToRoom
-
-    /// ルームからの退出に失敗した時
-    case failedToRemoveUserFromRoom
-
-    /// 指定IDのユーザー取得に失敗した時
-    case failedToFetchUser
 }

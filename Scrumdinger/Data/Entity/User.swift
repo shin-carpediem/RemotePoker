@@ -12,10 +12,16 @@ struct User {
     var selectedCardId: String
 }
 
-enum EnterRoomAction {
-    /// 入室中のルームに入る
-    case enterCurrentRoom
+struct UserSelectStatus: Identifiable {
+    /// ID
+    var id: String
 
-    /// 入室中ではないルームに入る
-    case enterOtherRoom(isNew: Bool)
+    /// ユーザー
+    var user: User
+
+    /// テーマカラー
+    var themeColor: ThemeColor
+
+    /// 選択済みカード
+    var selectedCard: Card?
 }

@@ -5,15 +5,15 @@ extension ModuleAssembler {
         let interactor = EnterRoomInteractor()
 
         presenter.inject(.init(useCase: interactor, viewModel: viewModel))
-        interactor.inject(.init(roomRepository: RoomDataStore(), output: presenter))
-
+        interactor.inject(.init(repository: UndefinedRoomDataStore(), output: presenter))
         let view = EnterRoomView(dependency: .init(presenter: presenter), viewModel: viewModel)
 
         return view
     }
 
     func assembleCardList(
-        roomId: Int, currentUserId: String, currentUserName: String, cardPackageId: String
+        roomId: Int, currentUserId: String, currentUserName: String, cardPackageId: String,
+        isExisingUser: Bool
     ) -> CardListView {
         let viewModel = CardListViewModel()
         let presenter = CardListPresenter()
@@ -25,9 +25,12 @@ extension ModuleAssembler {
                 roomId: roomId,
                 currentUserId: currentUserId,
                 currentUserName: currentUserName,
+                isExisingUser: isExisingUser,
                 viewModel: viewModel))
-        interactor.inject(.init(roomRepository: RoomDataStore(roomId: roomId), output: presenter))
-
+        interactor.inject(
+            .init(
+                undefinedRepository: UndefinedRoomDataStore(),
+                repository: RoomDataStore(roomId: roomId), output: presenter))
         let view = CardListView(
             dependency: .init(
                 presenter: presenter,
@@ -47,10 +50,9 @@ extension ModuleAssembler {
         presenter.inject(.init(useCase: interactor, viewModel: viewModel))
         interactor.inject(
             .init(
-                roomRepository: RoomDataStore(roomId: roomId),
+                repository: RoomDataStore(roomId: roomId),
                 output: presenter,
                 currentUserId: currentUserId))
-
         let view = SettingView(
             dependency: .init(
                 presenter: presenter,
@@ -69,10 +71,9 @@ extension ModuleAssembler {
         presenter.inject(.init(useCase: interactor, viewModel: viewModel))
         interactor.inject(
             .init(
-                roomRepository: RoomDataStore(roomId: roomId),
+                repository: RoomDataStore(roomId: roomId),
                 output: presenter,
                 cardPackageId: cardPackageId))
-
         let view = SelectThemeColorView(
             dependency: .init(presenter: presenter), viewModel: viewModel)
 

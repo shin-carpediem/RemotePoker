@@ -1,39 +1,21 @@
 import FirebaseAuth
 
 final class RoomAuthDataStore: RoomAuthRepository {
+    static let shared = RoomAuthDataStore()
+
     // MARK: - RoomAuthRepository
 
-    static var shared = RoomAuthDataStore()
-
-    weak var delegate: RoomAuthDelegate?
-
-    func fetchUserId() -> String? {
-        Auth.auth().currentUser?.uid
-    }
-
-    func isUserLoggedIn() -> Bool {
-        if let isUserLogin = Auth.auth().currentUser?.isAnonymous {
-            return isUserLogin
-        } else {
-            return false
+    func login(completion: @escaping (Result<String, FirebaseError>) -> Void) {
+        Auth.auth().signInAnonymously { authResult, error in
+            if let userId = authResult?.user.uid {
+                completion(.success(userId))
+            } else {
+                completion(.failure(.failedToLogin))
+            }
         }
     }
 
-    func login() {
-        Auth.auth().signInAnonymously { [weak self] authResult, error in
-            if error != nil {
-                self?.delegate?.whenFailedToLogin(error: .failedToLogin)
-                return
-            }
-            guard let authResult = authResult else {
-                self?.delegate?.whenFailedToLogin(error: .failedToLogin)
-                return
-            }
-            self?.delegate?.whenSuccessLogin(userId: authResult.user.uid)
-        }
-    }
-
-    func logout() -> Result<Void, RoomAuthError> {
+    func logout() -> Result<Void, FirebaseError> {
         do {
             try Auth.auth().signOut()
             return .success(())

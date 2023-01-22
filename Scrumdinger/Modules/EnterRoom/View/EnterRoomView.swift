@@ -29,17 +29,12 @@ struct EnterRoomView: View, ModuleAssembler {
     var body: some View {
         NavigationView {
             ZStack {
-                Colors.screenBackground
+                Colors.background.ignoresSafeArea()
                 contentView
                 navigationForCardListView
                 if viewModel.isShownLoader { Loader() }
             }
         }
-        .navigationTitle("RemotePoker")
-        .alert(
-            isPresented: $viewModel.isShownEnterCurrentRoomAlert,
-            content: { enterCurrentRoomAlert }
-        )
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
@@ -56,20 +51,6 @@ struct EnterRoomView: View, ModuleAssembler {
         .padding(.horizontal, 40)
     }
 
-    /// 入室中のルームに入るか促すアラート
-    private var enterCurrentRoomAlert: Alert {
-        .init(
-            title: Text("既存のルームに入りますか？"),
-            primaryButton: .default(
-                Text("入る"),
-                action: {
-                    dependency.presenter.didTapEnterCurrentRoomButton()
-                }),
-            secondaryButton: .cancel {
-                dependency.presenter.didCancelEnterCurrentRoomButton()
-            })
-    }
-
     /// 入力フォーム
     private var inputField: some View {
         HStack(spacing: 14) {
@@ -78,6 +59,7 @@ struct EnterRoomView: View, ModuleAssembler {
         }
     }
 
+    /// 入力フォーム内容が有効か評価されて表示されるメッセージ
     private var validatedMessage: some View {
         let textColor: Color = viewModel.isInputFormValid ? .green : .red
         return Text(viewModel.inputFormvalidatedMessage)
@@ -104,12 +86,15 @@ struct EnterRoomView: View, ModuleAssembler {
         NavigationLink(
             isActive: $viewModel.willPushCardListView,
             destination: {
+                // Viewの表示時に、以下の存在しないルームIDも以下に代入されてクラッシュするのを防ぐため、
+                // willPushCardListView が評価されるタイミングで値を見るようにする
                 if viewModel.willPushCardListView {
                     assembleCardList(
                         roomId: dependency.presenter.currentRoom.id,
                         currentUserId: dependency.presenter.currentUser.id,
                         currentUserName: dependency.presenter.currentUser.name,
-                        cardPackageId: dependency.presenter.currentRoom.cardPackage.id)
+                        cardPackageId: dependency.presenter.currentRoom.cardPackage.id,
+                        isExisingUser: false)
                 } else {
                     EmptyView()
                 }

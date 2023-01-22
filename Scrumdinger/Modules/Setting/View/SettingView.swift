@@ -31,7 +31,6 @@ struct SettingView: View, ModuleAssembler {
 
     var body: some View {
         ZStack {
-            Colors.screenBackground
             contentView
             navigationForSelectThemeColorView
             if viewModel.isShownLoader { Loader() }
@@ -49,6 +48,7 @@ struct SettingView: View, ModuleAssembler {
                 selecteThemeColorButton
                 leaveButton
             }
+            .listBackground(Colors.background)
             .listStyle(.insetGrouped)
         }
     }
@@ -65,6 +65,7 @@ struct SettingView: View, ModuleAssembler {
                     .foregroundColor(.gray)
             }
         }
+        .disabled(!viewModel.isButtonEnabled)
     }
 
     /// 退出ボタン
@@ -90,13 +91,9 @@ struct SettingView: View, ModuleAssembler {
         NavigationLink(
             isActive: $viewModel.willPushSelectThemeColorView,
             destination: {
-                if viewModel.willPushSelectThemeColorView {
-                    assembleSelectThemeColor(
-                        roomId: dependency.roomId,
-                        cardPackageId: dependency.cardPackageId)
-                } else {
-                    EmptyView()
-                }
+                assembleSelectThemeColor(
+                    roomId: dependency.roomId,
+                    cardPackageId: dependency.cardPackageId)
             }
         ) { EmptyView() }
     }

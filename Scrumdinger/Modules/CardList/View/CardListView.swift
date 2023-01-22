@@ -33,7 +33,7 @@ struct CardListView: View, ModuleAssembler {
 
     var body: some View {
         ZStack {
-            Colors.screenBackground
+            Colors.background.ignoresSafeArea()
             contentView
             navigationForSettingView
             if viewModel.isShownLoader { Loader() }
@@ -85,7 +85,6 @@ struct CardListView: View, ModuleAssembler {
         let cardList = viewModel.room.cardPackage.cardList
         return LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
             ForEach(cardList) { card in
-                let themeColor = viewModel.room.cardPackage.themeColor
                 let isSelected =
                     (card.id
                         == viewModel.userSelectStatusList.first(where: {
@@ -93,7 +92,7 @@ struct CardListView: View, ModuleAssembler {
                         })?.selectedCard?.id)
                 CardView(
                     card: card,
-                    themeColor: themeColor,
+                    themeColor: viewModel.room.cardPackage.themeColor,
                     isEnabled: viewModel.isButtonEnabled,
                     isSelected: isSelected
                 ) { selectedCard in
@@ -125,9 +124,7 @@ struct CardListView: View, ModuleAssembler {
 
     /// ボタンの説明テキスト
     private var buttonText: some View {
-        let text =
-            viewModel.isShownSelectedCardList ? "自分の選択したカードをリセット" : "全員の選択されたカードを見る"
-        return Text(text)
+        Text(viewModel.buttonText)
             .foregroundColor(.gray)
             .font(.system(size: 14, weight: .regular))
     }
@@ -141,20 +138,7 @@ struct CardListView: View, ModuleAssembler {
                 dependency.presenter.didTapOpenSelectedCardListButton()
             }
         } label: {
-            let selectedCardCount = viewModel.userSelectStatusList.map { $0.selectedCard }.count
-            let systemName: String
-            if viewModel.isShownSelectedCardList {
-                systemName = "gobackward"
-            } else {
-                if selectedCardCount >= 3 {
-                    systemName = "person.3.sequence"
-                } else if selectedCardCount == 2 {
-                    systemName = "person.2"
-                } else {
-                    systemName = "person"
-                }
-            }
-            return Image(systemName: systemName).foregroundColor(.gray)
+            Image(systemName: viewModel.fabIconName).foregroundColor(.gray)
         }
         .softButtonStyle(Circle())
         .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
@@ -168,20 +152,19 @@ struct CardListView: View, ModuleAssembler {
         NavigationLink(
             isActive: $viewModel.willPushSettingView,
             destination: {
-                if viewModel.willPushSettingView {
-                    assembleSetting(
-                        roomId: dependency.roomId,
-                        currentUserId: dependency.currentUserId,
-                        cardPackageId: dependency.cardPackageId
-                    )
-                    .onDisappear {
-                        if !RoomAuthDataStore.shared.isUserLoggedIn() {
-                            // ログアウトしている場合、ルート(=ひとつ前の画面)に遷移する
-                            presentation.wrappedValue.dismiss()
-                        }
+                assembleSetting(
+                    roomId: dependency.roomId,
+                    currentUserId: dependency.currentUserId,
+                    cardPackageId: dependency.cardPackageId
+                )
+                .onDisappear {
+                    let isUserLoggedOut =
+                        (LocalStorage.shared.currentRoomId == 0
+                            && LocalStorage.shared.currentUserId == "")
+                    if isUserLoggedOut {
+                        // ログアウトしている場合、ルート(=ひとつ前の画面)に遷移する
+                        presentation.wrappedValue.dismiss()
                     }
-                } else {
-                    EmptyView()
                 }
             }
         ) { EmptyView() }
@@ -195,12 +178,12 @@ struct CardListView_Previews: PreviewProvider {
         let viewModel = CardListViewModel()
         viewModel.userSelectStatusList = [
             .init(
-                id: 1,
+                id: "1",
                 user: CardListView_Previews.me,
                 themeColor: .navy,
                 selectedCard: CardView_Previews.card1),
             .init(
-                id: 2,
+                id: "2",
                 user: CardListView_Previews.user1,
                 themeColor: .indigo,
                 selectedCard: CardView_Previews.card2),

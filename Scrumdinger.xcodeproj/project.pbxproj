@@ -72,6 +72,10 @@
 		F5C397DC289F40C6008AEFF2 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DB289F40C6008AEFF2 /* Room.swift */; };
 		F5C397E0289F420F008AEFF2 /* EnterRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */; };
 		F5CBD36B296A3EA7008BB8DE /* LoaderUI in Frameworks */ = {isa = PBXBuildFile; productRef = F5CBD36A296A3EA7008BB8DE /* LoaderUI */; };
+		F5DDCD1B297B86B300786C35 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1A297B86B300786C35 /* List.swift */; };
+		F5DDCD1D297C183600786C35 /* UndefinedRoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1C297C183500786C35 /* UndefinedRoomRepository.swift */; };
+		F5DDCD1F297C18C300786C35 /* UndefinedRoomDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1E297C18C300786C35 /* UndefinedRoomDataStore.swift */; };
+		F5DDCD21297C1AEF00786C35 /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD20297C1AEF00786C35 /* FirebaseError.swift */; };
 		F5E05171292BB05F006EA727 /* RoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E05170292BB05F006EA727 /* RoomRepository.swift */; };
 		F5E05175292BB134006EA727 /* RoomDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E05174292BB134006EA727 /* RoomDataStore.swift */; };
 		F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */; };
@@ -163,6 +167,10 @@
 		F5C397D9289E9342008AEFF2 /* CardPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPackage.swift; sourceTree = "<group>"; };
 		F5C397DB289F40C6008AEFF2 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomView.swift; sourceTree = "<group>"; };
+		F5DDCD1A297B86B300786C35 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		F5DDCD1C297C183500786C35 /* UndefinedRoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndefinedRoomRepository.swift; sourceTree = "<group>"; };
+		F5DDCD1E297C18C300786C35 /* UndefinedRoomDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndefinedRoomDataStore.swift; sourceTree = "<group>"; };
+		F5DDCD20297C1AEF00786C35 /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
 		F5E05170292BB05F006EA727 /* RoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomRepository.swift; sourceTree = "<group>"; };
 		F5E05174292BB134006EA727 /* RoomDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDataStore.swift; sourceTree = "<group>"; };
 		F5E917C7287114DC00AE8421 /* Scrumdinger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scrumdinger.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -409,6 +417,7 @@
 			isa = PBXGroup;
 			children = (
 				F5802CFA2931E6E000955949 /* FirestoreRef.swift */,
+				F5DDCD20297C1AEF00786C35 /* FirebaseError.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -514,6 +523,14 @@
 			path = Interactor;
 			sourceTree = "<group>";
 		};
+		F5DDCD19297B869F00786C35 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				F5DDCD1A297B86B300786C35 /* List.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		F5E051662929B116006EA727 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -545,14 +562,14 @@
 			path = EnterRoom;
 			sourceTree = "<group>";
 		};
-		F5E051692929B421006EA727 /* Model */ = {
+		F5E051692929B421006EA727 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
 				F57C644029653F1500CD55CD /* User.swift */,
-				F5C397D9289E9342008AEFF2 /* CardPackage.swift */,
 				F5C397DB289F40C6008AEFF2 /* Room.swift */,
+				F5C397D9289E9342008AEFF2 /* CardPackage.swift */,
 			);
-			path = Model;
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		F5E0516A2929B45C006EA727 /* View */ = {
@@ -567,6 +584,7 @@
 		F5E0516F292BAFF4006EA727 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				F5E051692929B421006EA727 /* Entity */,
 				F5802CF92931E6D000955949 /* Firebase */,
 				F5E05172292BB0EF006EA727 /* Repository */,
 				F5E05173292BB0FA006EA727 /* DataStore */,
@@ -578,8 +596,9 @@
 		F5E05172292BB0EF006EA727 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				F5E05170292BB05F006EA727 /* RoomRepository.swift */,
 				F57C64312961366500CD55CD /* RoomAuthRepository.swift */,
+				F5DDCD1C297C183500786C35 /* UndefinedRoomRepository.swift */,
+				F5E05170292BB05F006EA727 /* RoomRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -587,8 +606,9 @@
 		F5E05173292BB0FA006EA727 /* DataStore */ = {
 			isa = PBXGroup;
 			children = (
-				F5E05174292BB134006EA727 /* RoomDataStore.swift */,
 				F57C6433296136CC00CD55CD /* RoomAuthDataStore.swift */,
+				F5DDCD1E297C18C300786C35 /* UndefinedRoomDataStore.swift */,
+				F5E05174292BB134006EA727 /* RoomDataStore.swift */,
 			);
 			path = DataStore;
 			sourceTree = "<group>";
@@ -619,10 +639,10 @@
 			isa = PBXGroup;
 			children = (
 				F5E0516F292BAFF4006EA727 /* Data */,
-				F5E051692929B421006EA727 /* Model */,
 				F5125F26292DF92700C822FE /* Modules */,
 				F5150AFB29694B95008ADAD6 /* ViewModifier */,
 				F5AFC1DB296BBEBE00A4FFCA /* ViewComponents */,
+				F5DDCD19297B869F00786C35 /* Extension */,
 				F5AFC1E0296BC21500A4FFCA /* Resources */,
 				F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */,
 				F5E917CE287114E900AE8421 /* Assets.xcassets */,
@@ -848,12 +868,15 @@
 				F5C397E0289F420F008AEFF2 /* EnterRoomView.swift in Sources */,
 				F52366A22896382F005B1F65 /* CardView.swift in Sources */,
 				F57C641E2950AA3400CD55CD /* SelectThemeColorView.swift in Sources */,
+				F5DDCD1D297C183600786C35 /* UndefinedRoomRepository.swift in Sources */,
 				F57C643C2963134800CD55CD /* Presentation.swift in Sources */,
 				F5C397DC289F40C6008AEFF2 /* Room.swift in Sources */,
 				F5B2FAD92944768600592363 /* SettingContract.swift in Sources */,
 				F57C64212956BB7C00CD55CD /* SelectThemeColorViewModel.swift in Sources */,
+				F5DDCD21297C1AEF00786C35 /* FirebaseError.swift in Sources */,
 				F5B2FADB294476BA00592363 /* SettingPresenter.swift in Sources */,
 				F5802D0B293218A800955949 /* CardListContract.swift in Sources */,
+				F5DDCD1B297B86B300786C35 /* List.swift in Sources */,
 				F5AFC1DA296BBCFD00A4FFCA /* Loader.swift in Sources */,
 				F523669A2891E837005B1F65 /* CardListView.swift in Sources */,
 				F5802D0529320F1B00955949 /* ModuleAssembler+Default.swift in Sources */,
@@ -861,6 +884,7 @@
 				F5AFC1E5296BF22700A4FFCA /* InputText.swift in Sources */,
 				F5E05171292BB05F006EA727 /* RoomRepository.swift in Sources */,
 				F57C643A2963010E00CD55CD /* DependencyInjectable.swift in Sources */,
+				F5DDCD1F297C18C300786C35 /* UndefinedRoomDataStore.swift in Sources */,
 				F5125F2E292E755600C822FE /* EnterRoomPresenter.swift in Sources */,
 				F525301429364D5200727472 /* EnterRoomViewModel.swift in Sources */,
 				F5B2FAE22949423200592363 /* CardListInteractor.swift in Sources */,
@@ -1038,7 +1062,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3.0.0;
+				CURRENT_PROJECT_VERSION = 1.3.1.0;
 				DEVELOPMENT_ASSET_PATHS = "\"Scrumdinger/Preview Content\"";
 				DEVELOPMENT_TEAM = KB4BJUD35F;
 				ENABLE_PREVIEWS = YES;
@@ -1055,7 +1079,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"-ObjC",
@@ -1074,7 +1098,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3.0.0;
+				CURRENT_PROJECT_VERSION = 1.3.1.0;
 				DEVELOPMENT_ASSET_PATHS = "\"Scrumdinger/Preview Content\"";
 				DEVELOPMENT_TEAM = KB4BJUD35F;
 				ENABLE_PREVIEWS = YES;
@@ -1091,7 +1115,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.3.1;
 				OTHER_LDFLAGS = (
 					"$(OTHER_LDFLAGS)",
 					"-ObjC",

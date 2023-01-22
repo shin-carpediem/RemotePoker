@@ -12,15 +12,13 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
         self.dependency = dependency
     }
 
-    // MARK: - Presentation
+    // MARK: - SettingPresentation
 
     func viewDidLoad() {}
 
     func viewDidResume() {}
 
     func viewDidSuspend() {}
-
-    // MARK: - SettingPresentation
 
     func didTapSelectThemeColorButton() {
         Task {
@@ -33,10 +31,10 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
             await disableButton(true)
             await showLoader(true)
             LocalStorage.shared.currentRoomId = 0
-            await dependency.useCase.leaveRoom()
+            LocalStorage.shared.currentUserId = ""
             dependency.useCase.unsubscribeUser()
             dependency.useCase.unsubscribeCardPackages()
-            dependency.useCase.disposeRoomRepository()
+            await dependency.useCase.leaveRoom()
             await disableButton(false)
             await showLoader(false)
         }
@@ -44,12 +42,14 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
 
     // MARK: - SettingInteractorOutput
 
-    @MainActor func outputSuccess(message: String) {
+    @MainActor
+    func outputSuccess(message: String) {
         dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 
-    @MainActor func outputError(_ errror: Error, message: String) {
+    @MainActor
+    func outputError(_ errror: Error, message: String) {
         dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
         dependency.viewModel?.isShownBanner = true
     }
@@ -59,21 +59,22 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
     private var dependency: Dependency!
 
     /// ボタンを無効にする
-    @MainActor private func disableButton(_ disabled: Bool) {
+    @MainActor
+    private func disableButton(_ disabled: Bool) {
         dependency.viewModel?.isButtonEnabled = !disabled
     }
 
     /// ローダーを表示する
-    @MainActor private func showLoader(_ show: Bool) {
+    @MainActor
+    private func showLoader(_ show: Bool) {
         dependency.viewModel?.isShownLoader = show
     }
 
     // MARK: - Router
 
     /// テーマカラー選択画面に遷移する
-    @MainActor private func pushSelectThemeColorView() {
+    @MainActor
+    private func pushSelectThemeColorView() {
         dependency.viewModel?.willPushSelectThemeColorView = true
-        disableButton(false)
-        showLoader(false)
     }
 }
