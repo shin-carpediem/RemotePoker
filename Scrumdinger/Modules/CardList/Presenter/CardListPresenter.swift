@@ -28,18 +28,14 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
                 self.login()
             } else {
                 // 新規ユーザー（EnterRoom画面が初期画面）
-                await self.setupData(userId: dependency.currentUserId)
+                await self.setupData(
+                    userId: dependency.currentUserId, shouldFetchData: self.dependency.isExisingUser
+                )
             }
         }
     }
 
-    func viewDidResume() {
-        Task {
-            await disableButton(true)
-            await showLoader(true)
-            await requestRoom()
-        }
-    }
+    func viewDidResume() {}
 
     func viewDidSuspend() {}
 
@@ -159,7 +155,8 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
                     // ログインに成功した
                     // ユーザーのカレントルームがFirestore上に存在するか確認する
                     if await self.checkUserInCurrentRoom() {
-                        await self.setupData(userId: userId)
+                        await self.setupData(
+                            userId: userId, shouldFetchData: self.dependency.isExisingUser)
                     }
 
                 case .failure(let error):
@@ -172,11 +169,13 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     }
 
     /// 各種データをセットアップする
-    private func setupData(userId: String) async {
+    private func setupData(userId: String, shouldFetchData: Bool) async {
         dependency.useCase.subscribeUsers()
         dependency.useCase.subscribeCardPackages()
-//        dependency.useCase.requestUser(userId: userId)
-        await requestRoom()
+        if shouldFetchData {
+            dependency.useCase.requestUser(userId: userId)
+            await dependency.useCase.requestRoom()
+        }
         await showHeaderTitle()
         await updateUserSelectStatusList()
     }
@@ -188,11 +187,6 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         } else {
             return await dependency.useCase.checkRoomExist(roomId: dependency.roomId)
         }
-    }
-
-    /// ルームを要求する
-    private func requestRoom() async {
-        await dependency.useCase.requestRoom()
     }
 
     /// 選択されたカード一覧を表示する
@@ -229,7 +223,5 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     @MainActor
     private func pushSettingView() {
         dependency.viewModel?.willPushSettingView = true
-        disableButton(false)
-        showLoader(false)
     }
 }

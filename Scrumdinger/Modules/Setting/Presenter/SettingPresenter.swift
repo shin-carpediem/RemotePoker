@@ -76,7 +76,5 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
     @MainActor
     private func pushSelectThemeColorView() {
         dependency.viewModel?.willPushSelectThemeColorView = true
-        disableButton(false)
-        showLoader(false)
     }
 }

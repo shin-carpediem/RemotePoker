@@ -150,7 +150,5 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     @MainActor
     private func pushCardListView() {
         dependency.viewModel?.willPushCardListView = true
-        disableButton(false)
-        showLoader(false)
     }
 }
