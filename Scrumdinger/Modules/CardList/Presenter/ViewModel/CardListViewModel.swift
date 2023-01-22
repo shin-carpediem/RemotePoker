@@ -22,7 +22,7 @@ actor CardListViewModel: CardListObservable {
     @Published var headerTitle = ""
 
     @MainActor
-    @Published var userSelectStatusList: [UserSelectStatus] = []
+    @Published var userSelectStatusList = [UserSelectStatus]()
 
     @MainActor
     @Published var isShownSelectedCardList = false
