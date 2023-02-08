@@ -13,15 +13,14 @@ struct ScrumdingerApp: App, ModuleAssembler {
             didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? =
                 nil
         ) -> Bool {
-            var shouldLaunchApp: Bool
-            shouldLaunchApp = setupFirebase()
-            return shouldLaunchApp
+            setupFirebase()
+            return true
         }
 
         // MARK: - Private
 
-        /// Firebaseをセットアップする(セットアップに成功したかを返却)
-        private func setupFirebase() -> Bool {
+        /// Firebaseをセットアップする
+        private func setupFirebase() {
             let googleServiceInfo: String = {
                 #if DEBUG
                     // 開発環境
@@ -34,13 +33,12 @@ struct ScrumdingerApp: App, ModuleAssembler {
 
             guard let filePath = Bundle.main.path(forResource: googleServiceInfo, ofType: "plist")
             else {
-                return false
+                fatalError("Could not load Firebase config file.")
             }
             guard let options = FirebaseOptions(contentsOfFile: filePath) else {
-                return false
+                fatalError("Could not load Firebase config file.")
             }
             FirebaseApp.configure(options: options)
-            return true
         }
     }
 
