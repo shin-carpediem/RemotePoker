@@ -1,6 +1,7 @@
 import XCTest
 
 class ScrumdingerUITestsLaunchTests: XCTestCase {
+    // MARK: - Override
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
@@ -9,6 +10,8 @@ class ScrumdingerUITestsLaunchTests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
+
+    // MARK: - Test
 
     func testLaunch() throws {
         let app = XCUIApplication()
