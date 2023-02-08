@@ -1,6 +1,15 @@
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
+enum FireStoreDocumentChanges {
+    /// ドキュメントが追加された時
+    case added
+    /// ドキュメントが更新された時
+    case modified
+    /// ドキュメントが削除された時
+    case removed
+}
+
 struct FirestoreRef {
     /// ルームID
     var roomId: Int

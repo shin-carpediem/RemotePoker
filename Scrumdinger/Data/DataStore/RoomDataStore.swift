@@ -84,10 +84,12 @@ final class RoomDataStore: RoomRepository {
         }
     }
 
-    func subscribeUser(completion: @escaping (Result<UserAction, FirebaseError>) -> Void) {
+    func subscribeUser(
+        completion: @escaping (Result<FireStoreDocumentChanges, FirebaseError>) -> Void
+    ) {
         usersListener = firestoreRef.usersQuery.addSnapshotListener { querySnapshot, error in
             querySnapshot?.documentChanges.forEach { diff in
-                var action: UserAction
+                var action: FireStoreDocumentChanges
                 if diff.type == .added {
                     action = .added
                 } else if diff.type == .modified {
@@ -121,12 +123,12 @@ final class RoomDataStore: RoomRepository {
     }
 
     func subscribeCardPackage(
-        completion: @escaping (Result<CardPackageAction, FirebaseError>) -> Void
+        completion: @escaping (Result<FireStoreDocumentChanges, FirebaseError>) -> Void
     ) {
         cardPackagesListener = firestoreRef.cardPackagesQuery.addSnapshotListener {
             querySnapshot, error in
             querySnapshot?.documentChanges.forEach { diff in
-                var action: CardPackageAction
+                var action: FireStoreDocumentChanges
                 if diff.type == .added {
                     action = .added
                 } else if diff.type == .modified {
