@@ -21,7 +21,24 @@ struct ScrumdingerApp: App, ModuleAssembler {
 
         /// Firebaseをセットアップする
         private func setupFirebase() {
-            FirebaseApp.configure()
+            let googleServiceInfo: String = {
+                #if DEBUG
+                    // 開発環境
+                    return "GoogleService-Info-Dev"
+                #else
+                    // 本番環境
+                    return "GoogleService-Info"
+                #endif
+            }()
+
+            guard let filePath = Bundle.main.path(forResource: googleServiceInfo, ofType: "plist")
+            else {
+                assert(false, "Could not load Firebase config file.")
+            }
+            guard let options = FirebaseOptions(contentsOfFile: filePath) else {
+                assert(false, "Could not load Firebase config file.")
+            }
+            FirebaseApp.configure(options: options)
         }
     }
 

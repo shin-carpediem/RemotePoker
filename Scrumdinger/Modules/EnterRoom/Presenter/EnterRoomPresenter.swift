@@ -85,12 +85,14 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
 
     private var dependency: Dependency!
 
+    private static let CFBundleShortVersionString = "CFBundleShortVersionString"
+
     /// ユーザーに、存在するカレントルームがあるか確認する
     private func checkUserInCurrentRoom() async -> Bool {
         let appVersionList: Set<String> = ["1.0.0", "1.1.0", "1.2.0", "1.2.1", "1.3.0"]
 
         if let currentAppVersion = Bundle.main.object(
-            forInfoDictionaryKey: "CFBundleShortVersionString")
+            forInfoDictionaryKey: Self.CFBundleShortVersionString)
             as? String, appVersionList.contains(currentAppVersion)
         {
             // アプリバージョンが1.3.0以下のユーザーデータはFirestoreから削除されているため、カレントルームは存在しない
