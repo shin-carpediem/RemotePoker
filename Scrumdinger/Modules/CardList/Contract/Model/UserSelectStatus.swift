@@ -6,7 +6,7 @@ struct UserSelectStatus: Identifiable {
     var user: UserEntity
 
     /// テーマカラー
-    var themeColor: ThemeColor
+    var themeColor: CardPackageEntity.ThemeColor
 
     /// 選択済みカード
     var selectedCard: CardPackageEntity.Card?

@@ -10,6 +10,25 @@ struct CardPackageEntity: Identifiable {
     /// カード一覧
     var cardList: [Card]
     
+    enum ThemeColor: String, CaseIterable, ShapeStyle {
+        case bubblegum
+        case buttercup
+        case indigo
+        case lavender
+        case magenta
+        case navy
+        case orange
+        case oxblood
+        case periwinkle
+        case poppy
+        case purple
+        case seafoam
+        case sky
+        case tan
+        case teal
+        case yellow
+    }
+    
     struct Card: Identifiable {
         /// ID
         var id: String
@@ -34,26 +53,6 @@ struct CardPackageEntity: Identifiable {
             return Color(color.rawValue).opacity(opacity)
         }
     }
-}
-
-/// テーマカラー
-enum ThemeColor: String, CaseIterable, ShapeStyle {
-    case bubblegum
-    case buttercup
-    case indigo
-    case lavender
-    case magenta
-    case navy
-    case orange
-    case oxblood
-    case periwinkle
-    case poppy
-    case purple
-    case seafoam
-    case sky
-    case tan
-    case teal
-    case yellow
 }
 
 /// サンプルデータ

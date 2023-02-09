@@ -6,7 +6,7 @@ struct CardView: View {
     var card: CardPackageEntity.Card
 
     /// テーマカラー
-    var themeColor: ThemeColor
+    var themeColor: CardPackageEntity.ThemeColor
 
     /// 有効か
     var isEnabled: Bool

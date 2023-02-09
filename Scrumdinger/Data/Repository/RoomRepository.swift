@@ -39,5 +39,5 @@ protocol RoomRepository: AnyObject {
     /// テーマカラーを変更する
     /// - parameter cardPackageId: カードパッケージID
     /// - parameter themeColor: テーマカラー
-    func updateThemeColor(cardPackageId: String, themeColor: ThemeColor)
+    func updateThemeColor(cardPackageId: String, themeColor: CardPackageEntity.ThemeColor)
 }
