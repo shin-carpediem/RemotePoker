@@ -152,7 +152,7 @@ struct CardListView: View, ModuleAssembler {
         NavigationLink(
             isActive: $viewModel.willPushSettingView,
             destination: {
-                assembleSetting(
+                assembleSettingModule(
                     roomId: dependency.roomId,
                     currentUserId: dependency.currentUserId,
                     cardPackageId: dependency.cardPackageId
@@ -192,30 +192,30 @@ struct CardListView_Previews: PreviewProvider {
         return viewModel
     }()
 
-    static let me: User = .init(
+    static let me: UserEntity = .init(
         id: "1",
         name: "ロイド フォージャ",
         currentRoomId: 0,
         selectedCardId: "")
 
-    static let user1: User = .init(
+    static let user1: UserEntity = .init(
         id: "2",
         name: "ヨル フォージャ",
         currentRoomId: 0,
         selectedCardId: "")
 
-    static let user2: User = .init(
+    static let user2: UserEntity = .init(
         id: "3",
         name: "アーニャ フォージャ",
         currentRoomId: 0,
         selectedCardId: "")
 
-    static let room1: Room = .init(
+    static let room1: RoomEntity = .init(
         id: 1,
         userList: [me],
         cardPackage: .defaultCardPackage)
 
-    static let room2: Room = .init(
+    static let room2: RoomEntity = .init(
         id: 2,
         userList: [me, user1],
         cardPackage: .defaultCardPackage)

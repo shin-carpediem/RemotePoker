@@ -11,7 +11,7 @@ final class UndefinedRoomDataStore: UndefinedRoomRepository {
         return document.exists
     }
 
-    func createRoom(_ room: Room) async -> Result<Void, FirebaseError> {
+    func createRoom(_ room: RoomEntity) async -> Result<Void, FirebaseError> {
         do {
             // ルーム追加
             let roomId = room.id

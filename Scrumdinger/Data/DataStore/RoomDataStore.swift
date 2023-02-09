@@ -9,7 +9,7 @@ final class RoomDataStore: RoomRepository {
 
     // MARK: - RoomRepository
 
-    func fetchRoom() async -> Result<Room, FirebaseError> {
+    func fetchRoom() async -> Result<RoomEntity, FirebaseError> {
         // ルーム取得
         let roomSnapshot = await firestoreRef.roomSnapshot()
         let roomData = roomSnapshot?.data()
@@ -20,9 +20,9 @@ final class RoomDataStore: RoomRepository {
 
         // ユーザー一覧取得
         let usersSnapshot = await firestoreRef.usersSnapshot()
-        let userList: [User] = usersSnapshot!.map { userDoc in
+        let userList: [UserEntity] = usersSnapshot!.map { userDoc in
             let userData = userDoc.data()
-            return User(
+            return UserEntity(
                 id: userData["id"] as! String,
                 name: userData["name"] as! String,
                 currentRoomId: userData["currentRoomId"] as! Int,
@@ -45,12 +45,12 @@ final class RoomDataStore: RoomRepository {
                 index: cardData["index"] as! Int)
         }.sorted { $0.index < $1.index }
 
-        let cardPackage = CardPackage(
+        let cardPackage = CardPackageEntity(
             id: cardPackageId,
             themeColor: ThemeColor(rawValue: themeColor)!,
             cardList: cardList)
 
-        let room = Room(
+        let room = RoomEntity(
             id: roomId,
             userList: userList,
             cardPackage: cardPackage)
@@ -58,7 +58,7 @@ final class RoomDataStore: RoomRepository {
         return .success(room)
     }
 
-    func addUserToRoom(user: User) async -> Result<Void, FirebaseError> {
+    func addUserToRoom(user: UserEntity) async -> Result<Void, FirebaseError> {
         do {
             let userDocument = firestoreRef.usersCollection.document(user.id)
             try await userDocument.setData([
@@ -105,11 +105,11 @@ final class RoomDataStore: RoomRepository {
         }
     }
 
-    func fetchUser(id: String, completion: @escaping (User) -> Void) {
+    func fetchUser(id: String, completion: @escaping (UserEntity) -> Void) {
         let userDocument = firestoreRef.userDocument(userId: id)
         userDocument.getDocument { userSnapshot, _ in
             let userData = userSnapshot?.data()
-            let user: User = .init(
+            let user: UserEntity = .init(
                 id: userData?["id"] as! String,
                 name: userData?["name"] as! String,
                 currentRoomId: userData?["currentRoomId"] as! Int,

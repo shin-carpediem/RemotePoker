@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct CardPackage: Identifiable {
+struct CardPackageEntity: Identifiable {
     /// ID
     var id: String
 
@@ -57,8 +57,8 @@ enum ThemeColor: String, CaseIterable, ShapeStyle {
 }
 
 /// サンプルデータ
-extension CardPackage {
-    static let defaultCardPackage = CardPackage(
+extension CardPackageEntity {
+    static let defaultCardPackage = CardPackageEntity(
         id: UUID().uuidString,
         themeColor: .oxblood,
         cardList: defaultCardList)

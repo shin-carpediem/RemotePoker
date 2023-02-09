@@ -1,11 +1,11 @@
 protocol RoomRepository: AnyObject {
     /// ルームを取得する
     /// - returns: 成功ならルーム
-    func fetchRoom() async -> Result<Room, FirebaseError>
+    func fetchRoom() async -> Result<RoomEntity, FirebaseError>
 
     /// ルームにユーザーを追加する
     /// - parameter user: ユーザー
-    func addUserToRoom(user: User) async -> Result<Void, FirebaseError>
+    func addUserToRoom(user: UserEntity) async -> Result<Void, FirebaseError>
 
     /// ルームからユーザーを削除する
     /// - parameter userId: ユーザーID
@@ -30,7 +30,7 @@ protocol RoomRepository: AnyObject {
     /// 指定IDのユーザーを取得する
     /// - parameter id: ユーザーID
     /// - parameter completion: 完了ハンドラ(ユーザーを返却)
-    func fetchUser(id: String, completion: @escaping (User) -> Void)
+    func fetchUser(id: String, completion: @escaping (UserEntity) -> Void)
 
     /// ユーザーの選択済みカードを更新する
     /// - parameter selectedCardDictionary: ユーザーIDと選択されたカードIDの辞書

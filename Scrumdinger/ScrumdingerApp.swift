@@ -51,10 +51,10 @@ struct ScrumdingerApp: App, ModuleAssembler {
                 let currentRoomId = LocalStorage.shared.currentRoomId
                 if currentRoomId == 0 {
                     // ログインしていない
-                    assmebleEnterRoom()
+                    assmebleEnterRoomModule()
                 } else {
                     // ログイン中(currentUserName、cardPackageIdは後で取得)
-                    assembleCardList(
+                    assembleCardListModule(
                         roomId: currentRoomId,
                         currentUserId: LocalStorage.shared.currentUserId,
                         currentUserName: "",

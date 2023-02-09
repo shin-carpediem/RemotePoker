@@ -1,6 +1,6 @@
 protocol ModuleAssembler {
     /// ルームに入る画面をアセンブルする
-    func assmebleEnterRoom() -> EnterRoomView
+    func assmebleEnterRoomModule() -> EnterRoomView
 
     /// カードリスト画面をアセンブルする
     /// - parameter roomId: ルームID
@@ -8,7 +8,7 @@ protocol ModuleAssembler {
     /// - parameter currentUserName: カレントユーザー名
     /// - parameter cardPackageId: カードパッケージID
     /// - parameter isExisingUser: 既存ユーザーか
-    func assembleCardList(
+    func assembleCardListModule(
         roomId: Int, currentUserId: String, currentUserName: String, cardPackageId: String,
         isExisingUser: Bool
     ) -> CardListView
@@ -17,10 +17,10 @@ protocol ModuleAssembler {
     /// - parameter roomId: ルームID
     /// - parameter currentUserId: カレントユーザーID
     /// - parameter cardPackageId: カードパッケージID
-    func assembleSetting(roomId: Int, currentUserId: String, cardPackageId: String) -> SettingView
+    func assembleSettingModule(roomId: Int, currentUserId: String, cardPackageId: String) -> SettingView
 
     /// テーマカラー選択画面をアセンブルする
     /// - parameter roomId: ルームID
     /// - parameter cardPackageId: カードパッケージID
-    func assembleSelectThemeColor(roomId: Int, cardPackageId: String) -> SelectThemeColorView
+    func assembleSelectThemeColorModule(roomId: Int, cardPackageId: String) -> SelectThemeColorView
 }

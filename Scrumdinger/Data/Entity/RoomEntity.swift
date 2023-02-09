@@ -1,10 +1,10 @@
-struct Room {
+struct RoomEntity {
     /// ID
     var id: Int
 
     /// ユーザー一覧
-    var userList: [User]
+    var userList: [UserEntity]
 
     /// カードパッケージ
-    var cardPackage: CardPackage
+    var cardPackage: CardPackageEntity
 }

@@ -1,5 +1,5 @@
 extension ModuleAssembler {
-    func assmebleEnterRoom() -> EnterRoomView {
+    func assmebleEnterRoomModule() -> EnterRoomView {
         let viewModel = EnterRoomViewModel()
         let presenter = EnterRoomPresenter()
         let interactor = EnterRoomInteractor()
@@ -11,7 +11,7 @@ extension ModuleAssembler {
         return view
     }
 
-    func assembleCardList(
+    func assembleCardListModule(
         roomId: Int, currentUserId: String, currentUserName: String, cardPackageId: String,
         isExisingUser: Bool
     ) -> CardListView {
@@ -42,7 +42,7 @@ extension ModuleAssembler {
         return view
     }
 
-    func assembleSetting(roomId: Int, currentUserId: String, cardPackageId: String) -> SettingView {
+    func assembleSettingModule(roomId: Int, currentUserId: String, cardPackageId: String) -> SettingView {
         let viewModel = SettingViewModel()
         let presenter = SettingPresenter()
         let interactor = SettingInteractor()
@@ -63,7 +63,7 @@ extension ModuleAssembler {
         return view
     }
 
-    func assembleSelectThemeColor(roomId: Int, cardPackageId: String) -> SelectThemeColorView {
+    func assembleSelectThemeColorModule(roomId: Int, cardPackageId: String) -> SelectThemeColorView {
         let viewModel = SelectThemeColorViewModel()
         let presenter = SelectThemeColorPresenter()
         let interactor = SelectThemeColorInteractor()

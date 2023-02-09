@@ -89,7 +89,7 @@ struct EnterRoomView: View, ModuleAssembler {
                 // Viewの表示時に、以下の存在しないルームIDも以下に代入されてクラッシュするのを防ぐため、
                 // willPushCardListView が評価されるタイミングで値を見るようにする
                 if viewModel.willPushCardListView {
-                    assembleCardList(
+                    assembleCardListModule(
                         roomId: dependency.presenter.currentRoom.id,
                         currentUserId: dependency.presenter.currentUser.id,
                         currentUserName: dependency.presenter.currentUser.name,

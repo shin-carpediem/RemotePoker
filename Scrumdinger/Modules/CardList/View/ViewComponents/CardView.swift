@@ -42,12 +42,12 @@ struct CardView: View {
 // MARK: - Preview
 
 struct CardView_Previews: PreviewProvider {
-    static let card1 = CardPackage.defaultCardList.first!
+    static let card1 = CardPackageEntity.defaultCardList.first!
 
-    static let card2 = CardPackage.defaultCardList[
+    static let card2 = CardPackageEntity.defaultCardList[
         Int(floor(CGFloat((card1.index + card3.index)) / 2))]
 
-    static let card3 = CardPackage.defaultCardList.last!
+    static let card3 = CardPackageEntity.defaultCardList.last!
 
     static var previews: some View {
         Group {

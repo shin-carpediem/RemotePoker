@@ -1,4 +1,4 @@
-struct User {
+struct UserEntity {
     /// ID
     var id: String
 
@@ -17,7 +17,7 @@ struct UserSelectStatus: Identifiable {
     var id: String
 
     /// ユーザー
-    var user: User
+    var user: UserEntity
 
     /// テーマカラー
     var themeColor: ThemeColor

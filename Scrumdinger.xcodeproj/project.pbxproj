@@ -54,7 +54,7 @@
 		F57C643A2963010E00CD55CD /* DependencyInjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C64392963010E00CD55CD /* DependencyInjectable.swift */; };
 		F57C643C2963134800CD55CD /* Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C643B2963134800CD55CD /* Presentation.swift */; };
 		F57C643F2963B53800CD55CD /* EnterRoomInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C643E2963B53800CD55CD /* EnterRoomInteractor.swift */; };
-		F57C644129653F1500CD55CD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C644029653F1500CD55CD /* User.swift */; };
+		F57C644129653F1500CD55CD /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C644029653F1500CD55CD /* UserEntity.swift */; };
 		F5802CFB2931E6E000955949 /* FirestoreRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFA2931E6E000955949 /* FirestoreRef.swift */; };
 		F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFD293207C700955949 /* CardListPresenter.swift */; };
 		F5802D0329320DEF00955949 /* ModuleAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D0229320DEF00955949 /* ModuleAssembler.swift */; };
@@ -69,8 +69,8 @@
 		F5B2FADB294476BA00592363 /* SettingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FADA294476BA00592363 /* SettingPresenter.swift */; };
 		F5B2FADE2944773C00592363 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FADD2944773C00592363 /* SettingViewModel.swift */; };
 		F5B2FAE22949423200592363 /* CardListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FAE12949423200592363 /* CardListInteractor.swift */; };
-		F5C397DA289E9342008AEFF2 /* CardPackage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397D9289E9342008AEFF2 /* CardPackage.swift */; };
-		F5C397DC289F40C6008AEFF2 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DB289F40C6008AEFF2 /* Room.swift */; };
+		F5C397DA289E9342008AEFF2 /* CardPackageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397D9289E9342008AEFF2 /* CardPackageEntity.swift */; };
+		F5C397DC289F40C6008AEFF2 /* RoomEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DB289F40C6008AEFF2 /* RoomEntity.swift */; };
 		F5C397E0289F420F008AEFF2 /* EnterRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */; };
 		F5CBD36B296A3EA7008BB8DE /* LoaderUI in Frameworks */ = {isa = PBXBuildFile; productRef = F5CBD36A296A3EA7008BB8DE /* LoaderUI */; };
 		F5DDCD1B297B86B300786C35 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1A297B86B300786C35 /* List.swift */; };
@@ -152,7 +152,7 @@
 		F57C64392963010E00CD55CD /* DependencyInjectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjectable.swift; sourceTree = "<group>"; };
 		F57C643B2963134800CD55CD /* Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presentation.swift; sourceTree = "<group>"; };
 		F57C643E2963B53800CD55CD /* EnterRoomInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomInteractor.swift; sourceTree = "<group>"; };
-		F57C644029653F1500CD55CD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		F57C644029653F1500CD55CD /* UserEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
 		F5802CFA2931E6E000955949 /* FirestoreRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRef.swift; sourceTree = "<group>"; };
 		F5802CFD293207C700955949 /* CardListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListPresenter.swift; sourceTree = "<group>"; };
 		F5802D0229320DEF00955949 /* ModuleAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleAssembler.swift; sourceTree = "<group>"; };
@@ -166,8 +166,8 @@
 		F5B2FADA294476BA00592363 /* SettingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPresenter.swift; sourceTree = "<group>"; };
 		F5B2FADD2944773C00592363 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		F5B2FAE12949423200592363 /* CardListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListInteractor.swift; sourceTree = "<group>"; };
-		F5C397D9289E9342008AEFF2 /* CardPackage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPackage.swift; sourceTree = "<group>"; };
-		F5C397DB289F40C6008AEFF2 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		F5C397D9289E9342008AEFF2 /* CardPackageEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPackageEntity.swift; sourceTree = "<group>"; };
+		F5C397DB289F40C6008AEFF2 /* RoomEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomEntity.swift; sourceTree = "<group>"; };
 		F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomView.swift; sourceTree = "<group>"; };
 		F5DDCD1A297B86B300786C35 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		F5DDCD1C297C183500786C35 /* UndefinedRoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndefinedRoomRepository.swift; sourceTree = "<group>"; };
@@ -567,9 +567,9 @@
 		F5E051692929B421006EA727 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				F57C644029653F1500CD55CD /* User.swift */,
-				F5C397DB289F40C6008AEFF2 /* Room.swift */,
-				F5C397D9289E9342008AEFF2 /* CardPackage.swift */,
+				F57C644029653F1500CD55CD /* UserEntity.swift */,
+				F5C397DB289F40C6008AEFF2 /* RoomEntity.swift */,
+				F5C397D9289E9342008AEFF2 /* CardPackageEntity.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -874,7 +874,7 @@
 				F57C641E2950AA3400CD55CD /* SelectThemeColorView.swift in Sources */,
 				F5DDCD1D297C183600786C35 /* UndefinedRoomRepository.swift in Sources */,
 				F57C643C2963134800CD55CD /* Presentation.swift in Sources */,
-				F5C397DC289F40C6008AEFF2 /* Room.swift in Sources */,
+				F5C397DC289F40C6008AEFF2 /* RoomEntity.swift in Sources */,
 				F5B2FAD92944768600592363 /* SettingContract.swift in Sources */,
 				F57C64212956BB7C00CD55CD /* SelectThemeColorViewModel.swift in Sources */,
 				F5DDCD21297C1AEF00786C35 /* FirebaseError.swift in Sources */,
@@ -894,7 +894,7 @@
 				F5B2FAE22949423200592363 /* CardListInteractor.swift in Sources */,
 				F57C641A2950A91000CD55CD /* SelectThemeColorContract.swift in Sources */,
 				F5AFC1DF296BC12200A4FFCA /* Colors.swift in Sources */,
-				F57C644129653F1500CD55CD /* User.swift in Sources */,
+				F57C644129653F1500CD55CD /* UserEntity.swift in Sources */,
 				F5802D0329320DEF00955949 /* ModuleAssembler.swift in Sources */,
 				F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */,
 				F57C643F2963B53800CD55CD /* EnterRoomInteractor.swift in Sources */,
@@ -905,7 +905,7 @@
 				F57C6430296120BD00CD55CD /* SettingInteractor.swift in Sources */,
 				F5150AFA2968E042008ADAD6 /* NotificationBanner.swift in Sources */,
 				F5B2FADE2944773C00592363 /* SettingViewModel.swift in Sources */,
-				F5C397DA289E9342008AEFF2 /* CardPackage.swift in Sources */,
+				F5C397DA289E9342008AEFF2 /* CardPackageEntity.swift in Sources */,
 				F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */,
 				F533A3A4293FCD7300C833F7 /* OpenCardView.swift in Sources */,
 				F5150AFD29694BB1008ADAD6 /* Overlay.swift in Sources */,
