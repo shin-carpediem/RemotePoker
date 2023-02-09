@@ -7,7 +7,7 @@ struct OpenCardView: View {
     // MARK: - Private
 
     /// 選択されたカード
-    private var selectedCard: Card? {
+    private var selectedCard: CardPackageEntity.Card? {
         userSelectStatus.selectedCard
     }
 

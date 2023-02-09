@@ -62,6 +62,7 @@
 		F5802D08293217D000955949 /* EnterRoomContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D07293217D000955949 /* EnterRoomContract.swift */; };
 		F5802D0B293218A800955949 /* CardListContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D0A293218A800955949 /* CardListContract.swift */; };
 		F588E30728BB8E2800C5CA9A /* Neumorphic in Frameworks */ = {isa = PBXBuildFile; productRef = F588E30628BB8E2800C5CA9A /* Neumorphic */; };
+		F59EE30F29954AD200A772BE /* UserSelectStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59EE30E29954AD200A772BE /* UserSelectStatus.swift */; };
 		F5AFC1DA296BBCFD00A4FFCA /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1D9296BBCFD00A4FFCA /* Loader.swift */; };
 		F5AFC1DF296BC12200A4FFCA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1DE296BC12200A4FFCA /* Colors.swift */; };
 		F5AFC1E5296BF22700A4FFCA /* InputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1E4296BF22700A4FFCA /* InputText.swift */; };
@@ -159,6 +160,7 @@
 		F5802D0429320F1B00955949 /* ModuleAssembler+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModuleAssembler+Default.swift"; sourceTree = "<group>"; };
 		F5802D07293217D000955949 /* EnterRoomContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomContract.swift; sourceTree = "<group>"; };
 		F5802D0A293218A800955949 /* CardListContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListContract.swift; sourceTree = "<group>"; };
+		F59EE30E29954AD200A772BE /* UserSelectStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectStatus.swift; sourceTree = "<group>"; };
 		F5AFC1D9296BBCFD00A4FFCA /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		F5AFC1DE296BC12200A4FFCA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		F5AFC1E4296BF22700A4FFCA /* InputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputText.swift; sourceTree = "<group>"; };
@@ -453,9 +455,18 @@
 		F5802D092932189C00955949 /* Contract */ = {
 			isa = PBXGroup;
 			children = (
+				F59EE30D29954AA500A772BE /* Model */,
 				F5802D0A293218A800955949 /* CardListContract.swift */,
 			);
 			path = Contract;
+			sourceTree = "<group>";
+		};
+		F59EE30D29954AA500A772BE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F59EE30E29954AD200A772BE /* UserSelectStatus.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		F5AFC1DB296BBEBE00A4FFCA /* ViewComponents */ = {
@@ -906,6 +917,7 @@
 				F5150AFA2968E042008ADAD6 /* NotificationBanner.swift in Sources */,
 				F5B2FADE2944773C00592363 /* SettingViewModel.swift in Sources */,
 				F5C397DA289E9342008AEFF2 /* CardPackageEntity.swift in Sources */,
+				F59EE30F29954AD200A772BE /* UserSelectStatus.swift in Sources */,
 				F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */,
 				F533A3A4293FCD7300C833F7 /* OpenCardView.swift in Sources */,
 				F5150AFD29694BB1008ADAD6 /* Overlay.swift in Sources */,

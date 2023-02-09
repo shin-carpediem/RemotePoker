@@ -3,7 +3,7 @@ import SwiftUI
 
 struct CardView: View {
     /// カード
-    var card: Card
+    var card: CardPackageEntity.Card
 
     /// テーマカラー
     var themeColor: ThemeColor
@@ -15,7 +15,7 @@ struct CardView: View {
     var isSelected: Bool
 
     /// カード選択ハンドラー
-    var selectCardHandler: ((Card) -> Void)?
+    var selectCardHandler: ((CardPackageEntity.Card) -> Void)?
 
     // MARK: - View
 

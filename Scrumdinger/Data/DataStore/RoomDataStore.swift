@@ -37,9 +37,9 @@ final class RoomDataStore: RoomRepository {
 
         // カード一覧取得
         let cardsSnapshot = await firestoreRef.cardsSnapshot(cardPackageId: cardPackageId)
-        let cardList: [Card] = cardsSnapshot!.map { cardDoc in
+        let cardList: [CardPackageEntity.Card] = cardsSnapshot!.map { cardDoc in
             let cardData = cardDoc.data()
-            return Card(
+            return CardPackageEntity.Card(
                 id: cardData["id"] as! String,
                 point: cardData["point"] as! String,
                 index: cardData["index"] as! Int)

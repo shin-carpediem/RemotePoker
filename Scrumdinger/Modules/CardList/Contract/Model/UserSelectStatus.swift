@@ -1,0 +1,13 @@
+struct UserSelectStatus: Identifiable {
+    /// ID
+    var id: String
+
+    /// ユーザー
+    var user: UserEntity
+
+    /// テーマカラー
+    var themeColor: ThemeColor
+
+    /// 選択済みカード
+    var selectedCard: CardPackageEntity.Card?
+}

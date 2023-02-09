@@ -11,17 +11,3 @@ struct UserEntity {
     /// 選択済みカードID(未選択は空文字)
     var selectedCardId: String
 }
-
-struct UserSelectStatus: Identifiable {
-    /// ID
-    var id: String
-
-    /// ユーザー
-    var user: UserEntity
-
-    /// テーマカラー
-    var themeColor: ThemeColor
-
-    /// 選択済みカード
-    var selectedCard: Card?
-}

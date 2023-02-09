@@ -113,7 +113,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 
         let userSelectStatusList: [UserSelectStatus] = room.userList.map { user in
             let cardPackage = room.cardPackage
-            let selectedCard: Card? = cardPackage.cardList.first(where: {
+            let selectedCard: CardPackageEntity.Card? = cardPackage.cardList.first(where: {
                 $0.id == user.selectedCardId
             })
 

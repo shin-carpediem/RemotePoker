@@ -9,30 +9,30 @@ struct CardPackageEntity: Identifiable {
 
     /// カード一覧
     var cardList: [Card]
-}
+    
+    struct Card: Identifiable {
+        /// ID
+        var id: String
 
-struct Card: Identifiable {
-    /// ID
-    var id: String
+        /// 見積もりポイント
+        var point: String
 
-    /// 見積もりポイント
-    var point: String
+        /// インデックス
+        var index: Int
 
-    /// インデックス
-    var index: Int
+        /// 文字色
+        var fontColor: Color {
+            let number = index >= 10 ? 9 : index
+            let opacity = Double("0.\(number)") ?? 1.0
+            return opacity >= 0.4 ? .white : .gray
+        }
 
-    /// 文字色
-    var fontColor: Color {
-        let number = index >= 10 ? 9 : index
-        let opacity = Double("0.\(number)") ?? 1.0
-        return opacity >= 0.4 ? .white : .gray
-    }
-
-    /// 指定カードの背景色
-    func outputBackgroundColor(color: ThemeColor) -> Color {
-        let number = index >= 10 ? 9 : index
-        let opacity = Double("0.\(number)5") ?? 1.0
-        return Color(color.rawValue).opacity(opacity)
+        /// 指定カードの背景色
+        func outputBackgroundColor(color: ThemeColor) -> Color {
+            let number = index >= 10 ? 9 : index
+            let opacity = Double("0.\(number)5") ?? 1.0
+            return Color(color.rawValue).opacity(opacity)
+        }
     }
 }
 
