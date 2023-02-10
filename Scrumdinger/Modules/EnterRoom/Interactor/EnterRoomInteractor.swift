@@ -18,7 +18,7 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
         await dependency.repository.checkRoomExist(roomId: roomId)
     }
 
-    func createRoom(room: RoomEntity) async {
+    func createRoom(room: Room) async {
         let result = await dependency.repository.createRoom(room)
         switch result {
         case .success(_):
@@ -31,7 +31,7 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
         }
     }
 
-    func adduserToRoom(roomId: Int, user: UserEntity) async {
+    func adduserToRoom(roomId: Int, user: User) async {
         repository = RoomDataStore(roomId: roomId)
         guard let repository = repository else { return }
         let result = await repository.addUserToRoom(user: user)

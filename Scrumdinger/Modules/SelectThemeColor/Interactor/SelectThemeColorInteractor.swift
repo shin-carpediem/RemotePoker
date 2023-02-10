@@ -15,7 +15,7 @@ final class SelectThemeColorInteractor: SelectThemeColorUseCase, DependencyInjec
 
     // MARK: - CardListUseCase
 
-    func updateThemeColor(themeColor: CardPackageEntity.ThemeColor) {
+    func updateThemeColor(themeColor: CardPackage.ThemeColor) {
         Task { @MainActor in
             dependency.repository.updateThemeColor(
                 cardPackageId: dependency.cardPackageId,

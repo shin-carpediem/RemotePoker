@@ -63,6 +63,7 @@
 		F5802D0B293218A800955949 /* CardListContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D0A293218A800955949 /* CardListContract.swift */; };
 		F588E30728BB8E2800C5CA9A /* Neumorphic in Frameworks */ = {isa = PBXBuildFile; productRef = F588E30628BB8E2800C5CA9A /* Neumorphic */; };
 		F59EE30F29954AD200A772BE /* UserSelectStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59EE30E29954AD200A772BE /* UserSelectStatus.swift */; };
+		F59EE31329967DC200A772BE /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59EE31229967DC200A772BE /* Model.swift */; };
 		F5AFC1DA296BBCFD00A4FFCA /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1D9296BBCFD00A4FFCA /* Loader.swift */; };
 		F5AFC1DF296BC12200A4FFCA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1DE296BC12200A4FFCA /* Colors.swift */; };
 		F5AFC1E5296BF22700A4FFCA /* InputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1E4296BF22700A4FFCA /* InputText.swift */; };
@@ -161,6 +162,7 @@
 		F5802D07293217D000955949 /* EnterRoomContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomContract.swift; sourceTree = "<group>"; };
 		F5802D0A293218A800955949 /* CardListContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListContract.swift; sourceTree = "<group>"; };
 		F59EE30E29954AD200A772BE /* UserSelectStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectStatus.swift; sourceTree = "<group>"; };
+		F59EE31229967DC200A772BE /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		F5AFC1D9296BBCFD00A4FFCA /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		F5AFC1DE296BC12200A4FFCA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		F5AFC1E4296BF22700A4FFCA /* InputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputText.swift; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 		F5125F26292DF92700C822FE /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				F59EE31229967DC200A772BE /* Model.swift */,
 				F5802D0129320DDC00955949 /* ModuleAssembler */,
 				F57C6438296300F400CD55CD /* Protocols */,
 				F5E051682929B407006EA727 /* EnterRoom */,
@@ -914,6 +917,7 @@
 				F5150AFF2969577F008ADAD6 /* ViewModel.swift in Sources */,
 				F5802D08293217D000955949 /* EnterRoomContract.swift in Sources */,
 				F57C6430296120BD00CD55CD /* SettingInteractor.swift in Sources */,
+				F59EE31329967DC200A772BE /* Model.swift in Sources */,
 				F5150AFA2968E042008ADAD6 /* NotificationBanner.swift in Sources */,
 				F5B2FADE2944773C00592363 /* SettingViewModel.swift in Sources */,
 				F5C397DA289E9342008AEFF2 /* CardPackageEntity.swift in Sources */,

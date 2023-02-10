@@ -50,7 +50,7 @@ struct SelectThemeColorView: View {
     }
 
     /// カラーセル
-    private func colorCell(_ color: CardPackageEntity.ThemeColor) -> some View {
+    private func colorCell(_ color: CardPackage.ThemeColor) -> some View {
         let isThemeColor = color == viewModel.selectedThemeColor
         return Button {
             dependency.presenter.didTapColor(color: color)
@@ -65,14 +65,14 @@ struct SelectThemeColorView: View {
     }
 
     /// テーマラベル
-    private func themeLabel(_ color: CardPackageEntity.ThemeColor) -> some View {
+    private func themeLabel(_ color: CardPackage.ThemeColor) -> some View {
         Text(color.rawValue)
             .font(.system(size: 18, weight: .bold))
             .foregroundColor(.gray)
     }
 
     /// ラベル
-    private func label(_ color: CardPackageEntity.ThemeColor) -> some View {
+    private func label(_ color: CardPackage.ThemeColor) -> some View {
         Text(color.rawValue)
             .foregroundColor(.gray)
     }

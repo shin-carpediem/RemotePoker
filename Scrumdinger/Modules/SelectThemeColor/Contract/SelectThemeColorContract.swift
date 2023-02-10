@@ -3,29 +3,29 @@ import Foundation
 protocol SelectThemeColorObservable: ObservableObject, ViewModel {
     /// テーマカラー一覧
     @MainActor
-    var themeColorList: [CardPackageEntity.ThemeColor] { get set }
+    var themeColorList: [CardPackage.ThemeColor] { get set }
 
     /// 選択されたテーマカラー
     @MainActor
-    var selectedThemeColor: CardPackageEntity.ThemeColor? { get set }
+    var selectedThemeColor: CardPackage.ThemeColor? { get set }
 }
 
 protocol SelectThemeColorPresentation: AnyObject, Presentation {
     /// カラーをタップした
     /// - parameter color: 選択したカラー
-    func didTapColor(color: CardPackageEntity.ThemeColor)
+    func didTapColor(color: CardPackage.ThemeColor)
 }
 
 protocol SelectThemeColorUseCase: AnyObject {
     /// テーマカラーを変更する
     /// - parameter themeColor: テーマカラー
-    func updateThemeColor(themeColor: CardPackageEntity.ThemeColor)
+    func updateThemeColor(themeColor: CardPackage.ThemeColor)
 }
 
 protocol SelectThemeColorInteractorOutput: AnyObject {
     /// 選択せれたテーマカラーを出力
     @MainActor
-    func outputSelectedThemeColor(_ themeColor: CardPackageEntity.ThemeColor)
+    func outputSelectedThemeColor(_ themeColor: CardPackage.ThemeColor)
 
     /// データ処理の成功を出力
     @MainActor

@@ -22,13 +22,13 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
 
     func viewDidSuspend() {}
 
-    var currentUser: UserEntity = .init(
+    var currentUser: User = .init(
         id: "",
         name: "",
         currentRoomId: 0,
         selectedCardId: "")
 
-    var currentRoom: RoomEntity = .init(id: 0, userList: [], cardPackage: .defaultCardPackage)
+    var currentRoom: Room = .init(id: 0, userList: [], cardPackage: .defaultCardPackage)
 
     func didTapEnterRoomButton(inputUserName: String, inputRoomId: String) {
         Task {

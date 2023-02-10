@@ -3,7 +3,7 @@ import Foundation
 protocol CardListObservable: ObservableObject, ViewModel {
     /// ルーム
     @MainActor
-    var room: RoomEntity { get set }
+    var room: Room { get set }
 
     /// ヘッダーテキスト
     @MainActor
@@ -78,11 +78,11 @@ protocol CardListUseCase: AnyObject {
 protocol CardListInteractorOutput: AnyObject {
     /// ユーザーを出力する
     @MainActor
-    func outputUser(_ user: UserEntity)
+    func outputUser(_ user: User)
 
     /// ルームを出力する
     @MainActor
-    func outputRoom(_ room: RoomEntity)
+    func outputRoom(_ room: Room)
 
     /// ヘッダーテキストを表示する
     @MainActor
