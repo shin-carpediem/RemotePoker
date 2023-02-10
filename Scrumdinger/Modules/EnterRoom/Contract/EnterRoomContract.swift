@@ -1,6 +1,6 @@
 import Foundation
 
-protocol EnterRoomObservable: ObservableObject, ViewModel {
+protocol EnterRoomObservable: ObservableObject {
     /// 入力フォーム/名前
     @MainActor
     var inputName: String { get set }
@@ -22,7 +22,7 @@ protocol EnterRoomObservable: ObservableObject, ViewModel {
     var willPushCardListView: Bool { get set }
 }
 
-protocol EnterRoomPresentation: Presentation {
+protocol EnterRoomPresentation: AnyObject, Presentation {
     /// カレントユーザー
     var currentUser: UserEntity { get }
 

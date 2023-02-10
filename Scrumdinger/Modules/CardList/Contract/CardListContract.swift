@@ -30,7 +30,7 @@ protocol CardListObservable: ObservableObject, ViewModel {
     var willPushSettingView: Bool { get set }
 }
 
-protocol CardListPresentation: Presentation {
+protocol CardListPresentation: AnyObject, Presentation {
     /// カードを選択した
     /// - parameter cardId: カードID
     func didSelectCard(cardId: String)

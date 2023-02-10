@@ -1,4 +1,4 @@
-protocol Presentation: AnyObject {
+protocol Presentation {
     /// View開始時
     func viewDidLoad()
 

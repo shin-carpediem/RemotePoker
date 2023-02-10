@@ -10,7 +10,7 @@ protocol SelectThemeColorObservable: ObservableObject, ViewModel {
     var selectedThemeColor: CardPackageEntity.ThemeColor? { get set }
 }
 
-protocol SelectThemeColorPresentation: Presentation {
+protocol SelectThemeColorPresentation: AnyObject, Presentation {
     /// カラーをタップした
     /// - parameter color: 選択したカラー
     func didTapColor(color: CardPackageEntity.ThemeColor)

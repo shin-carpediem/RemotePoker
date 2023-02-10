@@ -6,7 +6,7 @@ protocol SettingObservable: ObservableObject, ViewModel {
     var willPushSelectThemeColorView: Bool { get set }
 }
 
-protocol SettingPresentation: Presentation {
+protocol SettingPresentation: AnyObject, Presentation {
     /// テーマカラー選択画面に遷移するボタンがタップされた
     func didTapSelectThemeColorButton()
 

@@ -1,7 +1,7 @@
 import Combine
 import SwiftUI
 
-final class EnterRoomViewModel: EnterRoomObservable {
+final class EnterRoomViewModel: EnterRoomObservable, ViewModel {
     init() {
         observeInputForm()
     }
@@ -44,7 +44,7 @@ final class EnterRoomViewModel: EnterRoomObservable {
     // MARK: - Private
 
     /// 監視対象一覧
-    private var cancellables: Set<AnyCancellable> = []
+    private var cancellables = Set<AnyCancellable>()
 
     /// 入力フォーム内容を監視する
     private func observeInputForm() {
