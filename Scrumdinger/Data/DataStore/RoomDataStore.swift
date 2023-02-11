@@ -172,8 +172,8 @@ final class RoomDataStore: RoomRepository {
     private var roomId: Int!
 
     /// Firestoreのリファレンス一覧
-    private var firestoreRef: FirestoreRef {
-        FirestoreRef(roomId: roomId)
+    private var firestoreRef: FirestoreRefs {
+        FirestoreRefs(roomId: roomId)
     }
 
     /// ルーム内ユーザーのリスナー

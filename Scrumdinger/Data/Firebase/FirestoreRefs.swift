@@ -10,7 +10,7 @@ enum FireStoreDocumentChanges {
     case removed
 }
 
-struct FirestoreRef {
+struct FirestoreRefs {
     /// ルームID
     var roomId: Int
 
