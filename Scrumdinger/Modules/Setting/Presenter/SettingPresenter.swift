@@ -40,13 +40,13 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
 
     @MainActor
     func outputSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
+        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 
     @MainActor
     func outputError(_ errror: Error, message: String) {
-        dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
+        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onFailure, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 

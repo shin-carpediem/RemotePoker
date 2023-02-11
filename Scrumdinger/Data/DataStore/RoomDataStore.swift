@@ -109,7 +109,7 @@ final class RoomDataStore: RoomRepository {
         let userDocument = firestoreRef.userDocument(userId: id)
         userDocument.getDocument { userSnapshot, _ in
             let userData = userSnapshot?.data()
-            let user: UserEntity = .init(
+            let user = UserEntity(
                 id: userData?["id"] as! String,
                 name: userData?["name"] as! String,
                 currentRoomId: userData?["currentRoomId"] as! Int,

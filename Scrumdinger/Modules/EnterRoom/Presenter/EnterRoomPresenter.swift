@@ -22,13 +22,13 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
 
     func viewDidSuspend() {}
 
-    var currentUser: User = .init(
+    var currentUser = User(
         id: "",
         name: "",
         currentRoomId: 0,
         selectedCardId: "")
 
-    var currentRoom: Room = .init(id: 0, userList: [], cardPackage: .defaultCardPackage)
+    var currentRoom = Room(id: 0, userList: [], cardPackage: .defaultCardPackage)
 
     func didTapEnterRoomButton(inputUserName: String, inputRoomId: String) {
         Task {
@@ -71,13 +71,13 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
 
     @MainActor
     func outputSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
+        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 
     @MainActor
     func outputError(_ error: Error, message: String) {
-        dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
+        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onFailure, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 
@@ -91,7 +91,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     private func setupUserAndRoom(
         userId: String, userName: String, roomId: Int
     ) async {
-        currentUser = .init(
+        currentUser = User(
             id: userId,
             name: userName,
             currentRoomId: roomId,
@@ -107,7 +107,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
             await dependency.useCase.adduserToRoom(roomId: roomId, user: currentUser)
         } else {
             // 新規ルーム
-            currentRoom = .init(
+            currentRoom = Room(
                 id: roomId,
                 userList: [currentUser],
                 cardPackage: .defaultCardPackage)
