@@ -30,10 +30,6 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
         Task {
             await disableButton(true)
             await showLoader(true)
-            LocalStorage.shared.currentRoomId = 0
-            LocalStorage.shared.currentUserId = ""
-            dependency.useCase.unsubscribeUser()
-            dependency.useCase.unsubscribeCardPackages()
             await dependency.useCase.leaveRoom()
             await disableButton(false)
             await showLoader(false)
