@@ -63,7 +63,7 @@ protocol CardListUseCase: AnyObject {
 
     /// ユーザーを要求する
     /// - parameter userId:　ユーザーID
-    func requestUser(userId: String)
+    func requestUser(userId: String) async
 }
 
 protocol CardListInteractorOutput: AnyObject {

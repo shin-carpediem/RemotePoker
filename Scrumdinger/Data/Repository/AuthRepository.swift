@@ -1,7 +1,9 @@
+import Combine
+
 protocol AuthRepository: AnyObject {
     /// ログインする
-    /// - parameter completion: 完了ハンドラ(ユーザーIDを返却)
-    func login(completion: @escaping (Result<String, FirebaseError>) -> Void)
+    /// - returns: ユーザーID
+    func login() -> Future<String, Never>
 
     /// ログアウトする
     func logout() -> Result<Void, FirebaseError>

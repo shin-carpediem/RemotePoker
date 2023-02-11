@@ -25,12 +25,12 @@ final class RoomDataStore: RoomRepository {
 
     lazy var cardPackage: PassthroughSubject<CardPackageEntity, Never> = {
         let subject = PassthroughSubject<CardPackageEntity, Never>()
-        firestoreRef.cardPackagesQuery.addSnapshotListener { [weak self] snapshot, error in
-            guard let self = self else { return }
+        firestoreRef.cardPackagesQuery.addSnapshotListener { snapshot, error in
             if let error = error { return }
             guard let snapshot = snapshot else { return }
             guard let document = snapshot.documents.first else { return }
-            Task {
+            Task { [weak self] in
+                guard let self = self else { return }
                 let cardPackage: CardPackageEntity = await self.cardPackageEntity(from: document)
                 subject.send(cardPackage)
             }
@@ -50,7 +50,7 @@ final class RoomDataStore: RoomRepository {
                 "updatedAt": Date(),
             ])
             return .success(())
-        } catch {
+        } catch (_) {
             return .failure(.failedToAddUserToRoom)
         }
     }
@@ -59,19 +59,19 @@ final class RoomDataStore: RoomRepository {
         do {
             try await firestoreRef.userDocument(userId: userId).delete()
             return .success(())
-        } catch {
+        } catch (_) {
             return .failure(.failedToRemoveUserFromRoom)
         }
     }
 
-    func fetchUser(id: String, completion: @escaping (Result<UserEntity, FirebaseError>) -> Void) {
-        let userDocument = firestoreRef.userDocument(userId: id)
-        userDocument.getDocument { snapshot, _ in
-            guard let snapshot = snapshot else {
-                return completion(.failure(.failedToFetchUser))
+    func fetchUser(byId id: String) -> Future<UserEntity, Never> {
+        Future<UserEntity, Never> { [unowned self] promise in
+            let userDocument = self.firestoreRef.userDocument(userId: id)
+            userDocument.getDocument { snapshot, _ in
+                guard let snapshot = snapshot else { return }
+                let user = Self.userEntity(from: snapshot)
+                promise(.success(user))
             }
-            let user = Self.userEntity(from: snapshot)
-            completion(.success(user))
         }
     }
 
@@ -104,7 +104,7 @@ final class RoomDataStore: RoomRepository {
     // MARK: - Private
 
     /// ルームID
-    private var roomId: Int!
+    private let roomId: Int
 
     /// Firestoreのリファレンス一覧
     private var firestoreRef: FirestoreRefs {

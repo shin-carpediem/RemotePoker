@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 
 final class CardListPresenter: CardListPresentation, CardListInteractorOutput, DependencyInjectable
@@ -119,27 +120,22 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 
     private var dependency: Dependency!
 
+    private var cancellablesForAction = Set<AnyCancellable>()
+
     /// 匿名ログインする
     private func login() {
-        AuthDataStore.shared.login { [weak self] result in
-            guard let self = self else { return }
-            Task {
-                switch result {
-                case .success(let userId):
-                    // ログインに成功した
+        AuthDataStore.shared.login()
+            .sink { userId in
+                Task { [weak self] in
+                    guard let self = self else { return }
                     // ユーザーのカレントルームがFirestore上に存在するか確認する
                     if await self.checkUserInCurrentRoom() {
                         await self.setupData(
                             userId: userId, shouldFetchData: self.dependency.isExisingUser)
                     }
-
-                case .failure(let error):
-                    // ログインに失敗した
-                    let message = "ログインできませんでした。アプリを再インストールしてください"
-                    await self.outputError(error, message: message)
                 }
             }
-        }
+            .store(in: &self.cancellablesForAction)
     }
 
     /// 各種データをセットアップする
@@ -147,7 +143,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         dependency.useCase.subscribeUsers()
         dependency.useCase.subscribeCardPackages()
         if shouldFetchData {
-            dependency.useCase.requestUser(userId: userId)
+            await dependency.useCase.requestUser(userId: userId)
         }
     }
 

@@ -21,22 +21,23 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     }
 
     func subscribeUsers() {
-        userListCancellable = dependency.roomRepository.userList.sink { [weak self] userList in
-            guard let self = self else { return }
-            Task {
-                await self.dependency.output?.outputUserList(userList)
+        dependency.roomRepository.userList
+            .sink { userList in
+                Task { [unowned self] in
+                    await self.dependency.output?.outputUserList(userList)
+                }
             }
-        }
+            .store(in: &self.cancellablesForSubscription)
     }
 
     func subscribeCardPackages() {
-        cardPackageCancellable = dependency.roomRepository.cardPackage.sink {
-            [weak self] cardPackage in
-            guard let self = self else { return }
-            Task {
-                await self.dependency.output?.outputCardPackage(cardPackage)
+        dependency.roomRepository.cardPackage
+            .sink { cardPackage in
+                Task { [unowned self] in
+                    await self.dependency.output?.outputCardPackage(cardPackage)
+                }
             }
-        }
+            .store(in: &self.cancellablesForSubscription)
     }
 
     func updateSelectedCardId(selectedCardDictionary: [String: String]) {
@@ -44,27 +45,21 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
             selectedCardDictionary: selectedCardDictionary)
     }
 
-    func requestUser(userId: String) {
-        dependency.roomRepository.fetchUser(id: userId) { [weak self] result in
-            guard let self = self else { return }
-            Task {
-                switch result {
-                case .success(let user):
+    func requestUser(userId: String) async {
+        dependency.roomRepository.fetchUser(byId: userId)
+            .sink { user in
+                Task { [unowned self] in
                     await self.dependency.output?.outputCurrentUser(user)
-
-                case .failure(let error):
-                    let message = "ユーザーを見つけられませんでした"
-                    await self.dependency.output?.outputError(error, message: message)
                 }
             }
-        }
+            .store(in: &self.cancellablesForAction)
     }
 
     // MARK: - Private
 
     private var dependency: Dependency!
 
-    private var userListCancellable: AnyCancellable?
+    private var cancellablesForSubscription = Set<AnyCancellable>()
 
-    private var cardPackageCancellable: AnyCancellable?
+    private var cancellablesForAction = Set<AnyCancellable>()
 }

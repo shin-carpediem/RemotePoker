@@ -16,9 +16,9 @@ protocol RoomRepository: AnyObject {
     func removeUserFromRoom(userId: String) async -> Result<Void, FirebaseError>
 
     /// 指定IDのユーザーを取得する
-    /// - parameter id: ユーザーID
-    /// - parameter completion: 完了ハンドラ(ユーザーを返却)
-    func fetchUser(id: String, completion: @escaping (Result<UserEntity, FirebaseError>) -> Void)
+    /// - parameter byId: ユーザーID
+    /// - returns: ユーザーを返却
+    func fetchUser(byId id: String) -> Future<UserEntity, Never>
 
     /// ユーザーの選択済みカードを更新する
     /// - parameter selectedCardDictionary: ユーザーIDと選択されたカードIDの辞書

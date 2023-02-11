@@ -60,7 +60,7 @@ final class EnterRoomDataStore: EnterRoomRepository {
                 ])
             }
             return .success(())
-        } catch {
+        } catch (_) {
             return .failure(.failedToCreateRoom)
         }
     }
