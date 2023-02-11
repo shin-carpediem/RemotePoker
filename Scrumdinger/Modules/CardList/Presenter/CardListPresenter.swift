@@ -42,7 +42,6 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     func didSelectCard(cardId: String) {
         Task {
             await disableButton(true)
-            await showLoader(true)
             let selectedCardDictionary: [String: String] = [dependency.currentUserId: cardId]
             dependency.useCase.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
         }
@@ -76,19 +75,30 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     // MARK: - CardListInteractorOutput
 
     @MainActor
-    func outputUser(_ user: User) {
+    func outputCurrentUser(_ user: User) {
         dependency.currentUserId = user.id
         dependency.currentUserName = user.name
+        let userList = dependency.viewModel?.room.userList
+        if let userList = userList {
+            showHeaderTitle(userList: userList)
+            updateUserSelectStatusList(userList: userList)
+        }
         disableButton(false)
         showLoader(false)
     }
 
     @MainActor
-    func outputRoom(_ room: Room) {
-        dependency.viewModel?.room = room
-        dependency.roomId = room.id
-        showHeaderTitle(room: room)
-        updateUserSelectStatusList(room: room)
+    func outputUserList(_ userList: [User]) {
+        dependency.viewModel?.room.userList = userList
+        showHeaderTitle(userList: userList)
+        updateUserSelectStatusList(userList: userList)
+        disableButton(false)
+        showLoader(false)
+    }
+
+    @MainActor
+    func outputCardPackage(_ cardPackage: CardPackage) {
+        dependency.viewModel?.room.cardPackage = cardPackage
         disableButton(false)
         showLoader(false)
     }
@@ -138,7 +148,6 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         dependency.useCase.subscribeCardPackages()
         if shouldFetchData {
             dependency.useCase.requestUser(userId: userId)
-            await dependency.useCase.requestRoom()
         }
     }
 
@@ -153,20 +162,23 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 
     /// ヘッダータイトルを表示する
     @MainActor
-    private func showHeaderTitle(room: Room) {
-        let currentUserName = dependency.currentUserName
-        let otherUsersCount = room.userList.count - 1
+    private func showHeaderTitle(userList: [User]) {
+        let currentUserName: String = dependency.currentUserName
+        let otherUsersCount: Int = userList.count - 1
         let otherUsersText = (otherUsersCount >= 1 ? "と \(String(otherUsersCount))名" : "")
+        let roomId: Int = dependency.roomId
 
-        let headerTitle = "\(currentUserName) \(otherUsersText)が ルームID\(room.id) に入室中"
+        let headerTitle = "\(currentUserName) \(otherUsersText)が ルームID\(roomId) に入室中"
         dependency.viewModel?.headerTitle = headerTitle
     }
 
     /// ユーザーの選択状況一覧を更新する
     @MainActor
-    private func updateUserSelectStatusList(room: Room) {
-        let userSelectStatusList: [UserSelectStatus] = room.userList.map { user in
-            let cardPackage = room.cardPackage
+    private func updateUserSelectStatusList(userList: [User]) {
+        let userSelectStatusList: [UserSelectStatus] = userList.map { user in
+            guard let cardPackage = dependency.viewModel?.room.cardPackage else {
+                fatalError()
+            }
             let selectedCard: CardPackage.Card? = cardPackage.cardList.first(where: {
                 $0.id == user.selectedCardId
             })

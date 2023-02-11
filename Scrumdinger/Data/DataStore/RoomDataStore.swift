@@ -1,3 +1,4 @@
+import Combine
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Foundation
@@ -9,54 +10,33 @@ final class RoomDataStore: RoomRepository {
 
     // MARK: - RoomRepository
 
-    func fetchRoom() async -> Result<RoomEntity, FirebaseError> {
-        // ルーム取得
-        let roomSnapshot = await firestoreRef.roomSnapshot()
-        let roomData = roomSnapshot?.data()
-        guard let roomData = roomData else {
-            return .failure(.failedToFetchRoom)
+    lazy var userList: PassthroughSubject<[UserEntity], Never> = {
+        let subject = PassthroughSubject<[UserEntity], Never>()
+        firestoreRef.usersQuery.addSnapshotListener { snapshot, error in
+            if let error = error { return }
+            guard let snapshot = snapshot else { return }
+            let userList: [UserEntity] = snapshot.documents.map { doc in
+                Self.userEntity(from: doc)
+            }
+            subject.send(userList)
         }
-        let roomId = roomData["id"] as! Int
+        return subject
+    }()
 
-        // ユーザー一覧取得
-        let usersSnapshot = await firestoreRef.usersSnapshot()
-        let userList: [UserEntity] = usersSnapshot!.map { userDoc in
-            let userData = userDoc.data()
-            return UserEntity(
-                id: userData["id"] as! String,
-                name: userData["name"] as! String,
-                currentRoomId: userData["currentRoomId"] as! Int,
-                selectedCardId: userData["selectedCardId"] as! String)
+    lazy var cardPackage: PassthroughSubject<CardPackageEntity, Never> = {
+        let subject = PassthroughSubject<CardPackageEntity, Never>()
+        firestoreRef.cardPackagesQuery.addSnapshotListener { [weak self] snapshot, error in
+            guard let self = self else { return }
+            if let error = error { return }
+            guard let snapshot = snapshot else { return }
+            guard let document = snapshot.documents.first else { return }
+            Task {
+                let cardPackage: CardPackageEntity = await self.cardPackageEntity(from: document)
+                subject.send(cardPackage)
+            }
         }
-
-        // カードパッケージ取得
-        let cardPackagesSnapshot = await firestoreRef.cardPackagesSnapshot()?.first
-        let cardPackageData = cardPackagesSnapshot?.data()
-        let cardPackageId = cardPackageData!["id"] as! String
-        let themeColor = cardPackageData!["themeColor"] as! String
-
-        // カード一覧取得
-        let cardsSnapshot = await firestoreRef.cardsSnapshot(cardPackageId: cardPackageId)
-        let cardList: [CardPackageEntity.Card] = cardsSnapshot!.map { cardDoc in
-            let cardData = cardDoc.data()
-            return CardPackageEntity.Card(
-                id: cardData["id"] as! String,
-                point: cardData["point"] as! String,
-                index: cardData["index"] as! Int)
-        }.sorted { $0.index < $1.index }
-
-        let cardPackage = CardPackageEntity(
-            id: cardPackageId,
-            themeColor: CardPackageEntity.ThemeColor(rawValue: themeColor)!,
-            cardList: cardList)
-
-        let room = RoomEntity(
-            id: roomId,
-            userList: userList,
-            cardPackage: cardPackage)
-
-        return .success(room)
-    }
+        return subject
+    }()
 
     func addUserToRoom(user: UserEntity) async -> Result<Void, FirebaseError> {
         do {
@@ -84,68 +64,15 @@ final class RoomDataStore: RoomRepository {
         }
     }
 
-    func subscribeUser(
-        completion: @escaping (Result<FireStoreDocumentChanges, FirebaseError>) -> Void
-    ) {
-        usersListener = firestoreRef.usersQuery.addSnapshotListener { querySnapshot, error in
-            querySnapshot?.documentChanges.forEach { diff in
-                var diffType: FireStoreDocumentChanges
-                if diff.type == .added {
-                    diffType = .added
-                } else if diff.type == .modified {
-                    diffType = .modified
-                } else if diff.type == .removed {
-                    diffType = .removed
-                } else {
-                    completion(.failure(.failedToSubscribeUser))
-                    return
-                }
-                completion(.success(diffType))
-            }
-        }
-    }
-
-    func fetchUser(id: String, completion: @escaping (UserEntity) -> Void) {
+    func fetchUser(id: String, completion: @escaping (Result<UserEntity, FirebaseError>) -> Void) {
         let userDocument = firestoreRef.userDocument(userId: id)
-        userDocument.getDocument { userSnapshot, _ in
-            let userData = userSnapshot?.data()
-            let user = UserEntity(
-                id: userData?["id"] as! String,
-                name: userData?["name"] as! String,
-                currentRoomId: userData?["currentRoomId"] as! Int,
-                selectedCardId: userData?["selectedCardId"] as! String)
-            completion(user)
-        }
-    }
-
-    func unsubscribeUser() {
-        usersListener?.remove()
-    }
-
-    func subscribeCardPackage(
-        completion: @escaping (Result<FireStoreDocumentChanges, FirebaseError>) -> Void
-    ) {
-        cardPackagesListener = firestoreRef.cardPackagesQuery.addSnapshotListener {
-            querySnapshot, error in
-            querySnapshot?.documentChanges.forEach { diff in
-                var diffType: FireStoreDocumentChanges
-                if diff.type == .added {
-                    diffType = .added
-                } else if diff.type == .modified {
-                    diffType = .modified
-                } else if diff.type == .removed {
-                    diffType = .removed
-                } else {
-                    completion(.failure(.failedToSubscribeCardPackage))
-                    return
-                }
-                completion(.success(diffType))
+        userDocument.getDocument { snapshot, _ in
+            guard let snapshot = snapshot else {
+                return completion(.failure(.failedToFetchUser))
             }
+            let user = Self.userEntity(from: snapshot)
+            completion(.success(user))
         }
-    }
-
-    func unsubscribeCardPackage() {
-        cardPackagesListener?.remove()
     }
 
     func updateSelectedCardId(selectedCardDictionary: [String: String]) {
@@ -166,19 +93,61 @@ final class RoomDataStore: RoomRepository {
         ])
     }
 
+    func unsubscribeUser() {
+        userList.send(completion: .finished)
+    }
+
+    func unsubscribeCardPackage() {
+        cardPackage.send(completion: .finished)
+    }
+
     // MARK: - Private
 
     /// ルームID
     private var roomId: Int!
 
     /// Firestoreのリファレンス一覧
-    private var firestoreRef: FirestoreRef {
-        FirestoreRef(roomId: roomId)
+    private var firestoreRef: FirestoreRefs {
+        FirestoreRefs(roomId: roomId)
     }
 
-    /// ルーム内ユーザーのリスナー
-    private var usersListener: ListenerRegistration?
+    /// ユーザー エンティティ
+    private static func userEntity(from doc: DocumentSnapshot) -> UserEntity {
+        guard let id = doc.get("id") as? String else {
+            fatalError()
+        }
+        return UserEntity(
+            id: id,
+            name: doc.get("name") as? String ?? "",
+            currentRoomId: doc.get("currentRoomId") as? Int ?? 0,
+            selectedCardId: doc.get("selectedCardId") as? String ?? "")
+    }
 
-    /// ルームのカードパッケージのリスナー
-    private var cardPackagesListener: ListenerRegistration?
+    /// カードパッケージ エンティティ
+    private func cardPackageEntity(from doc: DocumentSnapshot) async -> CardPackageEntity {
+        guard let id = doc.get("id") as? String else {
+            fatalError()
+        }
+        let themeColor = doc.get("themeColor") as? String ?? ""
+
+        // カード一覧取得
+        let cardsSnapshot = await firestoreRef.cardsSnapshot(cardPackageId: id)
+        guard let cardsSnapshot = cardsSnapshot else {
+            fatalError()
+        }
+        let cardList: [CardPackageEntity.Card] = cardsSnapshot.map { doc in
+            guard let cardId = doc.get("id") as? String else {
+                fatalError()
+            }
+            return CardPackageEntity.Card(
+                id: cardId,
+                point: doc.get("point") as? String ?? "",
+                index: doc.get("index") as? Int ?? 0)
+        }.sorted { $0.index < $1.index }
+
+        return CardPackageEntity(
+            id: id,
+            themeColor: CardPackageEntity.ThemeColor(rawValue: themeColor) ?? .oxblood,
+            cardList: cardList)
+    }
 }

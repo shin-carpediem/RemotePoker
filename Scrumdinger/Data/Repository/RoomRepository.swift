@@ -1,7 +1,11 @@
+import Combine
+
 protocol RoomRepository: AnyObject {
-    /// ルームを取得する
-    /// - returns: 成功ならルーム
-    func fetchRoom() async -> Result<RoomEntity, FirebaseError>
+    /// ユーザーリスト
+    var userList: PassthroughSubject<[UserEntity], Never> { get }
+
+    /// カードパッケージ
+    var cardPackage: PassthroughSubject<CardPackageEntity, Never> { get }
 
     /// ルームにユーザーを追加する
     /// - parameter user: ユーザー
@@ -11,26 +15,10 @@ protocol RoomRepository: AnyObject {
     /// - parameter userId: ユーザーID
     func removeUserFromRoom(userId: String) async -> Result<Void, FirebaseError>
 
-    /// ユーザーを購読する
-    /// - parameter completion: 完了ハンドラ(ドキュメント操作の種類を返却)
-    func subscribeUser(
-        completion: @escaping (Result<FireStoreDocumentChanges, FirebaseError>) -> Void)
-
-    /// ユーザーの購読を解除する
-    func unsubscribeUser()
-
-    /// カードパッケージを購読する
-    /// - parameter completion: 完了ハンドラ(ドキュメント操作の種類を返却)
-    func subscribeCardPackage(
-        completion: @escaping (Result<FireStoreDocumentChanges, FirebaseError>) -> Void)
-
-    /// カードパッケージの購読を解除する
-    func unsubscribeCardPackage()
-
     /// 指定IDのユーザーを取得する
     /// - parameter id: ユーザーID
     /// - parameter completion: 完了ハンドラ(ユーザーを返却)
-    func fetchUser(id: String, completion: @escaping (UserEntity) -> Void)
+    func fetchUser(id: String, completion: @escaping (Result<UserEntity, FirebaseError>) -> Void)
 
     /// ユーザーの選択済みカードを更新する
     /// - parameter selectedCardDictionary: ユーザーIDと選択されたカードIDの辞書
@@ -40,4 +28,10 @@ protocol RoomRepository: AnyObject {
     /// - parameter cardPackageId: カードパッケージID
     /// - parameter themeColor: テーマカラー
     func updateThemeColor(cardPackageId: String, themeColor: CardPackageEntity.ThemeColor)
+
+    /// ユーザーの購読を解除する
+    func unsubscribeUser()
+
+    /// カードパッケージの購読を解除する
+    func unsubscribeCardPackage()
 }

@@ -55,7 +55,7 @@
 		F57C643C2963134800CD55CD /* Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C643B2963134800CD55CD /* Presentation.swift */; };
 		F57C643F2963B53800CD55CD /* EnterRoomInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C643E2963B53800CD55CD /* EnterRoomInteractor.swift */; };
 		F57C644129653F1500CD55CD /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C644029653F1500CD55CD /* UserEntity.swift */; };
-		F5802CFB2931E6E000955949 /* FirestoreRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFA2931E6E000955949 /* FirestoreRef.swift */; };
+		F5802CFB2931E6E000955949 /* FirestoreRefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFA2931E6E000955949 /* FirestoreRefs.swift */; };
 		F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFD293207C700955949 /* CardListPresenter.swift */; };
 		F5802D0329320DEF00955949 /* ModuleAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D0229320DEF00955949 /* ModuleAssembler.swift */; };
 		F5802D0529320F1B00955949 /* ModuleAssembler+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D0429320F1B00955949 /* ModuleAssembler+Default.swift */; };
@@ -155,7 +155,7 @@
 		F57C643B2963134800CD55CD /* Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presentation.swift; sourceTree = "<group>"; };
 		F57C643E2963B53800CD55CD /* EnterRoomInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomInteractor.swift; sourceTree = "<group>"; };
 		F57C644029653F1500CD55CD /* UserEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
-		F5802CFA2931E6E000955949 /* FirestoreRef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRef.swift; sourceTree = "<group>"; };
+		F5802CFA2931E6E000955949 /* FirestoreRefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRefs.swift; sourceTree = "<group>"; };
 		F5802CFD293207C700955949 /* CardListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListPresenter.swift; sourceTree = "<group>"; };
 		F5802D0229320DEF00955949 /* ModuleAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleAssembler.swift; sourceTree = "<group>"; };
 		F5802D0429320F1B00955949 /* ModuleAssembler+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModuleAssembler+Default.swift"; sourceTree = "<group>"; };
@@ -423,7 +423,7 @@
 		F5802CF92931E6D000955949 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				F5802CFA2931E6E000955949 /* FirestoreRef.swift */,
+				F5802CFA2931E6E000955949 /* FirestoreRefs.swift */,
 				F5DDCD20297C1AEF00786C35 /* FirebaseError.swift */,
 			);
 			path = Firebase;
@@ -880,7 +880,7 @@
 			files = (
 				F57C641C2950A99F00CD55CD /* SelectThemeColorPresenter.swift in Sources */,
 				F57C6434296136CC00CD55CD /* AuthDataStore.swift in Sources */,
-				F5802CFB2931E6E000955949 /* FirestoreRef.swift in Sources */,
+				F5802CFB2931E6E000955949 /* FirestoreRefs.swift in Sources */,
 				F57C64322961366500CD55CD /* AuthRepository.swift in Sources */,
 				F5E05175292BB134006EA727 /* RoomDataStore.swift in Sources */,
 				F5C397E0289F420F008AEFF2 /* EnterRoomView.swift in Sources */,
@@ -1082,7 +1082,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3.2.0;
+				CURRENT_PROJECT_VERSION = 1.3.2.1;
 				DEVELOPMENT_ASSET_PATHS = "\"Scrumdinger/Preview Content\"";
 				DEVELOPMENT_TEAM = KB4BJUD35F;
 				ENABLE_PREVIEWS = YES;
@@ -1118,7 +1118,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3.2.0;
+				CURRENT_PROJECT_VERSION = 1.3.2.1;
 				DEVELOPMENT_ASSET_PATHS = "\"Scrumdinger/Preview Content\"";
 				DEVELOPMENT_TEAM = KB4BJUD35F;
 				ENABLE_PREVIEWS = YES;

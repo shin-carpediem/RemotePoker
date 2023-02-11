@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 
 final class CardListInteractor: CardListUseCase, DependencyInjectable {
@@ -20,40 +21,20 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     }
 
     func subscribeUsers() {
-        dependency.roomRepository.subscribeUser { [weak self] result in
+        userListCancellable = dependency.roomRepository.userList.sink { [weak self] userList in
             guard let self = self else { return }
             Task {
-                switch result {
-                case .success(_):
-                    await self.requestRoom()
-
-                case .failure(let error):
-                    let message = "アプリ内に問題が発生しました。再度起動してください"
-                    await self.dependency.output?.outputError(error, message: message)
-                }
+                await self.dependency.output?.outputUserList(userList)
             }
         }
     }
 
     func subscribeCardPackages() {
-        dependency.roomRepository.subscribeCardPackage { [weak self] result in
+        cardPackageCancellable = dependency.roomRepository.cardPackage.sink {
+            [weak self] cardPackage in
             guard let self = self else { return }
             Task {
-                switch result {
-                case .success(let action):
-                    switch action {
-                    case .modified:
-                        // カードパッケージのテーマカラーが変更された時
-                        await self.requestRoom()
-
-                    case .added, .removed:
-                        return
-                    }
-
-                case .failure(let error):
-                    let message = "アプリ内に問題が発生しました。再度起動してください"
-                    await self.dependency.output?.outputError(error, message: message)
-                }
+                await self.dependency.output?.outputCardPackage(cardPackage)
             }
         }
     }
@@ -64,27 +45,26 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     }
 
     func requestUser(userId: String) {
-        dependency.roomRepository.fetchUser(id: userId) { [weak self] user in
+        dependency.roomRepository.fetchUser(id: userId) { [weak self] result in
             guard let self = self else { return }
             Task {
-                await self.dependency.output?.outputUser(user)
+                switch result {
+                case .success(let user):
+                    await self.dependency.output?.outputCurrentUser(user)
+
+                case .failure(let error):
+                    let message = "ユーザーを見つけられませんでした"
+                    await self.dependency.output?.outputError(error, message: message)
+                }
             }
-        }
-    }
-
-    func requestRoom() async {
-        let result = await dependency.roomRepository.fetchRoom()
-        switch result {
-        case .success(let room):
-            await dependency.output?.outputRoom(room)
-
-        case .failure(let error):
-            let message = "ルームを見つけられませんでした"
-            await dependency.output?.outputError(error, message: message)
         }
     }
 
     // MARK: - Private
 
     private var dependency: Dependency!
+
+    private var userListCancellable: AnyCancellable?
+
+    private var cardPackageCancellable: AnyCancellable?
 }
