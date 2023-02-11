@@ -9,7 +9,24 @@ final class RoomDataStore: RoomRepository {
     }
 
     // MARK: - RoomRepository
-
+    
+    lazy var userList: PassthroughSubject<[UserEntity], Never> = {
+        let subject = PassthroughSubject<[UserEntity], Never>()
+        firestoreRef.usersQuery.addSnapshotListener { snapshot, error in
+            if let error = error { return }
+            guard let snapshot = snapshot else { return }
+            let userList: [UserEntity] = snapshot.documents.map { doc in
+                Self.userEntity(from: doc)
+            }
+            subject.send(userList)
+        }
+        return subject
+    }()
+    
+    func unsubscribeUser() {
+        userList.send(completion: .finished)
+    }
+    
     func fetchRoom() async -> Result<RoomEntity, FirebaseError> {
         // ユーザー一覧取得
         let usersSnapshot = await firestoreRef.usersSnapshot()
@@ -63,42 +80,6 @@ final class RoomDataStore: RoomRepository {
         }
     }
 
-    func subscribeUser(
-        completion: @escaping (Result<FireStoreDocumentChanges, FirebaseError>) -> Void
-    ) {
-        usersListener = firestoreRef.usersQuery.addSnapshotListener { snapshot, error in
-            snapshot?.documentChanges.forEach { diff in
-                var diffType: FireStoreDocumentChanges
-                if diff.type == .added {
-                    diffType = .added
-                } else if diff.type == .modified {
-                    diffType = .modified
-                } else if diff.type == .removed {
-                    diffType = .removed
-                } else {
-                    completion(.failure(.failedToSubscribeUser))
-                    return
-                }
-                completion(.success(diffType))
-            }
-        }
-    }
-
-    //    lazy var userList: PassthroughSubject<[UserEntity], Never> = {
-    //        let subject = PassthroughSubject<[UserEntity], Never>()
-    //        firestoreRef.usersQuery.addSnapshotListener { snapshot, error in
-    //            if let error = error { return }
-    //            subject.send(snapshot)
-    //        }
-    //
-    //        return subject.send {
-    //            firestoreRef.usersQuery.addSnapshotListener { snapshot, error in
-    //                if let error = error { return }
-    //
-    //            }
-    //        }
-    //    }()
-
     func fetchUser(id: String, completion: @escaping (Result<UserEntity, FirebaseError>) -> Void) {
         let userDocument = firestoreRef.userDocument(userId: id)
         userDocument.getDocument { snapshot, _ in
@@ -108,10 +89,6 @@ final class RoomDataStore: RoomRepository {
             let user = Self.userEntity(from: snapshot)
             completion(.success(user))
         }
-    }
-
-    func unsubscribeUser() {
-        usersListener?.remove()
     }
 
     func subscribeCardPackage(
@@ -167,9 +144,6 @@ final class RoomDataStore: RoomRepository {
     private var firestoreRef: FirestoreRefs {
         FirestoreRefs(roomId: roomId)
     }
-
-    /// ルーム内ユーザーのリスナー
-    private var usersListener: ListenerRegistration?
 
     /// ルームのカードパッケージのリスナー
     private var cardPackagesListener: ListenerRegistration?

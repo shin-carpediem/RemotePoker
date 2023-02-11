@@ -17,9 +17,6 @@ enum FirebaseError: Error {
     /// ルームからの退出に失敗した
     case failedToRemoveUserFromRoom
 
-    /// ユーザーの購読に失敗した
-    case failedToSubscribeUser
-
     /// 指定IDのユーザー取得に失敗した
     case failedToFetchUser
 

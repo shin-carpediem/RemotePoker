@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 
 final class CardListInteractor: CardListUseCase, DependencyInjectable {
@@ -20,17 +21,10 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     }
 
     func subscribeUsers() {
-        dependency.roomRepository.subscribeUser { [weak self] result in
+        userListCancellable = dependency.roomRepository.userList.sink { [weak self] userList in
             guard let self = self else { return }
             Task {
-                switch result {
-                case .success(_):
-                    await self.requestRoom()
-
-                case .failure(let error):
-                    let message = "アプリ内に問題が発生しました。再インストールしてください"
-                    await self.dependency.output?.outputError(error, message: message)
-                }
+                await self.dependency.output?.outputUserList(userList)
             }
         }
     }
@@ -94,4 +88,6 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     // MARK: - Private
 
     private var dependency: Dependency!
+    
+    private var userListCancellable: AnyCancellable?
 }

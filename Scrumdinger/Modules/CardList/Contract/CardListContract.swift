@@ -70,6 +70,10 @@ protocol CardListUseCase: AnyObject {
 }
 
 protocol CardListInteractorOutput: AnyObject {
+    /// ユーザーリストを出力する
+    @MainActor
+    func outputUserList(_ userList: [User])
+    
     /// ユーザーを出力する
     @MainActor
     func outputUser(_ user: User)
