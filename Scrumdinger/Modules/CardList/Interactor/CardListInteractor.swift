@@ -21,19 +21,23 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     }
 
     func subscribeUsers() {
-        userListCancellable = dependency.roomRepository.userList.sink { userList in
-            Task { [weak self] in
-                await self?.dependency.output?.outputUserList(userList)
+        dependency.roomRepository.userList
+            .sink { userList in
+                Task { [weak self] in
+                    await self?.dependency.output?.outputUserList(userList)
+                }
             }
-        }
+            .store(in: &self.cancellables)
     }
 
     func subscribeCardPackages() {
-        cardPackageCancellable = dependency.roomRepository.cardPackage.sink { cardPackage in
-            Task { [weak self] in
-                await self?.dependency.output?.outputCardPackage(cardPackage)
+        dependency.roomRepository.cardPackage
+            .sink { cardPackage in
+                Task { [weak self] in
+                    await self?.dependency.output?.outputCardPackage(cardPackage)
+                }
             }
-        }
+            .store(in: &self.cancellables)
     }
 
     func updateSelectedCardId(selectedCardDictionary: [String: String]) {
@@ -42,7 +46,7 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     }
 
     func requestUser(userId: String) {
-        dependency.roomRepository.fetchUser(id: userId) { result in
+        dependency.roomRepository.fetchUser(byId: userId) { result in
             Task { [weak self] in
                 switch result {
                 case .success(let user):
@@ -59,8 +63,6 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     // MARK: - Private
 
     private var dependency: Dependency!
-
-    private var userListCancellable: AnyCancellable?
-
-    private var cardPackageCancellable: AnyCancellable?
+    
+    private var cancellables = Set<AnyCancellable>()
 }

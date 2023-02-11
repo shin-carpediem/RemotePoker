@@ -38,24 +38,24 @@ final class RoomDataStore: RoomRepository {
         return subject
     }()
 
-    //    func addUserToRoom(user: UserEntity) async -> AnyPublisher<Void, FirebaseError> {
-    //        Future<Void, FirebaseError> { promise in
-    //            do {
-    //                let userDocument = firestoreRef.usersCollection.document(user.id)
-    //                try await userDocument.setData([
-    //                    "id": user.id,
-    //                    "name": user.name,
-    //                    "currentRoomId": user.currentRoomId,
-    //                    "selectedCardId": user.selectedCardId,
-    //                    "createdAt": Timestamp(),
-    //                    "updatedAt": Date(),
-    //                ])
-    //                promise(.success(()))
-    //            } catch {
-    //                promise(.failure(.failedToAddUserToRoom))
-    //            }
-    //        }.eraseToAnyPublisher()
-    //    }
+//    func addUserToRoom(user: UserEntity) async -> AnyPublisher<Void, FirebaseError> {
+//        Future<Void, FirebaseError> { promise in
+//            do {
+//                let userDocument = firestoreRef.usersCollection.document(user.id)
+//                try await userDocument.setData([
+//                    "id": user.id,
+//                    "name": user.name,
+//                    "currentRoomId": user.currentRoomId,
+//                    "selectedCardId": user.selectedCardId,
+//                    "createdAt": Timestamp(),
+//                    "updatedAt": Date(),
+//                ])
+//                promise(.success(()))
+//            } catch {
+//                promise(.failure(.failedToAddUserToRoom))
+//            }
+//        }.eraseToAnyPublisher()
+//    }
 
     func addUserToRoom(user: UserEntity) async -> Result<Void, FirebaseError> {
         do {
@@ -83,18 +83,18 @@ final class RoomDataStore: RoomRepository {
         }
     }
 
-    //    func fetchUser(id: String) async -> Result<UserEntity, FirebaseError> {
-    //        let userDocument = firestoreRef.userDocument(userId: id)
-    //        userDocument.getDocument { snapshot, _ in
-    //            guard let snapshot = snapshot else {
-    //                return completion(.failure(.failedToFetchUser))
-    //            }
-    //            let user = Self.userEntity(from: snapshot)
-    //            completion(.success(user))
-    //        }
-    //    }
+//    func fetchUser(byId id: String) async -> Result<UserEntity, FirebaseError> {
+//        let userDocument = firestoreRef.userDocument(userId: id)
+//        userDocument.getDocument { snapshot, _ in
+//            guard let snapshot = snapshot else {
+//                return .failure(.failedToFetchUser)
+//            }
+//            let user = Self.userEntity(from: snapshot)
+//            return .success(user)
+//        }
+//    }
 
-    func fetchUser(id: String, completion: @escaping (Result<UserEntity, FirebaseError>) -> Void) {
+    func fetchUser(byId id: String, completion: @escaping (Result<UserEntity, FirebaseError>) -> Void) {
         let userDocument = firestoreRef.userDocument(userId: id)
         userDocument.getDocument { snapshot, _ in
             guard let snapshot = snapshot else {
