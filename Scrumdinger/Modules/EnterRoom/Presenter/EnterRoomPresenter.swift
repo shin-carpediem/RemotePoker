@@ -48,7 +48,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
 
     /// 匿名ログインする
     private func login(userName: String, roomId: Int) {
-        RoomAuthDataStore.shared.login { [weak self] result in
+        AuthDataStore.shared.login { [weak self] result in
             guard let self = self else { return }
             Task {
                 switch result {

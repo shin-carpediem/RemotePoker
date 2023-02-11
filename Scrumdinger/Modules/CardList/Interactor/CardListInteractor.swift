@@ -4,7 +4,7 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     // MARK: - DependencyInjectable
 
     struct Dependency {
-        var undefinedRepository: UndefinedRoomRepository
+        var undefinedRepository: EnterRoomRepository
         var repository: RoomRepository
         weak var output: CardListInteractorOutput?
     }

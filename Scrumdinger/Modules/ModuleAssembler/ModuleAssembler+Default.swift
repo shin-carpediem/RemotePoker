@@ -5,7 +5,7 @@ extension ModuleAssembler {
         let interactor = EnterRoomInteractor()
 
         presenter.inject(.init(useCase: interactor, viewModel: viewModel))
-        interactor.inject(.init(repository: UndefinedRoomDataStore(), output: presenter))
+        interactor.inject(.init(repository: EnterRoomDataStore(), output: presenter))
         let view = EnterRoomView(dependency: .init(presenter: presenter), viewModel: viewModel)
 
         return view
@@ -29,7 +29,7 @@ extension ModuleAssembler {
                 viewModel: viewModel))
         interactor.inject(
             .init(
-                undefinedRepository: UndefinedRoomDataStore(),
+                undefinedRepository: EnterRoomDataStore(),
                 repository: RoomDataStore(roomId: roomId), output: presenter))
         let view = CardListView(
             dependency: .init(

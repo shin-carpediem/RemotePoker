@@ -1,7 +1,7 @@
 import FirebaseAuth
 
-final class RoomAuthDataStore: RoomAuthRepository {
-    static let shared = RoomAuthDataStore()
+final class AuthDataStore: AuthRepository {
+    static let shared = AuthDataStore()
 
     // MARK: - RoomAuthRepository
 

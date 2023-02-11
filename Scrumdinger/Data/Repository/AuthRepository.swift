@@ -1,4 +1,4 @@
-protocol RoomAuthRepository: AnyObject {
+protocol AuthRepository: AnyObject {
     /// ログインする
     /// - parameter completion: 完了ハンドラ(ユーザーIDを返却)
     func login(completion: @escaping (Result<String, FirebaseError>) -> Void)

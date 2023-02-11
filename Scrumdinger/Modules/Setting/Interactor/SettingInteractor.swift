@@ -21,7 +21,7 @@ final class SettingInteractor: SettingUseCase, DependencyInjectable {
             userId: dependency.currentUserId)
         switch result {
         case .success(_):
-            let logoutResult = RoomAuthDataStore.shared.logout()
+            let logoutResult = AuthDataStore.shared.logout()
             switch logoutResult {
             case .success(_):
                 dependency.repository = nil

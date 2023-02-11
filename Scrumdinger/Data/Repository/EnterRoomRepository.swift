@@ -1,4 +1,4 @@
-protocol UndefinedRoomRepository: AnyObject {
+protocol EnterRoomRepository: AnyObject {
     /// ルームが存在するか確認する
     /// - parameter roomId: ルームID
     /// - returns: 存在するか
