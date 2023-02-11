@@ -147,7 +147,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         dependency.useCase.subscribeUsers()
         dependency.useCase.subscribeCardPackages()
         if shouldFetchData {
-            dependency.useCase.requestUser(userId: userId)
+            await dependency.useCase.requestUser(userId: userId)
         }
     }
 

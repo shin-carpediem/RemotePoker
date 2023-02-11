@@ -45,16 +45,14 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
             selectedCardDictionary: selectedCardDictionary)
     }
 
-    func requestUser(userId: String) {
-        Task { [unowned self] in
-            await self.dependency.roomRepository.fetchUser(byId: userId)
-                .sink { user in
-                    Task { [unowned self] in
-                        await self.dependency.output?.outputCurrentUser(user)
-                    }
+    func requestUser(userId: String) async {
+        await dependency.roomRepository.fetchUser(byId: userId)
+            .sink { user in
+                Task { [unowned self] in
+                    await self.dependency.output?.outputCurrentUser(user)
                 }
-                .store(in: &self.cancellablesForAction)
-        }
+            }
+            .store(in: &self.cancellablesForAction)
     }
 
     // MARK: - Private
