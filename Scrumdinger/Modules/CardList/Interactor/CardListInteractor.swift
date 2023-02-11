@@ -46,10 +46,6 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
         }
     }
 
-    func unsubscribeUsers() {
-        dependency.roomRepository.unsubscribeUser()
-    }
-
     func subscribeCardPackages() {
         dependency.roomRepository.subscribeCardPackage { [weak self] result in
             guard let self = self else { return }
@@ -71,10 +67,6 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
                 }
             }
         }
-    }
-
-    func unsubscribeCardPackages() {
-        dependency.roomRepository.unsubscribeCardPackage()
     }
 
     func updateSelectedCardId(selectedCardDictionary: [String: String]) {

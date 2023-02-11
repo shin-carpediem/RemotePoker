@@ -54,14 +54,8 @@ protocol CardListUseCase: AnyObject {
     /// ユーザーを購読する
     func subscribeUsers()
 
-    /// ユーザーの購読を解除する
-    func unsubscribeUsers()
-
     /// カードパッケージを購読する
     func subscribeCardPackages()
-
-    /// カードバッケージの購読を解除する
-    func unsubscribeCardPackages()
 
     /// 選択されたカードIDを更新する
     /// - parameter selectedCardDictionary: カレントユーザーIDと選択されたカードIDの辞書
