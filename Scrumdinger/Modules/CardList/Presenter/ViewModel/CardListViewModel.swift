@@ -16,7 +16,7 @@ actor CardListViewModel: CardListObservable {
     @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
 
     @MainActor
-    @Published var room = RoomEntity(id: 0, userList: [], cardPackage: .defaultCardPackage)
+    @Published var room = Room(id: 0, userList: [], cardPackage: .defaultCardPackage)
 
     @MainActor
     @Published var headerTitle = ""

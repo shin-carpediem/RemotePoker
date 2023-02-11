@@ -4,7 +4,7 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
     // MARK: - DependencyInjectable
 
     struct Dependency {
-        var repository: UndefinedRoomRepository
+        var repository: EnterRoomRepository
         weak var output: EnterRoomInteractorOutput?
     }
 

@@ -4,8 +4,8 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     // MARK: - DependencyInjectable
 
     struct Dependency {
-        var undefinedRepository: UndefinedRoomRepository
-        var repository: RoomRepository
+        var enterRoomRepository: EnterRoomRepository
+        var roomRepository: RoomRepository
         weak var output: CardListInteractorOutput?
     }
 
@@ -16,27 +16,16 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     // MARK: - CardListUseCase
 
     func checkRoomExist(roomId: Int) async -> Bool {
-        await dependency.undefinedRepository.checkRoomExist(roomId: roomId)
+        await dependency.enterRoomRepository.checkRoomExist(roomId: roomId)
     }
 
     func subscribeUsers() {
-        dependency.repository.subscribeUser { [weak self] result in
+        dependency.roomRepository.subscribeUser { [weak self] result in
             guard let self = self else { return }
             Task {
                 switch result {
-                case .success(let action):
-                    switch action {
-                    case .added, .removed:
-                        // ユーザーが入室あるいは退室した時
-                        await self.requestRoom()
-                        await self.dependency.output?.showHeaderTitle()
-                        await self.dependency.output?.updateUserSelectStatusList()
-
-                    case .modified:
-                        // ユーザーの選択済みカードが更新された時
-                        await self.requestRoom()
-                        await self.dependency.output?.updateUserSelectStatusList()
-                    }
+                case .success(_):
+                    await self.requestRoom()
 
                 case .failure(let error):
                     let message = "アプリ内に問題が発生しました。再度起動してください"
@@ -46,12 +35,8 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
         }
     }
 
-    func unsubscribeUsers() {
-        dependency.repository.unsubscribeUser()
-    }
-
     func subscribeCardPackages() {
-        dependency.repository.subscribeCardPackage { [weak self] result in
+        dependency.roomRepository.subscribeCardPackage { [weak self] result in
             guard let self = self else { return }
             Task {
                 switch result {
@@ -73,17 +58,13 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
         }
     }
 
-    func unsubscribeCardPackages() {
-        dependency.repository.unsubscribeCardPackage()
-    }
-
     func updateSelectedCardId(selectedCardDictionary: [String: String]) {
-        dependency.repository.updateSelectedCardId(
+        dependency.roomRepository.updateSelectedCardId(
             selectedCardDictionary: selectedCardDictionary)
     }
 
     func requestUser(userId: String) {
-        dependency.repository.fetchUser(id: userId) { [weak self] user in
+        dependency.roomRepository.fetchUser(id: userId) { [weak self] user in
             guard let self = self else { return }
             Task {
                 await self.dependency.output?.outputUser(user)
@@ -92,7 +73,7 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     }
 
     func requestRoom() async {
-        let result = await dependency.repository.fetchRoom()
+        let result = await dependency.roomRepository.fetchRoom()
         switch result {
         case .success(let room):
             await dependency.output?.outputRoom(room)

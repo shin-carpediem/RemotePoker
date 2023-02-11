@@ -54,14 +54,8 @@ protocol CardListUseCase: AnyObject {
     /// ユーザーを購読する
     func subscribeUsers()
 
-    /// ユーザーの購読を解除する
-    func unsubscribeUsers()
-
     /// カードパッケージを購読する
     func subscribeCardPackages()
-
-    /// カードバッケージの購読を解除する
-    func unsubscribeCardPackages()
 
     /// 選択されたカードIDを更新する
     /// - parameter selectedCardDictionary: カレントユーザーIDと選択されたカードIDの辞書
@@ -83,14 +77,6 @@ protocol CardListInteractorOutput: AnyObject {
     /// ルームを出力する
     @MainActor
     func outputRoom(_ room: Room)
-
-    /// ヘッダーテキストを表示する
-    @MainActor
-    func showHeaderTitle()
-
-    /// ユーザーの選択状況一覧を更新する
-    @MainActor
-    func updateUserSelectStatusList()
 
     /// データ処理の成功を出力
     @MainActor

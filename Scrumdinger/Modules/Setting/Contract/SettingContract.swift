@@ -17,12 +17,6 @@ protocol SettingPresentation: AnyObject, Presentation {
 protocol SettingUseCase: AnyObject {
     /// ルームから退室する
     func leaveRoom() async
-
-    /// ユーザーの購読を解除する
-    func unsubscribeUser()
-
-    /// カードパッケージの購読を解除する
-    func unsubscribeCardPackages()
 }
 
 protocol SettingInteractorOutput: AnyObject {

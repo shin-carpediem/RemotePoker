@@ -3,11 +3,11 @@ struct UserSelectStatus: Identifiable {
     var id: String
 
     /// ユーザー
-    var user: UserEntity
+    var user: User
 
     /// テーマカラー
-    var themeColor: CardPackageEntity.ThemeColor
+    var themeColor: CardPackage.ThemeColor
 
     /// 選択済みカード
-    var selectedCard: CardPackageEntity.Card?
+    var selectedCard: CardPackage.Card?
 }

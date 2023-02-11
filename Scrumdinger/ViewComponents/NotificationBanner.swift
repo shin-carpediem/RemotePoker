@@ -1,19 +1,19 @@
 import SwiftUI
 
-enum NotificationMessageType {
-    /// 成功時
-    case onSuccess
-
-    /// 失敗時
-    case onFailure
-}
-
 struct NotificationMessage {
     /// 種類
-    var type: NotificationMessageType
+    var type: MessageType
 
     /// テキスト
     var text: String
+
+    enum MessageType {
+        /// 成功時
+        case onSuccess
+
+        /// 失敗時
+        case onFailure
+    }
 }
 
 struct NotificationMessageViewModel {
@@ -36,10 +36,12 @@ struct NotificationBanner: View {
         guard let message = message else { return nil }
         switch message.type {
         case .onSuccess:
-            return .init(backGroundColor: .gray, iconName: "checkmark.circle")
+            return NotificationMessageViewModel(
+                backGroundColor: .gray, iconName: "checkmark.circle")
 
         case .onFailure:
-            return .init(backGroundColor: .red, iconName: "exclamationmark.square")
+            return NotificationMessageViewModel(
+                backGroundColor: .red, iconName: "exclamationmark.square")
         }
     }
 

@@ -46,13 +46,13 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation,
 
     @MainActor
     func outputSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
+        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 
     @MainActor
     func outputError(_ error: Error, message: String) {
-        dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
+        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onFailure, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 

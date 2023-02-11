@@ -2,8 +2,8 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Foundation
 
-final class UndefinedRoomDataStore: UndefinedRoomRepository {
-    // MARK: - AbstractRoomRepository
+final class EnterRoomDataStore: EnterRoomRepository {
+    // MARK: - EnterRoomRepository
 
     func checkRoomExist(roomId: Int) async -> Bool {
         let roomDocument = Firestore.firestore().collection("rooms").document(String(roomId))

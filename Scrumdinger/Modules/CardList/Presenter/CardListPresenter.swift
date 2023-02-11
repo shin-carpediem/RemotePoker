@@ -76,7 +76,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     // MARK: - CardListInteractorOutput
 
     @MainActor
-    func outputUser(_ user: UserEntity) {
+    func outputUser(_ user: User) {
         dependency.currentUserId = user.id
         dependency.currentUserName = user.name
         disableButton(false)
@@ -84,60 +84,24 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     }
 
     @MainActor
-    func outputRoom(_ room: RoomEntity) {
+    func outputRoom(_ room: Room) {
         dependency.viewModel?.room = room
         dependency.roomId = room.id
-        disableButton(false)
-        showLoader(false)
-    }
-
-    @MainActor
-    func showHeaderTitle() {
-        guard let room = dependency.viewModel?.room else { return }
-
-        let currentUserName = dependency.currentUserName
-        let otherUsersCount = room.userList.count - 1
-        let roomId = dependency.roomId
-        let otherUsersText = (otherUsersCount >= 1 ? "と \(String(otherUsersCount))名" : "")
-
-        let headerTitle = "\(currentUserName) \(otherUsersText)が ルームID\(roomId) に入室中"
-
-        dependency.viewModel?.headerTitle = headerTitle
-        disableButton(false)
-        showLoader(false)
-    }
-
-    @MainActor
-    func updateUserSelectStatusList() {
-        guard let room = dependency.viewModel?.room else { return }
-
-        let userSelectStatusList: [UserSelectStatus] = room.userList.map { user in
-            let cardPackage = room.cardPackage
-            let selectedCard: CardPackageEntity.Card? = cardPackage.cardList.first(where: {
-                $0.id == user.selectedCardId
-            })
-
-            return UserSelectStatus(
-                id: UUID().uuidString,
-                user: user,
-                themeColor: cardPackage.themeColor,
-                selectedCard: selectedCard)
-        }
-
-        dependency.viewModel?.userSelectStatusList = userSelectStatusList
+        showHeaderTitle(room: room)
+        updateUserSelectStatusList(room: room)
         disableButton(false)
         showLoader(false)
     }
 
     @MainActor
     func outputSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = .init(type: .onSuccess, text: message)
+        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 
     @MainActor
     func outputError(_ error: Error, message: String) {
-        dependency.viewModel?.bannerMessgage = .init(type: .onFailure, text: message)
+        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onFailure, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 
@@ -147,7 +111,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 
     /// 匿名ログインする
     private func login() {
-        RoomAuthDataStore.shared.login { [weak self] result in
+        AuthDataStore.shared.login { [weak self] result in
             guard let self = self else { return }
             Task {
                 switch result {
@@ -176,8 +140,6 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
             dependency.useCase.requestUser(userId: userId)
             await dependency.useCase.requestRoom()
         }
-        await showHeaderTitle()
-        await updateUserSelectStatusList()
     }
 
     /// ユーザーに、存在するカレントルームがあるか確認する
@@ -187,6 +149,34 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         } else {
             return await dependency.useCase.checkRoomExist(roomId: dependency.roomId)
         }
+    }
+
+    /// ヘッダータイトルを表示する
+    @MainActor
+    private func showHeaderTitle(room: Room) {
+        let currentUserName = dependency.currentUserName
+        let otherUsersCount = room.userList.count - 1
+        let otherUsersText = (otherUsersCount >= 1 ? "と \(String(otherUsersCount))名" : "")
+
+        let headerTitle = "\(currentUserName) \(otherUsersText)が ルームID\(room.id) に入室中"
+        dependency.viewModel?.headerTitle = headerTitle
+    }
+
+    /// ユーザーの選択状況一覧を更新する
+    @MainActor
+    private func updateUserSelectStatusList(room: Room) {
+        let userSelectStatusList: [UserSelectStatus] = room.userList.map { user in
+            let cardPackage = room.cardPackage
+            let selectedCard: CardPackage.Card? = cardPackage.cardList.first(where: {
+                $0.id == user.selectedCardId
+            })
+            return UserSelectStatus(
+                id: UUID().uuidString,
+                user: user,
+                themeColor: cardPackage.themeColor,
+                selectedCard: selectedCard)
+        }
+        dependency.viewModel?.userSelectStatusList = userSelectStatusList
     }
 
     /// 選択されたカード一覧を表示する
