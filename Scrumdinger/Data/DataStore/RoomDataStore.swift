@@ -38,25 +38,6 @@ final class RoomDataStore: RoomRepository {
         return subject
     }()
 
-//    func addUserToRoom(user: UserEntity) async -> AnyPublisher<Void, FirebaseError> {
-//        Future<Void, FirebaseError> { promise in
-//            do {
-//                let userDocument = firestoreRef.usersCollection.document(user.id)
-//                try await userDocument.setData([
-//                    "id": user.id,
-//                    "name": user.name,
-//                    "currentRoomId": user.currentRoomId,
-//                    "selectedCardId": user.selectedCardId,
-//                    "createdAt": Timestamp(),
-//                    "updatedAt": Date(),
-//                ])
-//                promise(.success(()))
-//            } catch {
-//                promise(.failure(.failedToAddUserToRoom))
-//            }
-//        }.eraseToAnyPublisher()
-//    }
-
     func addUserToRoom(user: UserEntity) async -> Result<Void, FirebaseError> {
         do {
             let userDocument = firestoreRef.usersCollection.document(user.id)
@@ -69,7 +50,7 @@ final class RoomDataStore: RoomRepository {
                 "updatedAt": Date(),
             ])
             return .success(())
-        } catch {
+        } catch(_) {
             return .failure(.failedToAddUserToRoom)
         }
     }
@@ -78,12 +59,12 @@ final class RoomDataStore: RoomRepository {
         do {
             try await firestoreRef.userDocument(userId: userId).delete()
             return .success(())
-        } catch {
+        } catch(_) {
             return .failure(.failedToRemoveUserFromRoom)
         }
     }
 
-    func fetchUser(byId id: String) async -> Future<UserEntity, Never> {
+    func fetchUser(byId id: String) -> Future<UserEntity, Never> {
         Future<UserEntity, Never> { [unowned self] promise in
             let userDocument = self.firestoreRef.userDocument(userId: id)
             userDocument.getDocument { snapshot, _ in

@@ -19,7 +19,7 @@ final class AuthDataStore: AuthRepository {
         do {
             try Auth.auth().signOut()
             return .success(())
-        } catch {
+        } catch(_) {
             return .failure(.failedToLogout)
         }
     }

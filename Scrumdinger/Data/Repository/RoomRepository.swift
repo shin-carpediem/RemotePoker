@@ -18,7 +18,7 @@ protocol RoomRepository: AnyObject {
     /// 指定IDのユーザーを取得する
     /// - parameter byId: ユーザーID
     /// - returns: ユーザーを返却
-    func fetchUser(byId id: String) async -> Future<UserEntity, Never>
+    func fetchUser(byId id: String) -> Future<UserEntity, Never>
 
     /// ユーザーの選択済みカードを更新する
     /// - parameter selectedCardDictionary: ユーザーIDと選択されたカードIDの辞書

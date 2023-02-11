@@ -46,7 +46,7 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     }
 
     func requestUser(userId: String) async {
-        await dependency.roomRepository.fetchUser(byId: userId)
+        dependency.roomRepository.fetchUser(byId: userId)
             .sink { user in
                 Task { [unowned self] in
                     await self.dependency.output?.outputCurrentUser(user)
