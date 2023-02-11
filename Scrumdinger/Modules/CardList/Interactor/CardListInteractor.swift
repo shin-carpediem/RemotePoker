@@ -21,20 +21,17 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     }
 
     func subscribeUsers() {
-        userListCancellable = dependency.roomRepository.userList.sink { [weak self] userList in
-            guard let self = self else { return }
-            Task {
-                await self.dependency.output?.outputUserList(userList)
+        userListCancellable = dependency.roomRepository.userList.sink { userList in
+            Task { [weak self] in
+                await self?.dependency.output?.outputUserList(userList)
             }
         }
     }
 
     func subscribeCardPackages() {
-        cardPackageCancellable = dependency.roomRepository.cardPackage.sink {
-            [weak self] cardPackage in
-            guard let self = self else { return }
-            Task {
-                await self.dependency.output?.outputCardPackage(cardPackage)
+        cardPackageCancellable = dependency.roomRepository.cardPackage.sink { cardPackage in
+            Task { [weak self] in
+                await self?.dependency.output?.outputCardPackage(cardPackage)
             }
         }
     }
@@ -45,16 +42,15 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     }
 
     func requestUser(userId: String) {
-        dependency.roomRepository.fetchUser(id: userId) { [weak self] result in
-            guard let self = self else { return }
-            Task {
+        dependency.roomRepository.fetchUser(id: userId) { result in
+            Task { [weak self] in
                 switch result {
                 case .success(let user):
-                    await self.dependency.output?.outputCurrentUser(user)
+                    await self?.dependency.output?.outputCurrentUser(user)
 
                 case .failure(let error):
                     let message = "ユーザーを見つけられませんでした"
-                    await self.dependency.output?.outputError(error, message: message)
+                    await self?.dependency.output?.outputError(error, message: message)
                 }
             }
         }
