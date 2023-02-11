@@ -23,9 +23,20 @@ final class RoomDataStore: RoomRepository {
         return subject
     }()
     
-    func unsubscribeUser() {
-        userList.send(completion: .finished)
-    }
+    lazy var cardPackage: PassthroughSubject<CardPackageEntity, Never> = {
+        let subject = PassthroughSubject<CardPackageEntity, Never>()
+        firestoreRef.cardPackagesQuery.addSnapshotListener { [weak self] snapshot, error in
+            guard let self = self else { return }
+            if let error = error { return }
+            guard let snapshot = snapshot else { return }
+            guard let document = snapshot.documents.first else { return }
+            Task {
+                let cardPackage: CardPackageEntity = await self.cardPackageEntity(from: document)
+                subject.send(cardPackage)
+            }
+        }
+        return subject
+    }()
     
     func fetchRoom() async -> Result<RoomEntity, FirebaseError> {
         // ユーザー一覧取得
@@ -91,32 +102,6 @@ final class RoomDataStore: RoomRepository {
         }
     }
 
-    func subscribeCardPackage(
-        completion: @escaping (Result<FireStoreDocumentChanges, FirebaseError>) -> Void
-    ) {
-        cardPackagesListener = firestoreRef.cardPackagesQuery.addSnapshotListener {
-            snapshot, error in
-            snapshot?.documentChanges.forEach { diff in
-                var diffType: FireStoreDocumentChanges
-                if diff.type == .added {
-                    diffType = .added
-                } else if diff.type == .modified {
-                    diffType = .modified
-                } else if diff.type == .removed {
-                    diffType = .removed
-                } else {
-                    completion(.failure(.failedToSubscribeCardPackage))
-                    return
-                }
-                completion(.success(diffType))
-            }
-        }
-    }
-
-    func unsubscribeCardPackage() {
-        cardPackagesListener?.remove()
-    }
-
     func updateSelectedCardId(selectedCardDictionary: [String: String]) {
         selectedCardDictionary.forEach { userId, selectedCardId in
             let userDocument = firestoreRef.userDocument(userId: userId)
@@ -134,6 +119,14 @@ final class RoomDataStore: RoomRepository {
             "updatedAt": Date(),
         ])
     }
+    
+    func unsubscribeUser() {
+        userList.send(completion: .finished)
+    }
+    
+    func unsubscribeCardPackage() {
+        cardPackage.send(completion: .finished)
+    }
 
     // MARK: - Private
 
@@ -144,9 +137,6 @@ final class RoomDataStore: RoomRepository {
     private var firestoreRef: FirestoreRefs {
         FirestoreRefs(roomId: roomId)
     }
-
-    /// ルームのカードパッケージのリスナー
-    private var cardPackagesListener: ListenerRegistration?
     
     /// ルーム エンティティ
     private static func roomEntity(from doc: DocumentSnapshot, withUsers userList: [UserEntity], withCards cardPackage: CardPackageEntity) -> RoomEntity {

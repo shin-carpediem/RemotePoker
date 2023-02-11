@@ -4,8 +4,8 @@ protocol RoomRepository: AnyObject {
     /// ユーザーリスト
     var userList: PassthroughSubject<[UserEntity], Never> { get }
     
-    /// ユーザーの購読を解除する
-    func unsubscribeUser()
+    /// カードパッケージ
+    var cardPackage: PassthroughSubject<CardPackageEntity, Never> { get }
     
     /// ルームを取得する
     /// - returns: 成功ならルーム
@@ -18,14 +18,6 @@ protocol RoomRepository: AnyObject {
     /// ルームからユーザーを削除する
     /// - parameter userId: ユーザーID
     func removeUserFromRoom(userId: String) async -> Result<Void, FirebaseError>
-
-    /// カードパッケージを購読する
-    /// - parameter completion: 完了ハンドラ(ドキュメント操作の種類を返却)
-    func subscribeCardPackage(
-        completion: @escaping (Result<FireStoreDocumentChanges, FirebaseError>) -> Void)
-
-    /// カードパッケージの購読を解除する
-    func unsubscribeCardPackage()
 
     /// 指定IDのユーザーを取得する
     /// - parameter id: ユーザーID
@@ -40,4 +32,10 @@ protocol RoomRepository: AnyObject {
     /// - parameter cardPackageId: カードパッケージID
     /// - parameter themeColor: テーマカラー
     func updateThemeColor(cardPackageId: String, themeColor: CardPackageEntity.ThemeColor)
+    
+    /// ユーザーの購読を解除する
+    func unsubscribeUser()
+    
+    /// カードパッケージの購読を解除する
+    func unsubscribeCardPackage()
 }

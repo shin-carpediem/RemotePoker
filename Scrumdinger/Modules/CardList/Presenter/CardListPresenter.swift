@@ -42,7 +42,6 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     func didSelectCard(cardId: String) {
         Task {
             await disableButton(true)
-            await showLoader(true)
             let selectedCardDictionary: [String: String] = [dependency.currentUserId: cardId]
             dependency.useCase.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
         }
@@ -96,6 +95,13 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     func outputRoom(_ room: Room) {
         dependency.viewModel?.room = room
         dependency.roomId = room.id
+        disableButton(false)
+        showLoader(false)
+    }
+    
+    @MainActor
+    func outputCardPackage(_ cardPackage: CardPackage) {
+        dependency.viewModel?.room.cardPackage = cardPackage
         disableButton(false)
         showLoader(false)
     }

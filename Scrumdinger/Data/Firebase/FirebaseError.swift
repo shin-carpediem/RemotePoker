@@ -19,7 +19,4 @@ enum FirebaseError: Error {
 
     /// 指定IDのユーザー取得に失敗した
     case failedToFetchUser
-
-    /// カードパッケージの購読に失敗した
-    case failedToSubscribeCardPackage
 }

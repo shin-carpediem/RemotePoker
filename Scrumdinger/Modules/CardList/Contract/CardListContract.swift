@@ -81,6 +81,10 @@ protocol CardListInteractorOutput: AnyObject {
     /// ルームを出力する
     @MainActor
     func outputRoom(_ room: Room)
+    
+    /// カードパッケージを出力する
+    @MainActor
+    func outputCardPackage(_ cardPackage: CardPackage)
 
     /// データ処理の成功を出力
     @MainActor
