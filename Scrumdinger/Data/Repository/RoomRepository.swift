@@ -30,7 +30,7 @@ protocol RoomRepository: AnyObject {
     /// 指定IDのユーザーを取得する
     /// - parameter id: ユーザーID
     /// - parameter completion: 完了ハンドラ(ユーザーを返却)
-    func fetchUser(id: String, completion: @escaping (UserEntity) -> Void)
+    func fetchUser(id: String, completion: @escaping (Result<UserEntity, FirebaseError>) -> Void)
 
     /// ユーザーの選択済みカードを更新する
     /// - parameter selectedCardDictionary: ユーザーIDと選択されたカードIDの辞書

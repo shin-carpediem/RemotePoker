@@ -28,7 +28,7 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
                     await self.requestRoom()
 
                 case .failure(let error):
-                    let message = "アプリ内に問題が発生しました。再度起動してください"
+                    let message = "アプリ内に問題が発生しました。再インストールしてください"
                     await self.dependency.output?.outputError(error, message: message)
                 }
             }
@@ -51,7 +51,7 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
                     }
 
                 case .failure(let error):
-                    let message = "アプリ内に問題が発生しました。再度起動してください"
+                    let message = "アプリ内に問題が発生しました。再インストールしてください"
                     await self.dependency.output?.outputError(error, message: message)
                 }
             }
@@ -64,10 +64,17 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     }
 
     func requestUser(userId: String) {
-        dependency.roomRepository.fetchUser(id: userId) { [weak self] user in
+        dependency.roomRepository.fetchUser(id: userId) { [weak self] result in
             guard let self = self else { return }
             Task {
-                await self.dependency.output?.outputUser(user)
+                switch result {
+                case .success(let user):
+                    await self.dependency.output?.outputUser(user)
+                    
+                case .failure(let error):
+                    let message = "ユーザーを見つけられませんでした"
+                    await self.dependency.output?.outputError(error, message: message)
+                }
             }
         }
     }
