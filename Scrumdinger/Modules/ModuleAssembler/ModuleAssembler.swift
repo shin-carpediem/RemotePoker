@@ -17,7 +17,8 @@ protocol ModuleAssembler {
     /// - parameter roomId: ルームID
     /// - parameter currentUserId: カレントユーザーID
     /// - parameter cardPackageId: カードパッケージID
-    func assembleSettingModule(roomId: Int, currentUserId: String, cardPackageId: String) -> SettingView
+    func assembleSettingModule(roomId: Int, currentUserId: String, cardPackageId: String)
+        -> SettingView
 
     /// テーマカラー選択画面をアセンブルする
     /// - parameter roomId: ルームID

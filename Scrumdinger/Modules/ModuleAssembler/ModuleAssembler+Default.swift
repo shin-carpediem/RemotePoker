@@ -42,7 +42,9 @@ extension ModuleAssembler {
         return view
     }
 
-    func assembleSettingModule(roomId: Int, currentUserId: String, cardPackageId: String) -> SettingView {
+    func assembleSettingModule(roomId: Int, currentUserId: String, cardPackageId: String)
+        -> SettingView
+    {
         let viewModel = SettingViewModel()
         let presenter = SettingPresenter()
         let interactor = SettingInteractor()
@@ -63,7 +65,8 @@ extension ModuleAssembler {
         return view
     }
 
-    func assembleSelectThemeColorModule(roomId: Int, cardPackageId: String) -> SelectThemeColorView {
+    func assembleSelectThemeColorModule(roomId: Int, cardPackageId: String) -> SelectThemeColorView
+    {
         let viewModel = SelectThemeColorViewModel()
         let presenter = SelectThemeColorPresenter()
         let interactor = SelectThemeColorInteractor()

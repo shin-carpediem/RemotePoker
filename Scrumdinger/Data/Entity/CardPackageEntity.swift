@@ -9,7 +9,7 @@ struct CardPackageEntity: Identifiable {
 
     /// カード一覧
     var cardList: [Card]
-    
+
     enum ThemeColor: String, CaseIterable, ShapeStyle {
         case bubblegum
         case buttercup
@@ -28,7 +28,7 @@ struct CardPackageEntity: Identifiable {
         case teal
         case yellow
     }
-    
+
     struct Card: Identifiable {
         /// ID
         var id: String
