@@ -76,7 +76,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     // MARK: - CardListInteractorOutput
 
     @MainActor
-    func outputUser(_ user: UserEntity) {
+    func outputUser(_ user: User) {
         dependency.currentUserId = user.id
         dependency.currentUserName = user.name
         disableButton(false)
@@ -84,7 +84,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     }
 
     @MainActor
-    func outputRoom(_ room: RoomEntity) {
+    func outputRoom(_ room: Room) {
         dependency.viewModel?.room = room
         dependency.roomId = room.id
         disableButton(false)
@@ -113,7 +113,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 
         let userSelectStatusList: [UserSelectStatus] = room.userList.map { user in
             let cardPackage = room.cardPackage
-            let selectedCard: CardPackageEntity.Card? = cardPackage.cardList.first(where: {
+            let selectedCard: CardPackage.Card? = cardPackage.cardList.first(where: {
                 $0.id == user.selectedCardId
             })
 
