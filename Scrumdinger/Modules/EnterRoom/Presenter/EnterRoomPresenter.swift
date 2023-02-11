@@ -87,26 +87,6 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
 
     private static let CFBundleShortVersionString = "CFBundleShortVersionString"
 
-    /// ユーザーに、存在するカレントルームがあるか確認する
-    private func checkUserInCurrentRoom() async -> Bool {
-        let appVersionList: Set<String> = ["1.0.0", "1.1.0", "1.2.0", "1.2.1", "1.3.0"]
-
-        if let currentAppVersion = Bundle.main.object(
-            forInfoDictionaryKey: Self.CFBundleShortVersionString)
-            as? String, appVersionList.contains(currentAppVersion)
-        {
-            // アプリバージョンが1.3.0以下のユーザーデータはFirestoreから削除されているため、カレントルームは存在しない
-            return false
-        }
-
-        let isRoomIdSavedAtLocal: Bool = (currentUser.currentRoomId != 0)
-        if isRoomIdSavedAtLocal {
-            return await dependency.useCase.checkRoomExist(roomId: currentUser.currentRoomId)
-        } else {
-            return false
-        }
-    }
-
     /// ユーザーとルームをセットアップする
     private func setupUserAndRoom(
         userId: String, userName: String, roomId: Int

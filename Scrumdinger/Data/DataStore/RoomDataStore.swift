@@ -89,18 +89,18 @@ final class RoomDataStore: RoomRepository {
     ) {
         usersListener = firestoreRef.usersQuery.addSnapshotListener { querySnapshot, error in
             querySnapshot?.documentChanges.forEach { diff in
-                var action: FireStoreDocumentChanges
+                var diffType: FireStoreDocumentChanges
                 if diff.type == .added {
-                    action = .added
+                    diffType = .added
                 } else if diff.type == .modified {
-                    action = .modified
+                    diffType = .modified
                 } else if diff.type == .removed {
-                    action = .removed
+                    diffType = .removed
                 } else {
                     completion(.failure(.failedToSubscribeUser))
                     return
                 }
-                completion(.success(action))
+                completion(.success(diffType))
             }
         }
     }
@@ -128,18 +128,18 @@ final class RoomDataStore: RoomRepository {
         cardPackagesListener = firestoreRef.cardPackagesQuery.addSnapshotListener {
             querySnapshot, error in
             querySnapshot?.documentChanges.forEach { diff in
-                var action: FireStoreDocumentChanges
+                var diffType: FireStoreDocumentChanges
                 if diff.type == .added {
-                    action = .added
+                    diffType = .added
                 } else if diff.type == .modified {
-                    action = .modified
+                    diffType = .modified
                 } else if diff.type == .removed {
-                    action = .removed
+                    diffType = .removed
                 } else {
                     completion(.failure(.failedToSubscribeCardPackage))
                     return
                 }
-                completion(.success(action))
+                completion(.success(diffType))
             }
         }
     }
