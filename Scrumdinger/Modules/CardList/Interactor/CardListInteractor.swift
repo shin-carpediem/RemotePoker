@@ -24,19 +24,8 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
             guard let self = self else { return }
             Task {
                 switch result {
-                case .success(let action):
-                    switch action {
-                    case .added, .removed:
-                        // ユーザーが入室あるいは退室した時
-                        await self.requestRoom()
-                        await self.dependency.output?.showHeaderTitle()
-                        await self.dependency.output?.updateUserSelectStatusList()
-
-                    case .modified:
-                        // ユーザーの選択済みカードが更新された時
-                        await self.requestRoom()
-                        await self.dependency.output?.updateUserSelectStatusList()
-                    }
+                case .success(_):
+                    await self.requestRoom()
 
                 case .failure(let error):
                     let message = "アプリ内に問題が発生しました。再度起動してください"

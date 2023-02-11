@@ -6,7 +6,7 @@ struct NotificationMessage {
 
     /// テキスト
     var text: String
-    
+
     enum MessageType {
         /// 成功時
         case onSuccess
@@ -36,10 +36,12 @@ struct NotificationBanner: View {
         guard let message = message else { return nil }
         switch message.type {
         case .onSuccess:
-            return NotificationMessageViewModel(backGroundColor: .gray, iconName: "checkmark.circle")
+            return NotificationMessageViewModel(
+                backGroundColor: .gray, iconName: "checkmark.circle")
 
         case .onFailure:
-            return NotificationMessageViewModel(backGroundColor: .red, iconName: "exclamationmark.square")
+            return NotificationMessageViewModel(
+                backGroundColor: .red, iconName: "exclamationmark.square")
         }
     }
 

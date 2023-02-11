@@ -87,44 +87,8 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     func outputRoom(_ room: Room) {
         dependency.viewModel?.room = room
         dependency.roomId = room.id
-        disableButton(false)
-        showLoader(false)
-    }
-
-    @MainActor
-    func showHeaderTitle() {
-        guard let room = dependency.viewModel?.room else { return }
-
-        let currentUserName = dependency.currentUserName
-        let otherUsersCount = room.userList.count - 1
-        let roomId = dependency.roomId
-        let otherUsersText = (otherUsersCount >= 1 ? "と \(String(otherUsersCount))名" : "")
-
-        let headerTitle = "\(currentUserName) \(otherUsersText)が ルームID\(roomId) に入室中"
-
-        dependency.viewModel?.headerTitle = headerTitle
-        disableButton(false)
-        showLoader(false)
-    }
-
-    @MainActor
-    func updateUserSelectStatusList() {
-        guard let room = dependency.viewModel?.room else { return }
-
-        let userSelectStatusList: [UserSelectStatus] = room.userList.map { user in
-            let cardPackage = room.cardPackage
-            let selectedCard: CardPackage.Card? = cardPackage.cardList.first(where: {
-                $0.id == user.selectedCardId
-            })
-
-            return UserSelectStatus(
-                id: UUID().uuidString,
-                user: user,
-                themeColor: cardPackage.themeColor,
-                selectedCard: selectedCard)
-        }
-
-        dependency.viewModel?.userSelectStatusList = userSelectStatusList
+        showHeaderTitle(room: room)
+        updateUserSelectStatusList(room: room)
         disableButton(false)
         showLoader(false)
     }
@@ -176,8 +140,6 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
             dependency.useCase.requestUser(userId: userId)
             await dependency.useCase.requestRoom()
         }
-        await showHeaderTitle()
-        await updateUserSelectStatusList()
     }
 
     /// ユーザーに、存在するカレントルームがあるか確認する
@@ -187,6 +149,34 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         } else {
             return await dependency.useCase.checkRoomExist(roomId: dependency.roomId)
         }
+    }
+
+    /// ヘッダータイトルを表示する
+    @MainActor
+    private func showHeaderTitle(room: Room) {
+        let currentUserName = dependency.currentUserName
+        let otherUsersCount = room.userList.count - 1
+        let otherUsersText = (otherUsersCount >= 1 ? "と \(String(otherUsersCount))名" : "")
+
+        let headerTitle = "\(currentUserName) \(otherUsersText)が ルームID\(room.id) に入室中"
+        dependency.viewModel?.headerTitle = headerTitle
+    }
+
+    /// ユーザーの選択状況一覧を更新する
+    @MainActor
+    private func updateUserSelectStatusList(room: Room) {
+        let userSelectStatusList: [UserSelectStatus] = room.userList.map { user in
+            let cardPackage = room.cardPackage
+            let selectedCard: CardPackage.Card? = cardPackage.cardList.first(where: {
+                $0.id == user.selectedCardId
+            })
+            return UserSelectStatus(
+                id: UUID().uuidString,
+                user: user,
+                themeColor: cardPackage.themeColor,
+                selectedCard: selectedCard)
+        }
+        dependency.viewModel?.userSelectStatusList = userSelectStatusList
     }
 
     /// 選択されたカード一覧を表示する

@@ -78,14 +78,6 @@ protocol CardListInteractorOutput: AnyObject {
     @MainActor
     func outputRoom(_ room: Room)
 
-    /// ヘッダーテキストを表示する
-    @MainActor
-    func showHeaderTitle()
-
-    /// ユーザーの選択状況一覧を更新する
-    @MainActor
-    func updateUserSelectStatusList()
-
     /// データ処理の成功を出力
     @MainActor
     func outputSuccess(message: String)

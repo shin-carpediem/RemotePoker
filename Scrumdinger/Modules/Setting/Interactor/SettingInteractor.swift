@@ -19,7 +19,7 @@ final class SettingInteractor: SettingUseCase, DependencyInjectable {
         resetLocalStorage()
         unsubscribeUser()
         unsubscribeCardPackages()
-        
+
         let result = await dependency.repository.removeUserFromRoom(
             userId: dependency.currentUserId)
         switch result {
@@ -44,12 +44,12 @@ final class SettingInteractor: SettingUseCase, DependencyInjectable {
     // MARK: - Private
 
     private var dependency: Dependency!
-    
+
     private func resetLocalStorage() {
         LocalStorage.shared.currentRoomId = 0
         LocalStorage.shared.currentUserId = ""
     }
-    
+
     private func unsubscribeUser() {
         dependency.repository.unsubscribeUser()
     }
