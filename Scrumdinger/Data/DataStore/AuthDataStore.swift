@@ -5,7 +5,7 @@ final class AuthDataStore: AuthRepository {
     static let shared = AuthDataStore()
 
     // MARK: - RoomAuthRepository
-    
+
     func login() -> Future<String, Never> {
         Future<String, Never> { promise in
             Auth.auth().signInAnonymously { authResult, error in
@@ -24,7 +24,7 @@ final class AuthDataStore: AuthRepository {
         do {
             try Auth.auth().signOut()
             return .success(())
-        } catch(_) {
+        } catch (_) {
             return .failure(.failedToLogout)
         }
     }

@@ -58,8 +58,8 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     // MARK: - Private
 
     private var dependency: Dependency!
-    
+
     private var cancellablesForSubscription = Set<AnyCancellable>()
-    
+
     private var cancellablesForAction = Set<AnyCancellable>()
 }

@@ -79,9 +79,9 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     private var dependency: Dependency!
 
     private static let CFBundleShortVersionString = "CFBundleShortVersionString"
-    
+
     private var cancellablesForAction = Set<AnyCancellable>()
-    
+
     /// ユーザーとルームをセットアップする
     private func setupUserAndRoom(
         userId: String, userName: String, roomId: Int

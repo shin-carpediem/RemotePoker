@@ -50,7 +50,7 @@ final class RoomDataStore: RoomRepository {
                 "updatedAt": Date(),
             ])
             return .success(())
-        } catch(_) {
+        } catch (_) {
             return .failure(.failedToAddUserToRoom)
         }
     }
@@ -59,7 +59,7 @@ final class RoomDataStore: RoomRepository {
         do {
             try await firestoreRef.userDocument(userId: userId).delete()
             return .success(())
-        } catch(_) {
+        } catch (_) {
             return .failure(.failedToRemoveUserFromRoom)
         }
     }

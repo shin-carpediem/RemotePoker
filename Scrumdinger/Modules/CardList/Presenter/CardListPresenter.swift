@@ -121,7 +121,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     private var dependency: Dependency!
 
     private var cancellablesForAction = Set<AnyCancellable>()
-    
+
     /// 匿名ログインする
     private func login() {
         AuthDataStore.shared.login()
