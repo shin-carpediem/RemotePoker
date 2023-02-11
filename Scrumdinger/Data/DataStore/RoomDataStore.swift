@@ -83,25 +83,14 @@ final class RoomDataStore: RoomRepository {
         }
     }
 
-//    func fetchUser(byId id: String) async -> Result<UserEntity, FirebaseError> {
-//        let userDocument = firestoreRef.userDocument(userId: id)
-//        userDocument.getDocument { snapshot, _ in
-//            guard let snapshot = snapshot else {
-//                return .failure(.failedToFetchUser)
-//            }
-//            let user = Self.userEntity(from: snapshot)
-//            return .success(user)
-//        }
-//    }
-
-    func fetchUser(byId id: String, completion: @escaping (Result<UserEntity, FirebaseError>) -> Void) {
-        let userDocument = firestoreRef.userDocument(userId: id)
-        userDocument.getDocument { snapshot, _ in
-            guard let snapshot = snapshot else {
-                return completion(.failure(.failedToFetchUser))
+    func fetchUser(byId id: String) async -> Future<UserEntity, Never> {
+        Future<UserEntity, Never> { [unowned self] promise in
+            let userDocument = self.firestoreRef.userDocument(userId: id)
+            userDocument.getDocument { snapshot, _ in
+                guard let snapshot = snapshot else { return }
+                let user = Self.userEntity(from: snapshot)
+                promise(.success(user))
             }
-            let user = Self.userEntity(from: snapshot)
-            completion(.success(user))
         }
     }
 

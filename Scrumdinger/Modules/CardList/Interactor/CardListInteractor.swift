@@ -23,21 +23,21 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     func subscribeUsers() {
         dependency.roomRepository.userList
             .sink { userList in
-                Task { [weak self] in
-                    await self?.dependency.output?.outputUserList(userList)
+                Task { [unowned self] in
+                    await self.dependency.output?.outputUserList(userList)
                 }
             }
-            .store(in: &self.cancellables)
+            .store(in: &self.cancellablesForSubscription)
     }
 
     func subscribeCardPackages() {
         dependency.roomRepository.cardPackage
             .sink { cardPackage in
-                Task { [weak self] in
-                    await self?.dependency.output?.outputCardPackage(cardPackage)
+                Task { [unowned self] in
+                    await self.dependency.output?.outputCardPackage(cardPackage)
                 }
             }
-            .store(in: &self.cancellables)
+            .store(in: &self.cancellablesForSubscription)
     }
 
     func updateSelectedCardId(selectedCardDictionary: [String: String]) {
@@ -46,17 +46,14 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     }
 
     func requestUser(userId: String) {
-        dependency.roomRepository.fetchUser(byId: userId) { result in
-            Task { [weak self] in
-                switch result {
-                case .success(let user):
-                    await self?.dependency.output?.outputCurrentUser(user)
-
-                case .failure(let error):
-                    let message = "ユーザーを見つけられませんでした"
-                    await self?.dependency.output?.outputError(error, message: message)
+        Task { [unowned self] in
+            await self.dependency.roomRepository.fetchUser(byId: userId)
+                .sink { user in
+                    Task { [unowned self] in
+                        await self.dependency.output?.outputCurrentUser(user)
+                    }
                 }
-            }
+                .store(in: &self.cancellablesForAction)
         }
     }
 
@@ -64,5 +61,7 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
 
     private var dependency: Dependency!
     
-    private var cancellables = Set<AnyCancellable>()
+    private var cancellablesForSubscription = Set<AnyCancellable>()
+    
+    private var cancellablesForAction = Set<AnyCancellable>()
 }
