@@ -1,7 +1,4 @@
 enum FirebaseError: Error {
-    /// ログインに失敗した
-    case failedToLogin
-
     /// ログアウトに失敗した
     case failedToLogout
 

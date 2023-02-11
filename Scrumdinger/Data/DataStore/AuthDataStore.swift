@@ -1,16 +1,21 @@
+import Combine
 import FirebaseAuth
 
 final class AuthDataStore: AuthRepository {
     static let shared = AuthDataStore()
 
     // MARK: - RoomAuthRepository
-
-    func login(completion: @escaping (Result<String, FirebaseError>) -> Void) {
-        Auth.auth().signInAnonymously { authResult, error in
-            if let userId = authResult?.user.uid {
-                completion(.success(userId))
-            } else {
-                completion(.failure(.failedToLogin))
+    
+    func login() -> Future<String, Never> {
+        Future<String, Never> { promise in
+            Auth.auth().signInAnonymously { authResult, error in
+                if error != nil {
+                    fatalError()
+                }
+                guard let userId = authResult?.user.uid else {
+                    fatalError()
+                }
+                promise(.success(userId))
             }
         }
     }

@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 
 final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput,
@@ -48,23 +49,15 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
 
     /// 匿名ログインする
     private func login(userName: String, roomId: Int) {
-        AuthDataStore.shared.login { [weak self] result in
-            guard let self = self else { return }
-            Task {
-                switch result {
-                case .success(let userId):
-                    // ログインに成功した
-                    await self.setupUserAndRoom(
+        AuthDataStore.shared.login()
+            .sink { userId in
+                Task { [weak self] in
+                    await self?.setupUserAndRoom(
                         userId: userId, userName: userName, roomId: roomId)
-                    await self.pushCardListView()
-
-                case .failure(let error):
-                    // ログインに失敗した
-                    let message = "ログインできませんでした。アプリを再インストールしてください"
-                    await self.outputError(error, message: message)
+                    await self?.pushCardListView()
                 }
             }
-        }
+            .store(in: &self.cancellablesForAction)
     }
 
     // MARK: - EnterRoomInteractorOutput
@@ -86,7 +79,9 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     private var dependency: Dependency!
 
     private static let CFBundleShortVersionString = "CFBundleShortVersionString"
-
+    
+    private var cancellablesForAction = Set<AnyCancellable>()
+    
     /// ユーザーとルームをセットアップする
     private func setupUserAndRoom(
         userId: String, userName: String, roomId: Int
