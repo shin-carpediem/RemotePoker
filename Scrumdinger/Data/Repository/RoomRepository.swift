@@ -3,13 +3,9 @@ import Combine
 protocol RoomRepository: AnyObject {
     /// ユーザーリスト
     var userList: PassthroughSubject<[UserEntity], Never> { get }
-    
+
     /// カードパッケージ
     var cardPackage: PassthroughSubject<CardPackageEntity, Never> { get }
-    
-    /// ルームを取得する
-    /// - returns: 成功ならルーム
-    func fetchRoom() async -> Result<RoomEntity, FirebaseError>
 
     /// ルームにユーザーを追加する
     /// - parameter user: ユーザー
@@ -32,10 +28,10 @@ protocol RoomRepository: AnyObject {
     /// - parameter cardPackageId: カードパッケージID
     /// - parameter themeColor: テーマカラー
     func updateThemeColor(cardPackageId: String, themeColor: CardPackageEntity.ThemeColor)
-    
+
     /// ユーザーの購読を解除する
     func unsubscribeUser()
-    
+
     /// カードパッケージの購読を解除する
     func unsubscribeCardPackage()
 }

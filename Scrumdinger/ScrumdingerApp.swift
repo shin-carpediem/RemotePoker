@@ -19,8 +19,7 @@ struct ScrumdingerApp: App, ModuleAssembler {
 
         // MARK: - Private
 
-        /// Firebaseをセットアップする
-        private func setupFirebase() {
+        private static let googleServiceInfoFilePath: String? = {
             let googleServiceInfo: String = {
                 #if DEBUG
                     // 開発環境
@@ -30,8 +29,12 @@ struct ScrumdingerApp: App, ModuleAssembler {
                     return "GoogleService-Info"
                 #endif
             }()
+            return Bundle.main.path(forResource: googleServiceInfo, ofType: "plist")
+        }()
 
-            guard let filePath = Bundle.main.path(forResource: googleServiceInfo, ofType: "plist")
+        /// Firebaseをセットアップする
+        private func setupFirebase() {
+            guard let filePath = Self.googleServiceInfoFilePath
             else {
                 fatalError("Could not load Firebase config file.")
             }

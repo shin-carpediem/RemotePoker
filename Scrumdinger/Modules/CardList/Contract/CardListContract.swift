@@ -64,24 +64,17 @@ protocol CardListUseCase: AnyObject {
     /// ユーザーを要求する
     /// - parameter userId:　ユーザーID
     func requestUser(userId: String)
-
-    /// ルームを要求する
-    func requestRoom() async
 }
 
 protocol CardListInteractorOutput: AnyObject {
+    /// カレントユーザーを出力する
+    @MainActor
+    func outputCurrentUser(_ user: User)
+    
     /// ユーザーリストを出力する
     @MainActor
     func outputUserList(_ userList: [User])
-    
-    /// ユーザーを出力する
-    @MainActor
-    func outputUser(_ user: User)
 
-    /// ルームを出力する
-    @MainActor
-    func outputRoom(_ room: Room)
-    
     /// カードパッケージを出力する
     @MainActor
     func outputCardPackage(_ cardPackage: CardPackage)

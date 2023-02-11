@@ -8,9 +8,6 @@ enum FirebaseError: Error {
     /// ルームの新規作成に失敗した
     case failedToCreateRoom
 
-    /// 指定IDのルームの取得に失敗した
-    case failedToFetchRoom
-
     /// ルームへのユーザー追加に失敗した
     case failedToAddUserToRoom
 

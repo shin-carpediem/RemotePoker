@@ -30,7 +30,8 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
     }
 
     func subscribeCardPackages() {
-        cardPackageCancellable = dependency.roomRepository.cardPackage.sink { [weak self] cardPackage in
+        cardPackageCancellable = dependency.roomRepository.cardPackage.sink {
+            [weak self] cardPackage in
             guard let self = self else { return }
             Task {
                 await self.dependency.output?.outputCardPackage(cardPackage)
@@ -49,8 +50,8 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
             Task {
                 switch result {
                 case .success(let user):
-                    await self.dependency.output?.outputUser(user)
-                    
+                    await self.dependency.output?.outputCurrentUser(user)
+
                 case .failure(let error):
                     let message = "ユーザーを見つけられませんでした"
                     await self.dependency.output?.outputError(error, message: message)
@@ -59,23 +60,11 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
         }
     }
 
-    func requestRoom() async {
-        let result = await dependency.roomRepository.fetchRoom()
-        switch result {
-        case .success(let room):
-            await dependency.output?.outputRoom(room)
-
-        case .failure(let error):
-            let message = "ルームを見つけられませんでした"
-            await dependency.output?.outputError(error, message: message)
-        }
-    }
-
     // MARK: - Private
 
     private var dependency: Dependency!
-    
+
     private var userListCancellable: AnyCancellable?
-    
+
     private var cardPackageCancellable: AnyCancellable?
 }

@@ -75,6 +75,19 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     // MARK: - CardListInteractorOutput
 
     @MainActor
+    func outputCurrentUser(_ user: User) {
+        dependency.currentUserId = user.id
+        dependency.currentUserName = user.name
+        let userList = dependency.viewModel?.room.userList
+        if let userList = userList {
+            showHeaderTitle(userList: userList)
+            updateUserSelectStatusList(userList: userList)
+        }
+        disableButton(false)
+        showLoader(false)
+    }
+    
+    @MainActor
     func outputUserList(_ userList: [User]) {
         dependency.viewModel?.room.userList = userList
         showHeaderTitle(userList: userList)
@@ -82,23 +95,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         disableButton(false)
         showLoader(false)
     }
-    
-    @MainActor
-    func outputUser(_ user: User) {
-        dependency.currentUserId = user.id
-        dependency.currentUserName = user.name
-        disableButton(false)
-        showLoader(false)
-    }
 
-    @MainActor
-    func outputRoom(_ room: Room) {
-        dependency.viewModel?.room = room
-        dependency.roomId = room.id
-        disableButton(false)
-        showLoader(false)
-    }
-    
     @MainActor
     func outputCardPackage(_ cardPackage: CardPackage) {
         dependency.viewModel?.room.cardPackage = cardPackage
@@ -151,7 +148,6 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         dependency.useCase.subscribeCardPackages()
         if shouldFetchData {
             dependency.useCase.requestUser(userId: userId)
-            await dependency.useCase.requestRoom()
         }
     }
 
