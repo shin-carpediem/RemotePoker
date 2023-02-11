@@ -86,7 +86,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         disableButton(false)
         showLoader(false)
     }
-    
+
     @MainActor
     func outputUserList(_ userList: [User]) {
         dependency.viewModel?.room.userList = userList

@@ -70,7 +70,7 @@ protocol CardListInteractorOutput: AnyObject {
     /// カレントユーザーを出力する
     @MainActor
     func outputCurrentUser(_ user: User)
-    
+
     /// ユーザーリストを出力する
     @MainActor
     func outputUserList(_ userList: [User])
