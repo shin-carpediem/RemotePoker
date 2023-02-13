@@ -1,4 +1,3 @@
-import Combine
 import Foundation
 
 final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput,
@@ -38,7 +37,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
                 // フォーム内容が有効
                 await showLoader(true)
                 let roomId = Int(inputRoomId)!
-                login(userName: inputUserName, roomId: roomId)
+                await dependency.useCase.login(userName: inputUserName, roomId: roomId)
             } else {
                 // フォーム内容が有効ではない
             }
@@ -47,20 +46,14 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         }
     }
 
-    /// 匿名ログインする
-    private func login(userName: String, roomId: Int) {
-        AuthDataStore.shared.login()
-            .sink { userId in
-                Task { [weak self] in
-                    await self?.setupUserAndRoom(
-                        userId: userId, userName: userName, roomId: roomId)
-                    await self?.pushCardListView()
-                }
-            }
-            .store(in: &self.cancellablesForAction)
-    }
-
     // MARK: - EnterRoomInteractorOutput
+
+    func outputCompletedLogin(userId: String, userName: String, roomId: Int) {
+        Task {
+            await setupUserAndRoom(userId: userId, userName: userName, roomId: roomId)
+            await pushCardListView()
+        }
+    }
 
     @MainActor
     func outputSuccess(message: String) {
@@ -79,8 +72,6 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     private var dependency: Dependency!
 
     private static let CFBundleShortVersionString = "CFBundleShortVersionString"
-
-    private var cancellablesForAction = Set<AnyCancellable>()
 
     /// ユーザーとルームをセットアップする
     private func setupUserAndRoom(
