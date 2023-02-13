@@ -34,7 +34,6 @@ struct CardView: View {
                         .stroke(isSelected ? .gray : .clear, lineWidth: 2)
                 }
         }
-        .softButtonStyle(RoundedRectangle(cornerRadius: 10))
         .disabled(!isEnabled)
     }
 }
