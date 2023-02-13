@@ -36,6 +36,11 @@ protocol EnterRoomPresentation: AnyObject, Presentation {
 }
 
 protocol EnterRoomUseCase: AnyObject {
+    /// ログインを要求する
+    /// - parameter userName: ユーザー名
+    /// - parameter roomId: ルームID
+    func login(userName: String, roomId: Int) async
+
     /// ルームが存在するか確認する
     /// - parameter roomId: ルームID
     /// - returns ルームが存在するか
@@ -52,6 +57,12 @@ protocol EnterRoomUseCase: AnyObject {
 }
 
 protocol EnterRoomInteractorOutput: AnyObject {
+    /// ログインの完了を出力
+    /// - parameter userId: ユーザーID
+    /// - parameter userName: ユーザー名
+    /// - parameter roomId: ルームID
+    func outputCompletedLogin(userId: String, userName: String, roomId: Int)
+
     /// データ処理の成功を出力
     @MainActor
     func outputSuccess(message: String)
