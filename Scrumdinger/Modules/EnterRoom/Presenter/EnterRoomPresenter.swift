@@ -33,7 +33,9 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     func didTapEnterRoomButton(inputUserName: String, inputRoomId: String) {
         Task {
             await disableButton(true)
-            if let viewModel: EnterRoomViewModel = dependency.viewModel, await viewModel.isInputFormValid {
+            if let viewModel: EnterRoomViewModel = dependency.viewModel,
+                await viewModel.isInputFormValid
+            {
                 // フォーム内容が有効
                 await showLoader(true)
                 let roomId = Int(inputRoomId)!

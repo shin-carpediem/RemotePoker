@@ -86,7 +86,8 @@ final class RoomDataStore: RoomRepository {
     }
 
     func updateThemeColor(cardPackageId: String, themeColor: CardPackageEntity.ThemeColor) {
-        let cardPackageDocument: DocumentReference = firestoreRef.cardPackageDocument(cardPackageId: cardPackageId)
+        let cardPackageDocument: DocumentReference = firestoreRef.cardPackageDocument(
+            cardPackageId: cardPackageId)
         cardPackageDocument.updateData([
             "themeColor": themeColor.rawValue,
             "updatedAt": Date(),
