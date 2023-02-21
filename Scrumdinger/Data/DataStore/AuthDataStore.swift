@@ -12,7 +12,7 @@ final class AuthDataStore: AuthRepository {
                 if error != nil {
                     fatalError()
                 }
-                guard let userId = authResult?.user.uid else {
+                guard let userId: String = authResult?.user.uid else {
                     fatalError()
                 }
                 promise(.success(userId))

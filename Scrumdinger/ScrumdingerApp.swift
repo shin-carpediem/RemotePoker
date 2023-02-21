@@ -34,11 +34,11 @@ struct ScrumdingerApp: App, ModuleAssembler {
 
         /// Firebaseをセットアップする
         private func setupFirebase() {
-            guard let filePath = Self.googleServiceInfoFilePath
+            guard let filePath: String = Self.googleServiceInfoFilePath
             else {
                 fatalError("Could not load Firebase config file.")
             }
-            guard let options = FirebaseOptions(contentsOfFile: filePath) else {
+            guard let options: FirebaseOptions = FirebaseOptions(contentsOfFile: filePath) else {
                 fatalError("Could not load Firebase config file.")
             }
             FirebaseApp.configure(options: options)
@@ -51,11 +51,9 @@ struct ScrumdingerApp: App, ModuleAssembler {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                let currentRoomId = LocalStorage.shared.currentRoomId
-                if currentRoomId == 0 {
-                    // ログインしていない
-                    assmebleEnterRoomModule()
-                } else {
+                let currentRoomId: Int = LocalStorage.shared.currentRoomId
+                let isUserLoggedIn: Bool = !(currentRoomId == 0)
+                if isUserLoggedIn {
                     // ログイン中(currentUserName、cardPackageIdは後で取得)
                     assembleCardListModule(
                         roomId: currentRoomId,
@@ -63,6 +61,9 @@ struct ScrumdingerApp: App, ModuleAssembler {
                         currentUserName: "",
                         cardPackageId: "",
                         isExisingUser: true)
+                } else {
+                    // ログインしていない
+                    assmebleEnterRoomModule()
                 }
             }
         }

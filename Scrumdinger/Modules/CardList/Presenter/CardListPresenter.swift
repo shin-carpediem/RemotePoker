@@ -79,7 +79,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     func outputCurrentUser(_ user: User) {
         dependency.currentUserId = user.id
         dependency.currentUserName = user.name
-        let userList = dependency.viewModel?.room.userList
+        let userList: [UserEntity]? = dependency.viewModel?.room.userList
         if let userList = userList {
             showHeaderTitle(userList: userList)
             updateUserSelectStatusList(userList: userList)
@@ -172,7 +172,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     @MainActor
     private func updateUserSelectStatusList(userList: [User]) {
         let userSelectStatusList: [UserSelectStatus] = userList.map { user in
-            guard let cardPackage = dependency.viewModel?.room.cardPackage else {
+            guard let cardPackage: CardPackageEntity = dependency.viewModel?.room.cardPackage else {
                 fatalError()
             }
             let selectedCard: CardPackage.Card? = cardPackage.cardList.first(where: {

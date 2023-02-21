@@ -29,7 +29,7 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
     }
 
     func createRoom(room: Room) async {
-        let result = await dependency.repository.createRoom(room)
+        let result: Result<Void, FirebaseError> = await dependency.repository.createRoom(room)
         switch result {
         case .success(_):
             let message = "新しいルームを作りました"
@@ -44,7 +44,7 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
     func adduserToRoom(roomId: Int, user: User) async {
         repository = RoomDataStore(roomId: roomId)
         guard let repository = repository else { return }
-        let result = await repository.addUserToRoom(user: user)
+        let result: Result<Void, FirebaseError> = await repository.addUserToRoom(user: user)
         switch result {
         case .success(_):
             let message = "ルームに追加されました"

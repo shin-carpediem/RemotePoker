@@ -33,7 +33,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     func didTapEnterRoomButton(inputUserName: String, inputRoomId: String) {
         Task {
             await disableButton(true)
-            if let viewModel = dependency.viewModel, await viewModel.isInputFormValid {
+            if let viewModel: EnterRoomViewModel = dependency.viewModel, await viewModel.isInputFormValid {
                 // フォーム内容が有効
                 await showLoader(true)
                 let roomId = Int(inputRoomId)!
@@ -86,7 +86,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         LocalStorage.shared.currentUserId = userId
 
         // 入力ルームIDに合致する既存ルームが存在するか確認
-        let roomExist = await dependency.useCase.checkRoomExist(roomId: roomId)
+        let roomExist: Bool = await dependency.useCase.checkRoomExist(roomId: roomId)
         if roomExist {
             // 既存ルーム
             currentRoom.id = roomId
