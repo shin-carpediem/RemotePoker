@@ -38,7 +38,7 @@ struct ScrumdingerApp: App, ModuleAssembler {
             else {
                 fatalError("Could not load Firebase config file.")
             }
-            guard let options: FirebaseOptions = FirebaseOptions(contentsOfFile: filePath) else {
+            guard let options = FirebaseOptions(contentsOfFile: filePath) else {
                 fatalError("Could not load Firebase config file.")
             }
             FirebaseApp.configure(options: options)
