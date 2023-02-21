@@ -34,7 +34,7 @@ actor CardListViewModel: CardListObservable {
 
     @MainActor
     var fabIconName: String {
-        let selectedCardCount = userSelectStatusList.map { $0.selectedCard }.count
+        let selectedCardCount: Int = userSelectStatusList.map { $0.selectedCard }.count
         let systemName: String = {
             if isShownSelectedCardList {
                 return "gobackward"

@@ -40,7 +40,7 @@ final class RoomDataStore: RoomRepository {
 
     func addUserToRoom(user: UserEntity) async -> Result<Void, FirebaseError> {
         do {
-            let userDocument = firestoreRef.usersCollection.document(user.id)
+            let userDocument: DocumentReference = firestoreRef.usersCollection.document(user.id)
             try await userDocument.setData([
                 "id": user.id,
                 "name": user.name,
@@ -66,10 +66,10 @@ final class RoomDataStore: RoomRepository {
 
     func fetchUser(byId id: String) -> Future<UserEntity, Never> {
         Future<UserEntity, Never> { [unowned self] promise in
-            let userDocument = self.firestoreRef.userDocument(userId: id)
+            let userDocument: DocumentReference = self.firestoreRef.userDocument(userId: id)
             userDocument.getDocument { snapshot, _ in
                 guard let snapshot = snapshot else { return }
-                let user = Self.userEntity(from: snapshot)
+                let user: UserEntity = Self.userEntity(from: snapshot)
                 promise(.success(user))
             }
         }
@@ -77,7 +77,7 @@ final class RoomDataStore: RoomRepository {
 
     func updateSelectedCardId(selectedCardDictionary: [String: String]) {
         selectedCardDictionary.forEach { userId, selectedCardId in
-            let userDocument = firestoreRef.userDocument(userId: userId)
+            let userDocument: DocumentReference = firestoreRef.userDocument(userId: userId)
             userDocument.updateData([
                 "selectedCardId": selectedCardId,
                 "updatedAt": Date(),
@@ -86,7 +86,7 @@ final class RoomDataStore: RoomRepository {
     }
 
     func updateThemeColor(cardPackageId: String, themeColor: CardPackageEntity.ThemeColor) {
-        let cardPackageDocument = firestoreRef.cardPackageDocument(cardPackageId: cardPackageId)
+        let cardPackageDocument: DocumentReference = firestoreRef.cardPackageDocument(cardPackageId: cardPackageId)
         cardPackageDocument.updateData([
             "themeColor": themeColor.rawValue,
             "updatedAt": Date(),

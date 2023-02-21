@@ -6,16 +6,16 @@ final class EnterRoomDataStore: EnterRoomRepository {
     // MARK: - EnterRoomRepository
 
     func checkRoomExist(roomId: Int) async -> Bool {
-        let roomDocument = Firestore.firestore().collection("rooms").document(String(roomId))
-        guard let document = try? await roomDocument.getDocument() else { return false }
+        let roomDocument: DocumentReference = Firestore.firestore().collection("rooms").document(String(roomId))
+        guard let document: DocumentSnapshot = try? await roomDocument.getDocument() else { return false }
         return document.exists
     }
 
     func createRoom(_ room: RoomEntity) async -> Result<Void, FirebaseError> {
         do {
             // ルーム追加
-            let roomId = room.id
-            let roomDocument = Firestore.firestore().collection("rooms").document(String(roomId))
+            let roomId: Int = room.id
+            let roomDocument: DocumentReference = Firestore.firestore().collection("rooms").document(String(roomId))
             try await roomDocument.setData([
                 "id": roomId,
                 "createdAt": Timestamp(),
@@ -24,8 +24,8 @@ final class EnterRoomDataStore: EnterRoomRepository {
 
             // ユーザー追加
             room.userList.forEach { user in
-                let userId = user.id
-                let userDocument = roomDocument.collection("users").document(userId)
+                let userId: String = user.id
+                let userDocument: DocumentReference = roomDocument.collection("users").document(userId)
                 userDocument.setData([
                     "id": userId,
                     "name": user.name,
@@ -37,8 +37,8 @@ final class EnterRoomDataStore: EnterRoomRepository {
             }
 
             // カードパッケージ追加
-            let cardPackageId = room.cardPackage.id
-            let cardPackageDocument = roomDocument.collection("cardPackages").document(
+            let cardPackageId: String = room.cardPackage.id
+            let cardPackageDocument: DocumentReference = roomDocument.collection("cardPackages").document(
                 cardPackageId)
             try await cardPackageDocument.setData([
                 "id": cardPackageId,
@@ -49,8 +49,8 @@ final class EnterRoomDataStore: EnterRoomRepository {
 
             // カード一覧追加
             room.cardPackage.cardList.forEach { card in
-                let cardId = card.id
-                let cardDocument = cardPackageDocument.collection("cards").document(cardId)
+                let cardId: String = card.id
+                let cardDocument: DocumentReference = cardPackageDocument.collection("cards").document(cardId)
                 cardDocument.setData([
                     "id": cardId,
                     "point": card.point,
