@@ -39,7 +39,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
                 // フォーム内容が有効
                 await showLoader(true)
                 let roomId = Int(inputRoomId)!
-                await dependency.useCase.login(userName: inputUserName, roomId: roomId)
+                await dependency.useCase.signIn(userName: inputUserName, roomId: roomId)
             } else {
                 // フォーム内容が有効ではない
             }
@@ -50,7 +50,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
 
     // MARK: - EnterRoomInteractorOutput
 
-    func outputCompletedLogin(userId: String, userName: String, roomId: Int) {
+    func outputCompletedSignIn(userId: String, userName: String, roomId: Int) {
         Task {
             await setupUserAndRoom(userId: userId, userName: userName, roomId: roomId)
             await pushCardListView()

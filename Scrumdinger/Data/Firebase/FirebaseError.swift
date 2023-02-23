@@ -1,6 +1,6 @@
 enum FirebaseError: Error {
     /// ログアウトに失敗した
-    case failedToLogout
+    case failedToSignOut
 
     /// ルームの新規作成に失敗した
     case failedToCreateRoom

@@ -24,7 +24,7 @@ final class SettingInteractor: SettingUseCase, DependencyInjectable {
             userId: dependency.currentUserId)
         switch result {
         case .success(_):
-            let logoutResult: Result<Void, FirebaseError> = AuthDataStore.shared.logout()
+            let logoutResult: Result<Void, FirebaseError> = AuthDataStore.shared.signOut()
             switch logoutResult {
             case .success(_):
                 let message = "ルームから退出しました"

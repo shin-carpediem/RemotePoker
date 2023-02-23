@@ -3,8 +3,8 @@ import Combine
 protocol AuthRepository: AnyObject {
     /// ログインする
     /// - returns: ユーザーID
-    func login() -> Future<String, Never>
+    func signIn() -> Future<String, Never>
 
     /// ログアウトする
-    func logout() -> Result<Void, FirebaseError>
+    func signOut() -> Result<Void, FirebaseError>
 }

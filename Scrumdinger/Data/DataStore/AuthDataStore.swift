@@ -6,7 +6,7 @@ final class AuthDataStore: AuthRepository {
 
     // MARK: - RoomAuthRepository
 
-    func login() -> Future<String, Never> {
+    func signIn() -> Future<String, Never> {
         Future<String, Never> { promise in
             Auth.auth().signInAnonymously { authResult, error in
                 if error != nil {
@@ -20,12 +20,12 @@ final class AuthDataStore: AuthRepository {
         }
     }
 
-    func logout() -> Result<Void, FirebaseError> {
+    func signOut() -> Result<Void, FirebaseError> {
         do {
             try Auth.auth().signOut()
             return .success(())
         } catch (_) {
-            return .failure(.failedToLogout)
+            return .failure(.failedToSignOut)
         }
     }
 

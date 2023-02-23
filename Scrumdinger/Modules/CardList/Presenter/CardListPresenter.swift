@@ -26,7 +26,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
             await showLoader(true)
             if dependency.isExisingUser {
                 // 既存ユーザー（この画面が初期画面）
-                self.login()
+                self.signIn()
             } else {
                 // 新規ユーザー（EnterRoom画面が初期画面）
                 await self.setupData(
@@ -123,8 +123,8 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     private var cancellablesForAction = Set<AnyCancellable>()
 
     /// 匿名ログインする
-    private func login() {
-        AuthDataStore.shared.login()
+    private func signIn() {
+        AuthDataStore.shared.signIn()
             .sink { userId in
                 Task { [weak self] in
                     guard let self = self else { return }

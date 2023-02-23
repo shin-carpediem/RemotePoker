@@ -15,10 +15,10 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
 
     // MARK: - EnterRoomUseCase
 
-    func login(userName: String, roomId: Int) async {
-        AuthDataStore.shared.login()
+    func signIn(userName: String, roomId: Int) async {
+        AuthDataStore.shared.signIn()
             .sink { [weak self] userId in
-                self?.dependency.output?.outputCompletedLogin(
+                self?.dependency.output?.outputCompletedSignIn(
                     userId: userId, userName: userName, roomId: roomId)
             }
             .store(in: &self.cancellablesForAction)
