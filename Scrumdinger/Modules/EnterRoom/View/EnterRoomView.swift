@@ -35,6 +35,7 @@ struct EnterRoomView: View, ModuleAssembler {
                 if viewModel.isShownLoader { Loader() }
             }
         }
+        .navigationViewStyle(.stack)
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }

@@ -66,6 +66,7 @@ struct ScrumdingerApp: App, ModuleAssembler {
                     assmebleEnterRoomModule()
                 }
             }
+            .navigationViewStyle(.stack)
         }
     }
 }
