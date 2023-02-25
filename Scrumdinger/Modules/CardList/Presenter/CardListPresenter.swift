@@ -29,7 +29,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
                 self.signIn()
             } else {
                 // 新規ユーザー（EnterRoom画面が初期画面）
-                await self.setupData(
+                await self.sucscribeAndSetupData(
                     userId: dependency.currentUserId, shouldFetchData: self.dependency.isExisingUser
                 )
             }
@@ -130,7 +130,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
                     guard let self = self else { return }
                     // ユーザーのカレントルームがFirestore上に存在するか確認する
                     if await self.checkUserInCurrentRoom() {
-                        await self.setupData(
+                        await self.sucscribeAndSetupData(
                             userId: userId, shouldFetchData: self.dependency.isExisingUser)
                     }
                 }
@@ -138,8 +138,8 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
             .store(in: &self.cancellablesForAction)
     }
 
-    /// 各種データをセットアップする
-    private func setupData(userId: String, shouldFetchData: Bool) async {
+    /// 各種データを購読しセットアップする
+    private func sucscribeAndSetupData(userId: String, shouldFetchData: Bool) async {
         dependency.useCase.subscribeUsers()
         dependency.useCase.subscribeCardPackages()
         if shouldFetchData {
