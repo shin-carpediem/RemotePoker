@@ -81,7 +81,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         dependency.currentUserName = user.name
         let userList: [UserEntity]? = dependency.viewModel?.room.userList
         if let userList = userList {
-            showHeaderTitle(userList: userList)
+            showTitle(userList: userList)
             updateUserSelectStatusList(userList: userList)
         }
         disableButton(false)
@@ -91,7 +91,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     @MainActor
     func outputUserList(_ userList: [User]) {
         dependency.viewModel?.room.userList = userList
-        showHeaderTitle(userList: userList)
+        showTitle(userList: userList)
         updateUserSelectStatusList(userList: userList)
         disableButton(false)
         showLoader(false)
@@ -156,16 +156,16 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         }
     }
 
-    /// ヘッダータイトルを表示する
+    /// タイトルを表示する
     @MainActor
-    private func showHeaderTitle(userList: [User]) {
+    private func showTitle(userList: [User]) {
         let currentUserName: String = dependency.currentUserName
         let otherUsersCount: Int = userList.count - 1
         let otherUsersText = (otherUsersCount >= 1 ? "と \(String(otherUsersCount))名" : "")
         let roomId: Int = dependency.roomId
 
-        let headerTitle = "\(currentUserName) \(otherUsersText)が ルームID\(roomId) に入室中"
-        dependency.viewModel?.headerTitle = headerTitle
+        let title = "\(currentUserName) \(otherUsersText)が ルームID\(roomId) に入室中"
+        dependency.viewModel?.title = title
     }
 
     /// ユーザーの選択状況一覧を更新する

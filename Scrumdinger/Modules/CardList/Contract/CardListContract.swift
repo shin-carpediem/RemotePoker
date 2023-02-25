@@ -5,9 +5,9 @@ protocol CardListObservable: ObservableObject, ViewModel {
     @MainActor
     var room: Room { get set }
 
-    /// ヘッダーテキスト
+    /// タイトル
     @MainActor
-    var headerTitle: String { get set }
+    var title: String { get set }
 
     /// ユーザーのカード選択状況一覧
     @MainActor

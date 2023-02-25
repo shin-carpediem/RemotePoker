@@ -19,7 +19,7 @@ actor CardListViewModel: CardListObservable {
     @Published var room = Room(id: 0, userList: [], cardPackage: .defaultCardPackage)
 
     @MainActor
-    @Published var headerTitle = ""
+    @Published var title = ""
 
     @MainActor
     @Published var userSelectStatusList = [UserSelectStatus]()

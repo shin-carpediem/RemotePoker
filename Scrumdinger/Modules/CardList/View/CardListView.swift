@@ -38,7 +38,7 @@ struct CardListView: View, ModuleAssembler {
             navigationForSettingView
             if viewModel.isShownLoader { Loader() }
         }
-        .navigationTitle(viewModel.headerTitle)
+        .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(trailing: settingButton)
