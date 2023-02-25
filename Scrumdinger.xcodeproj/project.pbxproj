@@ -74,7 +74,6 @@
 		F5C397DA289E9342008AEFF2 /* CardPackageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397D9289E9342008AEFF2 /* CardPackageEntity.swift */; };
 		F5C397DC289F40C6008AEFF2 /* RoomEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DB289F40C6008AEFF2 /* RoomEntity.swift */; };
 		F5C397E0289F420F008AEFF2 /* EnterRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */; };
-		F5C6387429A5102500A5F90A /* PromisesObjC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA272896CA2C003531CE /* PromisesObjC.xcframework */; };
 		F5CBD36B296A3EA7008BB8DE /* LoaderUI in Frameworks */ = {isa = PBXBuildFile; productRef = F5CBD36A296A3EA7008BB8DE /* LoaderUI */; };
 		F5DDCD1B297B86B300786C35 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1A297B86B300786C35 /* List.swift */; };
 		F5DDCD1D297C183600786C35 /* EnterRoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1C297C183500786C35 /* EnterRoomRepository.swift */; };
@@ -200,7 +199,6 @@
 				F571FA2D2896CA2C003531CE /* GoogleDataTransport.xcframework in Frameworks */,
 				F571FA2F2896CA2C003531CE /* abseil.xcframework in Frameworks */,
 				F571FA512896CA2D003531CE /* PromisesObjC.xcframework in Frameworks */,
-				F5C6387429A5102500A5F90A /* PromisesObjC.xcframework in Frameworks */,
 				F571FA4F2896CA2D003531CE /* nanopb.xcframework in Frameworks */,
 				F571FA432896CA2C003531CE /* leveldb-library.xcframework in Frameworks */,
 				F571FA492896CA2C003531CE /* Libuv-gRPC.xcframework in Frameworks */,
@@ -766,7 +764,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					F5E917C6287114DC00AE8421 = {
 						CreatedOnToolsVersion = 13.4.1;
