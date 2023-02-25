@@ -35,6 +35,10 @@ struct EnterRoomView: View, ModuleAssembler {
                 if viewModel.isShownLoader { Loader() }
             }
         }
+        // NavigationViewを使用した際にiPadでは、Master-Detail(Split view)の挙動になっている。
+        // そしてMasterとなるViewが配置されていない為、空白のViewが表示されてしまう。
+        // iPadはサポート外なので、iPhoneでもiPadでも同じ見た目に固定する。
+        .navigationViewStyle(.stack)
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
