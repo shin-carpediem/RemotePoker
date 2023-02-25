@@ -66,6 +66,9 @@ struct ScrumdingerApp: App, ModuleAssembler {
                     assmebleEnterRoomModule()
                 }
             }
+            // NavigationViewを使用した際にiPadでは、Master-Detail(Split view)の挙動になっている。
+            // そしてMasterとなるViewが配置されていない為、空白のViewが表示されてしまう。
+            // iPadはサポート外なので、iPhoneでもiPadでも同じ見た目に固定する。
             .navigationViewStyle(.stack)
         }
     }
