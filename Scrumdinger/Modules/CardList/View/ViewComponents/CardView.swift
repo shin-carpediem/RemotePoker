@@ -3,10 +3,10 @@ import SwiftUI
 
 struct CardView: View {
     /// カード
-    var card: CardPackage.Card
+    var card: CardPackageViewModel.Card
 
     /// テーマカラー
-    var themeColor: CardPackage.ThemeColor
+    var themeColor: CardPackageThemeColor
 
     /// 有効か
     var isEnabled: Bool
@@ -15,7 +15,7 @@ struct CardView: View {
     var isSelected: Bool
 
     /// カード選択ハンドラー
-    var selectCardHandler: ((CardPackage.Card) -> Void)?
+    var selectCardHandler: ((CardPackageViewModel.Card) -> Void)?
 
     // MARK: - View
 
@@ -27,7 +27,7 @@ struct CardView: View {
                 .frame(width: 150, height: 100)
                 .font(.system(size: 40, weight: .bold))
                 .foregroundColor(card.fontColor)
-                .background(card.backgroundColor(color: themeColor))
+                .background(card.backgroundColor)
                 .cornerRadius(10)
                 .overlay {
                     RoundedRectangle(cornerRadius: 10)
@@ -41,12 +41,16 @@ struct CardView: View {
 // MARK: - Preview
 
 struct CardView_Previews: PreviewProvider {
-    static let card1 = CardPackage.defaultCardList.first!
+    static let defaultCardList = CardPackageModelToCardPackageViewModelTranslator().translate(
+        .defaultCardPackage
+    ).cardList
 
-    static let card2 = CardPackage.defaultCardList[
+    static let card1: CardPackageViewModel.Card = defaultCardList.first!
+
+    static let card2: CardPackageViewModel.Card = defaultCardList[
         Int(floor(CGFloat((card1.index + card3.index)) / 2))]
 
-    static let card3 = CardPackage.defaultCardList.last!
+    static let card3: CardPackageViewModel.Card = defaultCardList.last!
 
     static var previews: some View {
         Group {

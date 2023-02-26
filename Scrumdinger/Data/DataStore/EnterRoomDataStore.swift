@@ -48,7 +48,7 @@ final class EnterRoomDataStore: EnterRoomRepository {
                     cardPackageId)
             try await cardPackageDocument.setData([
                 "id": cardPackageId,
-                "themeColor": room.cardPackage.themeColor.rawValue,
+                "themeColor": room.cardPackage.themeColor,
                 "createdAt": Timestamp(),
                 "updatedAt": Date(),
             ])

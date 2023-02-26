@@ -31,14 +31,14 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation,
 
     func viewDidSuspend() {}
 
-    func didTapColor(color: CardPackage.ThemeColor) {
+    func didTapColor(color: CardPackageThemeColor) {
         dependency.useCase.updateThemeColor(themeColor: color)
     }
 
     // MARK: - SelectThemeColorInteractorOutput
 
     @MainActor
-    func outputSelectedThemeColor(_ themeColor: CardPackage.ThemeColor) {
+    func outputSelectedThemeColor(_ themeColor: CardPackageThemeColor) {
         dependency.viewModel?.selectedThemeColor = themeColor
         disableButton(false)
         showLoader(false)
@@ -63,7 +63,7 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation,
     /// カラー一覧を表示する
     @MainActor
     private func showColorList() {
-        dependency.viewModel?.themeColorList = CardPackage.ThemeColor.allCases
+        dependency.viewModel?.themeColorList = CardPackageThemeColor.allCases
     }
 
     /// ボタンを無効にする

@@ -16,13 +16,16 @@ actor CardListViewModel: CardListObservable {
     @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
 
     @MainActor
-    @Published var room = Room(id: 0, userList: [], cardPackage: .defaultCardPackage)
+    @Published var room = RoomViewModel(
+        id: 0, userList: [],
+        cardPackage: CardPackageModelToCardPackageViewModelTranslator().translate(
+            .defaultCardPackage))
 
     @MainActor
     @Published var title = ""
 
     @MainActor
-    @Published var userSelectStatusList = [UserSelectStatus]()
+    @Published var userSelectStatusList = [UserSelectStatusViewModel]()
 
     @MainActor
     @Published var isShownSelectedCardList = false

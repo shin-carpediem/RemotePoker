@@ -24,7 +24,12 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
         dependency.roomRepository.userList
             .sink { userList in
                 Task { [unowned self] in
-                    await self.dependency.output?.outputUserList(userList)
+                    let model: [UserModel] = userList.map {
+                        UserModel(
+                            id: $0.id, name: $0.name, currentRoomId: $0.currentRoomId,
+                            selectedCardId: $0.selectedCardId)
+                    }
+                    await self.dependency.output?.outputUserList(model)
                 }
             }
             .store(in: &self.cancellablesForSubscription)
@@ -34,7 +39,12 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
         dependency.roomRepository.cardPackage
             .sink { cardPackage in
                 Task { [unowned self] in
-                    await self.dependency.output?.outputCardPackage(cardPackage)
+                    let model = CardPackageModel(
+                        id: cardPackage.id, themeColor: cardPackage.themeColor,
+                        cardList: cardPackage.cardList.map {
+                            CardPackageModel.Card(id: $0.id, point: $0.point, index: $0.index)
+                        })
+                    await self.dependency.output?.outputCardPackage(model)
                 }
             }
             .store(in: &self.cancellablesForSubscription)
@@ -49,7 +59,10 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
         dependency.roomRepository.fetchUser(byId: userId)
             .sink { user in
                 Task { [unowned self] in
-                    await self.dependency.output?.outputCurrentUser(user)
+                    let model = UserModel(
+                        id: user.id, name: user.name, currentRoomId: user.currentRoomId,
+                        selectedCardId: user.selectedCardId)
+                    await self.dependency.output?.outputCurrentUser(model)
                 }
             }
             .store(in: &self.cancellablesForAction)

@@ -15,11 +15,11 @@ final class SelectThemeColorInteractor: SelectThemeColorUseCase, DependencyInjec
 
     // MARK: - CardListUseCase
 
-    func updateThemeColor(themeColor: CardPackage.ThemeColor) {
+    func updateThemeColor(themeColor: CardPackageThemeColor) {
         Task { @MainActor in
             dependency.repository.updateThemeColor(
                 cardPackageId: dependency.cardPackageId,
-                themeColor: themeColor)
+                themeColor: themeColor.rawValue)
 
             dependency.output?.outputSelectedThemeColor(themeColor)
             let message = "テーマカラーを\(themeColor)に変更しました"

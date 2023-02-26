@@ -27,7 +27,7 @@ protocol RoomRepository: AnyObject {
     /// テーマカラーを変更する
     /// - parameter cardPackageId: カードパッケージID
     /// - parameter themeColor: テーマカラー
-    func updateThemeColor(cardPackageId: String, themeColor: CardPackageEntity.ThemeColor)
+    func updateThemeColor(cardPackageId: String, themeColor: String)
 
     /// ユーザーの購読を解除する
     func unsubscribeUser()

@@ -192,33 +192,35 @@ struct CardListView_Previews: PreviewProvider {
         return viewModel
     }()
 
-    static let me: User = .init(
+    static let me: UserViewModel = .init(
         id: "1",
         name: "ロイド フォージャ",
         currentRoomId: 0,
         selectedCardId: "")
 
-    static let user1: User = .init(
+    static let user1: UserViewModel = .init(
         id: "2",
         name: "ヨル フォージャ",
         currentRoomId: 0,
         selectedCardId: "")
 
-    static let user2: User = .init(
+    static let user2: UserViewModel = .init(
         id: "3",
         name: "アーニャ フォージャ",
         currentRoomId: 0,
         selectedCardId: "")
 
-    static let room1: Room = .init(
+    static let room1: RoomViewModel = .init(
         id: 1,
         userList: [me],
-        cardPackage: .defaultCardPackage)
+        cardPackage: trasnlator.translate(.defaultCardPackage))
 
-    static let room2: Room = .init(
+    static let room2: RoomViewModel = .init(
         id: 2,
         userList: [me, user1],
-        cardPackage: .defaultCardPackage)
+        cardPackage: trasnlator.translate(.defaultCardPackage))
+
+    static let trasnlator = CardPackageModelToCardPackageViewModelTranslator()
 
     static var previews: some View {
         Group {

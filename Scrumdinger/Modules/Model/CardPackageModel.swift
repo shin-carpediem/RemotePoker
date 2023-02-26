@@ -1,4 +1,4 @@
-struct CardPackageEntity {
+struct CardPackageModel {
     /// ID
     var id: String
 

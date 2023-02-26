@@ -76,10 +76,14 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     // MARK: - CardListInteractorOutput
 
     @MainActor
-    func outputCurrentUser(_ user: User) {
+    func outputCurrentUser(_ user: UserModel) {
         dependency.currentUserId = user.id
         dependency.currentUserName = user.name
-        let userList: [UserEntity]? = dependency.viewModel?.room.userList
+        let userList: [UserViewModel]? = dependency.viewModel?.room.userList.map {
+            UserViewModel(
+                id: $0.id, name: $0.name, currentRoomId: $0.currentRoomId,
+                selectedCardId: $0.selectedCardId)
+        }
         if let userList = userList {
             showTitle(userList: userList)
             updateUserSelectStatusList(userList: userList)
@@ -89,17 +93,22 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     }
 
     @MainActor
-    func outputUserList(_ userList: [User]) {
-        dependency.viewModel?.room.userList = userList
-        showTitle(userList: userList)
-        updateUserSelectStatusList(userList: userList)
+    func outputUserList(_ userList: [UserModel]) {
+        let viewModel = userList.map {
+            UserViewModel(
+                id: $0.id, name: $0.name, currentRoomId: $0.currentRoomId,
+                selectedCardId: $0.selectedCardId)
+        }
+        dependency.viewModel?.room.userList = viewModel
+        showTitle(userList: viewModel)
+        updateUserSelectStatusList(userList: viewModel)
         disableButton(false)
         showLoader(false)
     }
 
     @MainActor
-    func outputCardPackage(_ cardPackage: CardPackage) {
-        dependency.viewModel?.room.cardPackage = cardPackage
+    func outputCardPackage(_ cardPackage: CardPackageModel) {
+        dependency.viewModel?.room.cardPackage = translator.translate(cardPackage)
         disableButton(false)
         showLoader(false)
     }
@@ -121,6 +130,8 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     private var dependency: Dependency!
 
     private var cancellablesForAction = Set<AnyCancellable>()
+
+    private let translator = CardPackageModelToCardPackageViewModelTranslator()
 
     /// 匿名ログインする
     private func signIn() {
@@ -158,7 +169,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 
     /// タイトルを表示する
     @MainActor
-    private func showTitle(userList: [User]) {
+    private func showTitle(userList: [UserViewModel]) {
         let currentUserName: String = dependency.currentUserName
         let otherUsersCount: Int = userList.count - 1
         let otherUsersText = (otherUsersCount >= 1 ? "と \(String(otherUsersCount))名" : "")
@@ -170,15 +181,16 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 
     /// ユーザーの選択状況一覧を更新する
     @MainActor
-    private func updateUserSelectStatusList(userList: [User]) {
-        let userSelectStatusList: [UserSelectStatus] = userList.map { user in
-            guard let cardPackage: CardPackageEntity = dependency.viewModel?.room.cardPackage else {
+    private func updateUserSelectStatusList(userList: [UserViewModel]) {
+        let userSelectStatusList: [UserSelectStatusViewModel] = userList.map { user in
+            guard let cardPackage: CardPackageViewModel = dependency.viewModel?.room.cardPackage
+            else {
                 fatalError()
             }
-            let selectedCard: CardPackage.Card? = cardPackage.cardList.first(where: {
+            let selectedCard: CardPackageViewModel.Card? = cardPackage.cardList.first(where: {
                 $0.id == user.selectedCardId
             })
-            return UserSelectStatus(
+            return UserSelectStatusViewModel(
                 id: UUID().uuidString,
                 user: user,
                 themeColor: cardPackage.themeColor,

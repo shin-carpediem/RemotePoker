@@ -16,8 +16,8 @@ actor SelectThemeColorViewModel: SelectThemeColorObservable {
     @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
 
     @MainActor
-    @Published var themeColorList = [CardPackage.ThemeColor]()
+    @Published var themeColorList = [CardPackageThemeColor]()
 
     @MainActor
-    @Published var selectedThemeColor: CardPackage.ThemeColor?
+    @Published var selectedThemeColor: CardPackageThemeColor?
 }

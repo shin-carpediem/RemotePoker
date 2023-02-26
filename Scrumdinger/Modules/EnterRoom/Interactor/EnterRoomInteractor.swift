@@ -28,8 +28,21 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
         await dependency.repository.checkRoomExist(roomId: roomId)
     }
 
-    func createRoom(room: Room) async {
-        let result: Result<Void, FirebaseError> = await dependency.repository.createRoom(room)
+    func createRoom(room: RoomModel) async {
+        let entity = RoomEntity(
+            id: room.id,
+            userList: room.userList.map {
+                UserEntity(
+                    id: $0.id, name: $0.name, currentRoomId: $0.currentRoomId,
+                    selectedCardId: $0.selectedCardId)
+            },
+            cardPackage: CardPackageEntity(
+                id: room.cardPackage.id,
+                themeColor: room.cardPackage.themeColor,
+                cardList: room.cardPackage.cardList.map {
+                    CardPackageEntity.Card(id: $0.id, point: $0.point, index: $0.index)
+                }))
+        let result: Result<Void, FirebaseError> = await dependency.repository.createRoom(entity)
         switch result {
         case .success(_):
             let message = "新しいルームを作りました"
@@ -41,10 +54,15 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
         }
     }
 
-    func adduserToRoom(roomId: Int, user: User) async {
+    func adduserToRoom(roomId: Int, user: UserModel) async {
         repository = RoomDataStore(roomId: roomId)
         guard let repository = repository else { return }
-        let result: Result<Void, FirebaseError> = await repository.addUserToRoom(user: user)
+        let entity = UserEntity(
+            id: user.id,
+            name: user.name,
+            currentRoomId: user.currentRoomId,
+            selectedCardId: user.selectedCardId)
+        let result: Result<Void, FirebaseError> = await repository.addUserToRoom(user: entity)
         switch result {
         case .success(_):
             let message = "ルームに追加されました"
