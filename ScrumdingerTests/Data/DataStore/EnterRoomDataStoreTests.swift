@@ -5,9 +5,15 @@ import XCTest
 class EnterRoomDataStoreTests: XCTestCase {
     // MARK: - Override
 
-    override func setUpWithError() throws {}
+    override func setUp() {
+        super.setUp()
+        FirebaseTestHelper.shard.setupFirebaseTestApp()
+    }
 
-    override func tearDownWithError() throws {}
+    override func tearDown() {
+        super.tearDown()
+        FirebaseTestHelper.shard.deleteFirebaseTestApp()
+    }
 
     // MARK: - Test
 
