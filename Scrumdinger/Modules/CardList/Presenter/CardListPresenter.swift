@@ -26,11 +26,20 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
             await showLoader(true)
             if dependency.isExisingUser {
                 // 既存ユーザー（この画面が初期画面）
-                self.signIn()
+                signIn() { userId in
+                    Task { [weak self] in
+                        guard let self = self else { return }
+                        // ユーザーのカレントルームがFirestore上に存在するか確認する
+                        if await self.checkUserInCurrentRoom() {
+                            await self.sucscribeAndSetupData(
+                                userId: userId, shouldFetchData: self.dependency.isExisingUser)
+                        }
+                    }
+                }
             } else {
                 // 新規ユーザー（EnterRoom画面が初期画面）
-                await self.sucscribeAndSetupData(
-                    userId: dependency.currentUserId, shouldFetchData: self.dependency.isExisingUser
+                await sucscribeAndSetupData(
+                    userId: dependency.currentUserId, shouldFetchData: dependency.isExisingUser
                 )
             }
         }
@@ -132,19 +141,12 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     private var cancellablesForAction = Set<AnyCancellable>()
 
     private let translator = CardPackageModelToCardPackageViewModelTranslator()
-
-    /// 匿名ログインする
-    private func signIn() {
+    
+    /// 匿名ログインする(ユーザーIDを返却)
+    private func signIn(completionHandler: @escaping ((String) -> Void)) {
         AuthDataStore.shared.signIn()
             .sink { userId in
-                Task { [weak self] in
-                    guard let self = self else { return }
-                    // ユーザーのカレントルームがFirestore上に存在するか確認する
-                    if await self.checkUserInCurrentRoom() {
-                        await self.sucscribeAndSetupData(
-                            userId: userId, shouldFetchData: self.dependency.isExisingUser)
-                    }
-                }
+                completionHandler(userId)
             }
             .store(in: &self.cancellablesForAction)
     }
