@@ -24,10 +24,10 @@ protocol EnterRoomObservable: ObservableObject {
 
 protocol EnterRoomPresentation: AnyObject, Presentation {
     /// カレントユーザー
-    var currentUser: User { get }
+    var currentUser: UserViewModel { get }
 
     /// カレントルーム
-    var currentRoom: Room { get }
+    var currentRoom: RoomViewModel { get }
 
     /// ルームに入るボタンが押された
     /// - parameter inputUserName: 入力されたユーザー名
@@ -48,12 +48,12 @@ protocol EnterRoomUseCase: AnyObject {
 
     /// ルームを新規作成する
     /// - parameter room: ルーム
-    func createRoom(room: Room) async
+    func createRoom(room: RoomModel) async
 
     /// ルームにユーザーを追加する
     /// - parameter roomId: ルームID
     /// - parameter user: ユーザー
-    func adduserToRoom(roomId: Int, user: User) async
+    func adduserToRoom(roomId: Int, user: UserModel) async
 }
 
 protocol EnterRoomInteractorOutput: AnyObject {

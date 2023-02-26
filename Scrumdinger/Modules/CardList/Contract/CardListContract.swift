@@ -3,7 +3,7 @@ import Foundation
 protocol CardListObservable: ObservableObject, ViewModel {
     /// ルーム
     @MainActor
-    var room: Room { get set }
+    var room: RoomViewModel { get set }
 
     /// タイトル
     @MainActor
@@ -11,7 +11,7 @@ protocol CardListObservable: ObservableObject, ViewModel {
 
     /// ユーザーのカード選択状況一覧
     @MainActor
-    var userSelectStatusList: [UserSelectStatus] { get set }
+    var userSelectStatusList: [UserSelectStatusViewModel] { get set }
 
     /// 選択済みカード一覧が公開されるか
     @MainActor
@@ -69,15 +69,15 @@ protocol CardListUseCase: AnyObject {
 protocol CardListInteractorOutput: AnyObject {
     /// カレントユーザーを出力する
     @MainActor
-    func outputCurrentUser(_ user: User)
+    func outputCurrentUser(_ user: UserModel)
 
     /// ユーザーリストを出力する
     @MainActor
-    func outputUserList(_ userList: [User])
+    func outputUserList(_ userList: [UserModel])
 
     /// カードパッケージを出力する
     @MainActor
-    func outputCardPackage(_ cardPackage: CardPackage)
+    func outputCardPackage(_ cardPackage: CardPackageModel)
 
     /// データ処理の成功を出力
     @MainActor

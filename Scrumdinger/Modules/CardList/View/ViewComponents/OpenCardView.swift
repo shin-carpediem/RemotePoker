@@ -2,12 +2,12 @@ import SwiftUI
 
 struct OpenCardView: View {
     /// ユーザーのカード選択状況
-    var userSelectStatus: UserSelectStatus
+    var userSelectStatus: UserSelectStatusViewModel
 
     // MARK: - Private
 
     /// 選択されたカード
-    private var selectedCard: CardPackage.Card? {
+    private var selectedCard: CardPackageViewModel.Card? {
         userSelectStatus.selectedCard
     }
 
@@ -35,7 +35,7 @@ struct OpenCardView: View {
             .frame(width: 150, height: 100)
             .font(.system(size: 40, weight: .bold))
             .foregroundColor(selectedCard!.fontColor)
-            .background(selectedCard!.backgroundColor(color: userSelectStatus.themeColor))
+            .background(selectedCard!.backgroundColor)
             .cornerRadius(10)
     }
 

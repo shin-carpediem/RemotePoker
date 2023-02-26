@@ -85,11 +85,11 @@ final class RoomDataStore: RoomRepository {
         }
     }
 
-    func updateThemeColor(cardPackageId: String, themeColor: CardPackageEntity.ThemeColor) {
+    func updateThemeColor(cardPackageId: String, themeColor: String) {
         let cardPackageDocument: DocumentReference = firestoreRef.cardPackageDocument(
             cardPackageId: cardPackageId)
         cardPackageDocument.updateData([
-            "themeColor": themeColor.rawValue,
+            "themeColor": themeColor,
             "updatedAt": Date(),
         ])
     }
@@ -148,7 +148,7 @@ final class RoomDataStore: RoomRepository {
 
         return CardPackageEntity(
             id: id,
-            themeColor: CardPackageEntity.ThemeColor(rawValue: themeColor) ?? .oxblood,
+            themeColor: themeColor,
             cardList: cardList)
     }
 }

@@ -22,13 +22,14 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
 
     func viewDidSuspend() {}
 
-    var currentUser = User(
+    var currentUser = UserViewModel(
         id: "",
         name: "",
         currentRoomId: 0,
         selectedCardId: "")
 
-    var currentRoom = Room(id: 0, userList: [], cardPackage: .defaultCardPackage)
+    lazy var currentRoom = RoomViewModel(
+        id: 0, userList: [], cardPackage: translator.translate(.defaultCardPackage))
 
     func didTapEnterRoomButton(inputUserName: String, inputRoomId: String) {
         Task {
@@ -75,11 +76,13 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
 
     private static let CFBundleShortVersionString = "CFBundleShortVersionString"
 
+    private let translator = CardPackageModelToCardPackageViewModelTranslator()
+
     /// ユーザーとルームをセットアップする
     private func setupUserAndRoom(
         userId: String, userName: String, roomId: Int
     ) async {
-        currentUser = User(
+        currentUser = UserViewModel(
             id: userId,
             name: userName,
             currentRoomId: roomId,
@@ -87,19 +90,35 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
         LocalStorage.shared.currentRoomId = roomId
         LocalStorage.shared.currentUserId = userId
 
+        let currentUserModel = UserModel(
+            id: currentUser.id, name: currentUser.name, currentRoomId: currentUser.currentRoomId,
+            selectedCardId: currentUser.selectedCardId)
         // 入力ルームIDに合致する既存ルームが存在するか確認
         let roomExist: Bool = await dependency.useCase.checkRoomExist(roomId: roomId)
         if roomExist {
             // 既存ルーム
             currentRoom.id = roomId
-            await dependency.useCase.adduserToRoom(roomId: roomId, user: currentUser)
+            await dependency.useCase.adduserToRoom(roomId: roomId, user: currentUserModel)
         } else {
             // 新規ルーム
-            currentRoom = Room(
+            currentRoom = RoomViewModel(
                 id: roomId,
                 userList: [currentUser],
-                cardPackage: .defaultCardPackage)
-            await dependency.useCase.createRoom(room: currentRoom)
+                cardPackage: translator.translate(.defaultCardPackage))
+            let currentRoomModel = RoomModel(
+                id: currentRoom.id,
+                userList: currentRoom.userList.map {
+                    UserModel(
+                        id: $0.id, name: $0.name, currentRoomId: $0.currentRoomId,
+                        selectedCardId: $0.selectedCardId)
+                },
+                cardPackage: CardPackageModel(
+                    id: currentRoom.cardPackage.id,
+                    themeColor: currentRoom.cardPackage.themeColor.rawValue,
+                    cardList: currentRoom.cardPackage.cardList.map {
+                        CardPackageModel.Card(id: $0.id, point: $0.point, index: $0.index)
+                    }))
+            await dependency.useCase.createRoom(room: currentRoomModel)
         }
     }
 
