@@ -26,15 +26,11 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
             await showLoader(true)
             if dependency.isExisingUser {
                 // 既存ユーザー（この画面が初期画面）
-                signIn() { userId in
-                    Task { [weak self] in
-                        guard let self = self else { return }
-                        // ユーザーのカレントルームがFirestore上に存在するか確認する
-                        if await self.checkUserInCurrentRoom() {
-                            await self.sucscribeAndSetupData(
-                                userId: userId, shouldFetchData: self.dependency.isExisingUser)
-                        }
-                    }
+                let userId: String = await signIn().value
+                // ユーザーのカレントルームがFirestore上に存在するか確認する
+                if await checkUserInCurrentRoom() {
+                    await sucscribeAndSetupData(
+                        userId: userId, shouldFetchData: dependency.isExisingUser)
                 }
             } else {
                 // 新規ユーザー（EnterRoom画面が初期画面）
@@ -143,12 +139,14 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     private let translator = CardPackageModelToCardPackageViewModelTranslator()
     
     /// 匿名ログインする(ユーザーIDを返却)
-    private func signIn(completionHandler: @escaping ((String) -> Void)) {
-        AuthDataStore.shared.signIn()
-            .sink { userId in
-                completionHandler(userId)
-            }
-            .store(in: &self.cancellablesForAction)
+    private func signIn() -> Future<String, Never> {
+        Future<String, Never> { promise in
+            AuthDataStore.shared.signIn()
+                .sink { userId in
+                    promise(.success(userId))
+                }
+                .store(in: &self.cancellablesForAction)
+        }
     }
 
     /// 各種データを購読しセットアップする

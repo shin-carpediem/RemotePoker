@@ -82,6 +82,7 @@
 		F5C6388729AB1CEA00A5F90A /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6388629AB1CEA00A5F90A /* UserModel.swift */; };
 		F5C6388929AB1D0600A5F90A /* RoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6388829AB1D0600A5F90A /* RoomModel.swift */; };
 		F5C6388B29AB1D1F00A5F90A /* CardPackageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6388A29AB1D1F00A5F90A /* CardPackageModel.swift */; };
+		F5C6389529AB99B300A5F90A /* FirebaseTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6389429AB99B300A5F90A /* FirebaseTestHelper.swift */; };
 		F5CBD36B296A3EA7008BB8DE /* LoaderUI in Frameworks */ = {isa = PBXBuildFile; productRef = F5CBD36A296A3EA7008BB8DE /* LoaderUI */; };
 		F5DDCD1B297B86B300786C35 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1A297B86B300786C35 /* List.swift */; };
 		F5DDCD1D297C183600786C35 /* EnterRoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1C297C183500786C35 /* EnterRoomRepository.swift */; };
@@ -189,6 +190,7 @@
 		F5C6388629AB1CEA00A5F90A /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		F5C6388829AB1D0600A5F90A /* RoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomModel.swift; sourceTree = "<group>"; };
 		F5C6388A29AB1D1F00A5F90A /* CardPackageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPackageModel.swift; sourceTree = "<group>"; };
+		F5C6389429AB99B300A5F90A /* FirebaseTestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTestHelper.swift; sourceTree = "<group>"; };
 		F5DDCD1A297B86B300786C35 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		F5DDCD1C297C183500786C35 /* EnterRoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomRepository.swift; sourceTree = "<group>"; };
 		F5DDCD1E297C18C300786C35 /* EnterRoomDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomDataStore.swift; sourceTree = "<group>"; };
@@ -634,6 +636,14 @@
 			path = DataStore;
 			sourceTree = "<group>";
 		};
+		F5C6389329AB996E00A5F90A /* TestHelper */ = {
+			isa = PBXGroup;
+			children = (
+				F5C6389429AB99B300A5F90A /* FirebaseTestHelper.swift */,
+			);
+			path = TestHelper;
+			sourceTree = "<group>";
+		};
 		F5DDCD19297B869F00786C35 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -777,6 +787,7 @@
 			children = (
 				F5C6388C29AB5C5300A5F90A /* Data */,
 				F5C6388D29AB5C5800A5F90A /* Modules */,
+				F5C6389329AB996E00A5F90A /* TestHelper */,
 			);
 			path = ScrumdingerTests;
 			sourceTree = "<group>";
@@ -1038,6 +1049,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5E917DC287114EA00AE8421 /* EnterRoomDataStoreTests.swift in Sources */,
+				F5C6389529AB99B300A5F90A /* FirebaseTestHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

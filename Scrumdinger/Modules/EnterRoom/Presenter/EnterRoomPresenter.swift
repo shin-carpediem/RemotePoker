@@ -105,6 +105,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
                 id: roomId,
                 userList: [currentUser],
                 cardPackage: translator.translate(.defaultCardPackage))
+            
             let currentRoomModel = RoomModel(
                 id: currentRoom.id,
                 userList: currentRoom.userList.map {
@@ -118,6 +119,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
                     cardList: currentRoom.cardPackage.cardList.map {
                         CardPackageModel.Card(id: $0.id, point: $0.point, index: $0.index)
                     }))
+            
             await dependency.useCase.createRoom(room: currentRoomModel)
         }
     }
