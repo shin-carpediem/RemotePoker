@@ -35,7 +35,7 @@ struct OpenCardView: View {
             .frame(width: 150, height: 100)
             .font(.system(size: 40, weight: .bold))
             .foregroundColor(selectedCard!.fontColor)
-            .background(selectedCard!.outputBackgroundColor(color: userSelectStatus.themeColor))
+            .background(selectedCard!.backgroundColor(color: userSelectStatus.themeColor))
             .cornerRadius(10)
     }
 

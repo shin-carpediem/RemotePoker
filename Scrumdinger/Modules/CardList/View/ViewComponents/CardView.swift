@@ -27,7 +27,7 @@ struct CardView: View {
                 .frame(width: 150, height: 100)
                 .font(.system(size: 40, weight: .bold))
                 .foregroundColor(card.fontColor)
-                .background(card.outputBackgroundColor(color: themeColor))
+                .background(card.backgroundColor(color: themeColor))
                 .cornerRadius(10)
                 .overlay {
                     RoundedRectangle(cornerRadius: 10)
