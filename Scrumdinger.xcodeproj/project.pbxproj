@@ -92,7 +92,7 @@
 		F5E917CB287114DC00AE8421 /* ScrumdingerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917CA287114DC00AE8421 /* ScrumdingerApp.swift */; };
 		F5E917CF287114E900AE8421 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5E917CE287114E900AE8421 /* Assets.xcassets */; };
 		F5E917D2287114E900AE8421 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5E917D1287114E900AE8421 /* Preview Assets.xcassets */; };
-		F5E917DC287114EA00AE8421 /* ScrumdingerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917DB287114EA00AE8421 /* ScrumdingerTests.swift */; };
+		F5E917DC287114EA00AE8421 /* EnterRoomDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917DB287114EA00AE8421 /* EnterRoomDataStoreTests.swift */; };
 		F5E917E6287114EA00AE8421 /* ScrumdingerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917E5287114EA00AE8421 /* ScrumdingerUITests.swift */; };
 		F5E917E8287114EA00AE8421 /* ScrumdingerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917E7287114EA00AE8421 /* ScrumdingerUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
@@ -200,7 +200,7 @@
 		F5E917CE287114E900AE8421 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5E917D1287114E900AE8421 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F5E917D7287114EA00AE8421 /* ScrumdingerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrumdingerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F5E917DB287114EA00AE8421 /* ScrumdingerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrumdingerTests.swift; sourceTree = "<group>"; };
+		F5E917DB287114EA00AE8421 /* EnterRoomDataStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomDataStoreTests.swift; sourceTree = "<group>"; };
 		F5E917E1287114EA00AE8421 /* ScrumdingerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScrumdingerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5E917E5287114EA00AE8421 /* ScrumdingerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrumdingerUITests.swift; sourceTree = "<group>"; };
 		F5E917E7287114EA00AE8421 /* ScrumdingerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrumdingerUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -579,6 +579,61 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		F5C6388C29AB5C5300A5F90A /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				F5C6389229AB5FB000A5F90A /* DataStore */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		F5C6388D29AB5C5800A5F90A /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				F5C6388E29AB5F6F00A5F90A /* EnterRoom */,
+				F5C6388F29AB5F7600A5F90A /* CardList */,
+				F5C6389029AB5F7E00A5F90A /* Setting */,
+				F5C6389129AB5F9600A5F90A /* SelectThemeColor */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		F5C6388E29AB5F6F00A5F90A /* EnterRoom */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = EnterRoom;
+			sourceTree = "<group>";
+		};
+		F5C6388F29AB5F7600A5F90A /* CardList */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CardList;
+			sourceTree = "<group>";
+		};
+		F5C6389029AB5F7E00A5F90A /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		F5C6389129AB5F9600A5F90A /* SelectThemeColor */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SelectThemeColor;
+			sourceTree = "<group>";
+		};
+		F5C6389229AB5FB000A5F90A /* DataStore */ = {
+			isa = PBXGroup;
+			children = (
+				F5E917DB287114EA00AE8421 /* EnterRoomDataStoreTests.swift */,
+			);
+			path = DataStore;
+			sourceTree = "<group>";
+		};
 		F5DDCD19297B869F00786C35 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -720,7 +775,8 @@
 		F5E917DA287114EA00AE8421 /* ScrumdingerTests */ = {
 			isa = PBXGroup;
 			children = (
-				F5E917DB287114EA00AE8421 /* ScrumdingerTests.swift */,
+				F5C6388C29AB5C5300A5F90A /* Data */,
+				F5C6388D29AB5C5800A5F90A /* Modules */,
 			);
 			path = ScrumdingerTests;
 			sourceTree = "<group>";
@@ -981,7 +1037,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5E917DC287114EA00AE8421 /* ScrumdingerTests.swift in Sources */,
+				F5E917DC287114EA00AE8421 /* EnterRoomDataStoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

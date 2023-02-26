@@ -2,7 +2,7 @@ import XCTest
 
 @testable import Scrumdinger
 
-class ScrumdingerTests: XCTestCase {
+class EnterRoomDataStoreTests: XCTestCase {
     // MARK: - Override
 
     override func setUpWithError() throws {}
