@@ -1,6 +1,6 @@
 import XCTest
 
-@testable import Scrumdinger
+@testable import RemotePoker
 
 class EnterRoomDataStoreTests: XCTestCase {
     // MARK: - Override

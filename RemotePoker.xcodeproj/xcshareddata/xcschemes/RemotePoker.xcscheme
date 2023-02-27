@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F5E917C6287114DC00AE8421"
-               BuildableName = "Scrumdinger.app"
-               BlueprintName = "Scrumdinger"
-               ReferencedContainer = "container:Scrumdinger.xcodeproj">
+               BuildableName = "RemotePoker.app"
+               BlueprintName = "RemotePoker"
+               ReferencedContainer = "container:RemotePoker.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F5E917D6287114EA00AE8421"
-               BuildableName = "ScrumdingerTests.xctest"
-               BlueprintName = "ScrumdingerTests"
-               ReferencedContainer = "container:Scrumdinger.xcodeproj">
+               BuildableName = "RemotePokerTests.xctest"
+               BlueprintName = "RemotePokerTests"
+               ReferencedContainer = "container:RemotePoker.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F5E917E0287114EA00AE8421"
-               BuildableName = "ScrumdingerUITests.xctest"
-               BlueprintName = "ScrumdingerUITests"
-               ReferencedContainer = "container:Scrumdinger.xcodeproj">
+               BuildableName = "RemotePokerUITests.xctest"
+               BlueprintName = "RemotePokerUITests"
+               ReferencedContainer = "container:RemotePoker.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -65,9 +65,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F5E917C6287114DC00AE8421"
-            BuildableName = "Scrumdinger.app"
-            BlueprintName = "Scrumdinger"
-            ReferencedContainer = "container:Scrumdinger.xcodeproj">
+            BuildableName = "RemotePoker.app"
+            BlueprintName = "RemotePoker"
+            ReferencedContainer = "container:RemotePoker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -82,9 +82,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F5E917C6287114DC00AE8421"
-            BuildableName = "Scrumdinger.app"
-            BlueprintName = "Scrumdinger"
-            ReferencedContainer = "container:Scrumdinger.xcodeproj">
+            BuildableName = "RemotePoker.app"
+            BlueprintName = "RemotePoker"
+            ReferencedContainer = "container:RemotePoker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
