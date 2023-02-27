@@ -2,7 +2,7 @@ import FirebaseCore
 import SwiftUI
 
 @main
-struct ScrumdingerApp: App, ModuleAssembler {
+struct RemotePokerApp: App, ModuleAssembler {
     // MARK: - App
 
     class AppDelegate: NSObject, UIApplicationDelegate {

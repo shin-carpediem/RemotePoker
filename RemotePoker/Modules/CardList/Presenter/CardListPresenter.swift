@@ -26,11 +26,16 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
             await showLoader(true)
             if dependency.isExisingUser {
                 // 既存ユーザー（この画面が初期画面）
-                self.signIn()
+                let userId: String = await signIn().value
+                // ユーザーのカレントルームがFirestore上に存在するか確認する
+                if await checkUserInCurrentRoom() {
+                    await sucscribeAndSetupData(
+                        userId: userId, shouldFetchData: dependency.isExisingUser)
+                }
             } else {
                 // 新規ユーザー（EnterRoom画面が初期画面）
-                await self.sucscribeAndSetupData(
-                    userId: dependency.currentUserId, shouldFetchData: self.dependency.isExisingUser
+                await sucscribeAndSetupData(
+                    userId: dependency.currentUserId, shouldFetchData: dependency.isExisingUser
                 )
             }
         }
@@ -133,20 +138,15 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 
     private let translator = CardPackageModelToCardPackageViewModelTranslator()
 
-    /// 匿名ログインする
-    private func signIn() {
-        AuthDataStore.shared.signIn()
-            .sink { userId in
-                Task { [weak self] in
-                    guard let self = self else { return }
-                    // ユーザーのカレントルームがFirestore上に存在するか確認する
-                    if await self.checkUserInCurrentRoom() {
-                        await self.sucscribeAndSetupData(
-                            userId: userId, shouldFetchData: self.dependency.isExisingUser)
-                    }
+    /// 匿名ログインする(ユーザーIDを返却)
+    private func signIn() -> Future<String, Never> {
+        Future<String, Never> { promise in
+            AuthDataStore.shared.signIn()
+                .sink { userId in
+                    promise(.success(userId))
                 }
-            }
-            .store(in: &self.cancellablesForAction)
+                .store(in: &self.cancellablesForAction)
+        }
     }
 
     /// 各種データを購読しセットアップする

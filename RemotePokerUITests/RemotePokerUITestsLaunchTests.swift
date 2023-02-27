@@ -1,6 +1,6 @@
 import XCTest
 
-class ScrumdingerUITestsLaunchTests: XCTestCase {
+class RemotePokerUITestsLaunchTests: XCTestCase {
     // MARK: - Override
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {

@@ -1,6 +1,6 @@
 import XCTest
 
-class ScrumdingerUITests: XCTestCase {
+class RemotePokerUITests: XCTestCase {
     // MARK: - Override
 
     override func setUpWithError() throws {
