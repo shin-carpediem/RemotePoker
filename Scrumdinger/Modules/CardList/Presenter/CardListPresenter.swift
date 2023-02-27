@@ -137,7 +137,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     private var cancellablesForAction = Set<AnyCancellable>()
 
     private let translator = CardPackageModelToCardPackageViewModelTranslator()
-    
+
     /// 匿名ログインする(ユーザーIDを返却)
     private func signIn() -> Future<String, Never> {
         Future<String, Never> { promise in
