@@ -1,6 +1,6 @@
 import SwiftUI
 
-final class CardPackageModelToCardPackageViewModelTranslator: Translator {
+struct CardPackageModelToCardPackageViewModelTranslator: Translator {
     // MARK: - Translator
 
     typealias Input = CardPackageModel
