@@ -170,6 +170,9 @@
 		F5802D0429320F1B00955949 /* ModuleAssembler+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModuleAssembler+Default.swift"; sourceTree = "<group>"; };
 		F5802D07293217D000955949 /* EnterRoomContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomContract.swift; sourceTree = "<group>"; };
 		F5802D0A293218A800955949 /* CardListContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListContract.swift; sourceTree = "<group>"; };
+		F595FE6A29AFA22D00B58250 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
+		F595FE6B29AFA2D500B58250 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F595FE6C29AFA45A00B58250 /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
 		F59EE30E29954AD200A772BE /* UserSelectStatusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectStatusViewModel.swift; sourceTree = "<group>"; };
 		F59EE31229967DC200A772BE /* CardPackageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPackageViewModel.swift; sourceTree = "<group>"; };
 		F5AFC1D9296BBCFD00A4FFCA /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
@@ -485,6 +488,16 @@
 			path = Contract;
 			sourceTree = "<group>";
 		};
+		F595FE6929AFA11300B58250 /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				F595FE6A29AFA22D00B58250 /* ci_post_clone.sh */,
+				F595FE6C29AFA45A00B58250 /* ci_pre_xcodebuild.sh */,
+				F595FE6B29AFA2D500B58250 /* README.md */,
+			);
+			path = ci_scripts;
+			sourceTree = "<group>";
+		};
 		F5AFC1DB296BBEBE00A4FFCA /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
@@ -737,6 +750,7 @@
 		F5E917BE287114DC00AE8421 = {
 			isa = PBXGroup;
 			children = (
+				F595FE6929AFA11300B58250 /* ci_scripts */,
 				F571FA5E2896CCA5003531CE /* gRPCCertificates-Cpp.bundle */,
 				F571FA122896CA2B003531CE /* Frameworks */,
 				F5E917C8287114DC00AE8421 /* Products */,
