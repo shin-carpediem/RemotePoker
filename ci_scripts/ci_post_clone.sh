@@ -6,4 +6,4 @@ brew install swift-format
 
 # build packages installed by Cathage and make cache for upcoming app build
 PROJECT_ROOT_DIR=$(cd ..;pwd)
-carthage bootstrap --platform iOS --cache-builds --use-xcframeworks --project-directory ${PROJECT_ROOT_DIR}
+carthage bootstrap --platform iOS --cache-builds --use-xcframeworks --no-use-binaries --project-directory ${PROJECT_ROOT_DIR}

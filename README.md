@@ -47,13 +47,13 @@ $ rm -r Carthage
 ```
 
 ```
-$ carthage bootstrap --platform iOS --cache-builds --use-xcframeworks
+$ carthage bootstrap --platform iOS --cache-builds --use-xcframeworks --no-use-binaries
 ```
 
 #### How to upgrade packages
 
 ```
-$ carthage update --platform iOS --cache-builds --use-xcframeworks
+$ carthage update --platform iOS --cache-builds --use-xcframeworks --no-use-binaries
 ```
 
 #### How to Release App
