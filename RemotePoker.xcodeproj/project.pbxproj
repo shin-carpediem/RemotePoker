@@ -83,9 +83,7 @@
 		F5C6388B29AB1D1F00A5F90A /* CardPackageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6388A29AB1D1F00A5F90A /* CardPackageModel.swift */; };
 		F5C6389529AB99B300A5F90A /* FirebaseTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6389429AB99B300A5F90A /* FirebaseTestHelper.swift */; };
 		F5CBD36B296A3EA7008BB8DE /* LoaderUI in Frameworks */ = {isa = PBXBuildFile; productRef = F5CBD36A296A3EA7008BB8DE /* LoaderUI */; };
-		F5D2675529B3075800A6452D /* PromisesObjC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D2675429B3075800A6452D /* PromisesObjC.xcframework */; };
-		F5D2675829B3076300A6452D /* PromisesObjC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D2675429B3075800A6452D /* PromisesObjC.xcframework */; };
-		F5D2675B29B3077A00A6452D /* PromisesObjC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5D2675429B3075800A6452D /* PromisesObjC.xcframework */; };
+		F5D2676129B31CA300A6452D /* PromisesObjC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA272896CA2C003531CE /* PromisesObjC.xcframework */; };
 		F5DDCD1B297B86B300786C35 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1A297B86B300786C35 /* List.swift */; };
 		F5DDCD1D297C183600786C35 /* EnterRoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1C297C183500786C35 /* EnterRoomRepository.swift */; };
 		F5DDCD1F297C18C300786C35 /* EnterRoomDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1E297C18C300786C35 /* EnterRoomDataStore.swift */; };
@@ -222,7 +220,6 @@
 				F571FA4D2896CA2D003531CE /* GoogleAppMeasurement.xcframework in Frameworks */,
 				F571FA2D2896CA2C003531CE /* GoogleDataTransport.xcframework in Frameworks */,
 				F571FA2F2896CA2C003531CE /* abseil.xcframework in Frameworks */,
-				F5D2675529B3075800A6452D /* PromisesObjC.xcframework in Frameworks */,
 				F571FA4F2896CA2D003531CE /* nanopb.xcframework in Frameworks */,
 				F571FA432896CA2C003531CE /* leveldb-library.xcframework in Frameworks */,
 				F571FA492896CA2C003531CE /* Libuv-gRPC.xcframework in Frameworks */,
@@ -235,14 +232,13 @@
 				F5CBD36B296A3EA7008BB8DE /* LoaderUI in Frameworks */,
 				F571FA3D2896CA2C003531CE /* FirebaseCoreDiagnostics.xcframework in Frameworks */,
 				F588E30728BB8E2800C5CA9A /* Neumorphic in Frameworks */,
+				F5D2676129B31CA300A6452D /* PromisesObjC.xcframework in Frameworks */,
 				F571FA3F2896CA2C003531CE /* FirebaseFirestoreSwift.xcframework in Frameworks */,
-				F5D2675B29B3077A00A6452D /* PromisesObjC.xcframework in Frameworks */,
 				F571FA312896CA2C003531CE /* FirebaseCore.xcframework in Frameworks */,
 				F571FA292896CA2C003531CE /* FirebaseFirestore.xcframework in Frameworks */,
 				F571FA532896CA2D003531CE /* BoringSSL-GRPC.xcframework in Frameworks */,
 				F571FA472896CA2C003531CE /* FirebaseCoreInternal.xcframework in Frameworks */,
 				F571FA3B2896CA2C003531CE /* GTMSessionFetcher.xcframework in Frameworks */,
-				F5D2675829B3076300A6452D /* PromisesObjC.xcframework in Frameworks */,
 				F571FA2B2896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */,
 				F571FA332896CA2C003531CE /* FirebaseAnalytics.xcframework in Frameworks */,
 			);
@@ -1218,7 +1214,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3.3.5;
+				CURRENT_PROJECT_VERSION = 1.3.3.6;
 				DEVELOPMENT_ASSET_PATHS = "\"RemotePoker/Preview Content\"";
 				DEVELOPMENT_TEAM = KB4BJUD35F;
 				ENABLE_PREVIEWS = YES;
@@ -1255,7 +1251,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3.3.5;
+				CURRENT_PROJECT_VERSION = 1.3.3.6;
 				DEVELOPMENT_ASSET_PATHS = "\"RemotePoker/Preview Content\"";
 				DEVELOPMENT_TEAM = KB4BJUD35F;
 				ENABLE_PREVIEWS = YES;
