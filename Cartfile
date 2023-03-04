@@ -4,3 +4,7 @@
 binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseAnalyticsBinary.json" ~> 9.6.0
 binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseAuthBinary.json" ~> 9.6.0
 binary "https://dl.google.com/dl/firebase/ios/carthage/FirebaseFirestoreBinary.json" ~> 9.6.0
+
+# (少なくとも)9.6.0以降において FirebaseAnalytics に含まれるライブラリ PromisesObjC.xcframework は、
+# CarthageでインストールするためにFirebase公式が用意したバイナリ中には含まれないため、別経由でインストールする。
+github "https://github.com/shin-carpediem/PromisesObjC/tree/master/PromisesObjC.xcframework"
