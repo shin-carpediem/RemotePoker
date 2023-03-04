@@ -4,7 +4,7 @@
 
 ### Architecture
 
-![VIPER_SwiftUI](https://user-images.githubusercontent.com/71208265/207720255-8bf04fee-8693-4b2e-ad72-fdc26d361159.png)
+
 
 ### Package Dependency
 
@@ -25,9 +25,9 @@
 |                                                                         | [FirebaseAuth](https://github.com/firebase/firebase-ios-sdk)      | Anonimous Login   |
 |                                                                         | [FirebaseFirestore](https://github.com/firebase/firebase-ios-sdk) | Database          |
 
-#### How to Set up
+#### How to Set up Project
 
-- install packages related to buidling app by Homebrew
+- Install packages related to buidling the app by Homebrew.
 
 ```
 $ brew install carthage
@@ -37,8 +37,12 @@ $ brew install carthage
 $ brew install swift-format
 ```
 
-- build packages installed by Cathage and make cache for upcoming app build
+- Build packages installed by Cathage and make cache for upcoming building iOS app at root of the project.
 
 ```
 $ carthage update --platform iOS
 ```
+
+#### How to Release App
+
+- Make a tag, then all the test, archiving and uploading to App Store Connect will be done by Xcode Cloud.
