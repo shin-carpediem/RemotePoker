@@ -4,7 +4,7 @@
 
 ### Architecture
 
-![VIPER_SwiftUI](https://user-images.githubusercontent.com/71208265/207720255-8bf04fee-8693-4b2e-ad72-fdc26d361159.png)
+![VIPER_SwiftUI](https://user-images.githubusercontent.com/71208265/222874483-777408a0-1b17-4ffb-80ba-ee4a8b6625c5.png)
 
 ### Package Dependency
 
@@ -25,9 +25,9 @@
 |                                                                         | [FirebaseAuth](https://github.com/firebase/firebase-ios-sdk)      | Anonimous Login   |
 |                                                                         | [FirebaseFirestore](https://github.com/firebase/firebase-ios-sdk) | Database          |
 
-#### How to Set up
+#### How to Set up Project
 
-- install packages related to buidling app by Homebrew
+- Install packages related to buidling the app by Homebrew.
 
 ```
 $ brew install carthage
@@ -37,8 +37,31 @@ $ brew install carthage
 $ brew install swift-format
 ```
 
-- build packages installed by Cathage and make cache for upcoming app build
+- Build packages installed by Carthage and make cache for upcoming building iOS app at root of the project.
+
+- If you have already installed some packages by Carthage, delete them.
 
 ```
-$ carthage update --platform iOS
+$ rm -r Carthage
+
 ```
+
+```
+$ carthage bootstrap --platform iOS --cache-builds --use-xcframeworks --no-use-binaries
+```
+
+- PromisesObjC.xcframework need to be installed manually.
+
+```
+$ souce bin/install_promisesobjc.sh
+```
+
+#### How to upgrade packages
+
+```
+$ carthage update --platform iOS --cache-builds --use-xcframeworks --no-use-binaries
+```
+
+#### How to Release App
+
+- Make a tag, then all the test, archiving and uploading to App Store Connect will be done by Xcode Cloud.
