@@ -37,10 +37,23 @@ $ brew install carthage
 $ brew install swift-format
 ```
 
-- Build packages installed by Cathage and make cache for upcoming building iOS app at root of the project.
+- Build packages installed by Carthage and make cache for upcoming building iOS app at root of the project.
+
+- If you have already installed some packages by Carthage, delete them.
 
 ```
-$ carthage update --platform iOS
+$ rm -r Carthage
+
+```
+
+```
+$ carthage bootstrap --platform iOS --cache-builds --use-xcframeworks
+```
+
+#### How to upgrade packages
+
+```
+$ carthage update --platform iOS --cache-builds --use-xcframeworks
 ```
 
 #### How to Release App
