@@ -89,10 +89,6 @@ fastlane/test_output
 
 iOSInjectionProject/
 
-# Firebase Credential
-GoogleService-Info.plist
-GoogleService-Info-Dev.plist
-
 # Firebase Testing
 firebase-debug.log
 firestore-debug.log
