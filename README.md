@@ -43,7 +43,6 @@ $ brew install swift-format
 
 ```
 $ rm -r Carthage
-
 ```
 
 ```
