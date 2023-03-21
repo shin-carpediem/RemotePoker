@@ -7,7 +7,7 @@
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.735181370079-2o9hkrul4lurtguq5oehakq4u8j5jlfn</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBvUvp2I0TMgzxLaNhjbGGC1oVdznRA4HI</string>
+	<string>GOOGLESERVICE_INFO_PRODUCTION_API_KEY</string>
 	<key>GCM_SENDER_ID</key>
 	<string>735181370079</string>
 	<key>PLIST_VERSION</key>
@@ -19,15 +19,15 @@
 	<key>STORAGE_BUCKET</key>
 	<string>scrumdinger-f80ab.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:735181370079:ios:7cbe108bb7922a47c5ef6a</string>
 </dict>
