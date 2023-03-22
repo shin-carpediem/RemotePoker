@@ -826,9 +826,9 @@
 			buildPhases = (
 				F5E917C3287114DC00AE8421 /* Sources */,
 				F5E917C4287114DC00AE8421 /* Frameworks */,
+				F5D2676E29CA788400A6452D /* Apply Environment Variables */,
 				F5E917C5287114DC00AE8421 /* Resources */,
 				F571FA602896CCC5003531CE /* Copy Frameworks */,
-				F5D2676E29CA788400A6452D /* Apply Environment Variables */,
 				F5F277AB2972744F00166F88 /* Run swift-format */,
 			);
 			buildRules = (
@@ -989,11 +989,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/APPLY_ENVIRONMENT_VARIABLES_DUMMY_OUTPUT",
+				"${BUILD_DIR}/APPLY_ENVIRONMENT_VARIABLES_DUMMY_OUTPUT",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# ローカルビルド用に環境変数を適用する\nGOOGLESERVICE_INFO_DEVELOPMENT_FILE_PATH=\"../RemotePoker/GoogleService-Info-Dev.plist\"\nsed -i -e \"s/GOOGLESERVICE_INFO_DEVELOPMENT_API_KEY/AIzaSyDAinBYiXR0v-k7TghLkxY2MpE1UdqzCGw/g\" \"${GOOGLESERVICE_INFO_DEVELOPMENT_FILE_PATH}\"\n\nXcode 14から、Output Filesがない場合も空ファイルを生成してパス指定するか、\n# Based on dependency analysis のチェックを外す必要があるので、\n# ワークアラウンドとして、ビルド時に生成されるファイル内に空ファイルを生成する事で対応\ntouch ${BUILD_DIR}/APPLY_ENVIRONMENT_VARIABLES_DUMMY_OUTPUT\n";
+			shellScript = "# ローカルビルド用に環境変数を適用する\nGOOGLESERVICE_INFO_DEVELOPMENT_FILE_PATH=\"${SRCROOT}/RemotePoker/GoogleService-Info-Dev.plist\"\nsed -i -e \"s/GOOGLESERVICE_INFO_DEVELOPMENT_API_KEY/AIzaSyDAinBYiXR0v-k7TghLkxY2MpE1UdqzCGw/g\" \"${GOOGLESERVICE_INFO_DEVELOPMENT_FILE_PATH}\"\n\nXcode 14から、Output Filesがない場合も空ファイルを生成してパス指定するか、\n# Based on dependency analysis のチェックを外す必要があるので、\n# ワークアラウンドとして、ビルド時に生成されるファイル内に空ファイルを生成する事で対応\ntouch ${BUILD_DIR}/APPLY_ENVIRONMENT_VARIABLES_DUMMY_OUTPUT\n";
 		};
 		F5F277AB2972744F00166F88 /* Run swift-format */ = {
 			isa = PBXShellScriptBuildPhase;
