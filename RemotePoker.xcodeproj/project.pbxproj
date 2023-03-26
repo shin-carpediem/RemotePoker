@@ -18,7 +18,6 @@
 		F52530162936560D00727472 /* CardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52530152936560D00727472 /* CardListViewModel.swift */; };
 		F533A3A4293FCD7300C833F7 /* OpenCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F533A3A3293FCD7300C833F7 /* OpenCardView.swift */; };
 		F558BF4F29D09548009ECDC8 /* FirebaseEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F558BF4E29D09548009ECDC8 /* FirebaseEnvironment.swift */; };
-		F558BF5129D099D5009ECDC8 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = F558BF5029D099D5009ECDC8 /* GoogleService-Info-Dev.plist */; };
 		F571FA292896CA2C003531CE /* FirebaseFirestore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */; };
 		F571FA2B2896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */; };
 		F571FA2D2896CA2C003531CE /* GoogleDataTransport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA152896CA2C003531CE /* GoogleDataTransport.xcframework */; };
@@ -42,6 +41,7 @@
 		F571FA562896CA3B003531CE /* FirebaseAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA1A2896CA2C003531CE /* FirebaseAuth.xcframework */; };
 		F571FA5F2896CCA5003531CE /* gRPCCertificates-Cpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F571FA5E2896CCA5003531CE /* gRPCCertificates-Cpp.bundle */; };
 		F571FA682896D137003531CE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F571FA672896D137003531CE /* GoogleService-Info.plist */; };
+		F57A44BA29D09F9A00A077DD /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */; };
 		F57C641A2950A91000CD55CD /* SelectThemeColorContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C64192950A91000CD55CD /* SelectThemeColorContract.swift */; };
 		F57C641C2950A99F00CD55CD /* SelectThemeColorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C641B2950A99F00CD55CD /* SelectThemeColorPresenter.swift */; };
 		F57C641E2950AA3400CD55CD /* SelectThemeColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C641D2950AA3400CD55CD /* SelectThemeColorView.swift */; };
@@ -128,7 +128,6 @@
 		F52530152936560D00727472 /* CardListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewModel.swift; sourceTree = "<group>"; };
 		F533A3A3293FCD7300C833F7 /* OpenCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCardView.swift; sourceTree = "<group>"; };
 		F558BF4E29D09548009ECDC8 /* FirebaseEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseEnvironment.swift; sourceTree = "<group>"; };
-		F558BF5029D099D5009ECDC8 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info-Dev.plist"; path = "../../../Downloads/GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestore.xcframework; path = Carthage/Build/FirebaseFirestore.xcframework; sourceTree = "<group>"; };
 		F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurementIdentitySupport.xcframework; path = Carthage/Build/GoogleAppMeasurementIdentitySupport.xcframework; sourceTree = "<group>"; };
 		F571FA152896CA2C003531CE /* GoogleDataTransport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleDataTransport.xcframework; path = Carthage/Build/GoogleDataTransport.xcframework; sourceTree = "<group>"; };
@@ -153,6 +152,7 @@
 		F571FA282896CA2C003531CE /* BoringSSL-GRPC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "BoringSSL-GRPC.xcframework"; path = "Carthage/Build/BoringSSL-GRPC.xcframework"; sourceTree = "<group>"; };
 		F571FA5E2896CCA5003531CE /* gRPCCertificates-Cpp.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "gRPCCertificates-Cpp.bundle"; path = "Carthage/Build/gRPC-C++.xcframework/ios-arm64/gRPC-C++.framework/Resources/gRPCCertificates-Cpp.bundle"; sourceTree = "<group>"; };
 		F571FA672896D137003531CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		F57C64192950A91000CD55CD /* SelectThemeColorContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorContract.swift; sourceTree = "<group>"; };
 		F57C641B2950A99F00CD55CD /* SelectThemeColorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorPresenter.swift; sourceTree = "<group>"; };
 		F57C641D2950AA3400CD55CD /* SelectThemeColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorView.swift; sourceTree = "<group>"; };
@@ -787,7 +787,7 @@
 				F5E917CA287114DC00AE8421 /* RemotePokerApp.swift */,
 				F5E917CE287114E900AE8421 /* Assets.xcassets */,
 				F571FA672896D137003531CE /* GoogleService-Info.plist */,
-				F558BF5029D099D5009ECDC8 /* GoogleService-Info-Dev.plist */,
+				F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */,
 				F5E917D0287114E900AE8421 /* Preview Content */,
 			);
 			path = RemotePoker;
@@ -934,7 +934,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F558BF5129D099D5009ECDC8 /* GoogleService-Info-Dev.plist in Resources */,
+				F57A44BA29D09F9A00A077DD /* GoogleService-Info-Dev.plist in Resources */,
 				F571FA5F2896CCA5003531CE /* gRPCCertificates-Cpp.bundle in Resources */,
 				F571FA682896D137003531CE /* GoogleService-Info.plist in Resources */,
 				F5E917D2287114E900AE8421 /* Preview Assets.xcassets in Resources */,
@@ -1218,7 +1218,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3.4.11;
+				CURRENT_PROJECT_VERSION = 1.3.4.12;
 				DEVELOPMENT_ASSET_PATHS = "\"RemotePoker/Preview Content\"";
 				DEVELOPMENT_TEAM = KB4BJUD35F;
 				ENABLE_PREVIEWS = YES;
@@ -1255,7 +1255,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.3.4.11;
+				CURRENT_PROJECT_VERSION = 1.3.4.12;
 				DEVELOPMENT_ASSET_PATHS = "\"RemotePoker/Preview Content\"";
 				DEVELOPMENT_TEAM = KB4BJUD35F;
 				ENABLE_PREVIEWS = YES;

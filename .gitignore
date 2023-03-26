@@ -92,6 +92,3 @@ iOSInjectionProject/
 # Firebase Testing
 firebase-debug.log
 firestore-debug.log
-
-# Firebase for Developing
-GoogleService-Info-Dev.plist
