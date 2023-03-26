@@ -41,7 +41,7 @@
 		F571FA562896CA3B003531CE /* FirebaseAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA1A2896CA2C003531CE /* FirebaseAuth.xcframework */; };
 		F571FA5F2896CCA5003531CE /* gRPCCertificates-Cpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F571FA5E2896CCA5003531CE /* gRPCCertificates-Cpp.bundle */; };
 		F571FA682896D137003531CE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F571FA672896D137003531CE /* GoogleService-Info.plist */; };
-		F57A44B829D09ECF00A077DD /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = F57A44B729D09ECF00A077DD /* GoogleService-Info-Dev.plist */; };
+		F57A44BA29D09F9A00A077DD /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */; };
 		F57C641A2950A91000CD55CD /* SelectThemeColorContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C64192950A91000CD55CD /* SelectThemeColorContract.swift */; };
 		F57C641C2950A99F00CD55CD /* SelectThemeColorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C641B2950A99F00CD55CD /* SelectThemeColorPresenter.swift */; };
 		F57C641E2950AA3400CD55CD /* SelectThemeColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C641D2950AA3400CD55CD /* SelectThemeColorView.swift */; };
@@ -152,7 +152,7 @@
 		F571FA282896CA2C003531CE /* BoringSSL-GRPC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "BoringSSL-GRPC.xcframework"; path = "Carthage/Build/BoringSSL-GRPC.xcframework"; sourceTree = "<group>"; };
 		F571FA5E2896CCA5003531CE /* gRPCCertificates-Cpp.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = "gRPCCertificates-Cpp.bundle"; path = "Carthage/Build/gRPC-C++.xcframework/ios-arm64/gRPC-C++.framework/Resources/gRPCCertificates-Cpp.bundle"; sourceTree = "<group>"; };
 		F571FA672896D137003531CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		F57A44B729D09ECF00A077DD /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info-Dev.plist"; path = "../../../Downloads/GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
+		F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		F57C64192950A91000CD55CD /* SelectThemeColorContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorContract.swift; sourceTree = "<group>"; };
 		F57C641B2950A99F00CD55CD /* SelectThemeColorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorPresenter.swift; sourceTree = "<group>"; };
 		F57C641D2950AA3400CD55CD /* SelectThemeColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorView.swift; sourceTree = "<group>"; };
@@ -787,7 +787,7 @@
 				F5E917CA287114DC00AE8421 /* RemotePokerApp.swift */,
 				F5E917CE287114E900AE8421 /* Assets.xcassets */,
 				F571FA672896D137003531CE /* GoogleService-Info.plist */,
-				F57A44B729D09ECF00A077DD /* GoogleService-Info-Dev.plist */,
+				F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */,
 				F5E917D0287114E900AE8421 /* Preview Content */,
 			);
 			path = RemotePoker;
@@ -934,7 +934,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F57A44B829D09ECF00A077DD /* GoogleService-Info-Dev.plist in Resources */,
+				F57A44BA29D09F9A00A077DD /* GoogleService-Info-Dev.plist in Resources */,
 				F571FA5F2896CCA5003531CE /* gRPCCertificates-Cpp.bundle in Resources */,
 				F571FA682896D137003531CE /* GoogleService-Info.plist in Resources */,
 				F5E917D2287114E900AE8421 /* Preview Assets.xcassets in Resources */,
