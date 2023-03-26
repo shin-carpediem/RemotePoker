@@ -17,7 +17,6 @@
 		F525301429364D5200727472 /* EnterRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F525301329364D5200727472 /* EnterRoomViewModel.swift */; };
 		F52530162936560D00727472 /* CardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52530152936560D00727472 /* CardListViewModel.swift */; };
 		F533A3A4293FCD7300C833F7 /* OpenCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F533A3A3293FCD7300C833F7 /* OpenCardView.swift */; };
-		F541042E2993D8B100F2393D /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = F541042D2993D8B100F2393D /* GoogleService-Info-Dev.plist */; };
 		F558BF4F29D09548009ECDC8 /* FirebaseEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F558BF4E29D09548009ECDC8 /* FirebaseEnvironment.swift */; };
 		F571FA292896CA2C003531CE /* FirebaseFirestore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */; };
 		F571FA2B2896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */; };
@@ -127,7 +126,6 @@
 		F525301329364D5200727472 /* EnterRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomViewModel.swift; sourceTree = "<group>"; };
 		F52530152936560D00727472 /* CardListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewModel.swift; sourceTree = "<group>"; };
 		F533A3A3293FCD7300C833F7 /* OpenCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCardView.swift; sourceTree = "<group>"; };
-		F541042D2993D8B100F2393D /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		F558BF4E29D09548009ECDC8 /* FirebaseEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseEnvironment.swift; sourceTree = "<group>"; };
 		F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestore.xcframework; path = Carthage/Build/FirebaseFirestore.xcframework; sourceTree = "<group>"; };
 		F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurementIdentitySupport.xcframework; path = Carthage/Build/GoogleAppMeasurementIdentitySupport.xcframework; sourceTree = "<group>"; };
@@ -787,7 +785,6 @@
 				F5E917CA287114DC00AE8421 /* RemotePokerApp.swift */,
 				F5E917CE287114E900AE8421 /* Assets.xcassets */,
 				F571FA672896D137003531CE /* GoogleService-Info.plist */,
-				F541042D2993D8B100F2393D /* GoogleService-Info-Dev.plist */,
 				F5E917D0287114E900AE8421 /* Preview Content */,
 			);
 			path = RemotePoker;
@@ -936,7 +933,6 @@
 			files = (
 				F571FA5F2896CCA5003531CE /* gRPCCertificates-Cpp.bundle in Resources */,
 				F571FA682896D137003531CE /* GoogleService-Info.plist in Resources */,
-				F541042E2993D8B100F2393D /* GoogleService-Info-Dev.plist in Resources */,
 				F5E917D2287114E900AE8421 /* Preview Assets.xcassets in Resources */,
 				F5E917CF287114E900AE8421 /* Assets.xcassets in Resources */,
 			);
