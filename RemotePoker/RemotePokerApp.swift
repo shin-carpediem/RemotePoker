@@ -1,4 +1,3 @@
-import FirebaseCore
 import SwiftUI
 
 @main
@@ -13,35 +12,8 @@ struct RemotePokerApp: App, ModuleAssembler {
             didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? =
                 nil
         ) -> Bool {
-            setupFirebase()
+            FirebaseEnvironment.shared.setup()
             return true
-        }
-
-        // MARK: - Private
-
-        private static let googleServiceInfoFilePath: String? = {
-            let googleServiceInfo: String = {
-                #if DEBUG
-                    // 開発環境
-                    return "GoogleService-Info-Dev"
-                #else
-                    // 本番環境
-                    return "GoogleService-Info"
-                #endif
-            }()
-            return Bundle.main.path(forResource: googleServiceInfo, ofType: "plist")
-        }()
-
-        /// Firebaseをセットアップする
-        private func setupFirebase() {
-            guard let filePath: String = Self.googleServiceInfoFilePath
-            else {
-                fatalError("Could not load Firebase config file.")
-            }
-            guard let options = FirebaseOptions(contentsOfFile: filePath) else {
-                fatalError("Could not load Firebase config file.")
-            }
-            FirebaseApp.configure(options: options)
         }
     }
 

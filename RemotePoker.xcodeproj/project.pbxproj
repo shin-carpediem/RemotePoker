@@ -18,6 +18,7 @@
 		F52530162936560D00727472 /* CardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52530152936560D00727472 /* CardListViewModel.swift */; };
 		F533A3A4293FCD7300C833F7 /* OpenCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F533A3A3293FCD7300C833F7 /* OpenCardView.swift */; };
 		F541042E2993D8B100F2393D /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = F541042D2993D8B100F2393D /* GoogleService-Info-Dev.plist */; };
+		F558BF4F29D09548009ECDC8 /* FirebaseEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F558BF4E29D09548009ECDC8 /* FirebaseEnvironment.swift */; };
 		F571FA292896CA2C003531CE /* FirebaseFirestore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */; };
 		F571FA2B2896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */; };
 		F571FA2D2896CA2C003531CE /* GoogleDataTransport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA152896CA2C003531CE /* GoogleDataTransport.xcframework */; };
@@ -127,6 +128,7 @@
 		F52530152936560D00727472 /* CardListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewModel.swift; sourceTree = "<group>"; };
 		F533A3A3293FCD7300C833F7 /* OpenCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCardView.swift; sourceTree = "<group>"; };
 		F541042D2993D8B100F2393D /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
+		F558BF4E29D09548009ECDC8 /* FirebaseEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseEnvironment.swift; sourceTree = "<group>"; };
 		F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestore.xcframework; path = Carthage/Build/FirebaseFirestore.xcframework; sourceTree = "<group>"; };
 		F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurementIdentitySupport.xcframework; path = Carthage/Build/GoogleAppMeasurementIdentitySupport.xcframework; sourceTree = "<group>"; };
 		F571FA152896CA2C003531CE /* GoogleDataTransport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleDataTransport.xcframework; path = Carthage/Build/GoogleDataTransport.xcframework; sourceTree = "<group>"; };
@@ -450,6 +452,7 @@
 		F5802CF92931E6D000955949 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
+				F558BF4E29D09548009ECDC8 /* FirebaseEnvironment.swift */,
 				F5802CFA2931E6E000955949 /* FirestoreRefs.swift */,
 				F5DDCD20297C1AEF00786C35 /* FirebaseError.swift */,
 			);
@@ -825,7 +828,6 @@
 			buildConfigurationList = F5E917EB287114EA00AE8421 /* Build configuration list for PBXNativeTarget "RemotePoker" */;
 			buildPhases = (
 				F5F277AB2972744F00166F88 /* Run swift-format */,
-				F5D2676E29CA788400A6452D /* Apply Local Environment Variables */,
 				F5E917C3287114DC00AE8421 /* Sources */,
 				F5E917C4287114DC00AE8421 /* Frameworks */,
 				F5E917C5287114DC00AE8421 /* Resources */,
@@ -976,26 +978,6 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks\n\n# Xcode 14から、Output Filesがない場合も空ファイルを生成してパス指定するか、\n# Based on dependency analysis のチェックを外す必要があるので、\n# ワークアラウンドとして、ビルド時に生成されるファイル内に空ファイルを生成する事で対応\ntouch ${BUILD_DIR}/COPY_FRAMEWORKS_DUMMY_OUTPUT\n";
 		};
-		F5D2676E29CA788400A6452D /* Apply Local Environment Variables */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Apply Local Environment Variables";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${BUILD_DIR}/APPLY_LOCAL_ENVIRONMENT_VARIABLES_DUMMY_OUTPUT",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# ローカルビルド用に環境変数を適用する\nGOOGLESERVICE_INFO_DEVELOPMENT_API_KEY=\"AIzaSyDAinBYiXR0v-k7TghLkxY2MpE1UdqzCGw\"\n\nGOOGLESERVICE_INFO_DEVELOPMENT_FILE_PATH=\"${SRCROOT}/RemotePoker/GoogleService-Info-Dev.plist\"\nplutil -replace 'API_KEY' -string ${GOOGLESERVICE_INFO_DEVELOPMENT_API_KEY} ${GOOGLESERVICE_INFO_DEVELOPMENT_FILE_PATH}\n\n# Xcode 14から、Output Filesがない場合も空ファイルを生成してパス指定するか、\n# Based on dependency analysis のチェックを外す必要があるので、\n# ワークアラウンドとして、ビルド時に生成されるファイル内に空ファイルを生成する事で対応\ntouch ${BUILD_DIR}/APPLY_LOCAL_ENVIRONMENT_VARIABLES_DUMMY_OUTPUT\n";
-		};
 		F5F277AB2972744F00166F88 /* Run swift-format */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1077,6 +1059,7 @@
 				F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */,
 				F533A3A4293FCD7300C833F7 /* OpenCardView.swift in Sources */,
 				F5150AFD29694BB1008ADAD6 /* Overlay.swift in Sources */,
+				F558BF4F29D09548009ECDC8 /* FirebaseEnvironment.swift in Sources */,
 				F50060F9294437A3005923A7 /* SettingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
