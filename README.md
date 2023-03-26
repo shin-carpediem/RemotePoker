@@ -52,7 +52,7 @@ $ carthage bootstrap --platform iOS --cache-builds --use-xcframeworks --no-use-b
 - PromisesObjC.xcframework need to be installed manually.
 
 ```
-$ souce bin/install_promisesobjc.sh
+$ source bin/install_promisesobjc.sh
 ```
 
 #### How to upgrade packages
