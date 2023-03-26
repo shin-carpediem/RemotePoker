@@ -824,12 +824,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F5E917EB287114EA00AE8421 /* Build configuration list for PBXNativeTarget "RemotePoker" */;
 			buildPhases = (
+				F5F277AB2972744F00166F88 /* Run swift-format */,
 				F5D2676E29CA788400A6452D /* Apply Local Environment Variables */,
 				F5E917C3287114DC00AE8421 /* Sources */,
 				F5E917C4287114DC00AE8421 /* Frameworks */,
 				F5E917C5287114DC00AE8421 /* Resources */,
 				F571FA602896CCC5003531CE /* Copy Frameworks */,
-				F5F277AB2972744F00166F88 /* Run swift-format */,
 			);
 			buildRules = (
 			);
@@ -993,7 +993,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# ローカルビルド用に環境変数を適用する\nGOOGLESERVICE_INFO_DEVELOPMENT_API_KEY=\"AIzaSyDAinBYiXR0v-k7TghLkxY2MpE1UdqzCGw\"\n\nGOOGLESERVICE_INFO_DEVELOPMENT_FILE_PATH=\"${SRCROOT}/RemotePoker/GoogleService-Info-Dev.plist\"\nplutil -replace 'GOOGLESERVICE_INFO_DEVELOPMENT_API_KEY' -string ${GOOGLESERVICE_INFO_DEVELOPMENT_API_KEY} ${GOOGLESERVICE_INFO_DEVELOPMENT_FILE_PATH}\n\nXcode 14から、Output Filesがない場合も空ファイルを生成してパス指定するか、\n# Based on dependency analysis のチェックを外す必要があるので、\n# ワークアラウンドとして、ビルド時に生成されるファイル内に空ファイルを生成する事で対応\ntouch ${BUILD_DIR}/APPLY_LOCAL_ENVIRONMENT_VARIABLES_DUMMY_OUTPUT\n";
+			shellScript = "# ローカルビルド用に環境変数を適用する\nGOOGLESERVICE_INFO_DEVELOPMENT_API_KEY=\"AIzaSyDAinBYiXR0v-k7TghLkxY2MpE1UdqzCGw\"\n\nGOOGLESERVICE_INFO_DEVELOPMENT_FILE_PATH=\"${SRCROOT}/RemotePoker/GoogleService-Info-Dev.plist\"\nplutil -replace 'API_KEY' -string ${GOOGLESERVICE_INFO_DEVELOPMENT_API_KEY} ${GOOGLESERVICE_INFO_DEVELOPMENT_FILE_PATH}\n\n# Xcode 14から、Output Filesがない場合も空ファイルを生成してパス指定するか、\n# Based on dependency analysis のチェックを外す必要があるので、\n# ワークアラウンドとして、ビルド時に生成されるファイル内に空ファイルを生成する事で対応\ntouch ${BUILD_DIR}/APPLY_LOCAL_ENVIRONMENT_VARIABLES_DUMMY_OUTPUT\n";
 		};
 		F5F277AB2972744F00166F88 /* Run swift-format */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1012,7 +1012,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "USERNAME = $(whoami)\ncd /Users/USERNAME/develop/Scrumdinger\nswift-format -r . -i\n\n# Xcode 14から、Output Filesがない場合も空ファイルを生成してパス指定するか、\n# Based on dependency analysis のチェックを外す必要があるので、\n# ワークアラウンドとして、ビルド時に生成されるファイル内に空ファイルを生成する事で対応\ntouch ${BUILD_DIR}/RUN_SWIFT_FORMAT_DUMMY_OUTPUT\n";
+			shellScript = "USERNAME = $(whoami)\ncd /Users/${USERNAME}/develop/RemotePoker\nswift-format -r . -i\n\n# Xcode 14から、Output Filesがない場合も空ファイルを生成してパス指定するか、\n# Based on dependency analysis のチェックを外す必要があるので、\n# ワークアラウンドとして、ビルド時に生成されるファイル内に空ファイルを生成する事で対応\ntouch ${BUILD_DIR}/RUN_SWIFT_FORMAT_DUMMY_OUTPUT\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
