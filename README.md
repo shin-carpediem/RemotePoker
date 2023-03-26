@@ -55,6 +55,8 @@ $ carthage bootstrap --platform iOS --cache-builds --use-xcframeworks --no-use-b
 $ source bin/install_promisesobjc.sh
 ```
 
+- Add firebase's certificate named "GoogleService-Info-Dev.plist" for developing environment at the ${SRC_ROOT}/RemotePoker/{HERE}.
+
 #### How to upgrade packages
 
 ```
