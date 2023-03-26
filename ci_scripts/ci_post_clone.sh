@@ -10,4 +10,6 @@ carthage bootstrap --platform iOS --cache-builds --use-xcframeworks --no-use-bin
 
 # apply environment variables set on Xcode Cloud
 GOOGLESERVICE_INFO_PRODUCTION_FILE_PATH="${PROJECT_ROOT_DIR}/RemotePoker/GoogleService-Info.plist"
+GOOGLESERVICE_INFO_DEVELOPMENT_FILE_PATH="${PROJECT_ROOT_DIR}/RemotePoker/GoogleService-Info-Dev.plist"
 plutil -replace "API_KEY" -string ${GOOGLESERVICE_INFO_PRODUCTION_API_KEY} ${GOOGLESERVICE_INFO_PRODUCTION_FILE_PATH}
+plutil -replace "API_KEY" -string ${GOOGLESERVICE_INFO_DEVELOPMENT_FILE_PATH} ${GOOGLESERVICE_INFO_DEVELOPMENT_FILE_PATH}
