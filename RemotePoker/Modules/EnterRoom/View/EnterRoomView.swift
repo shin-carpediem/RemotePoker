@@ -32,7 +32,7 @@ struct EnterRoomView: View, ModuleAssembler {
                 Colors.background.ignoresSafeArea()
                 contentView
                 navigationForCardListView
-                if viewModel.isShownLoader { Loader() }
+                if viewModel.isShownLoader { ProgressView() }
             }
         }
         // NavigationViewを使用した際にiPadでは、Master-Detail(Split view)の挙動になっている。

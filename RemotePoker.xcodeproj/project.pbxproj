@@ -64,7 +64,6 @@
 		F588E30728BB8E2800C5CA9A /* Neumorphic in Frameworks */ = {isa = PBXBuildFile; productRef = F588E30628BB8E2800C5CA9A /* Neumorphic */; };
 		F59EE30F29954AD200A772BE /* UserSelectStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59EE30E29954AD200A772BE /* UserSelectStatusViewModel.swift */; };
 		F59EE31329967DC200A772BE /* CardPackageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59EE31229967DC200A772BE /* CardPackageViewModel.swift */; };
-		F5AFC1DA296BBCFD00A4FFCA /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1D9296BBCFD00A4FFCA /* Loader.swift */; };
 		F5AFC1DF296BC12200A4FFCA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1DE296BC12200A4FFCA /* Colors.swift */; };
 		F5AFC1E5296BF22700A4FFCA /* InputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1E4296BF22700A4FFCA /* InputText.swift */; };
 		F5B2FAD92944768600592363 /* SettingContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FAD82944768600592363 /* SettingContract.swift */; };
@@ -83,7 +82,6 @@
 		F5C6388929AB1D0600A5F90A /* RoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6388829AB1D0600A5F90A /* RoomModel.swift */; };
 		F5C6388B29AB1D1F00A5F90A /* CardPackageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6388A29AB1D1F00A5F90A /* CardPackageModel.swift */; };
 		F5C6389529AB99B300A5F90A /* FirebaseTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6389429AB99B300A5F90A /* FirebaseTestHelper.swift */; };
-		F5CBD36B296A3EA7008BB8DE /* LoaderUI in Frameworks */ = {isa = PBXBuildFile; productRef = F5CBD36A296A3EA7008BB8DE /* LoaderUI */; };
 		F5D2676829B32EFB00A6452D /* PromisesObjC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA272896CA2C003531CE /* PromisesObjC.xcframework */; };
 		F5DDCD1B297B86B300786C35 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1A297B86B300786C35 /* List.swift */; };
 		F5DDCD1D297C183600786C35 /* EnterRoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1C297C183500786C35 /* EnterRoomRepository.swift */; };
@@ -177,7 +175,6 @@
 		F595FE6C29AFA45A00B58250 /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
 		F59EE30E29954AD200A772BE /* UserSelectStatusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectStatusViewModel.swift; sourceTree = "<group>"; };
 		F59EE31229967DC200A772BE /* CardPackageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPackageViewModel.swift; sourceTree = "<group>"; };
-		F5AFC1D9296BBCFD00A4FFCA /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		F5AFC1DE296BC12200A4FFCA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		F5AFC1E4296BF22700A4FFCA /* InputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputText.swift; sourceTree = "<group>"; };
 		F5B2FAD82944768600592363 /* SettingContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContract.swift; sourceTree = "<group>"; };
@@ -231,7 +228,6 @@
 				F571FA4B2896CA2D003531CE /* gRPC-Core.xcframework in Frameworks */,
 				F571FA352896CA2C003531CE /* GoogleUtilities.xcframework in Frameworks */,
 				F571FA562896CA3B003531CE /* FirebaseAuth.xcframework in Frameworks */,
-				F5CBD36B296A3EA7008BB8DE /* LoaderUI in Frameworks */,
 				F571FA3D2896CA2C003531CE /* FirebaseCoreDiagnostics.xcframework in Frameworks */,
 				F588E30728BB8E2800C5CA9A /* Neumorphic in Frameworks */,
 				F5D2676829B32EFB00A6452D /* PromisesObjC.xcframework in Frameworks */,
@@ -506,7 +502,6 @@
 		F5AFC1DB296BBEBE00A4FFCA /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
-				F5AFC1D9296BBCFD00A4FFCA /* Loader.swift */,
 				F5150AF92968E042008ADAD6 /* NotificationBanner.swift */,
 			);
 			path = ViewComponents;
@@ -840,7 +835,6 @@
 			name = RemotePoker;
 			packageProductDependencies = (
 				F588E30628BB8E2800C5CA9A /* Neumorphic */,
-				F5CBD36A296A3EA7008BB8DE /* LoaderUI */,
 			);
 			productName = Scrumdinger;
 			productReference = F5E917C7287114DC00AE8421 /* RemotePoker.app */;
@@ -916,7 +910,6 @@
 			mainGroup = F5E917BE287114DC00AE8421;
 			packageReferences = (
 				F588E30528BB8E2800C5CA9A /* XCRemoteSwiftPackageReference "neumorphic" */,
-				F5CBD369296A3EA7008BB8DE /* XCRemoteSwiftPackageReference "LoaderUI" */,
 			);
 			productRefGroup = F5E917C8287114DC00AE8421 /* Products */;
 			projectDirPath = "";
@@ -1022,7 +1015,6 @@
 				F5802D0B293218A800955949 /* CardListContract.swift in Sources */,
 				F5C6388729AB1CEA00A5F90A /* UserModel.swift in Sources */,
 				F5DDCD1B297B86B300786C35 /* List.swift in Sources */,
-				F5AFC1DA296BBCFD00A4FFCA /* Loader.swift in Sources */,
 				F523669A2891E837005B1F65 /* CardListView.swift in Sources */,
 				F5802D0529320F1B00955949 /* ModuleAssembler+Default.swift in Sources */,
 				F5C6387E29AB076000A5F90A /* RoomViewModel.swift in Sources */,
@@ -1412,14 +1404,6 @@
 				minimumVersion = 2.0.5;
 			};
 		};
-		F5CBD369296A3EA7008BB8DE /* XCRemoteSwiftPackageReference "LoaderUI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ninjaprox/LoaderUI";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1427,11 +1411,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F588E30528BB8E2800C5CA9A /* XCRemoteSwiftPackageReference "neumorphic" */;
 			productName = Neumorphic;
-		};
-		F5CBD36A296A3EA7008BB8DE /* LoaderUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F5CBD369296A3EA7008BB8DE /* XCRemoteSwiftPackageReference "LoaderUI" */;
-			productName = LoaderUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

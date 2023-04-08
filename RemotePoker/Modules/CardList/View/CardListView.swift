@@ -36,7 +36,7 @@ struct CardListView: View, ModuleAssembler {
             Colors.background.ignoresSafeArea()
             contentView
             navigationForSettingView
-            if viewModel.isShownLoader { Loader() }
+            if viewModel.isShownLoader { ProgressView() }
         }
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)

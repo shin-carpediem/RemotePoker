@@ -33,7 +33,7 @@ struct SettingView: View, ModuleAssembler {
         ZStack {
             contentView
             navigationForSelectThemeColorView
-            if viewModel.isShownLoader { Loader() }
+            if viewModel.isShownLoader { ProgressView() }
         }
         .navigationTitle("設定")
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
