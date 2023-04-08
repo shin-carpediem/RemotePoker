@@ -30,7 +30,7 @@ struct SelectThemeColorView: View {
     var body: some View {
         ZStack {
             contentView
-            if viewModel.isShownLoader { Loader() }
+            if viewModel.isShownLoader { ProgressView() }
         }
         .navigationTitle("テーマカラー")
         .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))

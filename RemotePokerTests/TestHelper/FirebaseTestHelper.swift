@@ -3,7 +3,7 @@ import FirebaseFirestore
 import Foundation
 
 /// テスト用の仮想のFirebaseプロジェクトを作成するヘルパー
-final class FirebaseTestHelper {
+struct FirebaseTestHelper {
     static let shard = FirebaseTestHelper()
 
     /// テスト環境をセットアップする

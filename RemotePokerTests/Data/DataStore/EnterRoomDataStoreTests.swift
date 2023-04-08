@@ -7,12 +7,12 @@ class EnterRoomDataStoreTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        //        FirebaseTestHelper.shard.setupFirebaseTestApp()
+        FirebaseTestHelper.shard.setupFirebaseTestApp()
     }
 
     override func tearDown() {
         super.tearDown()
-        //        FirebaseTestHelper.shard.deleteFirebaseTestApp()
+        FirebaseTestHelper.shard.deleteFirebaseTestApp()
     }
 
     // MARK: - Test
