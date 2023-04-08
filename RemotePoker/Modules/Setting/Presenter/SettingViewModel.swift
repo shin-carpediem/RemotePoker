@@ -1,7 +1,13 @@
 import Foundation
 
-actor SelectThemeColorViewModel: SelectThemeColorObservable {
-    // MARK: - SelectThemeColorObservable
+actor SettingViewModel: SettingObservable {
+    // MARK: - SettingObservable
+
+    /// テーマカラー選択画面に遷移するか
+    @MainActor
+    @Published var willPushSelectThemeColorView = false
+
+    // MARK: - ViewModel
 
     @MainActor
     @Published var isButtonEnabled = true
@@ -14,10 +20,4 @@ actor SelectThemeColorViewModel: SelectThemeColorObservable {
 
     @MainActor
     @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
-
-    @MainActor
-    @Published var themeColorList = [CardPackageThemeColor]()
-
-    @MainActor
-    @Published var selectedThemeColor: CardPackageThemeColor?
 }

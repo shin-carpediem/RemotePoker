@@ -20,31 +20,6 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
 
     // MARK: - CardListPresentation
 
-    func viewDidLoad() {
-        Task {
-            await disableButton(true)
-            await showLoader(true)
-            if dependency.isExisingUser {
-                // 既存ユーザー（この画面が初期画面）
-                let userId: String = await signIn().value
-                // ユーザーのカレントルームがFirestore上に存在するか確認する
-                if await checkUserInCurrentRoom() {
-                    await sucscribeAndSetupData(
-                        userId: userId, shouldFetchData: dependency.isExisingUser)
-                }
-            } else {
-                // 新規ユーザー（EnterRoom画面が初期画面）
-                await sucscribeAndSetupData(
-                    userId: dependency.currentUserId, shouldFetchData: dependency.isExisingUser
-                )
-            }
-        }
-    }
-
-    func viewDidResume() {}
-
-    func viewDidSuspend() {}
-
     func didSelectCard(cardId: String) {
         Task {
             await disableButton(true)
@@ -77,6 +52,33 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
             await pushSettingView()
         }
     }
+
+    // MARK: - Presentation
+
+    func viewDidLoad() {
+        Task {
+            await disableButton(true)
+            await showLoader(true)
+            if dependency.isExisingUser {
+                // 既存ユーザー（この画面が初期画面）
+                let userId: String = await signIn().value
+                // ユーザーのカレントルームがFirestore上に存在するか確認する
+                if await checkUserInCurrentRoom() {
+                    await sucscribeAndSetupData(
+                        userId: userId, shouldFetchData: dependency.isExisingUser)
+                }
+            } else {
+                // 新規ユーザー（EnterRoom画面が初期画面）
+                await sucscribeAndSetupData(
+                    userId: dependency.currentUserId, shouldFetchData: dependency.isExisingUser
+                )
+            }
+        }
+    }
+
+    func viewDidResume() {}
+
+    func viewDidSuspend() {}
 
     // MARK: - CardListInteractorOutput
 

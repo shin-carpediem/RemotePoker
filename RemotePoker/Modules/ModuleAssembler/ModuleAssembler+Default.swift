@@ -69,13 +69,11 @@ extension ModuleAssembler {
     {
         let viewModel = SelectThemeColorViewModel()
         let presenter = SelectThemeColorPresenter()
-        let interactor = SelectThemeColorInteractor()
 
-        presenter.inject(.init(useCase: interactor, viewModel: viewModel))
-        interactor.inject(
+        presenter.inject(
             .init(
                 repository: RoomDataStore(roomId: roomId),
-                output: presenter,
+                viewModel: viewModel,
                 cardPackageId: cardPackageId))
         let view = SelectThemeColorView(
             dependency: .init(presenter: presenter), viewModel: viewModel)

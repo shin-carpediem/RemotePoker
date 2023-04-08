@@ -14,12 +14,6 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
 
     // MARK: - SettingPresentation
 
-    func viewDidLoad() {}
-
-    func viewDidResume() {}
-
-    func viewDidSuspend() {}
-
     func didTapSelectThemeColorButton() {
         Task {
             await pushSelectThemeColorView()
@@ -35,6 +29,14 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
             await showLoader(false)
         }
     }
+
+    // MARK: - Presentation
+
+    func viewDidLoad() {}
+
+    func viewDidResume() {}
+
+    func viewDidSuspend() {}
 
     // MARK: - SettingInteractorOutput
 

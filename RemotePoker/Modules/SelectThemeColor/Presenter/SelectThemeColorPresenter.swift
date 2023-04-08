@@ -1,14 +1,13 @@
 import Foundation
 
-final class SelectThemeColorPresenter: SelectThemeColorPresentation,
-    SelectThemeColorInteractorOutput, DependencyInjectable
-{
+final class SelectThemeColorPresenter: SelectThemeColorPresentation, DependencyInjectable {
 
     // MARK: - DependencyInjectable
 
     struct Dependency {
-        var useCase: SelectThemeColorUseCase
+        var repository: RoomRepository
         weak var viewModel: SelectThemeColorViewModel?
+        var cardPackageId: String
     }
 
     func inject(_ dependency: Dependency) {
@@ -16,6 +15,19 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation,
     }
 
     // MARK: - SelectThemeColorPresentation
+
+    func didTapColor(color: CardPackageThemeColor) {
+        Task { @MainActor in
+            dependency.repository.updateThemeColor(
+                cardPackageId: dependency.cardPackageId,
+                themeColor: color.rawValue)
+
+            applySelectedThemeColor(color)
+            showSuccess(message: "テーマカラーを\(color)に変更しました")
+        }
+    }
+
+    // MARK: - Presentation
 
     func viewDidLoad() {
         Task {
@@ -31,31 +43,6 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation,
 
     func viewDidSuspend() {}
 
-    func didTapColor(color: CardPackageThemeColor) {
-        dependency.useCase.updateThemeColor(themeColor: color)
-    }
-
-    // MARK: - SelectThemeColorInteractorOutput
-
-    @MainActor
-    func outputSelectedThemeColor(_ themeColor: CardPackageThemeColor) {
-        dependency.viewModel?.selectedThemeColor = themeColor
-        disableButton(false)
-        showLoader(false)
-    }
-
-    @MainActor
-    func outputSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
-        dependency.viewModel?.isShownBanner = true
-    }
-
-    @MainActor
-    func outputError(_ error: Error, message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onFailure, text: message)
-        dependency.viewModel?.isShownBanner = true
-    }
-
     // MARK: - Private
 
     private var dependency: Dependency!
@@ -66,15 +53,16 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation,
         dependency.viewModel?.themeColorList = CardPackageThemeColor.allCases
     }
 
-    /// ボタンを無効にする
+    /// 選択されたテーマカラーで表示する
     @MainActor
-    private func disableButton(_ disabled: Bool) {
-        dependency.viewModel?.isButtonEnabled = !disabled
+    private func applySelectedThemeColor(_ themeColor: CardPackageThemeColor) {
+        dependency.viewModel?.selectedThemeColor = themeColor
     }
 
-    /// ローダーを表示する
+    /// 成功を表示する
     @MainActor
-    private func showLoader(_ show: Bool) {
-        dependency.viewModel?.isShownLoader = show
+    private func showSuccess(message: String) {
+        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
+        dependency.viewModel?.isShownBanner = true
     }
 }

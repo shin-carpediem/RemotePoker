@@ -1,7 +1,7 @@
 import Combine
 import SwiftUI
 
-final class EnterRoomViewModel: EnterRoomObservable, ViewModel {
+final class EnterRoomViewModel: EnterRoomObservable {
     init() {
         observeInputForm()
     }
@@ -11,18 +11,6 @@ final class EnterRoomViewModel: EnterRoomObservable, ViewModel {
     }
 
     // MARK: - EnterRoomObservable
-
-    @MainActor
-    @Published var isButtonEnabled = true
-
-    @MainActor
-    @Published var isShownLoader = false
-
-    @MainActor
-    @Published var isShownBanner = false
-
-    @MainActor
-    @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
 
     @MainActor
     @Published var inputName = ""
@@ -40,6 +28,20 @@ final class EnterRoomViewModel: EnterRoomObservable, ViewModel {
 
     @MainActor
     @Published var willPushCardListView = false
+
+    // MARK: - ViewModel
+
+    @MainActor
+    @Published var isButtonEnabled = true
+
+    @MainActor
+    @Published var isShownLoader = false
+
+    @MainActor
+    @Published var isShownBanner = false
+
+    @MainActor
+    @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
 
     // MARK: - Private
 
