@@ -2,19 +2,7 @@ import SwiftUI
 
 actor CardListViewModel: CardListObservable {
     // MARK: - CardListObservable
-
-    @MainActor
-    @Published var isButtonEnabled = true
-
-    @MainActor
-    @Published var isShownLoader = false
-
-    @MainActor
-    @Published var isShownBanner = false
-
-    @MainActor
-    @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
-
+    
     @MainActor
     @Published var room = RoomViewModel(
         id: 0, userList: [],
@@ -56,4 +44,18 @@ actor CardListViewModel: CardListObservable {
 
     @MainActor
     @Published var willPushSettingView = false
+
+    // MARK: - ViewModel
+
+    @MainActor
+    @Published var isButtonEnabled = true
+
+    @MainActor
+    @Published var isShownLoader = false
+
+    @MainActor
+    @Published var isShownBanner = false
+
+    @MainActor
+    @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
 }

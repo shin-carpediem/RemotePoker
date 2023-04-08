@@ -15,13 +15,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     }
 
     // MARK: - EnterRoomPresentation
-
-    func viewDidLoad() {}
-
-    func viewDidResume() {}
-
-    func viewDidSuspend() {}
-
+    
     var currentUser = UserViewModel(
         id: "",
         name: "",
@@ -48,6 +42,14 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
             await showLoader(false)
         }
     }
+    
+    // MARK: - Presentation
+
+    func viewDidLoad() {}
+
+    func viewDidResume() {}
+
+    func viewDidSuspend() {}
 
     // MARK: - EnterRoomInteractorOutput
 

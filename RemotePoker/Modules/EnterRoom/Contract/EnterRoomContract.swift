@@ -1,6 +1,6 @@
 import Foundation
 
-protocol EnterRoomObservable: ObservableObject {
+protocol EnterRoomObservable: ObservableObject, ViewModel {
     /// 入力フォーム/名前
     @MainActor
     var inputName: String { get set }

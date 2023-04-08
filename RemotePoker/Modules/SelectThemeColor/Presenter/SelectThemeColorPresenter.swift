@@ -14,8 +14,14 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation,
     func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
-
+    
     // MARK: - SelectThemeColorPresentation
+
+    func didTapColor(color: CardPackageThemeColor) {
+        dependency.useCase.updateThemeColor(themeColor: color)
+    }
+    
+    // MARK: - Presentation
 
     func viewDidLoad() {
         Task {
@@ -30,10 +36,6 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation,
     }
 
     func viewDidSuspend() {}
-
-    func didTapColor(color: CardPackageThemeColor) {
-        dependency.useCase.updateThemeColor(themeColor: color)
-    }
 
     // MARK: - SelectThemeColorInteractorOutput
 

@@ -11,14 +11,8 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
     func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
-
+    
     // MARK: - SettingPresentation
-
-    func viewDidLoad() {}
-
-    func viewDidResume() {}
-
-    func viewDidSuspend() {}
 
     func didTapSelectThemeColorButton() {
         Task {
@@ -35,6 +29,14 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
             await showLoader(false)
         }
     }
+    
+    // MARK: - Presentation
+
+    func viewDidLoad() {}
+
+    func viewDidResume() {}
+
+    func viewDidSuspend() {}
 
     // MARK: - SettingInteractorOutput
 

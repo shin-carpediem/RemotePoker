@@ -2,6 +2,12 @@ import Foundation
 
 actor SettingViewModel: SettingObservable {
     // MARK: - SettingObservable
+    
+    /// テーマカラー選択画面に遷移するか
+    @MainActor
+    @Published var willPushSelectThemeColorView = false
+
+    // MARK: - ViewModel
 
     @MainActor
     @Published var isButtonEnabled = true
@@ -14,8 +20,4 @@ actor SettingViewModel: SettingObservable {
 
     @MainActor
     @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
-
-    /// テーマカラー選択画面に遷移するか
-    @MainActor
-    @Published var willPushSelectThemeColorView = false
 }

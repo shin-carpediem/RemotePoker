@@ -2,6 +2,14 @@ import Foundation
 
 actor SelectThemeColorViewModel: SelectThemeColorObservable {
     // MARK: - SelectThemeColorObservable
+    
+    @MainActor
+    @Published var themeColorList = [CardPackageThemeColor]()
+
+    @MainActor
+    @Published var selectedThemeColor: CardPackageThemeColor?
+
+    // MARK: - ViewModel
 
     @MainActor
     @Published var isButtonEnabled = true
@@ -14,10 +22,4 @@ actor SelectThemeColorViewModel: SelectThemeColorObservable {
 
     @MainActor
     @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
-
-    @MainActor
-    @Published var themeColorList = [CardPackageThemeColor]()
-
-    @MainActor
-    @Published var selectedThemeColor: CardPackageThemeColor?
 }
