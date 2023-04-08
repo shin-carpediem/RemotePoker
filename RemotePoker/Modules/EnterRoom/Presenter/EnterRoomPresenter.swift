@@ -15,7 +15,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     }
 
     // MARK: - EnterRoomPresentation
-    
+
     var currentUser = UserViewModel(
         id: "",
         name: "",
@@ -42,7 +42,7 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
             await showLoader(false)
         }
     }
-    
+
     // MARK: - Presentation
 
     func viewDidLoad() {}

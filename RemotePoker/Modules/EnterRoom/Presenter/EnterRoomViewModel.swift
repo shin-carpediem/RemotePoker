@@ -11,7 +11,7 @@ final class EnterRoomViewModel: EnterRoomObservable {
     }
 
     // MARK: - EnterRoomObservable
-    
+
     @MainActor
     @Published var inputName = ""
 
@@ -42,7 +42,7 @@ final class EnterRoomViewModel: EnterRoomObservable {
 
     @MainActor
     @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
-    
+
     // MARK: - Private
 
     /// 監視対象一覧

@@ -17,7 +17,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
-    
+
     // MARK: - CardListPresentation
 
     func didSelectCard(cardId: String) {
@@ -52,7 +52,7 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
             await pushSettingView()
         }
     }
-    
+
     // MARK: - Presentation
 
     func viewDidLoad() {

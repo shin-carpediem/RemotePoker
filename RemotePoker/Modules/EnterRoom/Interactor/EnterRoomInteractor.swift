@@ -45,12 +45,10 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
         let result: Result<Void, FirebaseError> = await dependency.repository.createRoom(entity)
         switch result {
         case .success(_):
-            let message = "新しいルームを作りました"
-            await dependency.output?.outputSuccess(message: message)
+            await dependency.output?.outputSuccess(message: "新しいルームを作りました")
 
         case .failure(let error):
-            let message = "新しいルームを作れませんでした"
-            await dependency.output?.outputError(error, message: message)
+            await dependency.output?.outputError(error, message: "新しいルームを作れませんでした")
         }
     }
 
@@ -65,12 +63,10 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
         let result: Result<Void, FirebaseError> = await repository.addUserToRoom(user: entity)
         switch result {
         case .success(_):
-            let message = "ルームに追加されました"
-            await dependency.output?.outputSuccess(message: message)
+            await dependency.output?.outputSuccess(message: "ルームに追加されました")
 
         case .failure(let error):
-            let message = "ルームに追加できませんでした"
-            await dependency.output?.outputError(error, message: message)
+            await dependency.output?.outputError(error, message: "ルームに追加できませんでした")
         }
     }
 

@@ -2,7 +2,7 @@ import Foundation
 
 actor SelectThemeColorViewModel: SelectThemeColorObservable {
     // MARK: - SelectThemeColorObservable
-    
+
     @MainActor
     @Published var themeColorList = [CardPackageThemeColor]()
 

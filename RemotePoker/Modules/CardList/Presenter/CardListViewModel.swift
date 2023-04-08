@@ -2,7 +2,7 @@ import SwiftUI
 
 actor CardListViewModel: CardListObservable {
     // MARK: - CardListObservable
-    
+
     @MainActor
     @Published var room = RoomViewModel(
         id: 0, userList: [],

@@ -11,7 +11,7 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
     func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
-    
+
     // MARK: - SettingPresentation
 
     func didTapSelectThemeColorButton() {
@@ -29,7 +29,7 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
             await showLoader(false)
         }
     }
-    
+
     // MARK: - Presentation
 
     func viewDidLoad() {}
