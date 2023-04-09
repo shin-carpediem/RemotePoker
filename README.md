@@ -57,7 +57,7 @@ $ source bin/install_promisesobjc.sh
 
 - Add firebase's certificate named "GoogleService-Info-Dev.plist" for developing environment at the root of ${SRC_ROOT}/RemotePoker.
 
-#### How to upgrade packages
+#### How to Upgrade Packages
 
 ##### swift-package-manager
 
@@ -67,6 +67,16 @@ Choose `Files` -> `Packages` -> `Update to Latest Package Versions`
 
 ```
 $ carthage update --platform iOS --cache-builds --use-xcframeworks --no-use-binaries
+```
+
+#### How to Run Tests
+
+```
+$ cd FirebaseTests
+```
+
+```
+$ firebase emulators:start --only firestore
 ```
 
 #### How to Release App
