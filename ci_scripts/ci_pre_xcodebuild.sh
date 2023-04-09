@@ -18,12 +18,15 @@ rm -r ${PROMISES_OBJC_ARCHIVE_FILE}
 mv ${PROMISES_OBJC_INSTALL_DIR}/PromisesObjC.xcframework-1.0.0 ${PROMISES_OBJC_INSTALL_DIR}/PromisesObjC.xcframework
 echo "✅ Completed installing PromisesObjC.xcframework."
 
-# Setup virtual Firebase project for tests
-## install Node.js to use `npm` command
-brew install nodebrew
-nodebrew install-binary latest
-## launch firestore emulator
-cd ../FirebaseTests
-npm install -g firebase-tools
-firebase setup:emulators:firestore
-firebase emulators:start --only firestore
+## NOTE: Xcode cloud上の環境でnodebrewのパスが間違っているからか、
+## インストール後にnodebrewコマンドに失敗する
+
+## Setup virtual Firebase project for tests
+### install Node.js to use `npm` command
+#brew install nodebrew
+#nodebrew install-binary latest
+### launch firestore emulator
+#cd ../FirebaseTests
+#npm install -g firebase-tools
+#firebase setup:emulators:firestore
+#firebase emulators:start --only firestore

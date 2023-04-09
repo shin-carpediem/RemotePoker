@@ -6,7 +6,8 @@ final class EnterRoomDataStore: EnterRoomRepository {
     // MARK: - EnterRoomRepository
 
     func checkRoomExist(roomId: Int) async -> Bool {
-        let roomDocument: DocumentReference = Firestore.firestore().collection("rooms").document(
+        let roomDocument: DocumentReference =
+        firestore.collection("rooms").document(
             String(roomId))
         guard let document: DocumentSnapshot = try? await roomDocument.getDocument() else {
             return false
@@ -18,7 +19,7 @@ final class EnterRoomDataStore: EnterRoomRepository {
         do {
             // ルーム追加
             let roomId: Int = room.id
-            let roomDocument: DocumentReference = Firestore.firestore().collection("rooms")
+            let roomDocument: DocumentReference = firestore.collection("rooms")
                 .document(String(roomId))
             try await roomDocument.setData([
                 "id": roomId,
@@ -70,5 +71,14 @@ final class EnterRoomDataStore: EnterRoomRepository {
         } catch (_) {
             return .failure(.failedToCreateRoom)
         }
+    }
+    
+    // MARK: - Private
+    
+    private var firestore: Firestore {
+        guard let app = FirebaseEnvironment.app else {
+            fatalError("Could not retrieve app.")
+        }
+        return Firestore.firestore(app: app)
     }
 }

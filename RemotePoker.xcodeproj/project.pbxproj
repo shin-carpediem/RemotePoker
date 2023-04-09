@@ -17,6 +17,7 @@
 		F525301429364D5200727472 /* EnterRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F525301329364D5200727472 /* EnterRoomViewModel.swift */; };
 		F52530162936560D00727472 /* CardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52530152936560D00727472 /* CardListViewModel.swift */; };
 		F533A3A4293FCD7300C833F7 /* OpenCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F533A3A3293FCD7300C833F7 /* OpenCardView.swift */; };
+		F539F02529E288D400C5C9C0 /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = F539F02429E288D400C5C9C0 /* Thread.swift */; };
 		F558BF4F29D09548009ECDC8 /* FirebaseEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F558BF4E29D09548009ECDC8 /* FirebaseEnvironment.swift */; };
 		F571FA292896CA2C003531CE /* FirebaseFirestore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */; };
 		F571FA2B2896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */; };
@@ -124,6 +125,7 @@
 		F525301329364D5200727472 /* EnterRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomViewModel.swift; sourceTree = "<group>"; };
 		F52530152936560D00727472 /* CardListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewModel.swift; sourceTree = "<group>"; };
 		F533A3A3293FCD7300C833F7 /* OpenCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCardView.swift; sourceTree = "<group>"; };
+		F539F02429E288D400C5C9C0 /* Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
 		F558BF4E29D09548009ECDC8 /* FirebaseEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseEnvironment.swift; sourceTree = "<group>"; };
 		F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestore.xcframework; path = Carthage/Build/FirebaseFirestore.xcframework; sourceTree = "<group>"; };
 		F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurementIdentitySupport.xcframework; path = Carthage/Build/GoogleAppMeasurementIdentitySupport.xcframework; sourceTree = "<group>"; };
@@ -617,6 +619,7 @@
 		F5DDCD19297B869F00786C35 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				F539F02429E288D400C5C9C0 /* Thread.swift */,
 				F5DDCD1A297B86B300786C35 /* List.swift */,
 			);
 			path = Extension;
@@ -756,9 +759,9 @@
 		F5E917DA287114EA00AE8421 /* RemotePokerTests */ = {
 			isa = PBXGroup;
 			children = (
+				F5C6389329AB996E00A5F90A /* TestHelper */,
 				F5C6388C29AB5C5300A5F90A /* Data */,
 				F5C6388D29AB5C5800A5F90A /* Modules */,
-				F5C6389329AB996E00A5F90A /* TestHelper */,
 			);
 			path = RemotePokerTests;
 			sourceTree = "<group>";
@@ -1001,6 +1004,7 @@
 				F59EE31329967DC200A772BE /* CardPackageViewModel.swift in Sources */,
 				F5150AFA2968E042008ADAD6 /* NotificationBanner.swift in Sources */,
 				F5B2FADE2944773C00592363 /* SettingViewModel.swift in Sources */,
+				F539F02529E288D400C5C9C0 /* Thread.swift in Sources */,
 				F5C6388229AB092800A5F90A /* CardPackageModelToCardPackageViewModelTranslator.swift in Sources */,
 				F5C397DA289E9342008AEFF2 /* CardPackageEntity.swift in Sources */,
 				F59EE30F29954AD200A772BE /* UserSelectStatusViewModel.swift in Sources */,
@@ -1166,7 +1170,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.4.1.1;
+				CURRENT_PROJECT_VERSION = 1.4.1.2;
 				DEVELOPMENT_ASSET_PATHS = "\"RemotePoker/Preview Content\"";
 				DEVELOPMENT_TEAM = KB4BJUD35F;
 				ENABLE_PREVIEWS = YES;
@@ -1203,7 +1207,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.4.1.1;
+				CURRENT_PROJECT_VERSION = 1.4.1.2;
 				DEVELOPMENT_ASSET_PATHS = "\"RemotePoker/Preview Content\"";
 				DEVELOPMENT_TEAM = KB4BJUD35F;
 				ENABLE_PREVIEWS = YES;
