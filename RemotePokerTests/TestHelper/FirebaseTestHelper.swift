@@ -11,7 +11,10 @@ struct FirebaseTestHelper {
         if FirebaseApp.app() != nil { return }
 
         let options = FirebaseOptions(googleAppID: "1:123:ios:123abc", gcmSenderID: "sender_id")
-        options.projectID = "test-" + UUID().uuidString
+        let identifier = "test-" + UUID().uuidString
+        options.projectID = identifier
+        // API_KEYのフォーマットは`A`から始まる39文字
+        options.apiKey = "A" + String(identifier.prefix(38))
         FirebaseApp.configure(options: options)
 
         let settings = FirestoreSettings()

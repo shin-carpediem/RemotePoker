@@ -10,10 +10,11 @@
 
 #### Related to Builing App
 
-| Package Manager             | Package Name                                          | Usage                                           |
-| :-------------------------- | :---------------------------------------------------- | :---------------------------------------------- |
-| [Homebrew](https://brew.sh) | [Carthage](https://github.com/Carthage/Carthage)      | Pakcage Manager for Packages Dependent with App |
-|                             | [swift-format](https://github.com/apple/swift-format) | Code Formatter                                  |
+| Package Manager                                | Package Name                                                            | Usage                                           |
+| :--------------------------------------------- | :---------------------------------------------------------------------- | :---------------------------------------------- |
+| [Xcode](https://developer.apple.com/jp/xcode/) | [swift-package-manager](https://github.com/apple/swift-package-manager) | Pakcage Manager for Packages Dependent with App |
+| [Homebrew](https://brew.sh)                    | [Carthage](https://github.com/Carthage/Carthage)                        | Pakcage Manager for Packages Dependent with App |
+|                                                | [swift-format](https://github.com/apple/swift-format)                   | Code Formatter                                  |
 
 #### Dependent with App
 
@@ -54,9 +55,15 @@ $ carthage bootstrap --platform iOS --cache-builds --use-xcframeworks --no-use-b
 $ source bin/install_promisesobjc.sh
 ```
 
-- Add firebase's certificate named "GoogleService-Info-Dev.plist" for developing environment at the ${SRC_ROOT}/RemotePoker/{HERE}.
+- Add firebase's certificate named "GoogleService-Info-Dev.plist" for developing environment at the root of ${SRC_ROOT}/RemotePoker.
 
 #### How to upgrade packages
+
+##### swift-package-manager
+
+Choose `Files` -> `Packages` -> `Update to Latest Package Versions`
+
+##### Carthage
 
 ```
 $ carthage update --platform iOS --cache-builds --use-xcframeworks --no-use-binaries
