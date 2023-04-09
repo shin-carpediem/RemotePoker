@@ -3,9 +3,9 @@ import FirebaseFirestore
 
 final class FirebaseEnvironment {
     static let shared = FirebaseEnvironment()
-    
+
     private(set) var app: FirebaseApp?
-    
+
     func setup() {
         switch environment {
         case .development, .production:
@@ -14,7 +14,7 @@ final class FirebaseEnvironment {
                 fatalError("Could not retrieve default app.")
             }
             self.app = app
-            
+
         case .testing:
             let appName = "secondary"
             FirebaseApp.configure(name: appName, options: firebaseOptions)
@@ -41,38 +41,40 @@ final class FirebaseEnvironment {
         /// 本番環境
         case production
     }
-    
+
     private var environment: Environment {
         #if DEBUG
-            return isRunningXCTest ? .testing: .development
+            return isRunningXCTest ? .testing : .development
         #else
             return .production
         #endif
     }
-    
+
     private var isRunningXCTest: Bool {
-        Thread.current.isRunningXCTest || (ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil) || (NSClassFromString("XCTest") != nil)
+        Thread.current.isRunningXCTest
+            || (ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil)
+            || (NSClassFromString("XCTest") != nil)
     }
-    
+
     private var infoPlistPath: String? {
         let googleServiceInfo: String
         switch environment {
         case .development:
             googleServiceInfo = "GoogleService-Info-Dev"
-            
+
         case .testing:
             fatalError("ここに来ることはない")
-            
+
         case .production:
             googleServiceInfo = "GoogleService-Info"
         }
 
         return Bundle.main.path(forResource: googleServiceInfo, ofType: "plist")
     }
-    
+
     private var firebaseOptions: FirebaseOptions {
         switch environment {
-        case.development, .production:
+        case .development, .production:
             guard let filePath: String = infoPlistPath
             else {
                 fatalError("Could not load Firebase config file.")

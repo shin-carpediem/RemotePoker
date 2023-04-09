@@ -88,7 +88,7 @@ struct FirestoreRefs {
         }
         return Firestore.firestore(app: app)
     }
-    
+
     /// rooms
     private var roomsCollection: CollectionReference {
         firestore.collection("rooms")

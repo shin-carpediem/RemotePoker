@@ -7,8 +7,8 @@ final class EnterRoomDataStore: EnterRoomRepository {
 
     func checkRoomExist(roomId: Int) async -> Bool {
         let roomDocument: DocumentReference =
-        firestore.collection("rooms").document(
-            String(roomId))
+            firestore.collection("rooms").document(
+                String(roomId))
         guard let document: DocumentSnapshot = try? await roomDocument.getDocument() else {
             return false
         }
@@ -72,9 +72,9 @@ final class EnterRoomDataStore: EnterRoomRepository {
             return .failure(.failedToCreateRoom)
         }
     }
-    
+
     // MARK: - Private
-    
+
     private var firestore: Firestore {
         guard let app = FirebaseEnvironment.shared.app else {
             fatalError("Could not retrieve app.")
