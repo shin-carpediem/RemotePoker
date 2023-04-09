@@ -17,3 +17,9 @@ unzip -q -o ${PROMISES_OBJC_ARCHIVE_FILE} -d ${PROMISES_OBJC_INSTALL_DIR}
 rm -r ${PROMISES_OBJC_ARCHIVE_FILE}
 mv ${PROMISES_OBJC_INSTALL_DIR}/PromisesObjC.xcframework-1.0.0 ${PROMISES_OBJC_INSTALL_DIR}/PromisesObjC.xcframework
 echo "✅ Completed installing PromisesObjC.xcframework."
+
+# Setup virtual Firebase project for tests
+cd FirebaseTests
+npm install -g firebase-tools
+firebase setup:emulators:firestore
+firebase emulators:start --only firestore
