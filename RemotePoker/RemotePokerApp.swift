@@ -12,7 +12,7 @@ struct RemotePokerApp: App, ModuleAssembler {
             didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? =
                 nil
         ) -> Bool {
-            FirebaseEnvironment.setup()
+            FirebaseEnvironment.shared.setup()
             return true
         }
     }

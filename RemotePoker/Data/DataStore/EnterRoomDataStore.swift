@@ -76,7 +76,7 @@ final class EnterRoomDataStore: EnterRoomRepository {
     // MARK: - Private
     
     private var firestore: Firestore {
-        guard let app = FirebaseEnvironment.app else {
+        guard let app = FirebaseEnvironment.shared.app else {
             fatalError("Could not retrieve app.")
         }
         return Firestore.firestore(app: app)

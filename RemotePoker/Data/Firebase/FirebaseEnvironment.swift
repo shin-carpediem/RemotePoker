@@ -2,20 +2,22 @@ import FirebaseCore
 import FirebaseFirestore
 
 final class FirebaseEnvironment {
-    private(set) static var app: FirebaseApp?
+    static let shared = FirebaseEnvironment()
     
-    static func setup() {
-        switch Self.environment {
+    private(set) var app: FirebaseApp?
+    
+    func setup() {
+        switch environment {
         case .development, .production:
-            FirebaseApp.configure(options: Self.firebaseOptions)
+            FirebaseApp.configure(options: firebaseOptions)
             guard let app = FirebaseApp.app() else {
                 fatalError("Could not retrieve default app.")
             }
-            Self.app = app
+            self.app = app
             
         case .testing:
             let appName = "secondary"
-            FirebaseApp.configure(name: appName, options: Self.firebaseOptions)
+            FirebaseApp.configure(name: appName, options: firebaseOptions)
 
             // テスト環境用にFirestoreの設定を変更する
             let settings = FirestoreSettings()
@@ -25,7 +27,7 @@ final class FirebaseEnvironment {
             guard let app = FirebaseApp.app(name: appName) else {
                 fatalError("Could not retrieve secondary app.")
             }
-            Self.app = app
+            self.app = app
         }
     }
 
@@ -40,7 +42,7 @@ final class FirebaseEnvironment {
         case production
     }
     
-    private static var environment: Environment {
+    private var environment: Environment {
         #if DEBUG
             return isRunningXCTest ? .testing: .development
         #else
@@ -48,11 +50,11 @@ final class FirebaseEnvironment {
         #endif
     }
     
-    private static var isRunningXCTest: Bool {
+    private var isRunningXCTest: Bool {
         Thread.current.isRunningXCTest || (ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil) || (NSClassFromString("XCTest") != nil)
     }
     
-    private static var infoPlistPath: String? {
+    private var infoPlistPath: String? {
         let googleServiceInfo: String
         switch environment {
         case .development:
@@ -68,7 +70,7 @@ final class FirebaseEnvironment {
         return Bundle.main.path(forResource: googleServiceInfo, ofType: "plist")
     }
     
-    private static var firebaseOptions: FirebaseOptions {
+    private var firebaseOptions: FirebaseOptions {
         switch environment {
         case.development, .production:
             guard let filePath: String = infoPlistPath
