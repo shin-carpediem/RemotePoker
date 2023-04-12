@@ -72,7 +72,7 @@ $ carthage update --platform iOS --cache-builds --use-xcframeworks --no-use-bina
 #### How to Run Tests
 
 ```
-$ cd FirebaseTests
+$ cd firebase
 ```
 
 ```
