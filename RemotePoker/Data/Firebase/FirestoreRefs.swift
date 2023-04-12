@@ -82,8 +82,15 @@ struct FirestoreRefs {
 
     // MARK: - Private
 
+    private var firestore: Firestore {
+        guard let app = FirebaseEnvironment.shared.app else {
+            fatalError("Could not retrieve app.")
+        }
+        return Firestore.firestore(app: app)
+    }
+
     /// rooms
     private var roomsCollection: CollectionReference {
-        Firestore.firestore().collection("rooms")
+        firestore.collection("rooms")
     }
 }

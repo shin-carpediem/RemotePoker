@@ -10,56 +10,42 @@
 
 #### Related to Builing App
 
-| Package Manager             | Package Name                                          | Usage                                           |
-| :-------------------------- | :---------------------------------------------------- | :---------------------------------------------- |
-| [Homebrew](https://brew.sh) | [Carthage](https://github.com/Carthage/Carthage)      | Pakcage Manager for Packages Dependent with App |
-|                             | [swift-format](https://github.com/apple/swift-format) | Code Formatter                                  |
+| Package Manager                                | Package Name                                                            | Usage                                           |
+| :--------------------------------------------- | :---------------------------------------------------------------------- | :---------------------------------------------- |
+| [Xcode](https://developer.apple.com/jp/xcode/) | [swift-package-manager](https://github.com/apple/swift-package-manager) | Pakcage Manager for Packages Dependent with App |
+| [Homebrew](https://brew.sh)                    | [swift-format](https://github.com/apple/swift-format)                   | Code Formatter                                  |
 
 #### Dependent with App
 
 | Package Manager                                                         | package Name                                                      | Usage           |
 | :---------------------------------------------------------------------- | :---------------------------------------------------------------- | :-------------- |
-| [swift-package-manager](https://github.com/apple/swift-package-manager) | [neumorphic](https://github.com/costachung/neumorphic)            | Neumorphism UI  |
-| [Carthage](https://github.com/Carthage/Carthage)                        | [FirebaseAnalytics](https://github.com/firebase/firebase-ios-sdk) | Data Analysis   |
+| [swift-package-manager](https://github.com/apple/swift-package-manager) | [FirebaseAnalytics](https://github.com/firebase/firebase-ios-sdk) | Data Analysis   |
 |                                                                         | [FirebaseAuth](https://github.com/firebase/firebase-ios-sdk)      | Anonimous Login |
 |                                                                         | [FirebaseFirestore](https://github.com/firebase/firebase-ios-sdk) | Database        |
+|                                                                         | [neumorphic](https://github.com/costachung/neumorphic)            | Neumorphism UI  |
 
 #### How to Set up Project
 
 - Install packages related to buidling the app by Homebrew.
 
 ```
-$ brew install carthage
-```
-
-```
 $ brew install swift-format
 ```
 
-- Build packages installed by Carthage and make cache for upcoming building iOS app at root of the project.
+- Add firebase's certificate named "GoogleService-Info-Dev.plist" for developing environment at the root of ${SRC_ROOT}/RemotePoker.
 
-- If you have already installed some packages by Carthage, delete them.
+#### How to Upgrade Packages
 
-```
-$ rm -r Carthage
-```
+Choose `Files` -> `Packages` -> `Update to Latest Package Versions`
 
-```
-$ carthage bootstrap --platform iOS --cache-builds --use-xcframeworks --no-use-binaries
-```
-
-- PromisesObjC.xcframework need to be installed manually.
+#### How to Run Tests
 
 ```
-$ source bin/install_promisesobjc.sh
+$ cd firebase
 ```
 
-- Add firebase's certificate named "GoogleService-Info-Dev.plist" for developing environment at the ${SRC_ROOT}/RemotePoker/{HERE}.
-
-#### How to upgrade packages
-
 ```
-$ carthage update --platform iOS --cache-builds --use-xcframeworks --no-use-binaries
+$ firebase emulators:start --only firestore
 ```
 
 #### How to Release App
