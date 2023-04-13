@@ -112,28 +112,6 @@
 		F533A3A3293FCD7300C833F7 /* OpenCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCardView.swift; sourceTree = "<group>"; };
 		F539F02429E288D400C5C9C0 /* Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
 		F558BF4E29D09548009ECDC8 /* FirebaseEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseEnvironment.swift; sourceTree = "<group>"; };
-		F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestore.xcframework; path = Carthage/Build/FirebaseFirestore.xcframework; sourceTree = "<group>"; };
-		F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurementIdentitySupport.xcframework; path = Carthage/Build/GoogleAppMeasurementIdentitySupport.xcframework; sourceTree = "<group>"; };
-		F571FA152896CA2C003531CE /* GoogleDataTransport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleDataTransport.xcframework; path = Carthage/Build/GoogleDataTransport.xcframework; sourceTree = "<group>"; };
-		F571FA162896CA2C003531CE /* abseil.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = abseil.xcframework; path = Carthage/Build/abseil.xcframework; sourceTree = "<group>"; };
-		F571FA172896CA2C003531CE /* FirebaseCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseCore.xcframework; path = Carthage/Build/FirebaseCore.xcframework; sourceTree = "<group>"; };
-		F571FA182896CA2C003531CE /* FirebaseAnalytics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAnalytics.xcframework; path = Carthage/Build/FirebaseAnalytics.xcframework; sourceTree = "<group>"; };
-		F571FA192896CA2C003531CE /* GoogleUtilities.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleUtilities.xcframework; path = Carthage/Build/GoogleUtilities.xcframework; sourceTree = "<group>"; };
-		F571FA1A2896CA2C003531CE /* FirebaseAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAuth.xcframework; path = Carthage/Build/FirebaseAuth.xcframework; sourceTree = "<group>"; };
-		F571FA1B2896CA2C003531CE /* gRPC-C++.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "gRPC-C++.xcframework"; path = "Carthage/Build/gRPC-C++.xcframework"; sourceTree = "<group>"; };
-		F571FA1C2896CA2C003531CE /* GTMSessionFetcher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GTMSessionFetcher.xcframework; path = Carthage/Build/GTMSessionFetcher.xcframework; sourceTree = "<group>"; };
-		F571FA1D2896CA2C003531CE /* FirebaseCoreDiagnostics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseCoreDiagnostics.xcframework; path = Carthage/Build/FirebaseCoreDiagnostics.xcframework; sourceTree = "<group>"; };
-		F571FA1E2896CA2C003531CE /* FirebaseFirestoreSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestoreSwift.xcframework; path = Carthage/Build/FirebaseFirestoreSwift.xcframework; sourceTree = "<group>"; };
-		F571FA1F2896CA2C003531CE /* FirebaseInstallations.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseInstallations.xcframework; path = Carthage/Build/FirebaseInstallations.xcframework; sourceTree = "<group>"; };
-		F571FA202896CA2C003531CE /* leveldb-library.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "leveldb-library.xcframework"; path = "Carthage/Build/leveldb-library.xcframework"; sourceTree = "<group>"; };
-		F571FA212896CA2C003531CE /* FirebaseAnalyticsSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAnalyticsSwift.xcframework; path = Carthage/Build/FirebaseAnalyticsSwift.xcframework; sourceTree = "<group>"; };
-		F571FA222896CA2C003531CE /* FirebaseCoreInternal.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseCoreInternal.xcframework; path = Carthage/Build/FirebaseCoreInternal.xcframework; sourceTree = "<group>"; };
-		F571FA232896CA2C003531CE /* Libuv-gRPC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "Libuv-gRPC.xcframework"; path = "Carthage/Build/Libuv-gRPC.xcframework"; sourceTree = "<group>"; };
-		F571FA242896CA2C003531CE /* gRPC-Core.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "gRPC-Core.xcframework"; path = "Carthage/Build/gRPC-Core.xcframework"; sourceTree = "<group>"; };
-		F571FA252896CA2C003531CE /* GoogleAppMeasurement.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurement.xcframework; path = Carthage/Build/GoogleAppMeasurement.xcframework; sourceTree = "<group>"; };
-		F571FA262896CA2C003531CE /* nanopb.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = nanopb.xcframework; path = Carthage/Build/nanopb.xcframework; sourceTree = "<group>"; };
-		F571FA272896CA2C003531CE /* PromisesObjC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = PromisesObjC.xcframework; path = Carthage/Build/PromisesObjC.xcframework; sourceTree = "<group>"; };
-		F571FA282896CA2C003531CE /* BoringSSL-GRPC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "BoringSSL-GRPC.xcframework"; path = "Carthage/Build/BoringSSL-GRPC.xcframework"; sourceTree = "<group>"; };
 		F571FA672896D137003531CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		F57C64192950A91000CD55CD /* SelectThemeColorContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorContract.swift; sourceTree = "<group>"; };
@@ -177,7 +155,6 @@
 		F5C6388829AB1D0600A5F90A /* RoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomModel.swift; sourceTree = "<group>"; };
 		F5C6388A29AB1D1F00A5F90A /* CardPackageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPackageModel.swift; sourceTree = "<group>"; };
 		F5C6389429AB99B300A5F90A /* FirebaseTestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTestHelper.swift; sourceTree = "<group>"; };
-		F5D2675429B3075800A6452D /* PromisesObjC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = PromisesObjC.xcframework; path = ../../Desktop/PromisesObjC.xcframework; sourceTree = "<group>"; };
 		F5DDCD1A297B86B300786C35 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		F5DDCD1C297C183500786C35 /* EnterRoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomRepository.swift; sourceTree = "<group>"; };
 		F5DDCD1E297C18C300786C35 /* EnterRoomDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomDataStore.swift; sourceTree = "<group>"; };
@@ -279,36 +256,6 @@
 				F5150AFC29694BB1008ADAD6 /* Overlay.swift */,
 			);
 			path = ViewModifier;
-			sourceTree = "<group>";
-		};
-		F571FA122896CA2B003531CE /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				F5D2675429B3075800A6452D /* PromisesObjC.xcframework */,
-				F571FA162896CA2C003531CE /* abseil.xcframework */,
-				F571FA282896CA2C003531CE /* BoringSSL-GRPC.xcframework */,
-				F571FA182896CA2C003531CE /* FirebaseAnalytics.xcframework */,
-				F571FA212896CA2C003531CE /* FirebaseAnalyticsSwift.xcframework */,
-				F571FA1A2896CA2C003531CE /* FirebaseAuth.xcframework */,
-				F571FA172896CA2C003531CE /* FirebaseCore.xcframework */,
-				F571FA1D2896CA2C003531CE /* FirebaseCoreDiagnostics.xcframework */,
-				F571FA222896CA2C003531CE /* FirebaseCoreInternal.xcframework */,
-				F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */,
-				F571FA1E2896CA2C003531CE /* FirebaseFirestoreSwift.xcframework */,
-				F571FA1F2896CA2C003531CE /* FirebaseInstallations.xcframework */,
-				F571FA252896CA2C003531CE /* GoogleAppMeasurement.xcframework */,
-				F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */,
-				F571FA152896CA2C003531CE /* GoogleDataTransport.xcframework */,
-				F571FA192896CA2C003531CE /* GoogleUtilities.xcframework */,
-				F571FA1B2896CA2C003531CE /* gRPC-C++.xcframework */,
-				F571FA242896CA2C003531CE /* gRPC-Core.xcframework */,
-				F571FA1C2896CA2C003531CE /* GTMSessionFetcher.xcframework */,
-				F571FA202896CA2C003531CE /* leveldb-library.xcframework */,
-				F571FA232896CA2C003531CE /* Libuv-gRPC.xcframework */,
-				F571FA262896CA2C003531CE /* nanopb.xcframework */,
-				F571FA272896CA2C003531CE /* PromisesObjC.xcframework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		F57C64152950A8A600CD55CD /* SelectThemeColor */ = {
@@ -681,7 +628,6 @@
 			isa = PBXGroup;
 			children = (
 				F595FE6929AFA11300B58250 /* ci_scripts */,
-				F571FA122896CA2B003531CE /* Frameworks */,
 				F5E917C8287114DC00AE8421 /* Products */,
 				F5E917C9287114DC00AE8421 /* RemotePoker */,
 				F5E917DA287114EA00AE8421 /* RemotePokerTests */,
