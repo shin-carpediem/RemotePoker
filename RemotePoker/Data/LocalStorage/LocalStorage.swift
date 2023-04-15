@@ -1,16 +1,16 @@
 import Foundation
 
-final class LocalStorage {
-    static let shared = LocalStorage()
+public final class LocalStorage {
+    public static let shared = LocalStorage()
 
     /// カレントルームID
-    var currentRoomId: Int {
+    public var currentRoomId: Int {
         get { UserDefaults.standard.integer(forKey: currentRoomIdKey) }
         set { UserDefaults.standard.set(newValue, forKey: currentRoomIdKey) }
     }
 
     /// カレントユーザーID
-    var currentUserId: String {
+    public var currentUserId: String {
         get { UserDefaults.standard.string(forKey: currentUserIdKey) ?? "" }
         set { UserDefaults.standard.set(newValue, forKey: currentUserIdKey) }
     }

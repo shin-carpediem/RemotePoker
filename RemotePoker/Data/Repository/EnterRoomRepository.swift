@@ -1,4 +1,4 @@
-protocol EnterRoomRepository: AnyObject {
+public protocol EnterRoomRepository: AnyObject {
     /// ルームが存在するか確認する
     /// - parameter roomId: ルームID
     /// - returns: 存在するか

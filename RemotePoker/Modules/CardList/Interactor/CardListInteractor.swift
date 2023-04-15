@@ -1,5 +1,4 @@
 import Combine
-import Foundation
 
 final class CardListInteractor: CardListUseCase, DependencyInjectable {
     // MARK: - DependencyInjectable

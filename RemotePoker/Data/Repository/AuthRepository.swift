@@ -1,6 +1,6 @@
 import Combine
 
-protocol AuthRepository: AnyObject {
+public protocol AuthRepository: AnyObject {
     /// ログインする
     /// - returns: ユーザーID
     func signIn() -> Future<String, Never>

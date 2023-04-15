@@ -1,5 +1,4 @@
 import Combine
-import Foundation
 
 final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
     // MARK: - DependencyInjectable

@@ -1,12 +1,12 @@
 import Combine
 import FirebaseAuth
 
-final class AuthDataStore: AuthRepository {
-    static let shared = AuthDataStore()
+public final class AuthDataStore: AuthRepository {
+    public static let shared = AuthDataStore()
 
     // MARK: - RoomAuthRepository
 
-    func signIn() -> Future<String, Never> {
+    public func signIn() -> Future<String, Never> {
         Future<String, Never> { promise in
             Auth.auth().signInAnonymously { authResult, error in
                 if error != nil {
@@ -20,7 +20,7 @@ final class AuthDataStore: AuthRepository {
         }
     }
 
-    func signOut() -> Result<Void, FirebaseError> {
+    public func signOut() -> Result<Void, FirebaseError> {
         do {
             try Auth.auth().signOut()
             return .success(())
@@ -31,6 +31,5 @@ final class AuthDataStore: AuthRepository {
 
     // MARK: - Private
 
-    // 外部からのインスタンス生成をコンパイルレベルで禁止
     private init() {}
 }

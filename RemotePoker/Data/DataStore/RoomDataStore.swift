@@ -1,16 +1,15 @@
 import Combine
 import FirebaseFirestore
 import FirebaseFirestoreSwift
-import Foundation
 
-final class RoomDataStore: RoomRepository {
-    init(roomId: Int) {
+public final class RoomDataStore: RoomRepository {
+    public init(roomId: Int) {
         self.roomId = roomId
     }
 
     // MARK: - RoomRepository
 
-    lazy var userList: PassthroughSubject<[UserEntity], Never> = {
+    public lazy var userList: PassthroughSubject<[UserEntity], Never> = {
         let subject = PassthroughSubject<[UserEntity], Never>()
         firestoreRef.usersQuery.addSnapshotListener { snapshot, error in
             if let error = error { return }
@@ -23,7 +22,7 @@ final class RoomDataStore: RoomRepository {
         return subject
     }()
 
-    lazy var cardPackage: PassthroughSubject<CardPackageEntity, Never> = {
+    public lazy var cardPackage: PassthroughSubject<CardPackageEntity, Never> = {
         let subject = PassthroughSubject<CardPackageEntity, Never>()
         firestoreRef.cardPackagesQuery.addSnapshotListener { snapshot, error in
             if let error = error { return }
@@ -38,7 +37,7 @@ final class RoomDataStore: RoomRepository {
         return subject
     }()
 
-    func addUserToRoom(user: UserEntity) async -> Result<Void, FirebaseError> {
+    public func addUserToRoom(user: UserEntity) async -> Result<Void, FirebaseError> {
         do {
             let userDocument: DocumentReference = firestoreRef.usersCollection.document(user.id)
             try await userDocument.setData([
@@ -55,7 +54,7 @@ final class RoomDataStore: RoomRepository {
         }
     }
 
-    func removeUserFromRoom(userId: String) async -> Result<Void, FirebaseError> {
+    public func removeUserFromRoom(userId: String) async -> Result<Void, FirebaseError> {
         do {
             try await firestoreRef.userDocument(userId: userId).delete()
             return .success(())
@@ -64,7 +63,7 @@ final class RoomDataStore: RoomRepository {
         }
     }
 
-    func fetchUser(byId id: String) -> Future<UserEntity, Never> {
+    public func fetchUser(byId id: String) -> Future<UserEntity, Never> {
         Future<UserEntity, Never> { [unowned self] promise in
             let userDocument: DocumentReference = self.firestoreRef.userDocument(userId: id)
             userDocument.getDocument { snapshot, _ in
@@ -75,7 +74,7 @@ final class RoomDataStore: RoomRepository {
         }
     }
 
-    func updateSelectedCardId(selectedCardDictionary: [String: String]) {
+    public func updateSelectedCardId(selectedCardDictionary: [String: String]) {
         selectedCardDictionary.forEach { userId, selectedCardId in
             let userDocument: DocumentReference = firestoreRef.userDocument(userId: userId)
             userDocument.updateData([
@@ -85,7 +84,7 @@ final class RoomDataStore: RoomRepository {
         }
     }
 
-    func updateThemeColor(cardPackageId: String, themeColor: String) {
+    public func updateThemeColor(cardPackageId: String, themeColor: String) {
         let cardPackageDocument: DocumentReference = firestoreRef.cardPackageDocument(
             cardPackageId: cardPackageId)
         cardPackageDocument.updateData([
@@ -94,11 +93,11 @@ final class RoomDataStore: RoomRepository {
         ])
     }
 
-    func unsubscribeUser() {
+    public func unsubscribeUser() {
         userList.send(completion: .finished)
     }
 
-    func unsubscribeCardPackage() {
+    public func unsubscribeCardPackage() {
         cardPackage.send(completion: .finished)
     }
 

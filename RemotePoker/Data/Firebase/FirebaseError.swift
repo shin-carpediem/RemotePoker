@@ -1,4 +1,4 @@
-enum FirebaseError: Error {
+public enum FirebaseError: Error {
     /// ログアウトに失敗した
     case failedToSignOut
 

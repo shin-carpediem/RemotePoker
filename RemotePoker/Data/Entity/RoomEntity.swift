@@ -1,10 +1,16 @@
-struct RoomEntity {
+public struct RoomEntity {
     /// ID
-    var id: Int
+    public var id: Int
 
     /// ユーザー一覧
-    var userList: [UserEntity]
+    public var userList: [UserEntity]
 
     /// カードパッケージ
-    var cardPackage: CardPackageEntity
+    public var cardPackage: CardPackageEntity
+    
+    public init(id: Int, userList: [UserEntity], cardPackage: CardPackageEntity) {
+        self.id = id
+        self.userList = userList
+        self.cardPackage = cardPackage
+    }
 }

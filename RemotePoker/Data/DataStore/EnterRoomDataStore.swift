@@ -2,10 +2,12 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Foundation
 
-final class EnterRoomDataStore: EnterRoomRepository {
+public final class EnterRoomDataStore: EnterRoomRepository {
+    public init() {}
+
     // MARK: - EnterRoomRepository
 
-    func checkRoomExist(roomId: Int) async -> Bool {
+    public func checkRoomExist(roomId: Int) async -> Bool {
         let roomDocument: DocumentReference =
             firestore.collection("rooms").document(
                 String(roomId))
@@ -15,7 +17,7 @@ final class EnterRoomDataStore: EnterRoomRepository {
         return document.exists
     }
 
-    func createRoom(_ room: RoomEntity) async -> Result<Void, FirebaseError> {
+    public func createRoom(_ room: RoomEntity) async -> Result<Void, FirebaseError> {
         do {
             // ルーム追加
             let roomId: Int = room.id

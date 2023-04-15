@@ -1,12 +1,12 @@
 import FirebaseCore
 import FirebaseFirestore
 
-final class FirebaseEnvironment {
-    static let shared = FirebaseEnvironment()
+public final class FirebaseEnvironment {
+    public static let shared = FirebaseEnvironment()
 
-    private(set) var app: FirebaseApp?
+    public private(set) var app: FirebaseApp?
 
-    func setup() {
+    public func setup() {
         switch environment {
         case .development, .production:
             FirebaseApp.configure(options: firebaseOptions)

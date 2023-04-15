@@ -1,82 +1,86 @@
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-struct FirestoreRefs {
+public struct FirestoreRefs {
     /// ルームID
-    var roomId: Int
+    public var roomId: Int
+    
+    public init(roomId: Int) {
+        self.roomId = roomId
+    }
 
     // MARK: - CollectionReference
 
     /// rooms / { roomId } / users
-    var usersCollection: CollectionReference {
+    public var usersCollection: CollectionReference {
         roomsCollection.document(String(roomId)).collection("users")
     }
 
     /// rooms / { roomId } / cardPackages
-    var cardPackagesCollection: CollectionReference {
+    public var cardPackagesCollection: CollectionReference {
         roomsCollection.document(String(roomId)).collection("cardPackages")
     }
 
     /// rooms / { roomId } / cardPackages / { cardPackageId } / cards
-    func cardsCollection(cardPackageId: String) -> CollectionReference {
+    public func cardsCollection(cardPackageId: String) -> CollectionReference {
         cardPackagesCollection.document(cardPackageId).collection("cards")
     }
 
     // MARK: - DocumentReference
 
     /// rooms / { roomId }
-    var roomDocument: DocumentReference {
+    public var roomDocument: DocumentReference {
         roomsCollection.document(String(roomId))
     }
 
     /// rooms / { roomId } / cardPackages / { cardPackageId }
-    func cardPackageDocument(cardPackageId: String) -> DocumentReference {
+    public func cardPackageDocument(cardPackageId: String) -> DocumentReference {
         cardPackagesCollection.document(cardPackageId)
     }
 
     /// rooms /  {roomId } / users / { userId }
-    func userDocument(userId: String) -> DocumentReference {
+    public func userDocument(userId: String) -> DocumentReference {
         usersCollection.document(userId)
     }
 
     /// rooms / { roomId } / cardPackages / { cardPackageId } / cards / { cardId }
-    func cardDocument(cardPackageId: String, cardId: String) -> DocumentReference {
+    public func cardDocument(cardPackageId: String, cardId: String) -> DocumentReference {
         cardsCollection(cardPackageId: cardPackageId).document(cardId)
     }
 
     // MARK: - DocumentSnapshot
 
     /// rooms / { roomId }
-    func roomSnapshot() async -> DocumentSnapshot? {
+    public func roomSnapshot() async -> DocumentSnapshot? {
         try? await roomDocument.getDocument()
     }
 
     // MARK: - Query
 
     /// rooms / { roomId } / cardPackages / *
-    var cardPackagesQuery: Query {
+    public var cardPackagesQuery: Query {
         cardPackagesCollection.whereField("id", isNotEqualTo: "")
     }
 
     /// rooms / { roomId } / users / *
-    var usersQuery: Query {
+    public var usersQuery: Query {
         usersCollection.whereField("id", isNotEqualTo: "")
     }
 
     // MARK: - QueryDocumentSnapshot
 
     /// rooms / { roomId } / users / *
-    func usersSnapshot() async -> [QueryDocumentSnapshot]? {
+    public func usersSnapshot() async -> [QueryDocumentSnapshot]? {
         try? await usersCollection.getDocuments().documents
     }
 
     /// rooms / { roomId } / cardPackages / *
-    func cardPackagesSnapshot() async -> [QueryDocumentSnapshot]? {
+    public func cardPackagesSnapshot() async -> [QueryDocumentSnapshot]? {
         try? await cardPackagesCollection.getDocuments().documents
     }
 
     /// rooms / { roomId } / cardPackages / { cardPackageId } / cards / *
-    func cardsSnapshot(cardPackageId: String) async -> [QueryDocumentSnapshot]? {
+    public func cardsSnapshot(cardPackageId: String) async -> [QueryDocumentSnapshot]? {
         try? await cardsCollection(cardPackageId: cardPackageId).getDocuments().documents
     }
 
