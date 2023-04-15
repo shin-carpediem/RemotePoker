@@ -1,7 +1,7 @@
 import FirebaseCore
 import FirebaseFirestore
 
-@testable import RemotePoker
+@testable import RemotePokerData
 
 /// テスト用の仮想のFirebaseプロジェクトを作成するヘルパー
 struct FirebaseTestHelper {

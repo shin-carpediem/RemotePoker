@@ -2,9 +2,9 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import XCTest
 
-@testable import RemotePoker
+@testable import RemotePokerData
 
-class EnterRoomDataStoreTests: XCTestCase {
+final class EnterRoomDataStoreTests: XCTestCase {
     // MARK: - Override
 
     override func tearDown() {

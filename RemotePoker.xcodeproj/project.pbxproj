@@ -56,12 +56,10 @@
 		F5C6388729AB1CEA00A5F90A /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6388629AB1CEA00A5F90A /* UserModel.swift */; };
 		F5C6388929AB1D0600A5F90A /* RoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6388829AB1D0600A5F90A /* RoomModel.swift */; };
 		F5C6388B29AB1D1F00A5F90A /* CardPackageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6388A29AB1D1F00A5F90A /* CardPackageModel.swift */; };
-		F5C6389529AB99B300A5F90A /* FirebaseTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6389429AB99B300A5F90A /* FirebaseTestHelper.swift */; };
 		F5DD230829EACF390091B84C /* RemotePokerViews in Frameworks */ = {isa = PBXBuildFile; productRef = F5DD230729EACF390091B84C /* RemotePokerViews */; };
 		F5DD230A29EAD45E0091B84C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5DD230929EAD44F0091B84C /* Assets.xcassets */; };
 		F5E917CB287114DC00AE8421 /* RemotePokerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917CA287114DC00AE8421 /* RemotePokerApp.swift */; };
 		F5E917D2287114E900AE8421 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5E917D1287114E900AE8421 /* Preview Assets.xcassets */; };
-		F5E917DC287114EA00AE8421 /* EnterRoomDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917DB287114EA00AE8421 /* EnterRoomDataStoreTests.swift */; };
 		F5E917E6287114EA00AE8421 /* RemotePokerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917E5287114EA00AE8421 /* RemotePokerUITests.swift */; };
 		F5E917E8287114EA00AE8421 /* RemotePokerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917E7287114EA00AE8421 /* RemotePokerUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
@@ -127,14 +125,12 @@
 		F5C6388629AB1CEA00A5F90A /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		F5C6388829AB1D0600A5F90A /* RoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomModel.swift; sourceTree = "<group>"; };
 		F5C6388A29AB1D1F00A5F90A /* CardPackageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPackageModel.swift; sourceTree = "<group>"; };
-		F5C6389429AB99B300A5F90A /* FirebaseTestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTestHelper.swift; sourceTree = "<group>"; };
 		F5D0FEC729EACCD6006769AD /* RemotePokerViews */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RemotePokerViews; sourceTree = "<group>"; };
 		F5DD230929EAD44F0091B84C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5E917C7287114DC00AE8421 /* RemotePoker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemotePoker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5E917CA287114DC00AE8421 /* RemotePokerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePokerApp.swift; sourceTree = "<group>"; };
 		F5E917D1287114E900AE8421 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F5E917D7287114EA00AE8421 /* RemotePokerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RemotePokerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F5E917DB287114EA00AE8421 /* EnterRoomDataStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomDataStoreTests.swift; sourceTree = "<group>"; };
 		F5E917E1287114EA00AE8421 /* RemotePokerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RemotePokerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5E917E5287114EA00AE8421 /* RemotePokerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePokerUITests.swift; sourceTree = "<group>"; };
 		F5E917E7287114EA00AE8421 /* RemotePokerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePokerUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -398,69 +394,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		F5C6388C29AB5C5300A5F90A /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				F5C6389229AB5FB000A5F90A /* DataStore */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		F5C6388D29AB5C5800A5F90A /* Modules */ = {
-			isa = PBXGroup;
-			children = (
-				F5C6388E29AB5F6F00A5F90A /* EnterRoom */,
-				F5C6388F29AB5F7600A5F90A /* CardList */,
-				F5C6389029AB5F7E00A5F90A /* Setting */,
-				F5C6389129AB5F9600A5F90A /* SelectThemeColor */,
-			);
-			path = Modules;
-			sourceTree = "<group>";
-		};
-		F5C6388E29AB5F6F00A5F90A /* EnterRoom */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = EnterRoom;
-			sourceTree = "<group>";
-		};
-		F5C6388F29AB5F7600A5F90A /* CardList */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CardList;
-			sourceTree = "<group>";
-		};
-		F5C6389029AB5F7E00A5F90A /* Setting */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Setting;
-			sourceTree = "<group>";
-		};
-		F5C6389129AB5F9600A5F90A /* SelectThemeColor */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SelectThemeColor;
-			sourceTree = "<group>";
-		};
-		F5C6389229AB5FB000A5F90A /* DataStore */ = {
-			isa = PBXGroup;
-			children = (
-				F5E917DB287114EA00AE8421 /* EnterRoomDataStoreTests.swift */,
-			);
-			path = DataStore;
-			sourceTree = "<group>";
-		};
-		F5C6389329AB996E00A5F90A /* TestHelper */ = {
-			isa = PBXGroup;
-			children = (
-				F5C6389429AB99B300A5F90A /* FirebaseTestHelper.swift */,
-			);
-			path = TestHelper;
-			sourceTree = "<group>";
-		};
 		F5DD230629EACF390091B84C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -556,9 +489,6 @@
 		F5E917DA287114EA00AE8421 /* RemotePokerTests */ = {
 			isa = PBXGroup;
 			children = (
-				F5C6389329AB996E00A5F90A /* TestHelper */,
-				F5C6388C29AB5C5300A5F90A /* Data */,
-				F5C6388D29AB5C5800A5F90A /* Modules */,
 			);
 			path = RemotePokerTests;
 			sourceTree = "<group>";
@@ -789,8 +719,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5E917DC287114EA00AE8421 /* EnterRoomDataStoreTests.swift in Sources */,
-				F5C6389529AB99B300A5F90A /* FirebaseTestHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
