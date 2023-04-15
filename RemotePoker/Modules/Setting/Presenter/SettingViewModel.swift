@@ -1,8 +1,6 @@
 import Foundation
 
-actor SettingViewModel: SettingObservable {
-    // MARK: - SettingObservable
-
+actor SettingViewModel: ObservableObject, ViewModel {
     /// テーマカラー選択画面に遷移するか
     @MainActor
     @Published var willPushSelectThemeColorView = false

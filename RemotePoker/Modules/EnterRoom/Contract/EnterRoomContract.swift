@@ -1,27 +1,5 @@
 import Foundation
 
-protocol EnterRoomObservable: ObservableObject, ViewModel {
-    /// 入力フォーム/名前
-    @MainActor
-    var inputName: String { get set }
-
-    /// 入力フォーム/ルームID
-    @MainActor
-    var inputRoomId: String { get set }
-
-    /// 入力フォーム内容が有効か
-    @MainActor
-    var isInputFormValid: Bool { get }
-
-    /// 入力フォーム内容が有効か評価されて表示されるメッセージ
-    @MainActor
-    var inputFormvalidatedMessage: String { get }
-
-    /// カード一覧画面に遷移するか
-    @MainActor
-    var willPushCardListView: Bool { get set }
-}
-
 protocol EnterRoomPresentation: AnyObject, Presentation {
     /// カレントユーザー
     var currentUser: UserViewModel { get }

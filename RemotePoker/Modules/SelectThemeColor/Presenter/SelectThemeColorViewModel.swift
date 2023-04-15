@@ -1,11 +1,11 @@
 import Foundation
 
-actor SelectThemeColorViewModel: SelectThemeColorObservable {
-    // MARK: - SelectThemeColorObservable
-
+actor SelectThemeColorViewModel: ObservableObject, ViewModel {
+    /// テーマカラー一覧
     @MainActor
     @Published var themeColorList = [CardPackageThemeColor]()
 
+    /// 選択されたテーマカラー
     @MainActor
     @Published var selectedThemeColor: CardPackageThemeColor?
 
