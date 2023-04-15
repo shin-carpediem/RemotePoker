@@ -395,6 +395,7 @@
 			isa = PBXGroup;
 			children = (
 				F5AFC1DE296BC12200A4FFCA /* Colors.swift */,
+				F5E917CE287114E900AE8421 /* Assets.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -655,7 +656,6 @@
 				F5DDCD19297B869F00786C35 /* Extension */,
 				F5AFC1E0296BC21500A4FFCA /* Resources */,
 				F5E917CA287114DC00AE8421 /* RemotePokerApp.swift */,
-				F5E917CE287114E900AE8421 /* Assets.xcassets */,
 				F571FA672896D137003531CE /* GoogleService-Info.plist */,
 				F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */,
 				F5E917D0287114E900AE8421 /* Preview Content */,

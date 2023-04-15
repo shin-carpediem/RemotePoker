@@ -7,7 +7,7 @@ public struct RoomEntity {
 
     /// カードパッケージ
     public var cardPackage: CardPackageEntity
-    
+
     public init(id: Int, userList: [UserEntity], cardPackage: CardPackageEntity) {
         self.id = id
         self.userList = userList
