@@ -1,5 +1,5 @@
 import Combine
-import Foundation
+import RemotePokerData
 
 final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
     // MARK: - DependencyInjectable

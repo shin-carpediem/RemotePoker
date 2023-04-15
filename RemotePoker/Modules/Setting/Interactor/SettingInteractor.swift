@@ -1,4 +1,5 @@
 import Foundation
+import RemotePokerData
 
 final class SettingInteractor: SettingUseCase, DependencyInjectable {
     // MARK: - DependencyInjectable

@@ -1,4 +1,6 @@
 import Neumorphic
+import RemotePokerData
+import RemotePokerViews
 import SwiftUI
 
 struct CardListView: View, ModuleAssembler {
@@ -24,10 +26,6 @@ struct CardListView: View, ModuleAssembler {
     private var dependency: Dependency
 
     @ObservedObject private var viewModel: CardListViewModel
-
-    private var notificationBanner: NotificationBanner {
-        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
-    }
 
     // MARK: - View
 
@@ -85,7 +83,7 @@ struct CardListView: View, ModuleAssembler {
         let cardList = viewModel.room.cardPackage.cardList
         return LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
             ForEach(cardList) { card in
-                let isSelected =
+                let isSelected: Bool =
                     (card.id
                         == viewModel.userSelectStatusList.first(where: {
                             $0.user.id == dependency.currentUserId
@@ -113,10 +111,11 @@ struct CardListView: View, ModuleAssembler {
 
     /// 選択されたカードのポイント
     private var selectedCardPointView: some View {
-        let currentUserSelectStatus = viewModel.userSelectStatusList.first(where: {
-            $0.user.id == dependency.currentUserId
-        })
-        let point = currentUserSelectStatus?.selectedCard?.point ?? ""
+        let currentUserSelectStatus: UserSelectStatusViewModel? = viewModel.userSelectStatusList
+            .first(where: {
+                $0.user.id == dependency.currentUserId
+            })
+        let point: String = currentUserSelectStatus?.selectedCard?.point ?? ""
         return Text(point)
             .foregroundColor(.gray)
             .font(.system(size: 26, weight: .regular))
@@ -143,6 +142,11 @@ struct CardListView: View, ModuleAssembler {
         .softButtonStyle(Circle())
         .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
         .disabled(!viewModel.isButtonEnabled)
+    }
+
+    /// 通知バナー
+    private var notificationBanner: NotificationBanner {
+        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
     }
 
     // MARK: - Router

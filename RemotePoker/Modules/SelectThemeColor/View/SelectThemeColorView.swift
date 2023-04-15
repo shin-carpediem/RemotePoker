@@ -1,3 +1,4 @@
+import RemotePokerViews
 import SwiftUI
 
 struct SelectThemeColorView: View {
@@ -20,10 +21,6 @@ struct SelectThemeColorView: View {
     private var dependency: Dependency
 
     @ObservedObject private var viewModel: SelectThemeColorViewModel
-
-    private var notificationBanner: NotificationBanner {
-        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
-    }
 
     // MARK: - View
 
@@ -51,7 +48,7 @@ struct SelectThemeColorView: View {
 
     /// カラーセル
     private func colorCell(_ color: CardPackageThemeColor) -> some View {
-        let isThemeColor = color == viewModel.selectedThemeColor
+        let isThemeColor: Bool = (color == viewModel.selectedThemeColor)
         return Button {
             dependency.presenter.didTapColor(color: color)
         } label: {
@@ -75,6 +72,11 @@ struct SelectThemeColorView: View {
     private func label(_ color: CardPackageThemeColor) -> some View {
         Text(color.rawValue)
             .foregroundColor(.gray)
+    }
+
+    /// 通知バナー
+    private var notificationBanner: NotificationBanner {
+        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
     }
 }
 

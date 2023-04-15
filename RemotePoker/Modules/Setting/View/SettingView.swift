@@ -1,3 +1,4 @@
+import RemotePokerViews
 import SwiftUI
 
 struct SettingView: View, ModuleAssembler {
@@ -22,10 +23,6 @@ struct SettingView: View, ModuleAssembler {
     private var dependency: Dependency
 
     @ObservedObject private var viewModel: SettingViewModel
-
-    private var notificationBanner: NotificationBanner {
-        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
-    }
 
     // MARK: - View
 
@@ -82,6 +79,11 @@ struct SettingView: View, ModuleAssembler {
             }
         }
         .disabled(!viewModel.isButtonEnabled)
+    }
+
+    /// 通知バナー
+    private var notificationBanner: NotificationBanner {
+        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
     }
 
     // MARK: - Router

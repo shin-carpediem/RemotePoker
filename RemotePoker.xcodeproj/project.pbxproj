@@ -9,15 +9,12 @@
 /* Begin PBXBuildFile section */
 		F50060F9294437A3005923A7 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50060F8294437A3005923A7 /* SettingView.swift */; };
 		F5125F2E292E755600C822FE /* EnterRoomPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5125F2D292E755600C822FE /* EnterRoomPresenter.swift */; };
-		F5150AFA2968E042008ADAD6 /* NotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5150AF92968E042008ADAD6 /* NotificationBanner.swift */; };
-		F5150AFD29694BB1008ADAD6 /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5150AFC29694BB1008ADAD6 /* Overlay.swift */; };
 		F5150AFF2969577F008ADAD6 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5150AFE2969577F008ADAD6 /* ViewModel.swift */; };
 		F523669A2891E837005B1F65 /* CardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52366992891E837005B1F65 /* CardListView.swift */; };
 		F52366A22896382F005B1F65 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52366A12896382F005B1F65 /* CardView.swift */; };
 		F525301429364D5200727472 /* EnterRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F525301329364D5200727472 /* EnterRoomViewModel.swift */; };
 		F52530162936560D00727472 /* CardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52530152936560D00727472 /* CardListViewModel.swift */; };
 		F533A3A4293FCD7300C833F7 /* OpenCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F533A3A3293FCD7300C833F7 /* OpenCardView.swift */; };
-		F539F02529E288D400C5C9C0 /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = F539F02429E288D400C5C9C0 /* Thread.swift */; };
 		F539F02829E6DE4300C5C9C0 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F539F02729E6DE4300C5C9C0 /* FirebaseAnalytics */; };
 		F539F02A29E6DE4400C5C9C0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = F539F02929E6DE4300C5C9C0 /* FirebaseAnalyticsOnDeviceConversion */; };
 		F539F02C29E6DE4400C5C9C0 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F539F02B29E6DE4400C5C9C0 /* FirebaseAnalyticsSwift */; };
@@ -26,7 +23,6 @@
 		F539F03229E6DE4400C5C9C0 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F539F03129E6DE4400C5C9C0 /* FirebaseFirestore */; };
 		F539F03429E6DE4400C5C9C0 /* FirebaseInstallations in Frameworks */ = {isa = PBXBuildFile; productRef = F539F03329E6DE4400C5C9C0 /* FirebaseInstallations */; };
 		F539F03629E6DEFE00C5C9C0 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F539F03529E6DEFE00C5C9C0 /* FirebaseFirestoreSwift */; };
-		F558BF4F29D09548009ECDC8 /* FirebaseEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = F558BF4E29D09548009ECDC8 /* FirebaseEnvironment.swift */; };
 		F571FA682896D137003531CE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F571FA672896D137003531CE /* GoogleService-Info.plist */; };
 		F57A44BA29D09F9A00A077DD /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */; };
 		F57C641A2950A91000CD55CD /* SelectThemeColorContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C64192950A91000CD55CD /* SelectThemeColorContract.swift */; };
@@ -34,14 +30,9 @@
 		F57C641E2950AA3400CD55CD /* SelectThemeColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C641D2950AA3400CD55CD /* SelectThemeColorView.swift */; };
 		F57C64212956BB7C00CD55CD /* SelectThemeColorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C64202956BB7C00CD55CD /* SelectThemeColorViewModel.swift */; };
 		F57C6430296120BD00CD55CD /* SettingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C642F296120BD00CD55CD /* SettingInteractor.swift */; };
-		F57C64322961366500CD55CD /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C64312961366500CD55CD /* AuthRepository.swift */; };
-		F57C6434296136CC00CD55CD /* AuthDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C6433296136CC00CD55CD /* AuthDataStore.swift */; };
-		F57C64362962F11C00CD55CD /* LocalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C64352962F11C00CD55CD /* LocalStorage.swift */; };
 		F57C643A2963010E00CD55CD /* DependencyInjectable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C64392963010E00CD55CD /* DependencyInjectable.swift */; };
 		F57C643C2963134800CD55CD /* Presentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C643B2963134800CD55CD /* Presentation.swift */; };
 		F57C643F2963B53800CD55CD /* EnterRoomInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C643E2963B53800CD55CD /* EnterRoomInteractor.swift */; };
-		F57C644129653F1500CD55CD /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C644029653F1500CD55CD /* UserEntity.swift */; };
-		F5802CFB2931E6E000955949 /* FirestoreRefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFA2931E6E000955949 /* FirestoreRefs.swift */; };
 		F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802CFD293207C700955949 /* CardListPresenter.swift */; };
 		F5802D0329320DEF00955949 /* ModuleAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D0229320DEF00955949 /* ModuleAssembler.swift */; };
 		F5802D0529320F1B00955949 /* ModuleAssembler+Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5802D0429320F1B00955949 /* ModuleAssembler+Default.swift */; };
@@ -50,14 +41,12 @@
 		F588E30728BB8E2800C5CA9A /* Neumorphic in Frameworks */ = {isa = PBXBuildFile; productRef = F588E30628BB8E2800C5CA9A /* Neumorphic */; };
 		F59EE30F29954AD200A772BE /* UserSelectStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59EE30E29954AD200A772BE /* UserSelectStatusViewModel.swift */; };
 		F59EE31329967DC200A772BE /* CardPackageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59EE31229967DC200A772BE /* CardPackageViewModel.swift */; };
-		F5AFC1DF296BC12200A4FFCA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1DE296BC12200A4FFCA /* Colors.swift */; };
+		F5A9D18F29EAFE430002865B /* RemotePokerData in Frameworks */ = {isa = PBXBuildFile; productRef = F5A9D18E29EAFE430002865B /* RemotePokerData */; };
 		F5AFC1E5296BF22700A4FFCA /* InputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1E4296BF22700A4FFCA /* InputText.swift */; };
 		F5B2FAD92944768600592363 /* SettingContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FAD82944768600592363 /* SettingContract.swift */; };
 		F5B2FADB294476BA00592363 /* SettingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FADA294476BA00592363 /* SettingPresenter.swift */; };
 		F5B2FADE2944773C00592363 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FADD2944773C00592363 /* SettingViewModel.swift */; };
 		F5B2FAE22949423200592363 /* CardListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FAE12949423200592363 /* CardListInteractor.swift */; };
-		F5C397DA289E9342008AEFF2 /* CardPackageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397D9289E9342008AEFF2 /* CardPackageEntity.swift */; };
-		F5C397DC289F40C6008AEFF2 /* RoomEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DB289F40C6008AEFF2 /* RoomEntity.swift */; };
 		F5C397E0289F420F008AEFF2 /* EnterRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */; };
 		F5C6387A29AAFA7400A5F90A /* Translator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6387929AAFA7400A5F90A /* Translator.swift */; };
 		F5C6387C29AB074800A5F90A /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6387B29AB074800A5F90A /* UserViewModel.swift */; };
@@ -67,17 +56,10 @@
 		F5C6388729AB1CEA00A5F90A /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6388629AB1CEA00A5F90A /* UserModel.swift */; };
 		F5C6388929AB1D0600A5F90A /* RoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6388829AB1D0600A5F90A /* RoomModel.swift */; };
 		F5C6388B29AB1D1F00A5F90A /* CardPackageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6388A29AB1D1F00A5F90A /* CardPackageModel.swift */; };
-		F5C6389529AB99B300A5F90A /* FirebaseTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6389429AB99B300A5F90A /* FirebaseTestHelper.swift */; };
-		F5DDCD1B297B86B300786C35 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1A297B86B300786C35 /* List.swift */; };
-		F5DDCD1D297C183600786C35 /* EnterRoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1C297C183500786C35 /* EnterRoomRepository.swift */; };
-		F5DDCD1F297C18C300786C35 /* EnterRoomDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1E297C18C300786C35 /* EnterRoomDataStore.swift */; };
-		F5DDCD21297C1AEF00786C35 /* FirebaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD20297C1AEF00786C35 /* FirebaseError.swift */; };
-		F5E05171292BB05F006EA727 /* RoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E05170292BB05F006EA727 /* RoomRepository.swift */; };
-		F5E05175292BB134006EA727 /* RoomDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E05174292BB134006EA727 /* RoomDataStore.swift */; };
+		F5DD230829EACF390091B84C /* RemotePokerViews in Frameworks */ = {isa = PBXBuildFile; productRef = F5DD230729EACF390091B84C /* RemotePokerViews */; };
+		F5DD230A29EAD45E0091B84C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5DD230929EAD44F0091B84C /* Assets.xcassets */; };
 		F5E917CB287114DC00AE8421 /* RemotePokerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917CA287114DC00AE8421 /* RemotePokerApp.swift */; };
-		F5E917CF287114E900AE8421 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5E917CE287114E900AE8421 /* Assets.xcassets */; };
 		F5E917D2287114E900AE8421 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5E917D1287114E900AE8421 /* Preview Assets.xcassets */; };
-		F5E917DC287114EA00AE8421 /* EnterRoomDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917DB287114EA00AE8421 /* EnterRoomDataStoreTests.swift */; };
 		F5E917E6287114EA00AE8421 /* RemotePokerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917E5287114EA00AE8421 /* RemotePokerUITests.swift */; };
 		F5E917E8287114EA00AE8421 /* RemotePokerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917E7287114EA00AE8421 /* RemotePokerUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
@@ -102,38 +84,12 @@
 /* Begin PBXFileReference section */
 		F50060F8294437A3005923A7 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		F5125F2D292E755600C822FE /* EnterRoomPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomPresenter.swift; sourceTree = "<group>"; };
-		F5150AF92968E042008ADAD6 /* NotificationBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBanner.swift; sourceTree = "<group>"; };
-		F5150AFC29694BB1008ADAD6 /* Overlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overlay.swift; sourceTree = "<group>"; };
 		F5150AFE2969577F008ADAD6 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		F52366992891E837005B1F65 /* CardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListView.swift; sourceTree = "<group>"; };
 		F52366A12896382F005B1F65 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		F525301329364D5200727472 /* EnterRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomViewModel.swift; sourceTree = "<group>"; };
 		F52530152936560D00727472 /* CardListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewModel.swift; sourceTree = "<group>"; };
 		F533A3A3293FCD7300C833F7 /* OpenCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCardView.swift; sourceTree = "<group>"; };
-		F539F02429E288D400C5C9C0 /* Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
-		F558BF4E29D09548009ECDC8 /* FirebaseEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseEnvironment.swift; sourceTree = "<group>"; };
-		F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestore.xcframework; path = Carthage/Build/FirebaseFirestore.xcframework; sourceTree = "<group>"; };
-		F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurementIdentitySupport.xcframework; path = Carthage/Build/GoogleAppMeasurementIdentitySupport.xcframework; sourceTree = "<group>"; };
-		F571FA152896CA2C003531CE /* GoogleDataTransport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleDataTransport.xcframework; path = Carthage/Build/GoogleDataTransport.xcframework; sourceTree = "<group>"; };
-		F571FA162896CA2C003531CE /* abseil.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = abseil.xcframework; path = Carthage/Build/abseil.xcframework; sourceTree = "<group>"; };
-		F571FA172896CA2C003531CE /* FirebaseCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseCore.xcframework; path = Carthage/Build/FirebaseCore.xcframework; sourceTree = "<group>"; };
-		F571FA182896CA2C003531CE /* FirebaseAnalytics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAnalytics.xcframework; path = Carthage/Build/FirebaseAnalytics.xcframework; sourceTree = "<group>"; };
-		F571FA192896CA2C003531CE /* GoogleUtilities.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleUtilities.xcframework; path = Carthage/Build/GoogleUtilities.xcframework; sourceTree = "<group>"; };
-		F571FA1A2896CA2C003531CE /* FirebaseAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAuth.xcframework; path = Carthage/Build/FirebaseAuth.xcframework; sourceTree = "<group>"; };
-		F571FA1B2896CA2C003531CE /* gRPC-C++.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "gRPC-C++.xcframework"; path = "Carthage/Build/gRPC-C++.xcframework"; sourceTree = "<group>"; };
-		F571FA1C2896CA2C003531CE /* GTMSessionFetcher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GTMSessionFetcher.xcframework; path = Carthage/Build/GTMSessionFetcher.xcframework; sourceTree = "<group>"; };
-		F571FA1D2896CA2C003531CE /* FirebaseCoreDiagnostics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseCoreDiagnostics.xcframework; path = Carthage/Build/FirebaseCoreDiagnostics.xcframework; sourceTree = "<group>"; };
-		F571FA1E2896CA2C003531CE /* FirebaseFirestoreSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestoreSwift.xcframework; path = Carthage/Build/FirebaseFirestoreSwift.xcframework; sourceTree = "<group>"; };
-		F571FA1F2896CA2C003531CE /* FirebaseInstallations.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseInstallations.xcframework; path = Carthage/Build/FirebaseInstallations.xcframework; sourceTree = "<group>"; };
-		F571FA202896CA2C003531CE /* leveldb-library.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "leveldb-library.xcframework"; path = "Carthage/Build/leveldb-library.xcframework"; sourceTree = "<group>"; };
-		F571FA212896CA2C003531CE /* FirebaseAnalyticsSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAnalyticsSwift.xcframework; path = Carthage/Build/FirebaseAnalyticsSwift.xcframework; sourceTree = "<group>"; };
-		F571FA222896CA2C003531CE /* FirebaseCoreInternal.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseCoreInternal.xcframework; path = Carthage/Build/FirebaseCoreInternal.xcframework; sourceTree = "<group>"; };
-		F571FA232896CA2C003531CE /* Libuv-gRPC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "Libuv-gRPC.xcframework"; path = "Carthage/Build/Libuv-gRPC.xcframework"; sourceTree = "<group>"; };
-		F571FA242896CA2C003531CE /* gRPC-Core.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "gRPC-Core.xcframework"; path = "Carthage/Build/gRPC-Core.xcframework"; sourceTree = "<group>"; };
-		F571FA252896CA2C003531CE /* GoogleAppMeasurement.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurement.xcframework; path = Carthage/Build/GoogleAppMeasurement.xcframework; sourceTree = "<group>"; };
-		F571FA262896CA2C003531CE /* nanopb.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = nanopb.xcframework; path = Carthage/Build/nanopb.xcframework; sourceTree = "<group>"; };
-		F571FA272896CA2C003531CE /* PromisesObjC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = PromisesObjC.xcframework; path = Carthage/Build/PromisesObjC.xcframework; sourceTree = "<group>"; };
-		F571FA282896CA2C003531CE /* BoringSSL-GRPC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "BoringSSL-GRPC.xcframework"; path = "Carthage/Build/BoringSSL-GRPC.xcframework"; sourceTree = "<group>"; };
 		F571FA672896D137003531CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		F57C64192950A91000CD55CD /* SelectThemeColorContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorContract.swift; sourceTree = "<group>"; };
@@ -141,14 +97,9 @@
 		F57C641D2950AA3400CD55CD /* SelectThemeColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorView.swift; sourceTree = "<group>"; };
 		F57C64202956BB7C00CD55CD /* SelectThemeColorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorViewModel.swift; sourceTree = "<group>"; };
 		F57C642F296120BD00CD55CD /* SettingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingInteractor.swift; sourceTree = "<group>"; };
-		F57C64312961366500CD55CD /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
-		F57C6433296136CC00CD55CD /* AuthDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDataStore.swift; sourceTree = "<group>"; };
-		F57C64352962F11C00CD55CD /* LocalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorage.swift; sourceTree = "<group>"; };
 		F57C64392963010E00CD55CD /* DependencyInjectable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjectable.swift; sourceTree = "<group>"; };
 		F57C643B2963134800CD55CD /* Presentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presentation.swift; sourceTree = "<group>"; };
 		F57C643E2963B53800CD55CD /* EnterRoomInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomInteractor.swift; sourceTree = "<group>"; };
-		F57C644029653F1500CD55CD /* UserEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEntity.swift; sourceTree = "<group>"; };
-		F5802CFA2931E6E000955949 /* FirestoreRefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRefs.swift; sourceTree = "<group>"; };
 		F5802CFD293207C700955949 /* CardListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListPresenter.swift; sourceTree = "<group>"; };
 		F5802D0229320DEF00955949 /* ModuleAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleAssembler.swift; sourceTree = "<group>"; };
 		F5802D0429320F1B00955949 /* ModuleAssembler+Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ModuleAssembler+Default.swift"; sourceTree = "<group>"; };
@@ -159,14 +110,12 @@
 		F595FE6C29AFA45A00B58250 /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
 		F59EE30E29954AD200A772BE /* UserSelectStatusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectStatusViewModel.swift; sourceTree = "<group>"; };
 		F59EE31229967DC200A772BE /* CardPackageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPackageViewModel.swift; sourceTree = "<group>"; };
-		F5AFC1DE296BC12200A4FFCA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		F5A9E74729EAFC0900CFE053 /* RemotePokerData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RemotePokerData; sourceTree = "<group>"; };
 		F5AFC1E4296BF22700A4FFCA /* InputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputText.swift; sourceTree = "<group>"; };
 		F5B2FAD82944768600592363 /* SettingContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContract.swift; sourceTree = "<group>"; };
 		F5B2FADA294476BA00592363 /* SettingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPresenter.swift; sourceTree = "<group>"; };
 		F5B2FADD2944773C00592363 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		F5B2FAE12949423200592363 /* CardListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListInteractor.swift; sourceTree = "<group>"; };
-		F5C397D9289E9342008AEFF2 /* CardPackageEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPackageEntity.swift; sourceTree = "<group>"; };
-		F5C397DB289F40C6008AEFF2 /* RoomEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomEntity.swift; sourceTree = "<group>"; };
 		F5C397DF289F420F008AEFF2 /* EnterRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomView.swift; sourceTree = "<group>"; };
 		F5C6387929AAFA7400A5F90A /* Translator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translator.swift; sourceTree = "<group>"; };
 		F5C6387B29AB074800A5F90A /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
@@ -176,20 +125,12 @@
 		F5C6388629AB1CEA00A5F90A /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		F5C6388829AB1D0600A5F90A /* RoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomModel.swift; sourceTree = "<group>"; };
 		F5C6388A29AB1D1F00A5F90A /* CardPackageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPackageModel.swift; sourceTree = "<group>"; };
-		F5C6389429AB99B300A5F90A /* FirebaseTestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTestHelper.swift; sourceTree = "<group>"; };
-		F5D2675429B3075800A6452D /* PromisesObjC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = PromisesObjC.xcframework; path = ../../Desktop/PromisesObjC.xcframework; sourceTree = "<group>"; };
-		F5DDCD1A297B86B300786C35 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
-		F5DDCD1C297C183500786C35 /* EnterRoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomRepository.swift; sourceTree = "<group>"; };
-		F5DDCD1E297C18C300786C35 /* EnterRoomDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomDataStore.swift; sourceTree = "<group>"; };
-		F5DDCD20297C1AEF00786C35 /* FirebaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseError.swift; sourceTree = "<group>"; };
-		F5E05170292BB05F006EA727 /* RoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomRepository.swift; sourceTree = "<group>"; };
-		F5E05174292BB134006EA727 /* RoomDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDataStore.swift; sourceTree = "<group>"; };
+		F5D0FEC729EACCD6006769AD /* RemotePokerViews */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RemotePokerViews; sourceTree = "<group>"; };
+		F5DD230929EAD44F0091B84C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5E917C7287114DC00AE8421 /* RemotePoker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemotePoker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5E917CA287114DC00AE8421 /* RemotePokerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePokerApp.swift; sourceTree = "<group>"; };
-		F5E917CE287114E900AE8421 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5E917D1287114E900AE8421 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F5E917D7287114EA00AE8421 /* RemotePokerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RemotePokerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		F5E917DB287114EA00AE8421 /* EnterRoomDataStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomDataStoreTests.swift; sourceTree = "<group>"; };
 		F5E917E1287114EA00AE8421 /* RemotePokerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RemotePokerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5E917E5287114EA00AE8421 /* RemotePokerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePokerUITests.swift; sourceTree = "<group>"; };
 		F5E917E7287114EA00AE8421 /* RemotePokerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePokerUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -201,6 +142,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F539F02C29E6DE4400C5C9C0 /* FirebaseAnalyticsSwift in Frameworks */,
+				F5A9D18F29EAFE430002865B /* RemotePokerData in Frameworks */,
+				F5DD230829EACF390091B84C /* RemotePokerViews in Frameworks */,
 				F539F03029E6DE4400C5C9C0 /* FirebaseAuth in Frameworks */,
 				F539F02E29E6DE4400C5C9C0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				F539F03429E6DE4400C5C9C0 /* FirebaseInstallations in Frameworks */,
@@ -273,44 +216,6 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
-		F5150AFB29694B95008ADAD6 /* ViewModifier */ = {
-			isa = PBXGroup;
-			children = (
-				F5150AFC29694BB1008ADAD6 /* Overlay.swift */,
-			);
-			path = ViewModifier;
-			sourceTree = "<group>";
-		};
-		F571FA122896CA2B003531CE /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				F5D2675429B3075800A6452D /* PromisesObjC.xcframework */,
-				F571FA162896CA2C003531CE /* abseil.xcframework */,
-				F571FA282896CA2C003531CE /* BoringSSL-GRPC.xcframework */,
-				F571FA182896CA2C003531CE /* FirebaseAnalytics.xcframework */,
-				F571FA212896CA2C003531CE /* FirebaseAnalyticsSwift.xcframework */,
-				F571FA1A2896CA2C003531CE /* FirebaseAuth.xcframework */,
-				F571FA172896CA2C003531CE /* FirebaseCore.xcframework */,
-				F571FA1D2896CA2C003531CE /* FirebaseCoreDiagnostics.xcframework */,
-				F571FA222896CA2C003531CE /* FirebaseCoreInternal.xcframework */,
-				F571FA132896CA2C003531CE /* FirebaseFirestore.xcframework */,
-				F571FA1E2896CA2C003531CE /* FirebaseFirestoreSwift.xcframework */,
-				F571FA1F2896CA2C003531CE /* FirebaseInstallations.xcframework */,
-				F571FA252896CA2C003531CE /* GoogleAppMeasurement.xcframework */,
-				F571FA142896CA2C003531CE /* GoogleAppMeasurementIdentitySupport.xcframework */,
-				F571FA152896CA2C003531CE /* GoogleDataTransport.xcframework */,
-				F571FA192896CA2C003531CE /* GoogleUtilities.xcframework */,
-				F571FA1B2896CA2C003531CE /* gRPC-C++.xcframework */,
-				F571FA242896CA2C003531CE /* gRPC-Core.xcframework */,
-				F571FA1C2896CA2C003531CE /* GTMSessionFetcher.xcframework */,
-				F571FA202896CA2C003531CE /* leveldb-library.xcframework */,
-				F571FA232896CA2C003531CE /* Libuv-gRPC.xcframework */,
-				F571FA262896CA2C003531CE /* nanopb.xcframework */,
-				F571FA272896CA2C003531CE /* PromisesObjC.xcframework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		F57C64152950A8A600CD55CD /* SelectThemeColor */ = {
 			isa = PBXGroup;
 			children = (
@@ -354,14 +259,6 @@
 			path = Interactor;
 			sourceTree = "<group>";
 		};
-		F57C64372963003E00CD55CD /* LocalStorage */ = {
-			isa = PBXGroup;
-			children = (
-				F57C64352962F11C00CD55CD /* LocalStorage.swift */,
-			);
-			path = LocalStorage;
-			sourceTree = "<group>";
-		};
 		F57C6438296300F400CD55CD /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -379,16 +276,6 @@
 				F57C643E2963B53800CD55CD /* EnterRoomInteractor.swift */,
 			);
 			path = Interactor;
-			sourceTree = "<group>";
-		};
-		F5802CF92931E6D000955949 /* Firebase */ = {
-			isa = PBXGroup;
-			children = (
-				F558BF4E29D09548009ECDC8 /* FirebaseEnvironment.swift */,
-				F5802CFA2931E6E000955949 /* FirestoreRefs.swift */,
-				F5DDCD20297C1AEF00786C35 /* FirebaseError.swift */,
-			);
-			path = Firebase;
 			sourceTree = "<group>";
 		};
 		F5802CFC293207B400955949 /* Presenter */ = {
@@ -434,22 +321,6 @@
 				F595FE6B29AFA2D500B58250 /* README.md */,
 			);
 			path = ci_scripts;
-			sourceTree = "<group>";
-		};
-		F5AFC1DB296BBEBE00A4FFCA /* ViewComponents */ = {
-			isa = PBXGroup;
-			children = (
-				F5150AF92968E042008ADAD6 /* NotificationBanner.swift */,
-			);
-			path = ViewComponents;
-			sourceTree = "<group>";
-		};
-		F5AFC1E0296BC21500A4FFCA /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				F5AFC1DE296BC12200A4FFCA /* Colors.swift */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		F5AFC1E3296BF21800A4FFCA /* ViewComponents */ = {
@@ -523,76 +394,11 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		F5C6388C29AB5C5300A5F90A /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				F5C6389229AB5FB000A5F90A /* DataStore */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		F5C6388D29AB5C5800A5F90A /* Modules */ = {
-			isa = PBXGroup;
-			children = (
-				F5C6388E29AB5F6F00A5F90A /* EnterRoom */,
-				F5C6388F29AB5F7600A5F90A /* CardList */,
-				F5C6389029AB5F7E00A5F90A /* Setting */,
-				F5C6389129AB5F9600A5F90A /* SelectThemeColor */,
-			);
-			path = Modules;
-			sourceTree = "<group>";
-		};
-		F5C6388E29AB5F6F00A5F90A /* EnterRoom */ = {
+		F5DD230629EACF390091B84C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = EnterRoom;
-			sourceTree = "<group>";
-		};
-		F5C6388F29AB5F7600A5F90A /* CardList */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CardList;
-			sourceTree = "<group>";
-		};
-		F5C6389029AB5F7E00A5F90A /* Setting */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Setting;
-			sourceTree = "<group>";
-		};
-		F5C6389129AB5F9600A5F90A /* SelectThemeColor */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SelectThemeColor;
-			sourceTree = "<group>";
-		};
-		F5C6389229AB5FB000A5F90A /* DataStore */ = {
-			isa = PBXGroup;
-			children = (
-				F5E917DB287114EA00AE8421 /* EnterRoomDataStoreTests.swift */,
-			);
-			path = DataStore;
-			sourceTree = "<group>";
-		};
-		F5C6389329AB996E00A5F90A /* TestHelper */ = {
-			isa = PBXGroup;
-			children = (
-				F5C6389429AB99B300A5F90A /* FirebaseTestHelper.swift */,
-			);
-			path = TestHelper;
-			sourceTree = "<group>";
-		};
-		F5DDCD19297B869F00786C35 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				F539F02429E288D400C5C9C0 /* Thread.swift */,
-				F5DDCD1A297B86B300786C35 /* List.swift */,
-			);
-			path = Extension;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		F5E051662929B116006EA727 /* View */ = {
@@ -626,16 +432,6 @@
 			path = EnterRoom;
 			sourceTree = "<group>";
 		};
-		F5E051692929B421006EA727 /* Entity */ = {
-			isa = PBXGroup;
-			children = (
-				F57C644029653F1500CD55CD /* UserEntity.swift */,
-				F5C397DB289F40C6008AEFF2 /* RoomEntity.swift */,
-				F5C397D9289E9342008AEFF2 /* CardPackageEntity.swift */,
-			);
-			path = Entity;
-			sourceTree = "<group>";
-		};
 		F5E0516A2929B45C006EA727 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -645,47 +441,17 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		F5E0516F292BAFF4006EA727 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				F5E051692929B421006EA727 /* Entity */,
-				F5802CF92931E6D000955949 /* Firebase */,
-				F5E05172292BB0EF006EA727 /* Repository */,
-				F5E05173292BB0FA006EA727 /* DataStore */,
-				F57C64372963003E00CD55CD /* LocalStorage */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		F5E05172292BB0EF006EA727 /* Repository */ = {
-			isa = PBXGroup;
-			children = (
-				F57C64312961366500CD55CD /* AuthRepository.swift */,
-				F5DDCD1C297C183500786C35 /* EnterRoomRepository.swift */,
-				F5E05170292BB05F006EA727 /* RoomRepository.swift */,
-			);
-			path = Repository;
-			sourceTree = "<group>";
-		};
-		F5E05173292BB0FA006EA727 /* DataStore */ = {
-			isa = PBXGroup;
-			children = (
-				F57C6433296136CC00CD55CD /* AuthDataStore.swift */,
-				F5DDCD1E297C18C300786C35 /* EnterRoomDataStore.swift */,
-				F5E05174292BB134006EA727 /* RoomDataStore.swift */,
-			);
-			path = DataStore;
-			sourceTree = "<group>";
-		};
 		F5E917BE287114DC00AE8421 = {
 			isa = PBXGroup;
 			children = (
 				F595FE6929AFA11300B58250 /* ci_scripts */,
-				F571FA122896CA2B003531CE /* Frameworks */,
 				F5E917C8287114DC00AE8421 /* Products */,
+				F5DD230629EACF390091B84C /* Frameworks */,
 				F5E917C9287114DC00AE8421 /* RemotePoker */,
 				F5E917DA287114EA00AE8421 /* RemotePokerTests */,
 				F5E917E4287114EA00AE8421 /* RemotePokerUITests */,
+				F5D0FEC729EACCD6006769AD /* RemotePokerViews */,
+				F5A9E74729EAFC0900CFE053 /* RemotePokerData */,
 			);
 			sourceTree = "<group>";
 		};
@@ -702,14 +468,9 @@
 		F5E917C9287114DC00AE8421 /* RemotePoker */ = {
 			isa = PBXGroup;
 			children = (
-				F5E0516F292BAFF4006EA727 /* Data */,
 				F5125F26292DF92700C822FE /* Modules */,
-				F5150AFB29694B95008ADAD6 /* ViewModifier */,
-				F5AFC1DB296BBEBE00A4FFCA /* ViewComponents */,
-				F5DDCD19297B869F00786C35 /* Extension */,
-				F5AFC1E0296BC21500A4FFCA /* Resources */,
 				F5E917CA287114DC00AE8421 /* RemotePokerApp.swift */,
-				F5E917CE287114E900AE8421 /* Assets.xcassets */,
+				F5DD230929EAD44F0091B84C /* Assets.xcassets */,
 				F571FA672896D137003531CE /* GoogleService-Info.plist */,
 				F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */,
 				F5E917D0287114E900AE8421 /* Preview Content */,
@@ -728,9 +489,6 @@
 		F5E917DA287114EA00AE8421 /* RemotePokerTests */ = {
 			isa = PBXGroup;
 			children = (
-				F5C6389329AB996E00A5F90A /* TestHelper */,
-				F5C6388C29AB5C5300A5F90A /* Data */,
-				F5C6388D29AB5C5800A5F90A /* Modules */,
 			);
 			path = RemotePokerTests;
 			sourceTree = "<group>";
@@ -771,6 +529,8 @@
 				F539F03129E6DE4400C5C9C0 /* FirebaseFirestore */,
 				F539F03329E6DE4400C5C9C0 /* FirebaseInstallations */,
 				F539F03529E6DEFE00C5C9C0 /* FirebaseFirestoreSwift */,
+				F5DD230729EACF390091B84C /* RemotePokerViews */,
+				F5A9D18E29EAFE430002865B /* RemotePokerData */,
 			);
 			productName = Scrumdinger;
 			productReference = F5E917C7287114DC00AE8421 /* RemotePoker.app */;
@@ -866,8 +626,8 @@
 			files = (
 				F57A44BA29D09F9A00A077DD /* GoogleService-Info-Dev.plist in Resources */,
 				F571FA682896D137003531CE /* GoogleService-Info.plist in Resources */,
+				F5DD230A29EAD45E0091B84C /* Assets.xcassets in Resources */,
 				F5E917D2287114E900AE8421 /* Preview Assets.xcassets in Resources */,
-				F5E917CF287114E900AE8421 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -915,60 +675,42 @@
 			buildActionMask = 2147483647;
 			files = (
 				F57C641C2950A99F00CD55CD /* SelectThemeColorPresenter.swift in Sources */,
-				F57C6434296136CC00CD55CD /* AuthDataStore.swift in Sources */,
-				F5802CFB2931E6E000955949 /* FirestoreRefs.swift in Sources */,
-				F57C64322961366500CD55CD /* AuthRepository.swift in Sources */,
-				F5E05175292BB134006EA727 /* RoomDataStore.swift in Sources */,
 				F5C397E0289F420F008AEFF2 /* EnterRoomView.swift in Sources */,
 				F52366A22896382F005B1F65 /* CardView.swift in Sources */,
 				F57C641E2950AA3400CD55CD /* SelectThemeColorView.swift in Sources */,
-				F5DDCD1D297C183600786C35 /* EnterRoomRepository.swift in Sources */,
 				F57C643C2963134800CD55CD /* Presentation.swift in Sources */,
-				F5C397DC289F40C6008AEFF2 /* RoomEntity.swift in Sources */,
 				F5B2FAD92944768600592363 /* SettingContract.swift in Sources */,
 				F57C64212956BB7C00CD55CD /* SelectThemeColorViewModel.swift in Sources */,
-				F5DDCD21297C1AEF00786C35 /* FirebaseError.swift in Sources */,
 				F5B2FADB294476BA00592363 /* SettingPresenter.swift in Sources */,
 				F5802D0B293218A800955949 /* CardListContract.swift in Sources */,
 				F5C6388729AB1CEA00A5F90A /* UserModel.swift in Sources */,
-				F5DDCD1B297B86B300786C35 /* List.swift in Sources */,
 				F523669A2891E837005B1F65 /* CardListView.swift in Sources */,
 				F5802D0529320F1B00955949 /* ModuleAssembler+Default.swift in Sources */,
 				F5C6387E29AB076000A5F90A /* RoomViewModel.swift in Sources */,
 				F5C6387A29AAFA7400A5F90A /* Translator.swift in Sources */,
 				F5AFC1E5296BF22700A4FFCA /* InputText.swift in Sources */,
-				F5E05171292BB05F006EA727 /* RoomRepository.swift in Sources */,
 				F57C643A2963010E00CD55CD /* DependencyInjectable.swift in Sources */,
 				F5C6388929AB1D0600A5F90A /* RoomModel.swift in Sources */,
-				F5DDCD1F297C18C300786C35 /* EnterRoomDataStore.swift in Sources */,
 				F5125F2E292E755600C822FE /* EnterRoomPresenter.swift in Sources */,
 				F525301429364D5200727472 /* EnterRoomViewModel.swift in Sources */,
 				F5C6387C29AB074800A5F90A /* UserViewModel.swift in Sources */,
 				F5C6388B29AB1D1F00A5F90A /* CardPackageModel.swift in Sources */,
 				F5B2FAE22949423200592363 /* CardListInteractor.swift in Sources */,
 				F57C641A2950A91000CD55CD /* SelectThemeColorContract.swift in Sources */,
-				F5AFC1DF296BC12200A4FFCA /* Colors.swift in Sources */,
-				F57C644129653F1500CD55CD /* UserEntity.swift in Sources */,
 				F5C6388429AB0C4500A5F90A /* CardPackageModel+SampleData.swift in Sources */,
 				F5802D0329320DEF00955949 /* ModuleAssembler.swift in Sources */,
 				F5E917CB287114DC00AE8421 /* RemotePokerApp.swift in Sources */,
 				F57C643F2963B53800CD55CD /* EnterRoomInteractor.swift in Sources */,
-				F57C64362962F11C00CD55CD /* LocalStorage.swift in Sources */,
 				F52530162936560D00727472 /* CardListViewModel.swift in Sources */,
 				F5150AFF2969577F008ADAD6 /* ViewModel.swift in Sources */,
 				F5802D08293217D000955949 /* EnterRoomContract.swift in Sources */,
 				F57C6430296120BD00CD55CD /* SettingInteractor.swift in Sources */,
 				F59EE31329967DC200A772BE /* CardPackageViewModel.swift in Sources */,
-				F5150AFA2968E042008ADAD6 /* NotificationBanner.swift in Sources */,
 				F5B2FADE2944773C00592363 /* SettingViewModel.swift in Sources */,
-				F539F02529E288D400C5C9C0 /* Thread.swift in Sources */,
 				F5C6388229AB092800A5F90A /* CardPackageModelToCardPackageViewModelTranslator.swift in Sources */,
-				F5C397DA289E9342008AEFF2 /* CardPackageEntity.swift in Sources */,
 				F59EE30F29954AD200A772BE /* UserSelectStatusViewModel.swift in Sources */,
 				F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */,
 				F533A3A4293FCD7300C833F7 /* OpenCardView.swift in Sources */,
-				F5150AFD29694BB1008ADAD6 /* Overlay.swift in Sources */,
-				F558BF4F29D09548009ECDC8 /* FirebaseEnvironment.swift in Sources */,
 				F50060F9294437A3005923A7 /* SettingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -977,8 +719,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5E917DC287114EA00AE8421 /* EnterRoomDataStoreTests.swift in Sources */,
-				F5C6389529AB99B300A5F90A /* FirebaseTestHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1376,6 +1116,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F588E30528BB8E2800C5CA9A /* XCRemoteSwiftPackageReference "neumorphic" */;
 			productName = Neumorphic;
+		};
+		F5A9D18E29EAFE430002865B /* RemotePokerData */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RemotePokerData;
+		};
+		F5DD230729EACF390091B84C /* RemotePokerViews */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RemotePokerViews;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

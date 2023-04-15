@@ -1,35 +1,5 @@
 import Foundation
 
-protocol CardListObservable: ObservableObject, ViewModel {
-    /// ルーム
-    @MainActor
-    var room: RoomViewModel { get set }
-
-    /// タイトル
-    @MainActor
-    var title: String { get set }
-
-    /// ユーザーのカード選択状況一覧
-    @MainActor
-    var userSelectStatusList: [UserSelectStatusViewModel] { get set }
-
-    /// 選択済みカード一覧が公開されるか
-    @MainActor
-    var isShownSelectedCardList: Bool { get set }
-
-    /// ボタンの説明テキスト
-    @MainActor
-    var buttonText: String { get }
-
-    @MainActor
-    /// フローティングアクションボタンのシンボル名
-    var fabIconName: String { get }
-
-    /// 設定画面に遷移するか
-    @MainActor
-    var willPushSettingView: Bool { get set }
-}
-
 protocol CardListPresentation: AnyObject, Presentation {
     /// カードを選択した
     /// - parameter cardId: カードID

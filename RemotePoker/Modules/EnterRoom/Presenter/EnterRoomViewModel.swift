@@ -1,7 +1,8 @@
 import Combine
+import RemotePokerViews
 import SwiftUI
 
-final class EnterRoomViewModel: EnterRoomObservable {
+final class EnterRoomViewModel: ObservableObject, ViewModel {
     init() {
         observeInputForm()
     }
@@ -10,22 +11,25 @@ final class EnterRoomViewModel: EnterRoomObservable {
         disposeInputForm()
     }
 
-    // MARK: - EnterRoomObservable
-
+    /// 入力フォーム/名前
     @MainActor
     @Published var inputName = ""
 
+    /// 入力フォーム/ルームID
     @MainActor
     @Published var inputRoomId = ""
 
+    /// 入力フォーム内容が有効か
     @MainActor
     @Published private(set) var isInputFormValid = true
 
+    /// 入力フォーム内容が有効か評価されて表示されるメッセージ
     @MainActor
     var inputFormvalidatedMessage: String {
         isInputFormValid ? "数字が新しければ新しいルームが作られます" : "6文字以下の名前と4桁の数字が必要です"
     }
 
+    /// カード一覧画面に遷移するか
     @MainActor
     @Published var willPushCardListView = false
 
