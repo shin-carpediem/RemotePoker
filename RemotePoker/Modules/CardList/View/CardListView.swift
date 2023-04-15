@@ -81,7 +81,7 @@ struct CardListView: View, ModuleAssembler {
         let cardList = viewModel.room.cardPackage.cardList
         return LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
             ForEach(cardList) { card in
-                let isSelected =
+                let isSelected: Bool =
                     (card.id
                         == viewModel.userSelectStatusList.first(where: {
                             $0.user.id == dependency.currentUserId
@@ -109,10 +109,10 @@ struct CardListView: View, ModuleAssembler {
 
     /// 選択されたカードのポイント
     private var selectedCardPointView: some View {
-        let currentUserSelectStatus = viewModel.userSelectStatusList.first(where: {
+        let currentUserSelectStatus: UserSelectStatusViewModel? = viewModel.userSelectStatusList.first(where: {
             $0.user.id == dependency.currentUserId
         })
-        let point = currentUserSelectStatus?.selectedCard?.point ?? ""
+        let point: String = currentUserSelectStatus?.selectedCard?.point ?? ""
         return Text(point)
             .foregroundColor(.gray)
             .font(.system(size: 26, weight: .regular))

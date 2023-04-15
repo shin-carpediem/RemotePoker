@@ -47,7 +47,7 @@ struct SelectThemeColorView: View {
 
     /// カラーセル
     private func colorCell(_ color: CardPackageThemeColor) -> some View {
-        let isThemeColor = color == viewModel.selectedThemeColor
+        let isThemeColor: Bool = (color == viewModel.selectedThemeColor)
         return Button {
             dependency.presenter.didTapColor(color: color)
         } label: {
