@@ -1,4 +1,5 @@
 import Foundation
+import RemotePokerViews
 
 final class SettingPresenter: SettingPresentation, SettingInteractorOutput, DependencyInjectable {
     // MARK: - DependencyInjectable

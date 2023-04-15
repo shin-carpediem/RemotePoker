@@ -1,4 +1,5 @@
 import Foundation
+import RemotePokerViews
 
 actor SettingViewModel: ObservableObject, ViewModel {
     /// テーマカラー選択画面に遷移するか

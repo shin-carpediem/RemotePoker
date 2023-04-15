@@ -1,4 +1,5 @@
 import Foundation
+import RemotePokerViews
 
 actor SelectThemeColorViewModel: ObservableObject, ViewModel {
     /// テーマカラー一覧

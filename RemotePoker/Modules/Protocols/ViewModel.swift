@@ -1,3 +1,5 @@
+import RemotePokerViews
+
 protocol ViewModel {
     /// ボタンが有効か
     @MainActor var isButtonEnabled: Bool { get set }

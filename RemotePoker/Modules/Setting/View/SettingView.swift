@@ -1,3 +1,4 @@
+import RemotePokerViews
 import SwiftUI
 
 struct SettingView: View, ModuleAssembler {

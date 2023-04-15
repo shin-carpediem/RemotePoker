@@ -1,4 +1,5 @@
 import Foundation
+import RemotePokerViews
 
 final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput,
     DependencyInjectable

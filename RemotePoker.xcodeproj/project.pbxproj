@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		F50060F9294437A3005923A7 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50060F8294437A3005923A7 /* SettingView.swift */; };
 		F5125F2E292E755600C822FE /* EnterRoomPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5125F2D292E755600C822FE /* EnterRoomPresenter.swift */; };
-		F5150AFA2968E042008ADAD6 /* NotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5150AF92968E042008ADAD6 /* NotificationBanner.swift */; };
-		F5150AFD29694BB1008ADAD6 /* Overlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5150AFC29694BB1008ADAD6 /* Overlay.swift */; };
 		F5150AFF2969577F008ADAD6 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5150AFE2969577F008ADAD6 /* ViewModel.swift */; };
 		F523669A2891E837005B1F65 /* CardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52366992891E837005B1F65 /* CardListView.swift */; };
 		F52366A22896382F005B1F65 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F52366A12896382F005B1F65 /* CardView.swift */; };
@@ -50,7 +48,6 @@
 		F588E30728BB8E2800C5CA9A /* Neumorphic in Frameworks */ = {isa = PBXBuildFile; productRef = F588E30628BB8E2800C5CA9A /* Neumorphic */; };
 		F59EE30F29954AD200A772BE /* UserSelectStatusViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59EE30E29954AD200A772BE /* UserSelectStatusViewModel.swift */; };
 		F59EE31329967DC200A772BE /* CardPackageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59EE31229967DC200A772BE /* CardPackageViewModel.swift */; };
-		F5AFC1DF296BC12200A4FFCA /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1DE296BC12200A4FFCA /* Colors.swift */; };
 		F5AFC1E5296BF22700A4FFCA /* InputText.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AFC1E4296BF22700A4FFCA /* InputText.swift */; };
 		F5B2FAD92944768600592363 /* SettingContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FAD82944768600592363 /* SettingContract.swift */; };
 		F5B2FADB294476BA00592363 /* SettingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5B2FADA294476BA00592363 /* SettingPresenter.swift */; };
@@ -68,6 +65,8 @@
 		F5C6388929AB1D0600A5F90A /* RoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6388829AB1D0600A5F90A /* RoomModel.swift */; };
 		F5C6388B29AB1D1F00A5F90A /* CardPackageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6388A29AB1D1F00A5F90A /* CardPackageModel.swift */; };
 		F5C6389529AB99B300A5F90A /* FirebaseTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5C6389429AB99B300A5F90A /* FirebaseTestHelper.swift */; };
+		F5DD230829EACF390091B84C /* RemotePokerViews in Frameworks */ = {isa = PBXBuildFile; productRef = F5DD230729EACF390091B84C /* RemotePokerViews */; };
+		F5DD230A29EAD45E0091B84C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5DD230929EAD44F0091B84C /* Assets.xcassets */; };
 		F5DDCD1B297B86B300786C35 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1A297B86B300786C35 /* List.swift */; };
 		F5DDCD1D297C183600786C35 /* EnterRoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1C297C183500786C35 /* EnterRoomRepository.swift */; };
 		F5DDCD1F297C18C300786C35 /* EnterRoomDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DDCD1E297C18C300786C35 /* EnterRoomDataStore.swift */; };
@@ -75,7 +74,6 @@
 		F5E05171292BB05F006EA727 /* RoomRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E05170292BB05F006EA727 /* RoomRepository.swift */; };
 		F5E05175292BB134006EA727 /* RoomDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E05174292BB134006EA727 /* RoomDataStore.swift */; };
 		F5E917CB287114DC00AE8421 /* RemotePokerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917CA287114DC00AE8421 /* RemotePokerApp.swift */; };
-		F5E917CF287114E900AE8421 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5E917CE287114E900AE8421 /* Assets.xcassets */; };
 		F5E917D2287114E900AE8421 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5E917D1287114E900AE8421 /* Preview Assets.xcassets */; };
 		F5E917DC287114EA00AE8421 /* EnterRoomDataStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917DB287114EA00AE8421 /* EnterRoomDataStoreTests.swift */; };
 		F5E917E6287114EA00AE8421 /* RemotePokerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917E5287114EA00AE8421 /* RemotePokerUITests.swift */; };
@@ -102,8 +100,6 @@
 /* Begin PBXFileReference section */
 		F50060F8294437A3005923A7 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		F5125F2D292E755600C822FE /* EnterRoomPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomPresenter.swift; sourceTree = "<group>"; };
-		F5150AF92968E042008ADAD6 /* NotificationBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBanner.swift; sourceTree = "<group>"; };
-		F5150AFC29694BB1008ADAD6 /* Overlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overlay.swift; sourceTree = "<group>"; };
 		F5150AFE2969577F008ADAD6 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		F52366992891E837005B1F65 /* CardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListView.swift; sourceTree = "<group>"; };
 		F52366A12896382F005B1F65 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
@@ -137,7 +133,6 @@
 		F595FE6C29AFA45A00B58250 /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
 		F59EE30E29954AD200A772BE /* UserSelectStatusViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSelectStatusViewModel.swift; sourceTree = "<group>"; };
 		F59EE31229967DC200A772BE /* CardPackageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPackageViewModel.swift; sourceTree = "<group>"; };
-		F5AFC1DE296BC12200A4FFCA /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		F5AFC1E4296BF22700A4FFCA /* InputText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputText.swift; sourceTree = "<group>"; };
 		F5B2FAD82944768600592363 /* SettingContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContract.swift; sourceTree = "<group>"; };
 		F5B2FADA294476BA00592363 /* SettingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingPresenter.swift; sourceTree = "<group>"; };
@@ -155,6 +150,8 @@
 		F5C6388829AB1D0600A5F90A /* RoomModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomModel.swift; sourceTree = "<group>"; };
 		F5C6388A29AB1D1F00A5F90A /* CardPackageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardPackageModel.swift; sourceTree = "<group>"; };
 		F5C6389429AB99B300A5F90A /* FirebaseTestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTestHelper.swift; sourceTree = "<group>"; };
+		F5D0FEC729EACCD6006769AD /* RemotePokerViews */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RemotePokerViews; sourceTree = "<group>"; };
+		F5DD230929EAD44F0091B84C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5DDCD1A297B86B300786C35 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		F5DDCD1C297C183500786C35 /* EnterRoomRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomRepository.swift; sourceTree = "<group>"; };
 		F5DDCD1E297C18C300786C35 /* EnterRoomDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomDataStore.swift; sourceTree = "<group>"; };
@@ -163,7 +160,6 @@
 		F5E05174292BB134006EA727 /* RoomDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDataStore.swift; sourceTree = "<group>"; };
 		F5E917C7287114DC00AE8421 /* RemotePoker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemotePoker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5E917CA287114DC00AE8421 /* RemotePokerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePokerApp.swift; sourceTree = "<group>"; };
-		F5E917CE287114E900AE8421 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5E917D1287114E900AE8421 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F5E917D7287114EA00AE8421 /* RemotePokerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RemotePokerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5E917DB287114EA00AE8421 /* EnterRoomDataStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomDataStoreTests.swift; sourceTree = "<group>"; };
@@ -178,6 +174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F539F02C29E6DE4400C5C9C0 /* FirebaseAnalyticsSwift in Frameworks */,
+				F5DD230829EACF390091B84C /* RemotePokerViews in Frameworks */,
 				F539F03029E6DE4400C5C9C0 /* FirebaseAuth in Frameworks */,
 				F539F02E29E6DE4400C5C9C0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				F539F03429E6DE4400C5C9C0 /* FirebaseInstallations in Frameworks */,
@@ -248,14 +245,6 @@
 				F5125F2D292E755600C822FE /* EnterRoomPresenter.swift */,
 			);
 			path = Presenter;
-			sourceTree = "<group>";
-		};
-		F5150AFB29694B95008ADAD6 /* ViewModifiers */ = {
-			isa = PBXGroup;
-			children = (
-				F5150AFC29694BB1008ADAD6 /* Overlay.swift */,
-			);
-			path = ViewModifiers;
 			sourceTree = "<group>";
 		};
 		F57C64152950A8A600CD55CD /* SelectThemeColor */ = {
@@ -381,23 +370,6 @@
 				F595FE6B29AFA2D500B58250 /* README.md */,
 			);
 			path = ci_scripts;
-			sourceTree = "<group>";
-		};
-		F5AFC1DB296BBEBE00A4FFCA /* ViewComponents */ = {
-			isa = PBXGroup;
-			children = (
-				F5150AF92968E042008ADAD6 /* NotificationBanner.swift */,
-			);
-			path = ViewComponents;
-			sourceTree = "<group>";
-		};
-		F5AFC1E0296BC21500A4FFCA /* ViewResources */ = {
-			isa = PBXGroup;
-			children = (
-				F5AFC1DE296BC12200A4FFCA /* Colors.swift */,
-				F5E917CE287114E900AE8421 /* Assets.xcassets */,
-			);
-			path = ViewResources;
 			sourceTree = "<group>";
 		};
 		F5AFC1E3296BF21800A4FFCA /* ViewComponents */ = {
@@ -534,14 +506,11 @@
 			path = TestHelper;
 			sourceTree = "<group>";
 		};
-		F5D0FEC029EAA91E006769AD /* Views */ = {
+		F5DD230629EACF390091B84C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F5AFC1DB296BBEBE00A4FFCA /* ViewComponents */,
-				F5150AFB29694B95008ADAD6 /* ViewModifiers */,
-				F5AFC1E0296BC21500A4FFCA /* ViewResources */,
 			);
-			path = Views;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		F5DDCD19297B869F00786C35 /* Extensions */ = {
@@ -640,9 +609,11 @@
 			children = (
 				F595FE6929AFA11300B58250 /* ci_scripts */,
 				F5E917C8287114DC00AE8421 /* Products */,
+				F5DD230629EACF390091B84C /* Frameworks */,
 				F5E917C9287114DC00AE8421 /* RemotePoker */,
 				F5E917DA287114EA00AE8421 /* RemotePokerTests */,
 				F5E917E4287114EA00AE8421 /* RemotePokerUITests */,
+				F5D0FEC729EACCD6006769AD /* RemotePokerViews */,
 			);
 			sourceTree = "<group>";
 		};
@@ -660,10 +631,10 @@
 			isa = PBXGroup;
 			children = (
 				F5E0516F292BAFF4006EA727 /* Data */,
-				F5D0FEC029EAA91E006769AD /* Views */,
 				F5DDCD19297B869F00786C35 /* Extensions */,
 				F5125F26292DF92700C822FE /* Modules */,
 				F5E917CA287114DC00AE8421 /* RemotePokerApp.swift */,
+				F5DD230929EAD44F0091B84C /* Assets.xcassets */,
 				F571FA672896D137003531CE /* GoogleService-Info.plist */,
 				F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */,
 				F5E917D0287114E900AE8421 /* Preview Content */,
@@ -725,6 +696,7 @@
 				F539F03129E6DE4400C5C9C0 /* FirebaseFirestore */,
 				F539F03329E6DE4400C5C9C0 /* FirebaseInstallations */,
 				F539F03529E6DEFE00C5C9C0 /* FirebaseFirestoreSwift */,
+				F5DD230729EACF390091B84C /* RemotePokerViews */,
 			);
 			productName = Scrumdinger;
 			productReference = F5E917C7287114DC00AE8421 /* RemotePoker.app */;
@@ -820,8 +792,8 @@
 			files = (
 				F57A44BA29D09F9A00A077DD /* GoogleService-Info-Dev.plist in Resources */,
 				F571FA682896D137003531CE /* GoogleService-Info.plist in Resources */,
+				F5DD230A29EAD45E0091B84C /* Assets.xcassets in Resources */,
 				F5E917D2287114E900AE8421 /* Preview Assets.xcassets in Resources */,
-				F5E917CF287114E900AE8421 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -901,7 +873,6 @@
 				F5C6388B29AB1D1F00A5F90A /* CardPackageModel.swift in Sources */,
 				F5B2FAE22949423200592363 /* CardListInteractor.swift in Sources */,
 				F57C641A2950A91000CD55CD /* SelectThemeColorContract.swift in Sources */,
-				F5AFC1DF296BC12200A4FFCA /* Colors.swift in Sources */,
 				F57C644129653F1500CD55CD /* UserEntity.swift in Sources */,
 				F5C6388429AB0C4500A5F90A /* CardPackageModel+SampleData.swift in Sources */,
 				F5802D0329320DEF00955949 /* ModuleAssembler.swift in Sources */,
@@ -913,7 +884,6 @@
 				F5802D08293217D000955949 /* EnterRoomContract.swift in Sources */,
 				F57C6430296120BD00CD55CD /* SettingInteractor.swift in Sources */,
 				F59EE31329967DC200A772BE /* CardPackageViewModel.swift in Sources */,
-				F5150AFA2968E042008ADAD6 /* NotificationBanner.swift in Sources */,
 				F5B2FADE2944773C00592363 /* SettingViewModel.swift in Sources */,
 				F539F02529E288D400C5C9C0 /* Thread.swift in Sources */,
 				F5C6388229AB092800A5F90A /* CardPackageModelToCardPackageViewModelTranslator.swift in Sources */,
@@ -921,7 +891,6 @@
 				F59EE30F29954AD200A772BE /* UserSelectStatusViewModel.swift in Sources */,
 				F5802CFE293207C700955949 /* CardListPresenter.swift in Sources */,
 				F533A3A4293FCD7300C833F7 /* OpenCardView.swift in Sources */,
-				F5150AFD29694BB1008ADAD6 /* Overlay.swift in Sources */,
 				F558BF4F29D09548009ECDC8 /* FirebaseEnvironment.swift in Sources */,
 				F50060F9294437A3005923A7 /* SettingView.swift in Sources */,
 			);
@@ -1330,6 +1299,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F588E30528BB8E2800C5CA9A /* XCRemoteSwiftPackageReference "neumorphic" */;
 			productName = Neumorphic;
+		};
+		F5DD230729EACF390091B84C /* RemotePokerViews */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RemotePokerViews;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
