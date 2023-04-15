@@ -9,9 +9,15 @@ let package = Package(
             name: "RemotePokerViews",
             targets: ["RemotePokerViews"])
     ],
+    dependencies: [
+        .package(url: "https://github.com/costachung/neumorphic", from: "2.0.0")
+    ],
     targets: [
         .target(
-            name: "RemotePokerViews"),
+            name: "RemotePokerViews",
+            dependencies: [
+                .product(name: "Neumorphic", package: "neumorphic")
+            ]),
         .testTarget(
             name: "RemotePokerViewsTests",
             dependencies: ["RemotePokerViews"]),
