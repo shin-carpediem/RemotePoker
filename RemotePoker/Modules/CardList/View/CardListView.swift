@@ -109,9 +109,10 @@ struct CardListView: View, ModuleAssembler {
 
     /// 選択されたカードのポイント
     private var selectedCardPointView: some View {
-        let currentUserSelectStatus: UserSelectStatusViewModel? = viewModel.userSelectStatusList.first(where: {
-            $0.user.id == dependency.currentUserId
-        })
+        let currentUserSelectStatus: UserSelectStatusViewModel? = viewModel.userSelectStatusList
+            .first(where: {
+                $0.user.id == dependency.currentUserId
+            })
         let point: String = currentUserSelectStatus?.selectedCard?.point ?? ""
         return Text(point)
             .foregroundColor(.gray)
