@@ -23,10 +23,6 @@ struct SettingView: View, ModuleAssembler {
 
     @ObservedObject private var viewModel: SettingViewModel
 
-    private var notificationBanner: NotificationBanner {
-        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
-    }
-
     // MARK: - View
 
     var body: some View {
@@ -82,6 +78,11 @@ struct SettingView: View, ModuleAssembler {
             }
         }
         .disabled(!viewModel.isButtonEnabled)
+    }
+
+    /// 通知バナー
+    private var notificationBanner: NotificationBanner {
+        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
     }
 
     // MARK: - Router

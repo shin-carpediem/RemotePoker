@@ -20,10 +20,6 @@ struct EnterRoomView: View, ModuleAssembler {
 
     @ObservedObject private var viewModel: EnterRoomViewModel
 
-    private var notificationBanner: NotificationBanner {
-        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
-    }
-
     // MARK: - View
 
     var body: some View {
@@ -81,6 +77,11 @@ struct EnterRoomView: View, ModuleAssembler {
         }
         .softButtonStyle(RoundedRectangle(cornerRadius: 20))
         .disabled(!viewModel.isButtonEnabled)
+    }
+
+    /// 通知バナー
+    private var notificationBanner: NotificationBanner {
+        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
     }
 
     // MARK: - Router

@@ -25,10 +25,6 @@ struct CardListView: View, ModuleAssembler {
 
     @ObservedObject private var viewModel: CardListViewModel
 
-    private var notificationBanner: NotificationBanner {
-        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
-    }
-
     // MARK: - View
 
     var body: some View {
@@ -143,6 +139,11 @@ struct CardListView: View, ModuleAssembler {
         .softButtonStyle(Circle())
         .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
         .disabled(!viewModel.isButtonEnabled)
+    }
+
+    /// 通知バナー
+    private var notificationBanner: NotificationBanner {
+        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
     }
 
     // MARK: - Router
