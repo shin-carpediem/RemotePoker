@@ -1,3 +1,5 @@
+import RemotePokerData
+
 extension ModuleAssembler {
     func assmebleEnterRoomModule() -> EnterRoomView {
         let viewModel = EnterRoomViewModel()

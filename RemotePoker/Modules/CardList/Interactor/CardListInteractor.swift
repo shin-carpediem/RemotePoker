@@ -1,4 +1,5 @@
 import Combine
+import RemotePokerData
 
 final class CardListInteractor: CardListUseCase, DependencyInjectable {
     // MARK: - DependencyInjectable
