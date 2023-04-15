@@ -250,12 +250,12 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
-		F5150AFB29694B95008ADAD6 /* ViewModifier */ = {
+		F5150AFB29694B95008ADAD6 /* ViewModifiers */ = {
 			isa = PBXGroup;
 			children = (
 				F5150AFC29694BB1008ADAD6 /* Overlay.swift */,
 			);
-			path = ViewModifier;
+			path = ViewModifiers;
 			sourceTree = "<group>";
 		};
 		F57C64152950A8A600CD55CD /* SelectThemeColor */ = {
@@ -391,13 +391,13 @@
 			path = ViewComponents;
 			sourceTree = "<group>";
 		};
-		F5AFC1E0296BC21500A4FFCA /* Resources */ = {
+		F5AFC1E0296BC21500A4FFCA /* ViewResources */ = {
 			isa = PBXGroup;
 			children = (
 				F5AFC1DE296BC12200A4FFCA /* Colors.swift */,
 				F5E917CE287114E900AE8421 /* Assets.xcassets */,
 			);
-			path = Resources;
+			path = ViewResources;
 			sourceTree = "<group>";
 		};
 		F5AFC1E3296BF21800A4FFCA /* ViewComponents */ = {
@@ -534,13 +534,23 @@
 			path = TestHelper;
 			sourceTree = "<group>";
 		};
-		F5DDCD19297B869F00786C35 /* Extension */ = {
+		F5D0FEC029EAA91E006769AD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F5AFC1DB296BBEBE00A4FFCA /* ViewComponents */,
+				F5150AFB29694B95008ADAD6 /* ViewModifiers */,
+				F5AFC1E0296BC21500A4FFCA /* ViewResources */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F5DDCD19297B869F00786C35 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				F539F02429E288D400C5C9C0 /* Thread.swift */,
 				F5DDCD1A297B86B300786C35 /* List.swift */,
 			);
-			path = Extension;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		F5E051662929B116006EA727 /* View */ = {
@@ -650,11 +660,9 @@
 			isa = PBXGroup;
 			children = (
 				F5E0516F292BAFF4006EA727 /* Data */,
+				F5D0FEC029EAA91E006769AD /* Views */,
+				F5DDCD19297B869F00786C35 /* Extensions */,
 				F5125F26292DF92700C822FE /* Modules */,
-				F5150AFB29694B95008ADAD6 /* ViewModifier */,
-				F5AFC1DB296BBEBE00A4FFCA /* ViewComponents */,
-				F5DDCD19297B869F00786C35 /* Extension */,
-				F5AFC1E0296BC21500A4FFCA /* Resources */,
 				F5E917CA287114DC00AE8421 /* RemotePokerApp.swift */,
 				F571FA672896D137003531CE /* GoogleService-Info.plist */,
 				F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */,

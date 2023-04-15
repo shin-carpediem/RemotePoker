@@ -1,34 +1,50 @@
 import SwiftUI
 
-struct NotificationMessage {
+public struct NotificationMessage {
     /// 種類
-    var type: MessageType
-
-    /// テキスト
-    var text: String
-
-    enum MessageType {
+    public enum MessageType {
         /// 成功時
         case onSuccess
 
         /// 失敗時
         case onFailure
     }
+
+    /// 種類
+    public var type: MessageType
+
+    /// テキスト
+    public var text: String
+
+    public init(type: MessageType, text: String) {
+        self.type = type
+        self.text = text
+    }
 }
 
-struct NotificationMessageViewModel {
+public struct NotificationMessageViewModel {
     /// 背景
-    var backGroundColor: Color
+    public var backGroundColor: Color
 
     /// アイコン名
-    var iconName: String
+    public var iconName: String
+
+    public init(backGroundColor: Color, iconName: String) {
+        self.backGroundColor = backGroundColor
+        self.iconName = iconName
+    }
 }
 
-struct NotificationBanner: View {
+public struct NotificationBanner: View {
     /// バナーを表示するか
-    @Binding var isShown: Bool
+    @Binding public var isShown: Bool
 
-    let message: NotificationMessage?
+    public let message: NotificationMessage?
+
+    public init(isShown: Binding<Bool>, message: NotificationMessage?) {
+        self._isShown = isShown
+        self.message = message
+    }
 
     // MARK: - Private
 
@@ -61,7 +77,7 @@ struct NotificationBanner: View {
 
     // MARK: - View
 
-    var body: some View {
+    public var body: some View {
         if let message = message {
             banner(message)
                 .padding()
