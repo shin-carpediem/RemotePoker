@@ -125,7 +125,6 @@
 				F5E917C8287114DC00AE8421 /* Products */,
 				F5DD230629EACF390091B84C /* Frameworks */,
 				F5E917C9287114DC00AE8421 /* RemotePoker */,
-				F5E917DA287114EA00AE8421 /* RemotePokerTests */,
 				F5E917E4287114EA00AE8421 /* RemotePokerUITests */,
 				F5D0FEC729EACCD6006769AD /* RemotePokerViews */,
 				F5A9E74729EAFC0900CFE053 /* RemotePokerData */,
@@ -161,13 +160,6 @@
 				F5E917D1287114E900AE8421 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		F5E917DA287114EA00AE8421 /* RemotePokerTests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = RemotePokerTests;
 			sourceTree = "<group>";
 		};
 		F5E917E4287114EA00AE8421 /* RemotePokerUITests */ = {
