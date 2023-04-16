@@ -1,10 +1,16 @@
-struct RoomViewModel {
+public struct RoomViewModel {
     /// ID
-    var id: Int
+    public var id: Int
 
     /// ユーザー一覧
-    var userList: [UserViewModel]
+    public var userList: [UserViewModel]
 
     /// カードパッケージ
-    var cardPackage: CardPackageViewModel
+    public var cardPackage: CardPackageViewModel
+    
+    public init(id: Int, userList: [UserViewModel], cardPackage: CardPackageViewModel) {
+        self.id = id
+        self.userList = userList
+        self.cardPackage = cardPackage
+    }
 }

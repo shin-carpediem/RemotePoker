@@ -1,34 +1,49 @@
 import SwiftUI
 
-struct CardPackageViewModel: Identifiable {
+public struct CardPackageViewModel: Identifiable {
     /// ID
-    var id: String
+    public var id: String
 
     /// テーマカラー
-    var themeColor: CardPackageThemeColor
+    public var themeColor: CardPackageThemeColor
 
     /// カード一覧
-    var cardList: [Card]
+    public var cardList: [Card]
 
-    struct Card: Identifiable {
+    /// カード
+    public struct Card: Identifiable {
         /// ID
-        var id: String
+        public var id: String
 
         /// 見積もりポイント
-        var point: String
+        public var point: String
 
         /// インデックス
-        var index: Int
+        public var index: Int
 
         /// 文字色
-        var fontColor: Color
+        public var fontColor: Color
 
         /// 背景色
-        var backgroundColor: Color
+        public var backgroundColor: Color
+        
+        public init(id: String, point: String, index: Int, fontColor: Color, backgroundColor: Color) {
+            self.id = id
+            self.point = point
+            self.index = index
+            self.fontColor = fontColor
+            self.backgroundColor = backgroundColor
+        }
+    }
+    
+    public init(id: String, themeColor: CardPackageThemeColor, cardList: [Card]) {
+        self.id = id
+        self.themeColor = themeColor
+        self.cardList = cardList
     }
 }
 
-enum CardPackageThemeColor: String, CaseIterable, ShapeStyle {
+public enum CardPackageThemeColor: String, CaseIterable, ShapeStyle {
     case bubblegum
     case buttercup
     case indigo

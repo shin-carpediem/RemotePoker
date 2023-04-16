@@ -2,12 +2,12 @@ import Foundation.NSUUID
 
 /// サンプルデータ
 extension CardPackageModel {
-    static let defaultCardPackage = CardPackageModel(
+    public static let defaultCardPackage = CardPackageModel(
         id: UUID().uuidString,
         themeColor: "oxblood",
         cardList: defaultCardList)
 
-    static let defaultCardList = [
+    public static let defaultCardList = [
         Card(
             id: UUID().uuidString,
             point: "0",
