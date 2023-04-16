@@ -17,12 +17,10 @@
 
 #### Dependent with App
 
-| Package Manager                                                         | package Name                                                      | Usage           |
-| :---------------------------------------------------------------------- | :---------------------------------------------------------------- | :-------------- |
-| [swift-package-manager](https://github.com/apple/swift-package-manager) | [FirebaseAnalytics](https://github.com/firebase/firebase-ios-sdk) | Data Analysis   |
-|                                                                         | [FirebaseAuth](https://github.com/firebase/firebase-ios-sdk)      | Anonimous Login |
-|                                                                         | [FirebaseFirestore](https://github.com/firebase/firebase-ios-sdk) | Database        |
-|                                                                         | [neumorphic](https://github.com/costachung/neumorphic)            | Neumorphism UI  |
+| Package Manager                                                         | package Name                                                     | Usage           |
+| :---------------------------------------------------------------------- | :--------------------------------------------------------------- | :-------------- |
+| [swift-package-manager](https://github.com/apple/swift-package-manager) | [firebase-ios-sdk](https://github.com/firebase/firebase-ios-sdk) | Login, Database |
+|                                                                         | [neumorphic](https://github.com/costachung/neumorphic)           | Neumorphism UI  |
 
 #### How to Set up Project
 
