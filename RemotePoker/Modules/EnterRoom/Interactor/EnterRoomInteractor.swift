@@ -1,7 +1,7 @@
 import Combine
 import RemotePokerData
 
-final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
+final class EnterRoomInteractor: DependencyInjectable {
     // MARK: - DependencyInjectable
 
     struct Dependency {
@@ -13,8 +13,18 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
         self.dependency = dependency
     }
 
-    // MARK: - EnterRoomUseCase
+    // MARK: - Private
 
+    private var dependency: Dependency!
+
+    private var repository: RoomRepository?
+
+    private var cancellablesForAction = Set<AnyCancellable>()
+}
+
+// MARK: - EnterRoomUseCase
+
+extension EnterRoomInteractor: EnterRoomUseCase {
     func signIn(userName: String, roomId: Int) async {
         AuthDataStore.shared.signIn()
             .sink { [weak self] userId in
@@ -69,12 +79,4 @@ final class EnterRoomInteractor: EnterRoomUseCase, DependencyInjectable {
             await dependency.output?.outputError(error, message: "ルームに追加できませんでした")
         }
     }
-
-    // MARK: - Private
-
-    private var dependency: Dependency!
-
-    private var repository: RoomRepository?
-
-    private var cancellablesForAction = Set<AnyCancellable>()
 }

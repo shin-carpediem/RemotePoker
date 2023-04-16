@@ -1,7 +1,7 @@
 import Foundation
 import RemotePokerViews
 
-final class SettingPresenter: SettingPresentation, SettingInteractorOutput, DependencyInjectable {
+final class SettingPresenter: DependencyInjectable {
     // MARK: - DependencyInjectable
 
     struct Dependency {
@@ -11,46 +11,6 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
 
     func inject(_ dependency: Dependency) {
         self.dependency = dependency
-    }
-
-    // MARK: - SettingPresentation
-
-    func didTapSelectThemeColorButton() {
-        Task {
-            await pushSelectThemeColorView()
-        }
-    }
-
-    func didTapLeaveRoomButton() {
-        Task {
-            await disableButton(true)
-            await showLoader(true)
-            await dependency.useCase.leaveRoom()
-            await disableButton(false)
-            await showLoader(false)
-        }
-    }
-
-    // MARK: - Presentation
-
-    func viewDidLoad() {}
-
-    func viewDidResume() {}
-
-    func viewDidSuspend() {}
-
-    // MARK: - SettingInteractorOutput
-
-    @MainActor
-    func outputSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
-        dependency.viewModel?.isShownBanner = true
-    }
-
-    @MainActor
-    func outputError(_ errror: Error, message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onFailure, text: message)
-        dependency.viewModel?.isShownBanner = true
     }
 
     // MARK: - Private
@@ -75,5 +35,49 @@ final class SettingPresenter: SettingPresentation, SettingInteractorOutput, Depe
     @MainActor
     private func pushSelectThemeColorView() {
         dependency.viewModel?.willPushSelectThemeColorView = true
+    }
+}
+
+// MARK: - SettingPresentation
+
+extension SettingPresenter: SettingPresentation {
+    func didTapSelectThemeColorButton() {
+        Task {
+            await pushSelectThemeColorView()
+        }
+    }
+
+    func didTapLeaveRoomButton() {
+        Task {
+            await disableButton(true)
+            await showLoader(true)
+            await dependency.useCase.leaveRoom()
+            await disableButton(false)
+            await showLoader(false)
+        }
+    }
+
+    // MARK: - Presentation
+
+    func viewDidLoad() {}
+
+    func viewDidResume() {}
+
+    func viewDidSuspend() {}
+}
+
+// MARK: - SettingInteractorOutput
+
+extension SettingPresenter: SettingInteractorOutput {
+    @MainActor
+    func outputSuccess(message: String) {
+        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
+        dependency.viewModel?.isShownBanner = true
+    }
+
+    @MainActor
+    func outputError(_ errror: Error, message: String) {
+        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onFailure, text: message)
+        dependency.viewModel?.isShownBanner = true
     }
 }

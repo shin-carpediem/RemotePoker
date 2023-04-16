@@ -2,7 +2,7 @@ import Foundation
 import RemotePokerData
 import RemotePokerViews
 
-final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput,
+final class EnterRoomPresenter: EnterRoomPresentation,
     DependencyInjectable
 {
     // MARK: - DependencyInjectable
@@ -52,27 +52,6 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     func viewDidResume() {}
 
     func viewDidSuspend() {}
-
-    // MARK: - EnterRoomInteractorOutput
-
-    func outputCompletedSignIn(userId: String, userName: String, roomId: Int) {
-        Task {
-            await setupUserAndRoom(userId: userId, userName: userName, roomId: roomId)
-            await pushCardListView()
-        }
-    }
-
-    @MainActor
-    func outputSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
-        dependency.viewModel?.isShownBanner = true
-    }
-
-    @MainActor
-    func outputError(_ error: Error, message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onFailure, text: message)
-        dependency.viewModel?.isShownBanner = true
-    }
 
     // MARK: - Private
 
@@ -146,5 +125,28 @@ final class EnterRoomPresenter: EnterRoomPresentation, EnterRoomInteractorOutput
     @MainActor
     private func pushCardListView() {
         dependency.viewModel?.willPushCardListView = true
+    }
+}
+
+// MARK: - EnterRoomInteractorOutput
+
+extension EnterRoomPresenter: EnterRoomInteractorOutput {
+    func outputCompletedSignIn(userId: String, userName: String, roomId: Int) {
+        Task {
+            await setupUserAndRoom(userId: userId, userName: userName, roomId: roomId)
+            await pushCardListView()
+        }
+    }
+
+    @MainActor
+    func outputSuccess(message: String) {
+        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
+        dependency.viewModel?.isShownBanner = true
+    }
+
+    @MainActor
+    func outputError(_ error: Error, message: String) {
+        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onFailure, text: message)
+        dependency.viewModel?.isShownBanner = true
     }
 }

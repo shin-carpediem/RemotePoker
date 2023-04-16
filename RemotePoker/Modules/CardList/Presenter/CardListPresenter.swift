@@ -3,7 +3,7 @@ import Foundation
 import RemotePokerData
 import RemotePokerViews
 
-final class CardListPresenter: CardListPresentation, CardListInteractorOutput, DependencyInjectable
+final class CardListPresenter: DependencyInjectable
 {
     // MARK: - DependencyInjectable
 
@@ -20,127 +20,11 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
         self.dependency = dependency
     }
 
-    // MARK: - CardListPresentation
-
-    func didSelectCard(cardId: String) {
-        Task {
-            await disableButton(true)
-            let selectedCardDictionary: [String: String] = [dependency.currentUserId: cardId]
-            dependency.useCase.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
-        }
-    }
-
-    func didTapOpenSelectedCardListButton() {
-        Task {
-            await disableButton(true)
-            await showLoader(true)
-            await showSelectedCardList()
-        }
-    }
-
-    func didTapResetSelectedCardListButton() {
-        Task {
-            await disableButton(true)
-            await showLoader(true)
-            // カレントユーザーの選択済みカードをリセットする
-            let selectedCardDictionary: [String: String] = [dependency.currentUserId: ""]
-            dependency.useCase.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
-            await hideSelectedCardList()
-        }
-    }
-
-    func didTapSettingButton() {
-        Task {
-            await pushSettingView()
-        }
-    }
-
-    // MARK: - Presentation
-
-    func viewDidLoad() {
-        Task {
-            await disableButton(true)
-            await showLoader(true)
-            if dependency.isExisingUser {
-                // 既存ユーザー（この画面が初期画面）
-                let userId: String = await signIn().value
-                // ユーザーのカレントルームがFirestore上に存在するか確認する
-                if await checkUserInCurrentRoom() {
-                    await sucscribeAndSetupData(
-                        userId: userId, shouldFetchData: dependency.isExisingUser)
-                }
-            } else {
-                // 新規ユーザー（EnterRoom画面が初期画面）
-                await sucscribeAndSetupData(
-                    userId: dependency.currentUserId, shouldFetchData: dependency.isExisingUser
-                )
-            }
-        }
-    }
-
-    func viewDidResume() {}
-
-    func viewDidSuspend() {}
-
-    // MARK: - CardListInteractorOutput
-
-    @MainActor
-    func outputCurrentUser(_ user: UserModel) {
-        dependency.currentUserId = user.id
-        dependency.currentUserName = user.name
-        let userList: [UserViewModel]? = dependency.viewModel?.room.userList.map {
-            UserViewModel(
-                id: $0.id, name: $0.name, currentRoomId: $0.currentRoomId,
-                selectedCardId: $0.selectedCardId)
-        }
-        if let userList = userList {
-            showTitle(userList: userList)
-            updateUserSelectStatusList(userList: userList)
-        }
-        disableButton(false)
-        showLoader(false)
-    }
-
-    @MainActor
-    func outputUserList(_ userList: [UserModel]) {
-        let viewModel = userList.map {
-            UserViewModel(
-                id: $0.id, name: $0.name, currentRoomId: $0.currentRoomId,
-                selectedCardId: $0.selectedCardId)
-        }
-        dependency.viewModel?.room.userList = viewModel
-        showTitle(userList: viewModel)
-        updateUserSelectStatusList(userList: viewModel)
-        disableButton(false)
-        showLoader(false)
-    }
-
-    @MainActor
-    func outputCardPackage(_ cardPackage: CardPackageModel) {
-        dependency.viewModel?.room.cardPackage = translator.translate(cardPackage)
-        disableButton(false)
-        showLoader(false)
-    }
-
-    @MainActor
-    func outputSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
-        dependency.viewModel?.isShownBanner = true
-    }
-
-    @MainActor
-    func outputError(_ error: Error, message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onFailure, text: message)
-        dependency.viewModel?.isShownBanner = true
-    }
-
     // MARK: - Private
 
     private var dependency: Dependency!
 
     private var cancellablesForAction = Set<AnyCancellable>()
-
-    private let translator = CardPackageModelToCardPackageViewModelTranslator()
 
     /// 匿名ログインする(ユーザーIDを返却)
     private func signIn() -> Future<String, Never> {
@@ -237,5 +121,123 @@ final class CardListPresenter: CardListPresentation, CardListInteractorOutput, D
     @MainActor
     private func pushSettingView() {
         dependency.viewModel?.willPushSettingView = true
+    }
+}
+
+// MARK: - CardListPresentation
+
+extension CardListPresenter: CardListPresentation {
+    func didSelectCard(cardId: String) {
+        Task {
+            await disableButton(true)
+            let selectedCardDictionary: [String: String] = [dependency.currentUserId: cardId]
+            dependency.useCase.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
+        }
+    }
+
+    func didTapOpenSelectedCardListButton() {
+        Task {
+            await disableButton(true)
+            await showLoader(true)
+            await showSelectedCardList()
+        }
+    }
+
+    func didTapResetSelectedCardListButton() {
+        Task {
+            await disableButton(true)
+            await showLoader(true)
+            // カレントユーザーの選択済みカードをリセットする
+            let selectedCardDictionary: [String: String] = [dependency.currentUserId: ""]
+            dependency.useCase.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
+            await hideSelectedCardList()
+        }
+    }
+
+    func didTapSettingButton() {
+        Task {
+            await pushSettingView()
+        }
+    }
+
+    // MARK: - Presentation
+
+    func viewDidLoad() {
+        Task {
+            await disableButton(true)
+            await showLoader(true)
+            if dependency.isExisingUser {
+                // 既存ユーザー（この画面が初期画面）
+                let userId: String = await signIn().value
+                // ユーザーのカレントルームがFirestore上に存在するか確認する
+                if await checkUserInCurrentRoom() {
+                    await sucscribeAndSetupData(
+                        userId: userId, shouldFetchData: dependency.isExisingUser)
+                }
+            } else {
+                // 新規ユーザー（EnterRoom画面が初期画面）
+                await sucscribeAndSetupData(
+                    userId: dependency.currentUserId, shouldFetchData: dependency.isExisingUser
+                )
+            }
+        }
+    }
+
+    func viewDidResume() {}
+
+    func viewDidSuspend() {}
+}
+
+// MARK: - CardListInteractorOutput
+
+extension CardListPresenter: CardListInteractorOutput {
+    @MainActor
+    func outputCurrentUser(_ user: UserModel) {
+        dependency.currentUserId = user.id
+        dependency.currentUserName = user.name
+        let userList: [UserViewModel]? = dependency.viewModel?.room.userList.map {
+            UserViewModel(
+                id: $0.id, name: $0.name, currentRoomId: $0.currentRoomId,
+                selectedCardId: $0.selectedCardId)
+        }
+        if let userList = userList {
+            showTitle(userList: userList)
+            updateUserSelectStatusList(userList: userList)
+        }
+        disableButton(false)
+        showLoader(false)
+    }
+
+    @MainActor
+    func outputUserList(_ userList: [UserModel]) {
+        let viewModel = userList.map {
+            UserViewModel(
+                id: $0.id, name: $0.name, currentRoomId: $0.currentRoomId,
+                selectedCardId: $0.selectedCardId)
+        }
+        dependency.viewModel?.room.userList = viewModel
+        showTitle(userList: viewModel)
+        updateUserSelectStatusList(userList: viewModel)
+        disableButton(false)
+        showLoader(false)
+    }
+
+    @MainActor
+    func outputCardPackage(_ cardPackage: CardPackageModel) {
+        dependency.viewModel?.room.cardPackage = CardPackageModelToCardPackageViewModelTranslator().translate(cardPackage)
+        disableButton(false)
+        showLoader(false)
+    }
+
+    @MainActor
+    func outputSuccess(message: String) {
+        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
+        dependency.viewModel?.isShownBanner = true
+    }
+
+    @MainActor
+    func outputError(_ error: Error, message: String) {
+        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onFailure, text: message)
+        dependency.viewModel?.isShownBanner = true
     }
 }

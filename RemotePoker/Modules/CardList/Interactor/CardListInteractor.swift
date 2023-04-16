@@ -1,7 +1,7 @@
 import Combine
 import RemotePokerData
 
-final class CardListInteractor: CardListUseCase, DependencyInjectable {
+final class CardListInteractor: DependencyInjectable {
     // MARK: - DependencyInjectable
 
     struct Dependency {
@@ -14,8 +14,18 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
         self.dependency = dependency
     }
 
-    // MARK: - CardListUseCase
+    // MARK: - Private
 
+    private var dependency: Dependency!
+
+    private var cancellablesForSubscription = Set<AnyCancellable>()
+
+    private var cancellablesForAction = Set<AnyCancellable>()
+}
+
+// MARK: - CardListUseCase
+
+extension CardListInteractor: CardListUseCase {
     func checkRoomExist(roomId: Int) async -> Bool {
         await dependency.enterRoomRepository.checkRoomExist(roomId: roomId)
     }
@@ -67,12 +77,4 @@ final class CardListInteractor: CardListUseCase, DependencyInjectable {
             }
             .store(in: &self.cancellablesForAction)
     }
-
-    // MARK: - Private
-
-    private var dependency: Dependency!
-
-    private var cancellablesForSubscription = Set<AnyCancellable>()
-
-    private var cancellablesForAction = Set<AnyCancellable>()
 }

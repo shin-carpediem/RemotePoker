@@ -90,6 +90,7 @@
 		F525301329364D5200727472 /* EnterRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterRoomViewModel.swift; sourceTree = "<group>"; };
 		F52530152936560D00727472 /* CardListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewModel.swift; sourceTree = "<group>"; };
 		F533A3A3293FCD7300C833F7 /* OpenCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenCardView.swift; sourceTree = "<group>"; };
+		F558B9F429EB898100B7ADD9 /* RemotePokerDomains */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RemotePokerDomains; sourceTree = "<group>"; };
 		F571FA672896D137003531CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		F57C64192950A91000CD55CD /* SelectThemeColorContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectThemeColorContract.swift; sourceTree = "<group>"; };
@@ -452,6 +453,7 @@
 				F5E917E4287114EA00AE8421 /* RemotePokerUITests */,
 				F5D0FEC729EACCD6006769AD /* RemotePokerViews */,
 				F5A9E74729EAFC0900CFE053 /* RemotePokerData */,
+				F558B9F429EB898100B7ADD9 /* RemotePokerDomains */,
 			);
 			sourceTree = "<group>";
 		};

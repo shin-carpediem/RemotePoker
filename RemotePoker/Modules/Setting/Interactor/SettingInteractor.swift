@@ -1,7 +1,7 @@
 import Foundation
 import RemotePokerData
 
-final class SettingInteractor: SettingUseCase, DependencyInjectable {
+final class SettingInteractor: DependencyInjectable {
     // MARK: - DependencyInjectable
 
     struct Dependency {
@@ -14,8 +14,27 @@ final class SettingInteractor: SettingUseCase, DependencyInjectable {
         self.dependency = dependency
     }
 
-    // MARK: - SettingUseCase
+    // MARK: - Private
 
+    private var dependency: Dependency!
+
+    private func resetLocalStorage() {
+        LocalStorage.shared.currentRoomId = 0
+        LocalStorage.shared.currentUserId = ""
+    }
+
+    private func unsubscribeUser() {
+        dependency.repository.unsubscribeUser()
+    }
+
+    private func unsubscribeCardPackages() {
+        dependency.repository.unsubscribeCardPackage()
+    }
+}
+
+// MARK: - SettingUseCase
+
+extension SettingInteractor: SettingUseCase {
     func leaveRoom() async {
         resetLocalStorage()
         unsubscribeUser()
@@ -37,22 +56,5 @@ final class SettingInteractor: SettingUseCase, DependencyInjectable {
         case .failure(let error):
             await dependency.output?.outputError(error, message: "ルームから退出できませんでした")
         }
-    }
-
-    // MARK: - Private
-
-    private var dependency: Dependency!
-
-    private func resetLocalStorage() {
-        LocalStorage.shared.currentRoomId = 0
-        LocalStorage.shared.currentUserId = ""
-    }
-
-    private func unsubscribeUser() {
-        dependency.repository.unsubscribeUser()
-    }
-
-    private func unsubscribeCardPackages() {
-        dependency.repository.unsubscribeCardPackage()
     }
 }

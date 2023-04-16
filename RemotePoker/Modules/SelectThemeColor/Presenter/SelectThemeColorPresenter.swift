@@ -2,7 +2,7 @@ import Foundation
 import RemotePokerData
 import RemotePokerViews
 
-final class SelectThemeColorPresenter: SelectThemeColorPresentation, DependencyInjectable {
+final class SelectThemeColorPresenter: DependencyInjectable {
 
     // MARK: - DependencyInjectable
 
@@ -16,8 +16,33 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation, DependencyI
         self.dependency = dependency
     }
 
-    // MARK: - SelectThemeColorPresentation
+    // MARK: - Private
 
+    private var dependency: Dependency!
+
+    /// カラー一覧を表示する
+    @MainActor
+    private func showColorList() {
+        dependency.viewModel?.themeColorList = CardPackageThemeColor.allCases
+    }
+
+    /// 選択されたテーマカラーで表示する
+    @MainActor
+    private func applySelectedThemeColor(_ themeColor: CardPackageThemeColor) {
+        dependency.viewModel?.selectedThemeColor = themeColor
+    }
+
+    /// 成功を表示する
+    @MainActor
+    private func showSuccess(message: String) {
+        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
+        dependency.viewModel?.isShownBanner = true
+    }
+}
+
+// MARK: - SelectThemeColorPresentation
+
+extension SelectThemeColorPresenter: SelectThemeColorPresentation {
     func didTapColor(color: CardPackageThemeColor) {
         Task { @MainActor in
             dependency.repository.updateThemeColor(
@@ -44,27 +69,4 @@ final class SelectThemeColorPresenter: SelectThemeColorPresentation, DependencyI
     }
 
     func viewDidSuspend() {}
-
-    // MARK: - Private
-
-    private var dependency: Dependency!
-
-    /// カラー一覧を表示する
-    @MainActor
-    private func showColorList() {
-        dependency.viewModel?.themeColorList = CardPackageThemeColor.allCases
-    }
-
-    /// 選択されたテーマカラーで表示する
-    @MainActor
-    private func applySelectedThemeColor(_ themeColor: CardPackageThemeColor) {
-        dependency.viewModel?.selectedThemeColor = themeColor
-    }
-
-    /// 成功を表示する
-    @MainActor
-    private func showSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
-        dependency.viewModel?.isShownBanner = true
-    }
 }
