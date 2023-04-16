@@ -1,4 +1,4 @@
-protocol ModuleAssembler {
+public protocol ModuleAssembler {
     /// ルームに入る画面をアセンブルする
     func assmebleEnterRoomModule() -> EnterRoomView
 

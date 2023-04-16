@@ -3,8 +3,7 @@ import Foundation
 import RemotePokerData
 import RemotePokerViews
 
-final class CardListPresenter: DependencyInjectable
-{
+final class CardListPresenter: DependencyInjectable {
     // MARK: - DependencyInjectable
 
     struct Dependency {
@@ -224,7 +223,8 @@ extension CardListPresenter: CardListInteractorOutput {
 
     @MainActor
     func outputCardPackage(_ cardPackage: CardPackageModel) {
-        dependency.viewModel?.room.cardPackage = CardPackageModelToCardPackageViewModelTranslator().translate(cardPackage)
+        dependency.viewModel?.room.cardPackage = CardPackageModelToCardPackageViewModelTranslator()
+            .translate(cardPackage)
         disableButton(false)
         showLoader(false)
     }

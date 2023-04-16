@@ -1,7 +1,7 @@
 import RemotePokerViews
 import SwiftUI
 
-struct SelectThemeColorView: View {
+public struct SelectThemeColorView: View {
     @Environment(\.presentationMode) var presentation
 
     // MARK: - Dependency
@@ -24,7 +24,7 @@ struct SelectThemeColorView: View {
 
     // MARK: - View
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             contentView
             if viewModel.isShownLoader { ProgressView() }

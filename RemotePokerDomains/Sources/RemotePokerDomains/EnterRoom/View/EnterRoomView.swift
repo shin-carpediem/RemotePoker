@@ -2,7 +2,7 @@ import Neumorphic
 import RemotePokerViews
 import SwiftUI
 
-struct EnterRoomView: View, ModuleAssembler {
+public struct EnterRoomView: View, ModuleAssembler {
     // MARK: - Dependency
 
     struct Dependency {
@@ -23,7 +23,7 @@ struct EnterRoomView: View, ModuleAssembler {
 
     // MARK: - View
 
-    var body: some View {
+    public var body: some View {
         NavigationView {
             ZStack {
                 Colors.background.ignoresSafeArea()

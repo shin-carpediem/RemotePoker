@@ -1,7 +1,7 @@
 import RemotePokerViews
 import SwiftUI
 
-struct SettingView: View, ModuleAssembler {
+public struct SettingView: View, ModuleAssembler {
     @Environment(\.presentationMode) var presentation
 
     // MARK: - Dependency
@@ -26,7 +26,7 @@ struct SettingView: View, ModuleAssembler {
 
     // MARK: - View
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             contentView
             navigationForSelectThemeColorView

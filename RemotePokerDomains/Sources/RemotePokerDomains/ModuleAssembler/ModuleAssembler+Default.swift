@@ -1,7 +1,7 @@
 import RemotePokerData
 
 extension ModuleAssembler {
-    func assmebleEnterRoomModule() -> EnterRoomView {
+    public func assmebleEnterRoomModule() -> EnterRoomView {
         let viewModel = EnterRoomViewModel()
         let presenter = EnterRoomPresenter()
         let interactor = EnterRoomInteractor()
@@ -13,7 +13,7 @@ extension ModuleAssembler {
         return view
     }
 
-    func assembleCardListModule(
+    public func assembleCardListModule(
         roomId: Int, currentUserId: String, currentUserName: String, cardPackageId: String,
         isExisingUser: Bool
     ) -> CardListView {
@@ -44,7 +44,7 @@ extension ModuleAssembler {
         return view
     }
 
-    func assembleSettingModule(roomId: Int, currentUserId: String, cardPackageId: String)
+    public func assembleSettingModule(roomId: Int, currentUserId: String, cardPackageId: String)
         -> SettingView
     {
         let viewModel = SettingViewModel()
@@ -67,7 +67,8 @@ extension ModuleAssembler {
         return view
     }
 
-    func assembleSelectThemeColorModule(roomId: Int, cardPackageId: String) -> SelectThemeColorView
+    public func assembleSelectThemeColorModule(roomId: Int, cardPackageId: String)
+        -> SelectThemeColorView
     {
         let viewModel = SelectThemeColorViewModel()
         let presenter = SelectThemeColorPresenter()

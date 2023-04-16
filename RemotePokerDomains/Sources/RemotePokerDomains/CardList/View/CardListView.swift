@@ -3,7 +3,7 @@ import RemotePokerData
 import RemotePokerViews
 import SwiftUI
 
-struct CardListView: View, ModuleAssembler {
+public struct CardListView: View, ModuleAssembler {
     @Environment(\.presentationMode) var presentation
 
     // MARK: - Dependency
@@ -29,7 +29,7 @@ struct CardListView: View, ModuleAssembler {
 
     // MARK: - View
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             Colors.background.ignoresSafeArea()
             contentView
