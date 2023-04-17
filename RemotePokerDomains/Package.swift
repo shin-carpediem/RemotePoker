@@ -10,15 +10,13 @@ let package = Package(
             targets: ["RemotePokerDomains"])
     ],
     dependencies: [
-        .package(path: "../RemotePokerData"),
-        .package(path: "../RemotePokerViews"),
+        .package(path: "../RemotePokerData")
     ],
     targets: [
         .target(
             name: "RemotePokerDomains",
             dependencies: [
-                "RemotePokerData",
-                "RemotePokerViews",
+                "RemotePokerData"
             ]),
         .testTarget(
             name: "RemotePokerDomainsTests",

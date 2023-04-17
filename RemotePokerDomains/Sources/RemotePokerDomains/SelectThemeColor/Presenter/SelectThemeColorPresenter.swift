@@ -1,18 +1,27 @@
 import Foundation
 import RemotePokerData
-import RemotePokerViews
 
-final class SelectThemeColorPresenter: DependencyInjectable {
+public final class SelectThemeColorPresenter: DependencyInjectable {
+    public init() {}
 
     // MARK: - DependencyInjectable
 
-    struct Dependency {
-        var repository: RoomRepository
-        weak var viewModel: SelectThemeColorViewModel?
-        var cardPackageId: String
+    public struct Dependency {
+        public var repository: RoomRepository
+        public weak var viewModel: SelectThemeColorViewModel?
+        public var cardPackageId: String
+
+        public init(
+            repository: RoomRepository, viewModel: SelectThemeColorViewModel? = nil,
+            cardPackageId: String
+        ) {
+            self.repository = repository
+            self.viewModel = viewModel
+            self.cardPackageId = cardPackageId
+        }
     }
 
-    func inject(_ dependency: Dependency) {
+    public func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
 
@@ -35,7 +44,8 @@ final class SelectThemeColorPresenter: DependencyInjectable {
     /// 成功を表示する
     @MainActor
     private func showSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
+        dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
+            type: .onSuccess, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 }
@@ -43,7 +53,7 @@ final class SelectThemeColorPresenter: DependencyInjectable {
 // MARK: - SelectThemeColorPresentation
 
 extension SelectThemeColorPresenter: SelectThemeColorPresentation {
-    func didTapColor(color: CardPackageThemeColor) {
+    public func didTapColor(color: CardPackageThemeColor) {
         Task { @MainActor in
             dependency.repository.updateThemeColor(
                 cardPackageId: dependency.cardPackageId,
@@ -56,17 +66,17 @@ extension SelectThemeColorPresenter: SelectThemeColorPresentation {
 
     // MARK: - Presentation
 
-    func viewDidLoad() {
+    public func viewDidLoad() {
         Task {
             await showColorList()
         }
     }
 
-    func viewDidResume() {
+    public func viewDidResume() {
         Task {
             await showColorList()
         }
     }
 
-    func viewDidSuspend() {}
+    public func viewDidSuspend() {}
 }

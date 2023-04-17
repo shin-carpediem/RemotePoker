@@ -1,15 +1,22 @@
 import Combine
 import RemotePokerData
 
-final class EnterRoomInteractor: DependencyInjectable {
+public final class EnterRoomInteractor: DependencyInjectable {
+    public init() {}
+
     // MARK: - DependencyInjectable
 
-    struct Dependency {
-        var repository: EnterRoomRepository
-        weak var output: EnterRoomInteractorOutput?
+    public struct Dependency {
+        public var repository: EnterRoomRepository
+        public weak var output: EnterRoomInteractorOutput?
+
+        public init(repository: EnterRoomRepository, output: EnterRoomInteractorOutput? = nil) {
+            self.repository = repository
+            self.output = output
+        }
     }
 
-    func inject(_ dependency: Dependency) {
+    public func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
 
@@ -25,7 +32,7 @@ final class EnterRoomInteractor: DependencyInjectable {
 // MARK: - EnterRoomUseCase
 
 extension EnterRoomInteractor: EnterRoomUseCase {
-    func signIn(userName: String, roomId: Int) async {
+    public func signIn(userName: String, roomId: Int) async {
         AuthDataStore.shared.signIn()
             .sink { [weak self] userId in
                 self?.dependency.output?.outputCompletedSignIn(
@@ -34,11 +41,11 @@ extension EnterRoomInteractor: EnterRoomUseCase {
             .store(in: &self.cancellablesForAction)
     }
 
-    func checkRoomExist(roomId: Int) async -> Bool {
+    public func checkRoomExist(roomId: Int) async -> Bool {
         await dependency.repository.checkRoomExist(roomId: roomId)
     }
 
-    func createRoom(room: RoomModel) async {
+    public func createRoom(room: RoomModel) async {
         let entity = RoomEntity(
             id: room.id,
             userList: room.userList.map {
@@ -62,7 +69,7 @@ extension EnterRoomInteractor: EnterRoomUseCase {
         }
     }
 
-    func adduserToRoom(roomId: Int, user: UserModel) async {
+    public func adduserToRoom(roomId: Int, user: UserModel) async {
         repository = RoomDataStore(roomId: roomId)
         guard let repository = repository else { return }
         let entity = UserEntity(

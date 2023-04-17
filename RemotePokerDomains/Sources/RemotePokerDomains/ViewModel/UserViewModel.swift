@@ -1,13 +1,15 @@
-struct UserViewModel {
-    /// ID
-    var id: String
-
-    /// 名前
-    var name: String
-
+public struct UserViewModel {
+    public var id: String
+    public var name: String
     /// 入室中のルームID(未入室は0)
-    var currentRoomId: Int
-
+    public var currentRoomId: Int
     /// 選択済みカードID(未選択は空文字)
-    var selectedCardId: String
+    public var selectedCardId: String
+
+    public init(id: String, name: String, currentRoomId: Int, selectedCardId: String) {
+        self.id = id
+        self.name = name
+        self.currentRoomId = currentRoomId
+        self.selectedCardId = selectedCardId
+    }
 }

@@ -1,16 +1,27 @@
 import Foundation
 import RemotePokerData
 
-final class SettingInteractor: DependencyInjectable {
+public final class SettingInteractor: DependencyInjectable {
+    public init() {}
+
     // MARK: - DependencyInjectable
 
-    struct Dependency {
-        var repository: RoomRepository
-        weak var output: SettingInteractorOutput?
-        var currentUserId: String
+    public struct Dependency {
+        public var repository: RoomRepository
+        public weak var output: SettingInteractorOutput?
+        public var currentUserId: String
+
+        public init(
+            repository: RoomRepository, output: SettingInteractorOutput? = nil,
+            currentUserId: String
+        ) {
+            self.repository = repository
+            self.output = output
+            self.currentUserId = currentUserId
+        }
     }
 
-    func inject(_ dependency: Dependency) {
+    public func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
 
@@ -35,7 +46,7 @@ final class SettingInteractor: DependencyInjectable {
 // MARK: - SettingUseCase
 
 extension SettingInteractor: SettingUseCase {
-    func leaveRoom() async {
+    public func leaveRoom() async {
         resetLocalStorage()
         unsubscribeUser()
         unsubscribeCardPackages()

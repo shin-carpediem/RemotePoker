@@ -1,21 +1,34 @@
-struct CardPackageModel {
+public struct CardPackageModel {
     /// ID
-    var id: String
+    public var id: String
 
     /// テーマカラー
-    var themeColor: String
+    public var themeColor: String
 
     /// カード一覧
-    var cardList: [Card]
+    public var cardList: [Card]
 
-    struct Card {
+    /// カード
+    public struct Card {
         /// ID
-        var id: String
+        public var id: String
 
         /// 見積もりポイント
-        var point: String
+        public var point: String
 
         /// インデックス
-        var index: Int
+        public var index: Int
+
+        public init(id: String, point: String, index: Int) {
+            self.id = id
+            self.point = point
+            self.index = index
+        }
+    }
+
+    public init(id: String, themeColor: String, cardList: [Card]) {
+        self.id = id
+        self.themeColor = themeColor
+        self.cardList = cardList
     }
 }

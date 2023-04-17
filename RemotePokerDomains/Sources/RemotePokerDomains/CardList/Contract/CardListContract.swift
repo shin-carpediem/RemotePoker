@@ -1,6 +1,6 @@
 import Foundation
 
-protocol CardListPresentation: AnyObject, Presentation {
+public protocol CardListPresentation: AnyObject, Presentation {
     /// カードを選択した
     /// - parameter cardId: カードID
     func didSelectCard(cardId: String)
@@ -15,7 +15,7 @@ protocol CardListPresentation: AnyObject, Presentation {
     func didTapSettingButton()
 }
 
-protocol CardListUseCase: AnyObject {
+public protocol CardListUseCase: AnyObject {
     /// ルームが存在するか確認する
     /// - parameter roomId: ルームID:
     /// - returns ルームが存在するか
@@ -36,7 +36,7 @@ protocol CardListUseCase: AnyObject {
     func requestUser(userId: String) async
 }
 
-protocol CardListInteractorOutput: AnyObject {
+public protocol CardListInteractorOutput: AnyObject {
     /// カレントユーザーを出力する
     @MainActor
     func outputCurrentUser(_ user: UserModel)

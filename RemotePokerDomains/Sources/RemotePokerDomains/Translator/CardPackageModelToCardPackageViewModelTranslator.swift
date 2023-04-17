@@ -1,12 +1,14 @@
 import SwiftUI
 
-struct CardPackageModelToCardPackageViewModelTranslator: Translator {
+public struct CardPackageModelToCardPackageViewModelTranslator: Translator {
+    public init() {}
+
     // MARK: - Translator
 
-    typealias Input = CardPackageModel
-    typealias Output = CardPackageViewModel
+    public typealias Input = CardPackageModel
+    public typealias Output = CardPackageViewModel
 
-    func translate(_ input: Input) -> Output {
+    public func translate(_ input: Input) -> Output {
         let themeColor = CardPackageThemeColor(rawValue: input.themeColor) ?? .oxblood
         let cardList: [CardPackageViewModel.Card] = input.cardList.map { card in
             CardPackageViewModel.Card(

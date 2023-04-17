@@ -1,6 +1,4 @@
-import RemotePokerViews
-
-protocol ViewModel {
+public protocol ViewModel {
     /// ボタンが有効か
     @MainActor var isButtonEnabled: Bool { get set }
 
@@ -11,5 +9,5 @@ protocol ViewModel {
     @MainActor var isShownBanner: Bool { get set }
 
     /// 通知バナーのメッセージ
-    @MainActor var bannerMessgage: NotificationMessage { get set }
+    @MainActor var bannerMessgage: NotificationBannerViewModel { get set }
 }

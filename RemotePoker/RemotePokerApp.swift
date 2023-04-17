@@ -1,5 +1,6 @@
 import RemotePokerData
 import RemotePokerDomains
+import RemotePokerViews
 import SwiftUI
 
 @main

@@ -1,6 +1,6 @@
 import Neumorphic
 import RemotePokerData
-import RemotePokerViews
+import RemotePokerDomains
 import SwiftUI
 
 public struct CardListView: View, ModuleAssembler {
@@ -146,7 +146,7 @@ public struct CardListView: View, ModuleAssembler {
 
     /// 通知バナー
     private var notificationBanner: NotificationBanner {
-        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
+        .init(isShown: $viewModel.isShownBanner, viewModel: viewModel.bannerMessgage)
     }
 
     // MARK: - Router

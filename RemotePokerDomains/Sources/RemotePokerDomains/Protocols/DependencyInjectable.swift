@@ -1,4 +1,4 @@
-protocol DependencyInjectable {
+public protocol DependencyInjectable {
     /// 依存性
     associatedtype Dependency
 

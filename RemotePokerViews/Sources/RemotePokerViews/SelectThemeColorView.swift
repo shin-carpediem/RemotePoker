@@ -1,4 +1,4 @@
-import RemotePokerViews
+import RemotePokerDomains
 import SwiftUI
 
 public struct SelectThemeColorView: View {
@@ -76,7 +76,7 @@ public struct SelectThemeColorView: View {
 
     /// 通知バナー
     private var notificationBanner: NotificationBanner {
-        .init(isShown: $viewModel.isShownBanner, message: viewModel.bannerMessgage)
+        .init(isShown: $viewModel.isShownBanner, viewModel: viewModel.bannerMessgage)
     }
 }
 

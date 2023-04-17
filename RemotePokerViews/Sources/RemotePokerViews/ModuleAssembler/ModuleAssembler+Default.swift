@@ -1,4 +1,5 @@
 import RemotePokerData
+import RemotePokerDomains
 
 extension ModuleAssembler {
     public func assmebleEnterRoomModule() -> EnterRoomView {

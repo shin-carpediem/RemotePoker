@@ -1,4 +1,4 @@
-protocol Translator {
+public protocol Translator {
     /// 入力する型
     associatedtype Input
     /// 出力する型

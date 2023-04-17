@@ -1,15 +1,21 @@
 import Foundation
-import RemotePokerViews
 
-final class SettingPresenter: DependencyInjectable {
+public final class SettingPresenter: DependencyInjectable {
+    public init() {}
+
     // MARK: - DependencyInjectable
 
-    struct Dependency {
-        var useCase: SettingUseCase
-        weak var viewModel: SettingViewModel?
+    public struct Dependency {
+        public var useCase: SettingUseCase
+        public weak var viewModel: SettingViewModel?
+
+        public init(useCase: SettingUseCase, viewModel: SettingViewModel? = nil) {
+            self.useCase = useCase
+            self.viewModel = viewModel
+        }
     }
 
-    func inject(_ dependency: Dependency) {
+    public func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
 
@@ -41,13 +47,13 @@ final class SettingPresenter: DependencyInjectable {
 // MARK: - SettingPresentation
 
 extension SettingPresenter: SettingPresentation {
-    func didTapSelectThemeColorButton() {
+    public func didTapSelectThemeColorButton() {
         Task {
             await pushSelectThemeColorView()
         }
     }
 
-    func didTapLeaveRoomButton() {
+    public func didTapLeaveRoomButton() {
         Task {
             await disableButton(true)
             await showLoader(true)
@@ -59,25 +65,27 @@ extension SettingPresenter: SettingPresentation {
 
     // MARK: - Presentation
 
-    func viewDidLoad() {}
+    public func viewDidLoad() {}
 
-    func viewDidResume() {}
+    public func viewDidResume() {}
 
-    func viewDidSuspend() {}
+    public func viewDidSuspend() {}
 }
 
 // MARK: - SettingInteractorOutput
 
 extension SettingPresenter: SettingInteractorOutput {
     @MainActor
-    func outputSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
+    public func outputSuccess(message: String) {
+        dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
+            type: .onSuccess, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 
     @MainActor
-    func outputError(_ errror: Error, message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onFailure, text: message)
+    public func outputError(_ errror: Error, message: String) {
+        dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
+            type: .onFailure, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 }
