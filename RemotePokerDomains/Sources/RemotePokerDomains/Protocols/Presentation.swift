@@ -1,4 +1,4 @@
-protocol Presentation {
+public protocol Presentation {
     /// View開始時
     func viewDidLoad()
 

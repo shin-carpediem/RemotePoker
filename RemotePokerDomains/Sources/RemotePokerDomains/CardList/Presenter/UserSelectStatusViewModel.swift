@@ -1,13 +1,16 @@
-struct UserSelectStatusViewModel: Identifiable {
-    /// ID
-    var id: String
+public struct UserSelectStatusViewModel: Identifiable {
+    public var id: String
+    public var user: UserViewModel
+    public var themeColor: CardPackageThemeColor
+    public var selectedCard: CardPackageViewModel.Card?
 
-    /// ユーザー
-    var user: UserViewModel
-
-    /// テーマカラー
-    var themeColor: CardPackageThemeColor
-
-    /// 選択済みカード
-    var selectedCard: CardPackageViewModel.Card?
+    public init(
+        id: String, user: UserViewModel, themeColor: CardPackageThemeColor,
+        selectedCard: CardPackageViewModel.Card? = nil
+    ) {
+        self.id = id
+        self.user = user
+        self.themeColor = themeColor
+        self.selectedCard = selectedCard
+    }
 }

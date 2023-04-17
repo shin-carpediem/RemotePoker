@@ -10,7 +10,7 @@ public struct UserModel {
 
     /// 選択済みカードID(未選択は空文字)
     public var selectedCardId: String
-    
+
     public init(id: String, name: String, currentRoomId: Int, selectedCardId: String) {
         self.id = id
         self.name = name

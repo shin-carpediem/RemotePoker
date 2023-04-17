@@ -1,16 +1,27 @@
 import Combine
 import RemotePokerData
 
-final class CardListInteractor: DependencyInjectable {
+public final class CardListInteractor: DependencyInjectable {
+    public init() {}
+
     // MARK: - DependencyInjectable
 
-    struct Dependency {
-        var enterRoomRepository: EnterRoomRepository
-        var roomRepository: RoomRepository
-        weak var output: CardListInteractorOutput?
+    public struct Dependency {
+        public var enterRoomRepository: EnterRoomRepository
+        public var roomRepository: RoomRepository
+        public weak var output: CardListInteractorOutput?
+
+        public init(
+            enterRoomRepository: EnterRoomRepository, roomRepository: RoomRepository,
+            output: CardListInteractorOutput? = nil
+        ) {
+            self.enterRoomRepository = enterRoomRepository
+            self.roomRepository = roomRepository
+            self.output = output
+        }
     }
 
-    func inject(_ dependency: Dependency) {
+    public func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
 
@@ -26,11 +37,11 @@ final class CardListInteractor: DependencyInjectable {
 // MARK: - CardListUseCase
 
 extension CardListInteractor: CardListUseCase {
-    func checkRoomExist(roomId: Int) async -> Bool {
+    public func checkRoomExist(roomId: Int) async -> Bool {
         await dependency.enterRoomRepository.checkRoomExist(roomId: roomId)
     }
 
-    func subscribeUsers() {
+    public func subscribeUsers() {
         dependency.roomRepository.userList
             .sink { userList in
                 Task { [unowned self] in
@@ -45,7 +56,7 @@ extension CardListInteractor: CardListUseCase {
             .store(in: &self.cancellablesForSubscription)
     }
 
-    func subscribeCardPackages() {
+    public func subscribeCardPackages() {
         dependency.roomRepository.cardPackage
             .sink { cardPackage in
                 Task { [unowned self] in
@@ -60,12 +71,12 @@ extension CardListInteractor: CardListUseCase {
             .store(in: &self.cancellablesForSubscription)
     }
 
-    func updateSelectedCardId(selectedCardDictionary: [String: String]) {
+    public func updateSelectedCardId(selectedCardDictionary: [String: String]) {
         dependency.roomRepository.updateSelectedCardId(
             selectedCardDictionary: selectedCardDictionary)
     }
 
-    func requestUser(userId: String) async {
+    public func requestUser(userId: String) async {
         dependency.roomRepository.fetchUser(byId: userId)
             .sink { user in
                 Task { [unowned self] in

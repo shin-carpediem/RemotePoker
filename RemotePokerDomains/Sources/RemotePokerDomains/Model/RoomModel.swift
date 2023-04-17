@@ -7,7 +7,7 @@ public struct RoomModel {
 
     /// カードパッケージ
     public var cardPackage: CardPackageModel
-    
+
     public init(id: Int, userList: [UserModel], cardPackage: CardPackageModel) {
         self.id = id
         self.userList = userList

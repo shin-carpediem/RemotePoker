@@ -1,3 +1,4 @@
+import RemotePokerDomains
 import SwiftUI
 
 struct OpenCardView: View {

@@ -1,6 +1,6 @@
 import Foundation
 
-protocol SettingPresentation: AnyObject, Presentation {
+public protocol SettingPresentation: AnyObject, Presentation {
     /// テーマカラー選択画面に遷移するボタンがタップされた
     func didTapSelectThemeColorButton()
 
@@ -8,12 +8,12 @@ protocol SettingPresentation: AnyObject, Presentation {
     func didTapLeaveRoomButton()
 }
 
-protocol SettingUseCase: AnyObject {
+public protocol SettingUseCase: AnyObject {
     /// ルームから退室する
     func leaveRoom() async
 }
 
-protocol SettingInteractorOutput: AnyObject {
+public protocol SettingInteractorOutput: AnyObject {
     /// データ処理の成功を出力
     @MainActor
     func outputSuccess(message: String)

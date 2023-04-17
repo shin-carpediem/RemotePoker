@@ -1,6 +1,6 @@
 import Foundation
 
-protocol EnterRoomPresentation: AnyObject, Presentation {
+public protocol EnterRoomPresentation: AnyObject, Presentation {
     /// カレントユーザー
     var currentUser: UserViewModel { get }
 
@@ -13,7 +13,7 @@ protocol EnterRoomPresentation: AnyObject, Presentation {
     func didTapEnterRoomButton(inputUserName: String, inputRoomId: String)
 }
 
-protocol EnterRoomUseCase: AnyObject {
+public protocol EnterRoomUseCase: AnyObject {
     /// ログインを要求する
     /// - parameter userName: ユーザー名
     /// - parameter roomId: ルームID
@@ -34,7 +34,7 @@ protocol EnterRoomUseCase: AnyObject {
     func adduserToRoom(roomId: Int, user: UserModel) async
 }
 
-protocol EnterRoomInteractorOutput: AnyObject {
+public protocol EnterRoomInteractorOutput: AnyObject {
     /// ログインの完了を出力
     /// - parameter userId: ユーザーID
     /// - parameter userName: ユーザー名

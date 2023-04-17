@@ -1,21 +1,34 @@
 import Combine
 import Foundation
 import RemotePokerData
-import RemotePokerViews
 
-final class CardListPresenter: DependencyInjectable {
+public final class CardListPresenter: DependencyInjectable {
+    public init() {}
+
     // MARK: - DependencyInjectable
 
-    struct Dependency {
-        var useCase: CardListUseCase
-        var roomId: Int
-        var currentUserId: String
-        var currentUserName: String
-        var isExisingUser: Bool
-        weak var viewModel: CardListViewModel?
+    public struct Dependency {
+        public var useCase: CardListUseCase
+        public var roomId: Int
+        public var currentUserId: String
+        public var currentUserName: String
+        public var isExisingUser: Bool
+        public weak var viewModel: CardListViewModel?
+
+        public init(
+            useCase: CardListUseCase, roomId: Int, currentUserId: String, currentUserName: String,
+            isExisingUser: Bool, viewModel: CardListViewModel? = nil
+        ) {
+            self.useCase = useCase
+            self.roomId = roomId
+            self.currentUserId = currentUserId
+            self.currentUserName = currentUserName
+            self.isExisingUser = isExisingUser
+            self.viewModel = viewModel
+        }
     }
 
-    func inject(_ dependency: Dependency) {
+    public func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
 
@@ -126,7 +139,7 @@ final class CardListPresenter: DependencyInjectable {
 // MARK: - CardListPresentation
 
 extension CardListPresenter: CardListPresentation {
-    func didSelectCard(cardId: String) {
+    public func didSelectCard(cardId: String) {
         Task {
             await disableButton(true)
             let selectedCardDictionary: [String: String] = [dependency.currentUserId: cardId]
@@ -134,7 +147,7 @@ extension CardListPresenter: CardListPresentation {
         }
     }
 
-    func didTapOpenSelectedCardListButton() {
+    public func didTapOpenSelectedCardListButton() {
         Task {
             await disableButton(true)
             await showLoader(true)
@@ -142,7 +155,7 @@ extension CardListPresenter: CardListPresentation {
         }
     }
 
-    func didTapResetSelectedCardListButton() {
+    public func didTapResetSelectedCardListButton() {
         Task {
             await disableButton(true)
             await showLoader(true)
@@ -153,7 +166,7 @@ extension CardListPresenter: CardListPresentation {
         }
     }
 
-    func didTapSettingButton() {
+    public func didTapSettingButton() {
         Task {
             await pushSettingView()
         }
@@ -161,7 +174,7 @@ extension CardListPresenter: CardListPresentation {
 
     // MARK: - Presentation
 
-    func viewDidLoad() {
+    public func viewDidLoad() {
         Task {
             await disableButton(true)
             await showLoader(true)
@@ -182,16 +195,16 @@ extension CardListPresenter: CardListPresentation {
         }
     }
 
-    func viewDidResume() {}
+    public func viewDidResume() {}
 
-    func viewDidSuspend() {}
+    public func viewDidSuspend() {}
 }
 
 // MARK: - CardListInteractorOutput
 
 extension CardListPresenter: CardListInteractorOutput {
     @MainActor
-    func outputCurrentUser(_ user: UserModel) {
+    public func outputCurrentUser(_ user: UserModel) {
         dependency.currentUserId = user.id
         dependency.currentUserName = user.name
         let userList: [UserViewModel]? = dependency.viewModel?.room.userList.map {
@@ -208,7 +221,7 @@ extension CardListPresenter: CardListInteractorOutput {
     }
 
     @MainActor
-    func outputUserList(_ userList: [UserModel]) {
+    public func outputUserList(_ userList: [UserModel]) {
         let viewModel = userList.map {
             UserViewModel(
                 id: $0.id, name: $0.name, currentRoomId: $0.currentRoomId,
@@ -222,7 +235,7 @@ extension CardListPresenter: CardListInteractorOutput {
     }
 
     @MainActor
-    func outputCardPackage(_ cardPackage: CardPackageModel) {
+    public func outputCardPackage(_ cardPackage: CardPackageModel) {
         dependency.viewModel?.room.cardPackage = CardPackageModelToCardPackageViewModelTranslator()
             .translate(cardPackage)
         disableButton(false)
@@ -230,14 +243,16 @@ extension CardListPresenter: CardListInteractorOutput {
     }
 
     @MainActor
-    func outputSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
+    public func outputSuccess(message: String) {
+        dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
+            type: .onSuccess, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 
     @MainActor
-    func outputError(_ error: Error, message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onFailure, text: message)
+    public func outputError(_ error: Error, message: String) {
+        dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
+            type: .onFailure, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 }

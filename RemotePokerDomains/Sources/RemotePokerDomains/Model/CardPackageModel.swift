@@ -18,14 +18,14 @@ public struct CardPackageModel {
 
         /// インデックス
         public var index: Int
-        
+
         public init(id: String, point: String, index: Int) {
             self.id = id
             self.point = point
             self.index = index
         }
     }
-    
+
     public init(id: String, themeColor: String, cardList: [Card]) {
         self.id = id
         self.themeColor = themeColor

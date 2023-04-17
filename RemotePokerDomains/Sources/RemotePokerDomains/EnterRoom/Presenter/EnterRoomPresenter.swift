@@ -1,33 +1,39 @@
 import Foundation
 import RemotePokerData
-import RemotePokerViews
 
-final class EnterRoomPresenter: EnterRoomPresentation,
+public final class EnterRoomPresenter: EnterRoomPresentation,
     DependencyInjectable
 {
+    public init() {}
+
     // MARK: - DependencyInjectable
 
-    struct Dependency {
-        var useCase: EnterRoomUseCase
-        weak var viewModel: EnterRoomViewModel?
+    public struct Dependency {
+        public var useCase: EnterRoomUseCase
+        public weak var viewModel: EnterRoomViewModel?
+
+        public init(useCase: EnterRoomUseCase, viewModel: EnterRoomViewModel? = nil) {
+            self.useCase = useCase
+            self.viewModel = viewModel
+        }
     }
 
-    func inject(_ dependency: Dependency) {
+    public func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
 
     // MARK: - EnterRoomPresentation
 
-    var currentUser = UserViewModel(
+    public var currentUser = UserViewModel(
         id: "",
         name: "",
         currentRoomId: 0,
         selectedCardId: "")
 
-    lazy var currentRoom = RoomViewModel(
+    public lazy var currentRoom = RoomViewModel(
         id: 0, userList: [], cardPackage: translator.translate(.defaultCardPackage))
 
-    func didTapEnterRoomButton(inputUserName: String, inputRoomId: String) {
+    public func didTapEnterRoomButton(inputUserName: String, inputRoomId: String) {
         Task {
             await disableButton(true)
             if let viewModel: EnterRoomViewModel = dependency.viewModel,
@@ -47,11 +53,11 @@ final class EnterRoomPresenter: EnterRoomPresentation,
 
     // MARK: - Presentation
 
-    func viewDidLoad() {}
+    public func viewDidLoad() {}
 
-    func viewDidResume() {}
+    public func viewDidResume() {}
 
-    func viewDidSuspend() {}
+    public func viewDidSuspend() {}
 
     // MARK: - Private
 
@@ -131,7 +137,7 @@ final class EnterRoomPresenter: EnterRoomPresentation,
 // MARK: - EnterRoomInteractorOutput
 
 extension EnterRoomPresenter: EnterRoomInteractorOutput {
-    func outputCompletedSignIn(userId: String, userName: String, roomId: Int) {
+    public func outputCompletedSignIn(userId: String, userName: String, roomId: Int) {
         Task {
             await setupUserAndRoom(userId: userId, userName: userName, roomId: roomId)
             await pushCardListView()
@@ -139,14 +145,16 @@ extension EnterRoomPresenter: EnterRoomInteractorOutput {
     }
 
     @MainActor
-    func outputSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onSuccess, text: message)
+    public func outputSuccess(message: String) {
+        dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
+            type: .onSuccess, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 
     @MainActor
-    func outputError(_ error: Error, message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationMessage(type: .onFailure, text: message)
+    public func outputError(_ error: Error, message: String) {
+        dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
+            type: .onFailure, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 }

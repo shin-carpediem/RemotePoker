@@ -1,22 +1,23 @@
 import Foundation
-import RemotePokerViews
 
-actor SettingViewModel: ObservableObject, ViewModel {
+public actor SettingViewModel: ObservableObject, ViewModel {
+    public init() {}
+
     /// テーマカラー選択画面に遷移するか
     @MainActor
-    @Published var willPushSelectThemeColorView = false
+    @Published public var willPushSelectThemeColorView = false
 
     // MARK: - ViewModel
 
     @MainActor
-    @Published var isButtonEnabled = true
+    @Published public var isButtonEnabled = true
 
     @MainActor
-    @Published var isShownLoader = false
+    @Published public var isShownLoader = false
 
     @MainActor
-    @Published var isShownBanner = false
+    @Published public var isShownBanner = false
 
     @MainActor
-    @Published var bannerMessgage = NotificationMessage(type: .onSuccess, text: "")
+    @Published public var bannerMessgage = NotificationBannerViewModel(type: .onSuccess, text: "")
 }
