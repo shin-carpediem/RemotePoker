@@ -1,5 +1,9 @@
+import CardListDomain
+import EnterRoomDomain
 import RemotePokerData
 import RemotePokerDomains
+import SelectThemeColorDomain
+import SettingDomain
 
 extension ModuleAssembler {
     public func assmebleEnterRoomModule() -> EnterRoomView {
@@ -9,7 +13,8 @@ extension ModuleAssembler {
 
         presenter.inject(.init(useCase: interactor, viewModel: viewModel))
         interactor.inject(.init(repository: EnterRoomDataStore(), output: presenter))
-        let view = EnterRoomView(dependency: .init(presenter: presenter), viewModel: viewModel)
+        let view = EnterRoomView(
+            dependency: EnterRoomView.Dependency(presenter: presenter), viewModel: viewModel)
 
         return view
     }
@@ -35,7 +40,7 @@ extension ModuleAssembler {
                 enterRoomRepository: EnterRoomDataStore(),
                 roomRepository: RoomDataStore(roomId: roomId), output: presenter))
         let view = CardListView(
-            dependency: .init(
+            dependency: CardListView.Dependency(
                 presenter: presenter,
                 roomId: roomId,
                 currentUserId: currentUserId,
@@ -59,7 +64,7 @@ extension ModuleAssembler {
                 output: presenter,
                 currentUserId: currentUserId))
         let view = SettingView(
-            dependency: .init(
+            dependency: SettingView.Dependency(
                 presenter: presenter,
                 roomId: roomId,
                 cardPackageId: cardPackageId),
@@ -80,7 +85,7 @@ extension ModuleAssembler {
                 viewModel: viewModel,
                 cardPackageId: cardPackageId))
         let view = SelectThemeColorView(
-            dependency: .init(presenter: presenter), viewModel: viewModel)
+            dependency: SelectThemeColorView.Dependency(presenter: presenter), viewModel: viewModel)
 
         return view
     }

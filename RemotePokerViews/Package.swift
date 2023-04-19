@@ -3,11 +3,10 @@ import PackageDescription
 
 let package = Package(
     name: "RemotePokerViews",
+    defaultLocalization: "en",
     platforms: [.iOS(.v15), .macOS(.v10_15)],
     products: [
-        .library(
-            name: "RemotePokerViews",
-            targets: ["RemotePokerViews"])
+        .library(name: "RemotePokerViews", targets: ["RemotePokerViews"])
     ],
     dependencies: [
         .package(path: "../RemotePokerDomains"),

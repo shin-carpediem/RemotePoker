@@ -1,5 +1,5 @@
-import RemotePokerDomains
 import SwiftUI
+import ViewModel
 
 public struct NotificationBanner: View {
     /// バナーを表示するか
