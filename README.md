@@ -4,7 +4,7 @@
 
 ### Architecture
 
-![VIPER_SwiftUI](https://user-images.githubusercontent.com/71208265/232536817-eee81e61-9d15-49a3-980b-7f3f8d04eace.png)
+![VIPER_SwiftUI](https://user-images.githubusercontent.com/71208265/233383883-3fbfdeb4-05c6-47c0-b21c-992b07f23bd4.png)
 
 ### Package Dependency
 
