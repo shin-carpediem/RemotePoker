@@ -28,7 +28,7 @@ struct CardView: View {
         }) {
             Text(card.point)
                 .frame(width: 150, height: 100)
-                .font(.system(size: 40, weight: .bold))
+                .font(.largeTitle)
                 .foregroundColor(card.fontColor)
                 .background(card.backgroundColor)
                 .cornerRadius(10)
