@@ -35,7 +35,7 @@ struct OpenCardView: View {
     private var selectedCardView: some View {
         Text(selectedCard!.point)
             .frame(width: 150, height: 100)
-            .font(.system(size: 40, weight: .bold))
+            .font(.largeTitle)
             .foregroundColor(selectedCard!.fontColor)
             .background(selectedCard!.backgroundColor)
             .cornerRadius(10)

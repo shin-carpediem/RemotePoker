@@ -120,14 +120,14 @@ public struct CardListView: View, ModuleAssembler {
         let point: String = currentUserSelectStatus?.selectedCard?.point ?? ""
         return Text(point)
             .foregroundColor(.gray)
-            .font(.system(size: 26, weight: .regular))
+            .font(.title)
     }
 
     /// ボタンの説明テキスト
     private var buttonText: some View {
         Text(viewModel.buttonText)
             .foregroundColor(.gray)
-            .font(.system(size: 14, weight: .regular))
+            .font(.subheadline)
     }
 
     /// フローティングアクションボタン
@@ -142,7 +142,7 @@ public struct CardListView: View, ModuleAssembler {
             Image(systemName: viewModel.fabIconName).foregroundColor(.gray)
         }
         .softButtonStyle(Circle())
-        .padding(EdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16))
+        .padding(16)
         .disabled(!viewModel.isButtonEnabled)
     }
 

@@ -65,7 +65,7 @@ public struct SelectThemeColorView: View {
     /// テーマラベル
     private func themeLabel(_ color: CardPackageThemeColor) -> some View {
         Text(color.rawValue)
-            .font(.system(size: 18, weight: .bold))
+            .font(.headline)
             .foregroundColor(.gray)
     }
 
