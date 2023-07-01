@@ -5,19 +5,14 @@ import Translator
 import ViewModel
 
 struct CardView: View {
-    /// カード
     var card: CardPackageViewModel.Card
 
-    /// テーマカラー
     var themeColor: CardPackageThemeColor
 
-    /// 有効か
     var isEnabled: Bool
 
-    /// 選択されているか
     var isSelected: Bool
 
-    /// カード選択ハンドラー
     var selectCardHandler: ((CardPackageViewModel.Card) -> Void)?
 
     // MARK: - View

@@ -44,12 +44,12 @@ public final class CardListPresenter: DependencyInjectable {
 
     /// 匿名ログインする(ユーザーIDを返却)
     private func signIn() -> Future<String, Never> {
-        Future<String, Never> { promise in
+        Future<String, Never> { [unowned self] promise in
             AuthDataStore.shared.signIn()
                 .sink { userId in
                     promise(.success(userId))
                 }
-                .store(in: &self.cancellablesForAction)
+                .store(in: &cancellablesForAction)
         }
     }
 
@@ -72,20 +72,15 @@ public final class CardListPresenter: DependencyInjectable {
     }
 
     /// タイトルを表示する
-    @MainActor
-    private func showTitle(userList: [UserViewModel]) {
-        let currentUserName: String = dependency.currentUserName
+    @MainActor private func showTitle(userList: [UserViewModel]) {
         let otherUsersCount: Int = userList.count - 1
-        let otherUsersText = (otherUsersCount >= 1 ? "と \(String(otherUsersCount))名" : "")
-        let roomId: Int = dependency.roomId
+        let title = "\(dependency.currentUserName) \(otherUsersCount >= 1 ? "と \(String(otherUsersCount))名" : "")が ルームID\(dependency.roomId) に入室中"
 
-        let title = "\(currentUserName) \(otherUsersText)が ルームID\(roomId) に入室中"
         dependency.viewModel?.title = title
     }
 
     /// ユーザーの選択状況一覧を更新する
-    @MainActor
-    private func updateUserSelectStatusList(userList: [UserViewModel]) {
+    @MainActor private func updateUserSelectStatusList(userList: [UserViewModel]) {
         let userSelectStatusList: [UserSelectStatusViewModel] = userList.map { user in
             guard let cardPackage: CardPackageViewModel = dependency.viewModel?.room.cardPackage
             else {
@@ -104,38 +99,33 @@ public final class CardListPresenter: DependencyInjectable {
     }
 
     /// 選択されたカード一覧を表示する
-    @MainActor
-    private func showSelectedCardList() {
+    @MainActor private func showSelectedCardList() {
         dependency.viewModel?.isShownSelectedCardList = true
         disableButton(false)
         showLoader(false)
     }
 
     /// 選択されたカード一覧を非表示にする
-    @MainActor
-    private func hideSelectedCardList() {
+    @MainActor private func hideSelectedCardList() {
         dependency.viewModel?.isShownSelectedCardList = false
         disableButton(false)
         showLoader(false)
     }
 
     /// ボタンを無効にする
-    @MainActor
-    private func disableButton(_ disabled: Bool) {
+    @MainActor private func disableButton(_ disabled: Bool) {
         dependency.viewModel?.isButtonEnabled = !disabled
     }
 
     /// ローダーを表示する
-    @MainActor
-    private func showLoader(_ show: Bool) {
+    @MainActor private func showLoader(_ show: Bool) {
         dependency.viewModel?.isShownLoader = show
     }
 
     // MARK: - Router
 
     /// 設定画面に遷移する
-    @MainActor
-    private func pushSettingView() {
+    @MainActor private func pushSettingView() {
         dependency.viewModel?.willPushSettingView = true
     }
 }
@@ -207,8 +197,7 @@ extension CardListPresenter: CardListPresentation {
 // MARK: - CardListInteractorOutput
 
 extension CardListPresenter: CardListInteractorOutput {
-    @MainActor
-    public func outputCurrentUser(_ user: UserModel) {
+    @MainActor public func outputCurrentUser(_ user: UserModel) {
         dependency.currentUserId = user.id
         dependency.currentUserName = user.name
         let userList: [UserViewModel]? = dependency.viewModel?.room.userList.map {
@@ -224,8 +213,7 @@ extension CardListPresenter: CardListInteractorOutput {
         showLoader(false)
     }
 
-    @MainActor
-    public func outputUserList(_ userList: [UserModel]) {
+    @MainActor public func outputUserList(_ userList: [UserModel]) {
         let viewModel = userList.map {
             UserViewModel(
                 id: $0.id, name: $0.name, currentRoomId: $0.currentRoomId,
@@ -238,23 +226,20 @@ extension CardListPresenter: CardListInteractorOutput {
         showLoader(false)
     }
 
-    @MainActor
-    public func outputCardPackage(_ cardPackage: CardPackageModel) {
+    @MainActor public func outputCardPackage(_ cardPackage: CardPackageModel) {
         dependency.viewModel?.room.cardPackage = CardPackageModelToCardPackageViewModelTranslator()
             .translate(cardPackage)
         disableButton(false)
         showLoader(false)
     }
 
-    @MainActor
-    public func outputSuccess(message: String) {
+    @MainActor public func outputSuccess(message: String) {
         dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
             type: .onSuccess, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 
-    @MainActor
-    public func outputError(_ error: Error, message: String) {
+    @MainActor public func outputError(_ error: Error, message: String) {
         dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
             type: .onFailure, text: message)
         dependency.viewModel?.isShownBanner = true

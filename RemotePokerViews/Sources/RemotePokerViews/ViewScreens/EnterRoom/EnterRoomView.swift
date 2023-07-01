@@ -41,7 +41,6 @@ public struct EnterRoomView: View, ModuleAssembler {
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
 
-    /// コンテンツビュー
     private var contentView: some View {
         VStack(spacing: 28) {
             inputField

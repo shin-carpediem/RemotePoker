@@ -47,7 +47,6 @@ public struct CardListView: View, ModuleAssembler {
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
 
-    /// コンテンツビュー
     private var contentView: some View {
         VStack {
             ScrollView {

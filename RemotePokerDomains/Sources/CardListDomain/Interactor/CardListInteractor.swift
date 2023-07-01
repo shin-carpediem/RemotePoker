@@ -55,7 +55,7 @@ extension CardListInteractor: CardListUseCase {
                     await self.dependency.output?.outputUserList(model)
                 }
             }
-            .store(in: &self.cancellablesForSubscription)
+            .store(in: &cancellablesForSubscription)
     }
 
     public func subscribeCardPackages() {
@@ -70,7 +70,7 @@ extension CardListInteractor: CardListUseCase {
                     await self.dependency.output?.outputCardPackage(model)
                 }
             }
-            .store(in: &self.cancellablesForSubscription)
+            .store(in: &cancellablesForSubscription)
     }
 
     public func updateSelectedCardId(selectedCardDictionary: [String: String]) {
@@ -88,6 +88,6 @@ extension CardListInteractor: CardListUseCase {
                     await self.dependency.output?.outputCurrentUser(model)
                 }
             }
-            .store(in: &self.cancellablesForAction)
+            .store(in: &cancellablesForAction)
     }
 }

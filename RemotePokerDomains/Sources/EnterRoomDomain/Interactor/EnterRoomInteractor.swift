@@ -40,7 +40,7 @@ extension EnterRoomInteractor: EnterRoomUseCase {
                 self?.dependency.output?.outputCompletedSignIn(
                     userId: userId, userName: userName, roomId: roomId)
             }
-            .store(in: &self.cancellablesForAction)
+            .store(in: &cancellablesForAction)
     }
 
     public func checkRoomExist(roomId: Int) async -> Bool {

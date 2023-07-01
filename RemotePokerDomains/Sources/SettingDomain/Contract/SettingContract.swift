@@ -16,10 +16,8 @@ public protocol SettingUseCase: AnyObject {
 
 public protocol SettingInteractorOutput: AnyObject {
     /// データ処理の成功を出力
-    @MainActor
-    func outputSuccess(message: String)
+    @MainActor func outputSuccess(message: String)
 
     /// エラーを出力
-    @MainActor
-    func outputError(_ error: Error, message: String)
+    @MainActor func outputError(_ error: Error, message: String)
 }

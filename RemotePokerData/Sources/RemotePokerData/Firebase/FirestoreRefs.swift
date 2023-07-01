@@ -2,7 +2,6 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 public struct FirestoreRefs {
-    /// ルームID
     public var roomId: Int
 
     public init(roomId: Int) {

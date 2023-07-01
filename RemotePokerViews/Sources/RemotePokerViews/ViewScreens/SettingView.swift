@@ -38,7 +38,6 @@ public struct SettingView: View, ModuleAssembler {
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
 
-    /// コンテンツビュー
     private var contentView: some View {
         VStack(alignment: .leading) {
             List {
