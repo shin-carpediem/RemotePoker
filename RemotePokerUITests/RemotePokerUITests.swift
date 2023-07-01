@@ -1,6 +1,6 @@
 import XCTest
 
-class RemotePokerUITests: XCTestCase {
+final class RemotePokerUITests: XCTestCase {
     // MARK: - Override
 
     override func setUpWithError() throws {

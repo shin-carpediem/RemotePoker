@@ -20,6 +20,7 @@
 		F57A44BA29D09F9A00A077DD /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */; };
 		F588E30728BB8E2800C5CA9A /* Neumorphic in Frameworks */ = {isa = PBXBuildFile; productRef = F588E30628BB8E2800C5CA9A /* Neumorphic */; };
 		F5A9D18F29EAFE430002865B /* RemotePokerData in Frameworks */ = {isa = PBXBuildFile; productRef = F5A9D18E29EAFE430002865B /* RemotePokerData */; };
+		F5D079A32A500A9F00170BEA /* RemotePokerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D079A22A500A9F00170BEA /* RemotePokerTests.swift */; };
 		F5DD230829EACF390091B84C /* RemotePokerViews in Frameworks */ = {isa = PBXBuildFile; productRef = F5DD230729EACF390091B84C /* RemotePokerViews */; };
 		F5DD230A29EAD45E0091B84C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5DD230929EAD44F0091B84C /* Assets.xcassets */; };
 		F5E917CB287114DC00AE8421 /* RemotePokerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5E917CA287114DC00AE8421 /* RemotePokerApp.swift */; };
@@ -54,6 +55,7 @@
 		F595FE6B29AFA2D500B58250 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F595FE6C29AFA45A00B58250 /* ci_pre_xcodebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_pre_xcodebuild.sh; sourceTree = "<group>"; };
 		F5A9E74729EAFC0900CFE053 /* RemotePokerData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RemotePokerData; sourceTree = "<group>"; };
+		F5D079A22A500A9F00170BEA /* RemotePokerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePokerTests.swift; sourceTree = "<group>"; };
 		F5D0FEC729EACCD6006769AD /* RemotePokerViews */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RemotePokerViews; sourceTree = "<group>"; };
 		F5DD230929EAD44F0091B84C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5E917C7287114DC00AE8421 /* RemotePoker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RemotePoker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,6 +114,14 @@
 			path = ci_scripts;
 			sourceTree = "<group>";
 		};
+		F5D079A12A500A8000170BEA /* RemotePokerTests */ = {
+			isa = PBXGroup;
+			children = (
+				F5D079A22A500A9F00170BEA /* RemotePokerTests.swift */,
+			);
+			path = RemotePokerTests;
+			sourceTree = "<group>";
+		};
 		F5DD230629EACF390091B84C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +136,7 @@
 				F5E917C8287114DC00AE8421 /* Products */,
 				F5DD230629EACF390091B84C /* Frameworks */,
 				F5E917C9287114DC00AE8421 /* RemotePoker */,
+				F5D079A12A500A8000170BEA /* RemotePokerTests */,
 				F5E917E4287114EA00AE8421 /* RemotePokerUITests */,
 				F5D0FEC729EACCD6006769AD /* RemotePokerViews */,
 				F5A9E74729EAFC0900CFE053 /* RemotePokerData */,
@@ -259,6 +270,7 @@
 					};
 					F5E917D6287114EA00AE8421 = {
 						CreatedOnToolsVersion = 13.4.1;
+						LastSwiftMigration = 1430;
 						TestTargetID = F5E917C6287114DC00AE8421;
 					};
 					F5E917E0287114EA00AE8421 = {
@@ -354,6 +366,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5D079A32A500A9F00170BEA /* RemotePokerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,7 +431,6 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -479,7 +491,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -579,6 +590,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3A32XTC8Y7;
@@ -588,6 +600,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = dinger.scrum.RemotePokerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RemotePoker.app/RemotePoker";
@@ -599,6 +612,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3A32XTC8Y7;

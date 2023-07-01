@@ -1,6 +1,6 @@
 import XCTest
 
-class RemotePokerUITestsLaunchTests: XCTestCase {
+final class RemotePokerUITestsLaunchTests: XCTestCase {
     // MARK: - Override
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
