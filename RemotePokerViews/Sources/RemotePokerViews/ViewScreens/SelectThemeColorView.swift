@@ -40,6 +40,7 @@ public struct SelectThemeColorView: View {
         VStack(alignment: .leading) {
             List(viewModel.themeColorList, id: \.self) { color in
                 colorCell(color)
+                    .disabled(!viewModel.isButtonEnabled)
             }
             .listBackground(Colors.background)
             .listStyle(.insetGrouped)
@@ -58,7 +59,6 @@ public struct SelectThemeColorView: View {
                 label(color)
             }
         }
-        .disabled(!viewModel.isButtonEnabled)
     }
 
     /// テーマラベル

@@ -65,6 +65,7 @@ public struct CardListView: View, ModuleAssembler {
                 Spacer()
                 buttonText
                 floatingActionButton
+                    .disabled(!viewModel.isButtonEnabled)
             }
         }
     }
@@ -142,7 +143,6 @@ public struct CardListView: View, ModuleAssembler {
         }
         .softButtonStyle(Circle())
         .padding(16)
-        .disabled(!viewModel.isButtonEnabled)
     }
 
     /// 通知バナー

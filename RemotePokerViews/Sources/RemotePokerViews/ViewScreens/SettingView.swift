@@ -42,7 +42,9 @@ public struct SettingView: View, ModuleAssembler {
         VStack(alignment: .leading) {
             List {
                 selecteThemeColorButton
+                    .disabled(!viewModel.isButtonEnabled)
                 leaveButton
+                    .disabled(!viewModel.isButtonEnabled)
             }
             .listBackground(Colors.background)
             .listStyle(.insetGrouped)
@@ -61,7 +63,6 @@ public struct SettingView: View, ModuleAssembler {
                     .foregroundColor(.gray)
             }
         }
-        .disabled(!viewModel.isButtonEnabled)
     }
 
     /// 退出ボタン
@@ -77,7 +78,6 @@ public struct SettingView: View, ModuleAssembler {
                     .foregroundColor(.gray)
             }
         }
-        .disabled(!viewModel.isButtonEnabled)
     }
 
     /// 通知バナー
