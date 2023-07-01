@@ -12,6 +12,7 @@ public struct EnterRoomView: View, ModuleAssembler {
     init(dependency: Dependency, viewModel: EnterRoomViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
+
         self.dependency.presenter.viewDidLoad()
     }
 

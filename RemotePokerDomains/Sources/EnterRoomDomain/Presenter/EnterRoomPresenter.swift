@@ -47,8 +47,6 @@ public final class EnterRoomPresenter: EnterRoomPresentation,
                 await showLoader(true)
                 let roomId = Int(inputRoomId)!
                 await dependency.useCase.signIn(userName: inputUserName, roomId: roomId)
-            } else {
-                // フォーム内容が有効ではない
             }
             await disableButton(false)
             await showLoader(false)
@@ -117,19 +115,16 @@ public final class EnterRoomPresenter: EnterRoomPresentation,
         }
     }
 
-    /// ボタンを無効にする
     @MainActor private func disableButton(_ disabled: Bool) {
         dependency.viewModel?.isButtonEnabled = !disabled
     }
 
-    /// ローダーを表示する
     @MainActor private func showLoader(_ show: Bool) {
         dependency.viewModel?.isShownLoader = show
     }
 
     // MARK: - Router
 
-    /// カード一覧画面に遷移する
     @MainActor private func pushCardListView() {
         dependency.viewModel?.willPushCardListView = true
     }
@@ -139,9 +134,9 @@ public final class EnterRoomPresenter: EnterRoomPresentation,
 
 extension EnterRoomPresenter: EnterRoomInteractorOutput {
     public func outputCompletedSignIn(userId: String, userName: String, roomId: Int) {
-        Task {
+        Task { @MainActor in
             await setupUserAndRoom(userId: userId, userName: userName, roomId: roomId)
-            await pushCardListView()
+            pushCardListView()
         }
     }
 

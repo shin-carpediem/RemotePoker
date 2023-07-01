@@ -5,10 +5,8 @@ import ViewModel
 public actor SelectThemeColorViewModel: ObservableObject, ViewModel {
     public init() {}
 
-    /// テーマカラー一覧
     @MainActor @Published public var themeColorList = [CardPackageThemeColor]()
 
-    /// 選択されたテーマカラー
     @MainActor @Published public var selectedThemeColor: CardPackageThemeColor?
 
     // MARK: - ViewModel
