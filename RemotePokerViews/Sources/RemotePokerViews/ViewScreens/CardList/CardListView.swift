@@ -20,6 +20,7 @@ public struct CardListView: View, ModuleAssembler {
     init(dependency: Dependency, viewModel: CardListViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
+
         self.dependency.presenter.viewDidLoad()
     }
 
@@ -47,7 +48,6 @@ public struct CardListView: View, ModuleAssembler {
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
 
-    /// コンテンツビュー
     private var contentView: some View {
         VStack {
             ScrollView {
@@ -66,6 +66,7 @@ public struct CardListView: View, ModuleAssembler {
                 Spacer()
                 buttonText
                 floatingActionButton
+                    .disabled(!viewModel.isButtonEnabled)
             }
         }
     }
@@ -134,7 +135,7 @@ public struct CardListView: View, ModuleAssembler {
     private var floatingActionButton: some View {
         Button {
             if viewModel.isShownSelectedCardList {
-                dependency.presenter.didTapResetSelectedCardListButton()
+                dependency.presenter.didTapBackButton()
             } else {
                 dependency.presenter.didTapOpenSelectedCardListButton()
             }
@@ -143,7 +144,6 @@ public struct CardListView: View, ModuleAssembler {
         }
         .softButtonStyle(Circle())
         .padding(16)
-        .disabled(!viewModel.isButtonEnabled)
     }
 
     /// 通知バナー

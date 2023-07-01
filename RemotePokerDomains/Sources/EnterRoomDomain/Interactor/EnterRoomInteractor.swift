@@ -28,7 +28,7 @@ public final class EnterRoomInteractor: DependencyInjectable {
 
     private var repository: RoomRepository?
 
-    private var cancellablesForAction = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
 }
 
 // MARK: - EnterRoomUseCase
@@ -40,7 +40,7 @@ extension EnterRoomInteractor: EnterRoomUseCase {
                 self?.dependency.output?.outputCompletedSignIn(
                     userId: userId, userName: userName, roomId: roomId)
             }
-            .store(in: &self.cancellablesForAction)
+            .store(in: &cancellables)
     }
 
     public func checkRoomExist(roomId: Int) async -> Bool {

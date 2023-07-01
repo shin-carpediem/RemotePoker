@@ -1,8 +1,6 @@
 public struct UserEntity {
-    /// ID
     public var id: String
 
-    /// 名前
     public var name: String
 
     /// 入室中のルームID(未入室は0)

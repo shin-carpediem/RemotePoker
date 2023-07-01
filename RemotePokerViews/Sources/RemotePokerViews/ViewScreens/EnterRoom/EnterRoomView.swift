@@ -12,6 +12,7 @@ public struct EnterRoomView: View, ModuleAssembler {
     init(dependency: Dependency, viewModel: EnterRoomViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
+
         self.dependency.presenter.viewDidLoad()
     }
 
@@ -41,12 +42,12 @@ public struct EnterRoomView: View, ModuleAssembler {
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
 
-    /// コンテンツビュー
     private var contentView: some View {
         VStack(spacing: 28) {
             inputField
             validatedMessage
             sendButton
+                .disabled(!viewModel.isButtonEnabled)
                 .padding()
         }
         .padding(.horizontal, 40)
@@ -77,7 +78,6 @@ public struct EnterRoomView: View, ModuleAssembler {
                 .frame(width: 140, height: 20)
         }
         .softButtonStyle(RoundedRectangle(cornerRadius: 20))
-        .disabled(!viewModel.isButtonEnabled)
     }
 
     /// 通知バナー

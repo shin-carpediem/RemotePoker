@@ -15,8 +15,7 @@ public struct NotificationBanner: View {
     // MARK: - Private
 
     /// バナーを非表示にする
-    @MainActor
-    private func hideBanner() {
+    @MainActor private func hideBanner() {
         isShown = false
     }
 
@@ -31,28 +30,28 @@ public struct NotificationBanner: View {
     // MARK: - View
 
     public var body: some View {
-        banner
-            .padding()
-            .animation(.easeOut, value: isShown)
-            .transition(.move(edge: .top).combined(with: .opacity))
-            .onTapGesture { withAnimation { hideBanner() } }
-            .onAppear { construct() }
+        VStack {
+            banner
+                .padding()
+                .animation(.easeOut, value: isShown)
+                .transition(.move(edge: .top).combined(with: .opacity))
+                .onTapGesture { withAnimation { hideBanner() } }
+                .onAppear { construct() }
+            Spacer()
+        }
     }
 
     /// バナーView
     private var banner: some View {
-        VStack {
-            HStack {
-                Image(systemName: viewModel.iconName)
-                Text(viewModel.text)
-                Spacer()
-            }
-            .foregroundColor(.white)
-            .padding(12)
-            .background(viewModel.backGroundColor)
-            .cornerRadius(8)
+        HStack {
+            Image(systemName: viewModel.iconName)
+            Text(viewModel.text)
             Spacer()
         }
+        .foregroundColor(.white)
+        .padding(12)
+        .background(viewModel.backGroundColor)
+        .cornerRadius(8)
     }
 }
 

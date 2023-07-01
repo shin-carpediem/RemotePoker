@@ -2,8 +2,6 @@ import SettingDomain
 import SwiftUI
 
 public struct SettingView: View, ModuleAssembler {
-    @Environment(\.presentationMode) var presentation
-
     // MARK: - Dependency
 
     struct Dependency {
@@ -15,6 +13,7 @@ public struct SettingView: View, ModuleAssembler {
     init(dependency: Dependency, viewModel: SettingViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
+
         self.dependency.presenter.viewDidLoad()
     }
 
@@ -38,12 +37,11 @@ public struct SettingView: View, ModuleAssembler {
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
 
-    /// コンテンツビュー
     private var contentView: some View {
         VStack(alignment: .leading) {
             List {
                 selecteThemeColorButton
-                leaveButton
+                    .disabled(!viewModel.isButtonEnabled)
             }
             .listBackground(Colors.background)
             .listStyle(.insetGrouped)
@@ -62,23 +60,6 @@ public struct SettingView: View, ModuleAssembler {
                     .foregroundColor(.gray)
             }
         }
-        .disabled(!viewModel.isButtonEnabled)
-    }
-
-    /// 退出ボタン
-    private var leaveButton: some View {
-        Button(action: {
-            dependency.presenter.didTapLeaveRoomButton()
-            presentation.wrappedValue.dismiss()
-        }) {
-            HStack {
-                Image(systemName: "rectangle.portrait.and.arrow.forward")
-                    .foregroundColor(.gray)
-                Text("ルームから退出")
-                    .foregroundColor(.gray)
-            }
-        }
-        .disabled(!viewModel.isButtonEnabled)
     }
 
     /// 通知バナー

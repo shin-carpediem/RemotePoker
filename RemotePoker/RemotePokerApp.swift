@@ -3,8 +3,7 @@ import RemotePokerDomains
 import RemotePokerViews
 import SwiftUI
 
-@main
-struct RemotePokerApp: App, ModuleAssembler {
+@main struct RemotePokerApp: App, ModuleAssembler {
     // MARK: - App
 
     class AppDelegate: NSObject, UIApplicationDelegate {

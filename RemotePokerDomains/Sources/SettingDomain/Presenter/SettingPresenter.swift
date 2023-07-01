@@ -8,11 +8,9 @@ public final class SettingPresenter: DependencyInjectable {
     // MARK: - DependencyInjectable
 
     public struct Dependency {
-        public var useCase: SettingUseCase
         public weak var viewModel: SettingViewModel?
 
-        public init(useCase: SettingUseCase, viewModel: SettingViewModel?) {
-            self.useCase = useCase
+        public init(viewModel: SettingViewModel?) {
             self.viewModel = viewModel
         }
     }
@@ -25,23 +23,17 @@ public final class SettingPresenter: DependencyInjectable {
 
     private var dependency: Dependency!
 
-    /// ボタンを無効にする
-    @MainActor
-    private func disableButton(_ disabled: Bool) {
+    @MainActor private func disableButton(_ disabled: Bool) {
         dependency.viewModel?.isButtonEnabled = !disabled
     }
 
-    /// ローダーを表示する
-    @MainActor
-    private func showLoader(_ show: Bool) {
+    @MainActor private func showLoader(_ show: Bool) {
         dependency.viewModel?.isShownLoader = show
     }
 
     // MARK: - Router
 
-    /// テーマカラー選択画面に遷移する
-    @MainActor
-    private func pushSelectThemeColorView() {
+    @MainActor private func pushSelectThemeColorView() {
         dependency.viewModel?.willPushSelectThemeColorView = true
     }
 }
@@ -52,16 +44,6 @@ extension SettingPresenter: SettingPresentation {
     public func didTapSelectThemeColorButton() {
         Task {
             await pushSelectThemeColorView()
-        }
-    }
-
-    public func didTapLeaveRoomButton() {
-        Task {
-            await disableButton(true)
-            await showLoader(true)
-            await dependency.useCase.leaveRoom()
-            await disableButton(false)
-            await showLoader(false)
         }
     }
 
@@ -77,15 +59,13 @@ extension SettingPresenter: SettingPresentation {
 // MARK: - SettingInteractorOutput
 
 extension SettingPresenter: SettingInteractorOutput {
-    @MainActor
-    public func outputSuccess(message: String) {
+    @MainActor public func outputSuccess(message: String) {
         dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
             type: .onSuccess, text: message)
         dependency.viewModel?.isShownBanner = true
     }
 
-    @MainActor
-    public func outputError(_ errror: Error, message: String) {
+    @MainActor public func outputError(_ errror: Error, message: String) {
         dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
             type: .onFailure, text: message)
         dependency.viewModel?.isShownBanner = true

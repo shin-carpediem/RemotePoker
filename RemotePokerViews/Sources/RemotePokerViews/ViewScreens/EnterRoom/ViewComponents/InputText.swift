@@ -11,10 +11,6 @@ struct InputText: View {
     // MARK: - View
 
     var body: some View {
-        textField
-    }
-
-    private var textField: some View {
         TextField(placeholder, text: text)
             .padding()
             .background(

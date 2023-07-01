@@ -14,6 +14,7 @@ public struct SelectThemeColorView: View {
     init(dependency: Dependency, viewModel: SelectThemeColorViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
+
         self.dependency.presenter.viewDidLoad()
     }
 
@@ -36,11 +37,11 @@ public struct SelectThemeColorView: View {
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
 
-    /// コンテンツビュー
     private var contentView: some View {
         VStack(alignment: .leading) {
             List(viewModel.themeColorList, id: \.self) { color in
                 colorCell(color)
+                    .disabled(!viewModel.isButtonEnabled)
             }
             .listBackground(Colors.background)
             .listStyle(.insetGrouped)
@@ -59,7 +60,6 @@ public struct SelectThemeColorView: View {
                 label(color)
             }
         }
-        .disabled(!viewModel.isButtonEnabled)
     }
 
     /// テーマラベル

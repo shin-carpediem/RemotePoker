@@ -10,8 +10,8 @@ public protocol CardListPresentation: AnyObject, Presentation {
     /// 選択済みカード一覧を公開するボタンがタップされた
     func didTapOpenSelectedCardListButton()
 
-    /// 選択済みカード一覧をリセットするボタンがタップされた
-    func didTapResetSelectedCardListButton()
+    /// 戻るボタンがタップされた
+    func didTapBackButton()
 
     /// 設定ボタンがタップされた
     func didTapSettingButton()
@@ -40,22 +40,17 @@ public protocol CardListUseCase: AnyObject {
 
 public protocol CardListInteractorOutput: AnyObject {
     /// カレントユーザーを出力する
-    @MainActor
-    func outputCurrentUser(_ user: UserModel)
+    @MainActor func outputCurrentUser(_ user: UserModel)
 
     /// ユーザーリストを出力する
-    @MainActor
-    func outputUserList(_ userList: [UserModel])
+    @MainActor func outputUserList(_ userList: [UserModel])
 
     /// カードパッケージを出力する
-    @MainActor
-    func outputCardPackage(_ cardPackage: CardPackageModel)
+    @MainActor func outputCardPackage(_ cardPackage: CardPackageModel)
 
-    /// データ処理の成功を出力
-    @MainActor
-    func outputSuccess(message: String)
+    /// データ処理の成功を出力する
+    @MainActor func outputSuccess(message: String)
 
-    /// エラーを出力
-    @MainActor
-    func outputError(_ error: Error, message: String)
+    /// エラーを出力する
+    @MainActor func outputError(_ error: Error, message: String)
 }
