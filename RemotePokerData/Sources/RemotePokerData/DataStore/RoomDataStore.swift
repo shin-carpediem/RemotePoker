@@ -103,7 +103,6 @@ public final class RoomDataStore: RoomRepository {
 
     // MARK: - Private
 
-    /// ルームID
     private let roomId: Int
 
     /// Firestoreのリファレンス一覧
@@ -111,7 +110,6 @@ public final class RoomDataStore: RoomRepository {
         FirestoreRefs(roomId: roomId)
     }
 
-    /// ユーザー エンティティ
     private static func userEntity(from doc: DocumentSnapshot) -> UserEntity {
         guard let id = doc.get("id") as? String else {
             fatalError()
@@ -123,7 +121,6 @@ public final class RoomDataStore: RoomRepository {
             selectedCardId: doc.get("selectedCardId") as? String ?? "")
     }
 
-    /// カードパッケージ エンティティ
     private func cardPackageEntity(from doc: DocumentSnapshot) async -> CardPackageEntity {
         guard let id = doc.get("id") as? String else {
             fatalError()

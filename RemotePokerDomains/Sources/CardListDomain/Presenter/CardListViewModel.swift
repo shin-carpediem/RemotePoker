@@ -6,24 +6,21 @@ import ViewModel
 public actor CardListViewModel: ObservableObject, ViewModel {
     public init() {}
 
-    /// ルーム
     @MainActor @Published public var room = RoomViewModel(
         id: 0, userList: [],
         cardPackage: CardPackageModelToCardPackageViewModelTranslator().translate(
             .defaultCardPackage))
 
-    /// タイトル
     @MainActor @Published public var title = ""
 
     /// ユーザーのカード選択状況一覧
     @MainActor @Published public var userSelectStatusList = [UserSelectStatusViewModel]()
 
-    /// 選択済みカード一覧が公開されるか
     @MainActor @Published public var isShownSelectedCardList = false
 
     /// ボタンの説明テキスト
     @MainActor public var buttonText: String {
-        isShownSelectedCardList ? "自分の選択したカードをリセット" : "全員の選択されたカードを見る"
+        isShownSelectedCardList ? "カード選択画面に戻る" : "全員の選択されたカードを見る"
     }
 
     /// フローティングアクションボタンのシンボル名
@@ -45,7 +42,6 @@ public actor CardListViewModel: ObservableObject, ViewModel {
         return systemName
     }
 
-    /// 設定画面に遷移するか
     @MainActor @Published public var willPushSettingView = false
 
     // MARK: - ViewModel

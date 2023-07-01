@@ -25,19 +25,16 @@ public final class SettingPresenter: DependencyInjectable {
 
     private var dependency: Dependency!
 
-    /// ボタンを無効にする
     @MainActor private func disableButton(_ disabled: Bool) {
         dependency.viewModel?.isButtonEnabled = !disabled
     }
 
-    /// ローダーを表示する
     @MainActor private func showLoader(_ show: Bool) {
         dependency.viewModel?.isShownLoader = show
     }
 
     // MARK: - Router
 
-    /// テーマカラー選択画面に遷移する
     @MainActor private func pushSelectThemeColorView() {
         dependency.viewModel?.willPushSelectThemeColorView = true
     }

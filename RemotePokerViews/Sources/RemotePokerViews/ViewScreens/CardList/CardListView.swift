@@ -20,6 +20,7 @@ public struct CardListView: View, ModuleAssembler {
     init(dependency: Dependency, viewModel: CardListViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
+
         self.dependency.presenter.viewDidLoad()
     }
 
@@ -50,7 +51,6 @@ public struct CardListView: View, ModuleAssembler {
     private var contentView: some View {
         VStack {
             ScrollView {
-                Spacer()
                 if viewModel.isShownSelectedCardList {
                     selectedCardListView
                         .padding()
@@ -60,8 +60,8 @@ public struct CardListView: View, ModuleAssembler {
                 }
             }
             HStack {
-                Spacer()
                 selectedCardPointView
+                    .padding(.leading, 32)
                 Spacer()
                 buttonText
                 floatingActionButton
@@ -134,7 +134,7 @@ public struct CardListView: View, ModuleAssembler {
     private var floatingActionButton: some View {
         Button {
             if viewModel.isShownSelectedCardList {
-                dependency.presenter.didTapResetSelectedCardListButton()
+                dependency.presenter.didTapBackButton()
             } else {
                 dependency.presenter.didTapOpenSelectedCardListButton()
             }

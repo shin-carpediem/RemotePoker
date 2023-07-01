@@ -31,17 +31,14 @@ public final class SelectThemeColorPresenter: DependencyInjectable {
 
     private var dependency: Dependency!
 
-    /// カラー一覧を表示する
     @MainActor private func showColorList() {
         dependency.viewModel?.themeColorList = CardPackageThemeColor.allCases
     }
 
-    /// 選択されたテーマカラーで表示する
     @MainActor private func applySelectedThemeColor(_ themeColor: CardPackageThemeColor) {
         dependency.viewModel?.selectedThemeColor = themeColor
     }
 
-    /// 成功を表示する
     @MainActor private func showSuccess(message: String) {
         dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
             type: .onSuccess, text: message)

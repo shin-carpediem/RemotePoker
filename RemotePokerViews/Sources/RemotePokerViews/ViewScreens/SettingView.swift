@@ -15,6 +15,7 @@ public struct SettingView: View, ModuleAssembler {
     init(dependency: Dependency, viewModel: SettingViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
+
         self.dependency.presenter.viewDidLoad()
     }
 

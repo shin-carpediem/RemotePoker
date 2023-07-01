@@ -149,13 +149,10 @@ extension CardListPresenter: CardListPresentation {
         }
     }
 
-    public func didTapResetSelectedCardListButton() {
+    public func didTapBackButton() {
         Task {
             await disableButton(true)
             await showLoader(true)
-            // カレントユーザーの選択済みカードをリセットする
-            let selectedCardDictionary: [String: String] = [dependency.currentUserId: ""]
-            dependency.useCase.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
             await hideSelectedCardList()
         }
     }

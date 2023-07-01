@@ -32,7 +32,6 @@ public final class CardListInteractor: DependencyInjectable {
     private var dependency: Dependency!
 
     private var cancellablesForSubscription = Set<AnyCancellable>()
-
     private var cancellablesForAction = Set<AnyCancellable>()
 }
 

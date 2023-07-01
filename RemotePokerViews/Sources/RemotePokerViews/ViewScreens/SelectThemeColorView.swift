@@ -14,6 +14,7 @@ public struct SelectThemeColorView: View {
     init(dependency: Dependency, viewModel: SelectThemeColorViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
+
         self.dependency.presenter.viewDidLoad()
     }
 
