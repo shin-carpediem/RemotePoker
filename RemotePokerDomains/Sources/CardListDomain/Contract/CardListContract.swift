@@ -10,8 +10,8 @@ public protocol CardListPresentation: AnyObject, Presentation {
     /// 選択済みカード一覧を公開するボタンがタップされた
     func didTapOpenSelectedCardListButton()
 
-    /// 戻るボタンがタップされた
-    func didTapBackButton()
+    /// 選択済みカード一覧をリセットするボタンがタップされた
+    func didTapResetSelectedCardListButton()
 
     /// 設定ボタンがタップされた
     func didTapSettingButton()

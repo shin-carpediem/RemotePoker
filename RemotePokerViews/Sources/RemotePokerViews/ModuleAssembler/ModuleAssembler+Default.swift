@@ -55,8 +55,14 @@ extension ModuleAssembler {
     {
         let viewModel = SettingViewModel()
         let presenter = SettingPresenter()
+        let interactor = SettingInteractor()
 
-        presenter.inject(.init(viewModel: viewModel))
+        presenter.inject(.init(useCase: interactor, viewModel: viewModel))
+        interactor.inject(
+            .init(
+                repository: RoomDataStore(roomId: roomId),
+                output: presenter,
+                currentUserId: currentUserId))
         let view = SettingView(
             dependency: SettingView.Dependency(
                 presenter: presenter,

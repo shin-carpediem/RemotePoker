@@ -20,7 +20,6 @@ public struct CardListView: View, ModuleAssembler {
     init(dependency: Dependency, viewModel: CardListViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
-
         self.dependency.presenter.viewDidLoad()
     }
 
@@ -135,7 +134,7 @@ public struct CardListView: View, ModuleAssembler {
     private var floatingActionButton: some View {
         Button {
             if viewModel.isShownSelectedCardList {
-                dependency.presenter.didTapBackButton()
+                dependency.presenter.didTapResetSelectedCardListButton()
             } else {
                 dependency.presenter.didTapOpenSelectedCardListButton()
             }

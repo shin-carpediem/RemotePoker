@@ -5,6 +5,7 @@ import ViewModel
 public actor SettingViewModel: ObservableObject, ViewModel {
     public init() {}
 
+    /// テーマカラー選択画面に遷移するか
     @MainActor @Published public var willPushSelectThemeColorView = false
 
     // MARK: - ViewModel

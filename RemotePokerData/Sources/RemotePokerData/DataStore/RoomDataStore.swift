@@ -39,10 +39,8 @@ public final class RoomDataStore: RoomRepository {
 
     public func addUserToRoom(user: UserEntity) async -> Result<Void, FirebaseError> {
         do {
-            try await firestoreRef
-                .usersCollection
-                .document(user.id)
-                .setData([
+            let userDocument: DocumentReference = firestoreRef.usersCollection.document(user.id)
+            try await userDocument.setData([
                 "id": user.id,
                 "name": user.name,
                 "currentRoomId": user.currentRoomId,
@@ -67,9 +65,8 @@ public final class RoomDataStore: RoomRepository {
 
     public func fetchUser(byId id: String) -> Future<UserEntity, Never> {
         Future<UserEntity, Never> { [unowned self] promise in
-            firestoreRef
-                .userDocument(userId: id)
-                .getDocument { snapshot, _ in
+            let userDocument: DocumentReference = self.firestoreRef.userDocument(userId: id)
+            userDocument.getDocument { snapshot, _ in
                 guard let snapshot = snapshot else { return }
                 let user: UserEntity = Self.userEntity(from: snapshot)
                 promise(.success(user))
@@ -79,9 +76,8 @@ public final class RoomDataStore: RoomRepository {
 
     public func updateSelectedCardId(selectedCardDictionary: [String: String]) {
         selectedCardDictionary.forEach { userId, selectedCardId in
-            firestoreRef
-                .userDocument(userId: userId)
-                .updateData([
+            let userDocument: DocumentReference = firestoreRef.userDocument(userId: userId)
+            userDocument.updateData([
                 "selectedCardId": selectedCardId,
                 "updatedAt": Date(),
             ])
@@ -89,9 +85,9 @@ public final class RoomDataStore: RoomRepository {
     }
 
     public func updateThemeColor(cardPackageId: String, themeColor: String) {
-        firestoreRef
-            .cardPackageDocument(cardPackageId: cardPackageId)
-            .updateData([
+        let cardPackageDocument: DocumentReference = firestoreRef.cardPackageDocument(
+            cardPackageId: cardPackageId)
+        cardPackageDocument.updateData([
             "themeColor": themeColor,
             "updatedAt": Date(),
         ])
@@ -107,6 +103,7 @@ public final class RoomDataStore: RoomRepository {
 
     // MARK: - Private
 
+    /// ルームID
     private let roomId: Int
 
     /// Firestoreのリファレンス一覧
@@ -114,6 +111,7 @@ public final class RoomDataStore: RoomRepository {
         FirestoreRefs(roomId: roomId)
     }
 
+    /// ユーザー エンティティ
     private static func userEntity(from doc: DocumentSnapshot) -> UserEntity {
         guard let id = doc.get("id") as? String else {
             fatalError()
@@ -125,6 +123,7 @@ public final class RoomDataStore: RoomRepository {
             selectedCardId: doc.get("selectedCardId") as? String ?? "")
     }
 
+    /// カードパッケージ エンティティ
     private func cardPackageEntity(from doc: DocumentSnapshot) async -> CardPackageEntity {
         guard let id = doc.get("id") as? String else {
             fatalError()

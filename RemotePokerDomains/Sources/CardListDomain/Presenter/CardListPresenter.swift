@@ -62,6 +62,7 @@ public final class CardListPresenter: DependencyInjectable {
         }
     }
 
+    /// ユーザーに、存在するカレントルームがあるか確認する
     private func checkUserInCurrentRoom() async -> Bool {
         if dependency.roomId == 0 {
             return false
@@ -70,6 +71,7 @@ public final class CardListPresenter: DependencyInjectable {
         }
     }
 
+    /// タイトルを表示する
     @MainActor private func showTitle(userList: [UserViewModel]) {
         let otherUsersCount: Int = userList.count - 1
         let title = "\(dependency.currentUserName) \(otherUsersCount >= 1 ? "と \(String(otherUsersCount))名" : "")が ルームID\(dependency.roomId) に入室中"
@@ -77,6 +79,7 @@ public final class CardListPresenter: DependencyInjectable {
         dependency.viewModel?.title = title
     }
 
+    /// ユーザーの選択状況一覧を更新する
     @MainActor private func updateUserSelectStatusList(userList: [UserViewModel]) {
         let userSelectStatusList: [UserSelectStatusViewModel] = userList.map { user in
             guard let cardPackage: CardPackageViewModel = dependency.viewModel?.room.cardPackage
@@ -95,28 +98,33 @@ public final class CardListPresenter: DependencyInjectable {
         dependency.viewModel?.userSelectStatusList = userSelectStatusList
     }
 
+    /// 選択されたカード一覧を表示する
     @MainActor private func showSelectedCardList() {
         dependency.viewModel?.isShownSelectedCardList = true
         disableButton(false)
         showLoader(false)
     }
 
+    /// 選択されたカード一覧を非表示にする
     @MainActor private func hideSelectedCardList() {
         dependency.viewModel?.isShownSelectedCardList = false
         disableButton(false)
         showLoader(false)
     }
 
+    /// ボタンを無効にする
     @MainActor private func disableButton(_ disabled: Bool) {
         dependency.viewModel?.isButtonEnabled = !disabled
     }
 
+    /// ローダーを表示する
     @MainActor private func showLoader(_ show: Bool) {
         dependency.viewModel?.isShownLoader = show
     }
 
     // MARK: - Router
 
+    /// 設定画面に遷移する
     @MainActor private func pushSettingView() {
         dependency.viewModel?.willPushSettingView = true
     }
@@ -141,10 +149,13 @@ extension CardListPresenter: CardListPresentation {
         }
     }
 
-    public func didTapBackButton() {
+    public func didTapResetSelectedCardListButton() {
         Task {
             await disableButton(true)
             await showLoader(true)
+            // カレントユーザーの選択済みカードをリセットする
+            let selectedCardDictionary: [String: String] = [dependency.currentUserId: ""]
+            dependency.useCase.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
             await hideSelectedCardList()
         }
     }
