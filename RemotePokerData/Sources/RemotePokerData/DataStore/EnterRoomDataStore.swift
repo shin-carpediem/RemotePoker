@@ -71,6 +71,7 @@ public final class EnterRoomDataStore: EnterRoomRepository {
             }
             return .success(())
         } catch (_) {
+            Log.main.error("failedToCreateRoom")
             return .failure(.failedToCreateRoom)
         }
     }
@@ -79,6 +80,7 @@ public final class EnterRoomDataStore: EnterRoomRepository {
 
     private var firestore: Firestore {
         guard let app = FirebaseEnvironment.shared.app else {
+            Log.main.error("Could not retrieve app.")
             fatalError("Could not retrieve app.")
         }
         return Firestore.firestore(app: app)

@@ -26,9 +26,9 @@ import SwiftUI
         WindowGroup {
             NavigationView {
                 let currentRoomId: Int = LocalStorage.shared.currentRoomId
-                let isUserLoggedIn: Bool = !(currentRoomId == 0)
-                if isUserLoggedIn {
-                    // ログイン中(currentUserName、cardPackageIdは後で取得)
+                let isUserSignedIn: Bool = !(currentRoomId == 0)
+                if isUserSignedIn {
+                    // サインイン中(currentUserName、cardPackageIdは後で取得)
                     assembleCardListModule(
                         roomId: currentRoomId,
                         currentUserId: LocalStorage.shared.currentUserId,
@@ -36,7 +36,7 @@ import SwiftUI
                         cardPackageId: "",
                         isExisingUser: true)
                 } else {
-                    // ログインしていない
+                    // サインインしていない
                     assmebleEnterRoomModule()
                 }
             }

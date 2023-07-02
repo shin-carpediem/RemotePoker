@@ -25,6 +25,7 @@ public final class AuthDataStore: AuthRepository {
             try Auth.auth().signOut()
             return .success(())
         } catch (_) {
+            Log.main.error("failedToSignOut")
             return .failure(.failedToSignOut)
         }
     }
