@@ -40,17 +40,17 @@ public protocol CardListUseCase: AnyObject {
 
 public protocol CardListInteractorOutput: AnyObject {
     /// カレントユーザーを出力する
-    @MainActor func outputCurrentUser(_ user: UserModel)
+    func outputCurrentUser(_ user: UserModel)
 
     /// ユーザーリストを出力する
-    @MainActor func outputUserList(_ userList: [UserModel])
+    func outputUserList(_ userList: [UserModel])
 
     /// カードパッケージを出力する
-    @MainActor func outputCardPackage(_ cardPackage: CardPackageModel)
+    func outputCardPackage(_ cardPackage: CardPackageModel)
 
     /// データ処理の成功を出力する
-    @MainActor func outputSuccess(message: String)
+    func outputSuccess(message: String)
 
     /// エラーを出力する
-    @MainActor func outputError(_ error: Error, message: String)
+    func outputError(_ error: Error, message: String)
 }

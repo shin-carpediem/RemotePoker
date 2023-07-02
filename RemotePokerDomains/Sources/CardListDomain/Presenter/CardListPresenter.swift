@@ -40,7 +40,7 @@ public final class CardListPresenter: DependencyInjectable {
 
     private var dependency: Dependency!
 
-    private var cancellablesForAction = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
 
     /// 匿名ログインする(ユーザーIDを返却)
     private func signIn() -> Future<String, Never> {
@@ -49,7 +49,7 @@ public final class CardListPresenter: DependencyInjectable {
                 .sink { userId in
                     promise(.success(userId))
                 }
-                .store(in: &cancellablesForAction)
+                .store(in: &cancellables)
         }
     }
 
@@ -71,16 +71,16 @@ public final class CardListPresenter: DependencyInjectable {
         }
     }
 
-    /// タイトルを表示する
-    @MainActor private func showTitle(userList: [UserViewModel]) {
+    private func showTitle(userList: [UserViewModel]) {
         let otherUsersCount: Int = userList.count - 1
         let title = "\(dependency.currentUserName) \(otherUsersCount >= 1 ? "と \(String(otherUsersCount))名" : "")が ルームID\(dependency.roomId) に入室中"
-
-        dependency.viewModel?.title = title
+        
+        Task { @MainActor in
+            dependency.viewModel?.title = title
+        }
     }
 
-    /// ユーザーの選択状況一覧を更新する
-    @MainActor private func updateUserSelectStatusList(userList: [UserViewModel]) {
+    private func updateUserSelectStatusList(userList: [UserViewModel]) {
         let userSelectStatusList: [UserSelectStatusViewModel] = userList.map { user in
             guard let cardPackage: CardPackageViewModel = dependency.viewModel?.room.cardPackage
             else {
@@ -95,38 +95,46 @@ public final class CardListPresenter: DependencyInjectable {
                 themeColor: cardPackage.themeColor,
                 selectedCard: selectedCard)
         }
-        dependency.viewModel?.userSelectStatusList = userSelectStatusList
+
+        Task { @MainActor in
+            dependency.viewModel?.userSelectStatusList = userSelectStatusList
+        }
     }
 
-    /// 選択されたカード一覧を表示する
-    @MainActor private func showSelectedCardList() {
-        dependency.viewModel?.isShownSelectedCardList = true
+    private func showSelectedCardList() {
+        Task { @MainActor in
+            dependency.viewModel?.isShownSelectedCardList = true
+        }
         disableButton(false)
         showLoader(false)
     }
 
-    /// 選択されたカード一覧を非表示にする
-    @MainActor private func hideSelectedCardList() {
-        dependency.viewModel?.isShownSelectedCardList = false
+    private func hideSelectedCardList() {
+        Task { @MainActor in
+            dependency.viewModel?.isShownSelectedCardList = false
+        }
         disableButton(false)
         showLoader(false)
     }
 
-    /// ボタンを無効にする
-    @MainActor private func disableButton(_ disabled: Bool) {
-        dependency.viewModel?.isButtonEnabled = !disabled
+    private func disableButton(_ disabled: Bool) {
+        Task { @MainActor in
+            dependency.viewModel?.isButtonEnabled = !disabled
+        }
     }
 
-    /// ローダーを表示する
-    @MainActor private func showLoader(_ show: Bool) {
-        dependency.viewModel?.isShownLoader = show
+    private func showLoader(_ show: Bool) {
+        Task { @MainActor in
+            dependency.viewModel?.isShownLoader = show
+        }
     }
 
     // MARK: - Router
 
-    /// 設定画面に遷移する
-    @MainActor private func pushSettingView() {
-        dependency.viewModel?.willPushSettingView = true
+    private func pushSettingView() {
+        Task { @MainActor in
+            dependency.viewModel?.willPushSettingView = true
+        }
     }
 }
 
@@ -134,41 +142,33 @@ public final class CardListPresenter: DependencyInjectable {
 
 extension CardListPresenter: CardListPresentation {
     public func didSelectCard(cardId: String) {
-        Task {
-            await disableButton(true)
-            let selectedCardDictionary: [String: String] = [dependency.currentUserId: cardId]
-            dependency.useCase.updateSelectedCardId(selectedCardDictionary: selectedCardDictionary)
-        }
+        disableButton(true)
+        dependency.useCase.updateSelectedCardId(selectedCardDictionary: [dependency.currentUserId: cardId])
     }
 
     public func didTapOpenSelectedCardListButton() {
-        Task {
-            await disableButton(true)
-            await showLoader(true)
-            await showSelectedCardList()
-        }
+        disableButton(true)
+        showLoader(true)
+        showSelectedCardList()
     }
 
     public func didTapBackButton() {
-        Task {
-            await disableButton(true)
-            await showLoader(true)
-            await hideSelectedCardList()
-        }
+        disableButton(true)
+        showLoader(true)
+        hideSelectedCardList()
     }
 
     public func didTapSettingButton() {
-        Task {
-            await pushSettingView()
-        }
+        pushSettingView()
     }
 
     // MARK: - Presentation
 
     public func viewDidLoad() {
+        disableButton(true)
+        showLoader(true)
+        
         Task {
-            await disableButton(true)
-            await showLoader(true)
             if dependency.isExisingUser {
                 // 既存ユーザー（この画面が初期画面）
                 let userId: String = await signIn().value
@@ -194,7 +194,7 @@ extension CardListPresenter: CardListPresentation {
 // MARK: - CardListInteractorOutput
 
 extension CardListPresenter: CardListInteractorOutput {
-    @MainActor public func outputCurrentUser(_ user: UserModel) {
+    public func outputCurrentUser(_ user: UserModel) {
         dependency.currentUserId = user.id
         dependency.currentUserName = user.name
         let userList: [UserViewModel]? = dependency.viewModel?.room.userList.map {
@@ -210,35 +210,43 @@ extension CardListPresenter: CardListInteractorOutput {
         showLoader(false)
     }
 
-    @MainActor public func outputUserList(_ userList: [UserModel]) {
+    public func outputUserList(_ userList: [UserModel]) {
         let viewModel = userList.map {
             UserViewModel(
                 id: $0.id, name: $0.name, currentRoomId: $0.currentRoomId,
                 selectedCardId: $0.selectedCardId)
         }
-        dependency.viewModel?.room.userList = viewModel
+        Task { @MainActor in
+            dependency.viewModel?.room.userList = viewModel
+        }
         showTitle(userList: viewModel)
         updateUserSelectStatusList(userList: viewModel)
         disableButton(false)
         showLoader(false)
     }
 
-    @MainActor public func outputCardPackage(_ cardPackage: CardPackageModel) {
-        dependency.viewModel?.room.cardPackage = CardPackageModelToCardPackageViewModelTranslator()
-            .translate(cardPackage)
+    public func outputCardPackage(_ cardPackage: CardPackageModel) {
+        Task { @MainActor in
+            dependency.viewModel?.room.cardPackage = CardPackageModelToCardPackageViewModelTranslator()
+                .translate(cardPackage)
+        }
         disableButton(false)
         showLoader(false)
     }
 
-    @MainActor public func outputSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
-            type: .onSuccess, text: message)
-        dependency.viewModel?.isShownBanner = true
+    public func outputSuccess(message: String) {
+        Task { @MainActor in
+            dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
+                type: .onSuccess, text: message)
+            dependency.viewModel?.isShownBanner = true
+        }
     }
 
-    @MainActor public func outputError(_ error: Error, message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
-            type: .onFailure, text: message)
-        dependency.viewModel?.isShownBanner = true
+    public func outputError(_ error: Error, message: String) {
+        Task { @MainActor in
+            dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
+                type: .onFailure, text: message)
+            dependency.viewModel?.isShownBanner = true
+        }
     }
 }

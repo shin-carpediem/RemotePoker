@@ -25,18 +25,24 @@ public final class SettingPresenter: DependencyInjectable {
 
     private var dependency: Dependency!
 
-    @MainActor private func disableButton(_ disabled: Bool) {
-        dependency.viewModel?.isButtonEnabled = !disabled
+    private func disableButton(_ disabled: Bool) {
+        Task { @MainActor in
+            dependency.viewModel?.isButtonEnabled = !disabled
+        }
     }
 
-    @MainActor private func showLoader(_ show: Bool) {
-        dependency.viewModel?.isShownLoader = show
+    private func showLoader(_ show: Bool) {
+        Task { @MainActor in
+            dependency.viewModel?.isShownLoader = show
+        }
     }
 
     // MARK: - Router
 
-    @MainActor private func pushSelectThemeColorView() {
-        dependency.viewModel?.willPushSelectThemeColorView = true
+    private func pushSelectThemeColorView() {
+        Task { @MainActor in
+            dependency.viewModel?.willPushSelectThemeColorView = true
+        }
     }
 }
 
@@ -44,18 +50,16 @@ public final class SettingPresenter: DependencyInjectable {
 
 extension SettingPresenter: SettingPresentation {
     public func didTapSelectThemeColorButton() {
-        Task {
-            await pushSelectThemeColorView()
-        }
+        pushSelectThemeColorView()
     }
 
     public func didTapLeaveRoomButton() {
+        disableButton(true)
+        showLoader(true)
         Task {
-            await disableButton(true)
-            await showLoader(true)
             await dependency.useCase.leaveRoom()
-            await disableButton(false)
-            await showLoader(false)
+            disableButton(false)
+            showLoader(false)
         }
     }
 
@@ -71,15 +75,19 @@ extension SettingPresenter: SettingPresentation {
 // MARK: - SettingInteractorOutput
 
 extension SettingPresenter: SettingInteractorOutput {
-    @MainActor public func outputSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
-            type: .onSuccess, text: message)
-        dependency.viewModel?.isShownBanner = true
+    public func outputSuccess(message: String) {
+        Task { @MainActor in
+            dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
+                type: .onSuccess, text: message)
+            dependency.viewModel?.isShownBanner = true
+        }
     }
 
-    @MainActor public func outputError(_ errror: Error, message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
-            type: .onFailure, text: message)
-        dependency.viewModel?.isShownBanner = true
+    public func outputError(_ errror: Error, message: String) {
+        Task { @MainActor in
+            dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
+                type: .onFailure, text: message)
+            dependency.viewModel?.isShownBanner = true
+        }
     }
 }

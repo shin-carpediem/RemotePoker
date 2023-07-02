@@ -38,15 +38,15 @@ public protocol EnterRoomUseCase: AnyObject {
 }
 
 public protocol EnterRoomInteractorOutput: AnyObject {
-    /// ログインの完了を出力
+    /// サインインの成功を出力
     /// - parameter userId: ユーザーID
     /// - parameter userName: ユーザー名
     /// - parameter roomId: ルームID
-    func outputCompletedSignIn(userId: String, userName: String, roomId: Int)
+    func outputSucceedToSignIn(userId: String, userName: String, roomId: Int)
 
     /// データ処理の成功を出力
-    @MainActor func outputSuccess(message: String)
+    func outputSuccess(message: String)
 
     /// エラーを出力
-    @MainActor func outputError(_ error: Error, message: String)
+    func outputError(_ error: Error, message: String)
 }

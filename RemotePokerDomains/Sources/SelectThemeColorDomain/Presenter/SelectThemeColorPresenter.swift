@@ -31,18 +31,24 @@ public final class SelectThemeColorPresenter: DependencyInjectable {
 
     private var dependency: Dependency!
 
-    @MainActor private func showColorList() {
-        dependency.viewModel?.themeColorList = CardPackageThemeColor.allCases
+    private func showColorList() {
+        Task { @MainActor in
+            dependency.viewModel?.themeColorList = CardPackageThemeColor.allCases
+        }
     }
 
-    @MainActor private func applySelectedThemeColor(_ themeColor: CardPackageThemeColor) {
-        dependency.viewModel?.selectedThemeColor = themeColor
+    private func applySelectedThemeColor(_ themeColor: CardPackageThemeColor) {
+        Task { @MainActor in
+            dependency.viewModel?.selectedThemeColor = themeColor
+        }
     }
 
-    @MainActor private func showSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
-            type: .onSuccess, text: message)
-        dependency.viewModel?.isShownBanner = true
+    private func showSuccess(message: String) {
+        Task { @MainActor in
+            dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
+                type: .onSuccess, text: message)
+            dependency.viewModel?.isShownBanner = true
+        }
     }
 }
 
@@ -63,15 +69,11 @@ extension SelectThemeColorPresenter: SelectThemeColorPresentation {
     // MARK: - Presentation
 
     public func viewDidLoad() {
-        Task {
-            await showColorList()
-        }
+        showColorList()
     }
 
     public func viewDidResume() {
-        Task {
-            await showColorList()
-        }
+        showColorList()
     }
 
     public func viewDidSuspend() {}

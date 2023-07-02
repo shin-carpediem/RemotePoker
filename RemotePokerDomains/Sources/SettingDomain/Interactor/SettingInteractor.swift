@@ -59,14 +59,14 @@ extension SettingInteractor: SettingUseCase {
             let logoutResult: Result<Void, FirebaseError> = AuthDataStore.shared.signOut()
             switch logoutResult {
             case .success(_):
-                await dependency.output?.outputSuccess(message: "ルームから退出しました")
+                dependency.output?.outputSuccess(message: "ルームから退出しました")
 
             case .failure(let error):
-                await dependency.output?.outputError(error, message: "ルームから退出できませんでした")
+                dependency.output?.outputError(error, message: "ルームから退出できませんでした")
             }
 
         case .failure(let error):
-            await dependency.output?.outputError(error, message: "ルームから退出できませんでした")
+            dependency.output?.outputError(error, message: "ルームから退出できませんでした")
         }
     }
 }
