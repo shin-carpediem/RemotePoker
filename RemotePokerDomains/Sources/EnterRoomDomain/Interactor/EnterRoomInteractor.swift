@@ -64,10 +64,10 @@ extension EnterRoomInteractor: EnterRoomUseCase {
         let result: Result<Void, FirebaseError> = await dependency.repository.createRoom(entity)
         switch result {
         case .success:
-            await dependency.output?.outputSuccess(message: "新しいルームを作りました")
+            dependency.output?.outputSuccess(message: "新しいルームを作りました")
 
         case .failure(let error):
-            await dependency.output?.outputError(error, message: "新しいルームを作れませんでした")
+            dependency.output?.outputError(error, message: "新しいルームを作れませんでした")
         }
     }
 
@@ -82,10 +82,10 @@ extension EnterRoomInteractor: EnterRoomUseCase {
         let result: Result<Void, FirebaseError> = await repository.addUserToRoom(user: entity)
         switch result {
         case .success:
-            await dependency.output?.outputSuccess(message: "ルームに追加されました")
+            dependency.output?.outputSuccess(message: "ルームに追加されました")
 
         case .failure(let error):
-            await dependency.output?.outputError(error, message: "ルームに追加できませんでした")
+            dependency.output?.outputError(error, message: "ルームに追加できませんでした")
         }
     }
 }

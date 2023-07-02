@@ -55,10 +55,10 @@ extension SettingInteractor: SettingUseCase {
         let result: Result<Void, FirebaseError> = await dependency.repository.removeUserFromRoom(
             userId: dependency.currentUserId)
         switch result {
-        case .success(_):
-            let logoutResult: Result<Void, FirebaseError> = AuthDataStore.shared.signOut()
-            switch logoutResult {
-            case .success(_):
+        case .success:
+            let signoutResult: Result<Void, FirebaseError> = AuthDataStore.shared.signOut()
+            switch signoutResult {
+            case .success:
                 dependency.output?.outputSuccess(message: "ルームから退出しました")
 
             case .failure(let error):
