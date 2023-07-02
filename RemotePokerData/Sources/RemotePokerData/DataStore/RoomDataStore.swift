@@ -50,6 +50,7 @@ public final class RoomDataStore: RoomRepository {
             ])
             return .success(())
         } catch (_) {
+            Log.main.error("failedToAddUserToRoom")
             return .failure(.failedToAddUserToRoom)
         }
     }
@@ -59,6 +60,7 @@ public final class RoomDataStore: RoomRepository {
             try await firestoreRef.userDocument(userId: userId).delete()
             return .success(())
         } catch (_) {
+            Log.main.error("failedToRemoveUserFromRoom")
             return .failure(.failedToRemoveUserFromRoom)
         }
     }

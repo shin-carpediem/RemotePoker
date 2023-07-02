@@ -38,19 +38,18 @@ public final class EnterRoomPresenter: EnterRoomPresentation,
         id: 0, userList: [], cardPackage: translator.translate(.defaultCardPackage))
 
     public func didTapEnterRoomButton(inputUserName: String, inputRoomId: String) {
-        Task {
-            await disableButton(true)
-            await showLoader(true)
-            if let viewModel: EnterRoomViewModel = dependency.viewModel,
-                await viewModel.isInputFormValid
-            {
-                // フォーム内容が有効
-                await showLoader(true)
-                let roomId = Int(inputRoomId)!
+        if let viewModel: EnterRoomViewModel = dependency.viewModel,
+            viewModel.isInputFormValid
+        {
+            disableButton(true)
+            showLoader(true)
+
+            Task {
+                guard let roomId = Int(inputRoomId) else {
+                    fatalError()
+                }
                 await dependency.useCase.signIn(userName: inputUserName, roomId: roomId)
             }
-            await disableButton(false)
-            await showLoader(false)
         }
     }
 
@@ -115,40 +114,52 @@ public final class EnterRoomPresenter: EnterRoomPresentation,
         }
     }
 
-    @MainActor private func disableButton(_ disabled: Bool) {
-        dependency.viewModel?.isButtonEnabled = !disabled
+    private func disableButton(_ disabled: Bool) {
+        Task { @MainActor in
+            dependency.viewModel?.isButtonEnabled = !disabled
+        }
     }
 
-    @MainActor private func showLoader(_ show: Bool) {
-        dependency.viewModel?.isShownLoader = show
+    private func showLoader(_ show: Bool) {
+        Task { @MainActor in
+            dependency.viewModel?.isShownLoader = show
+        }
     }
 
     // MARK: - Router
 
-    @MainActor private func pushCardListView() {
-        dependency.viewModel?.willPushCardListView = true
+    private func pushCardListView() {
+        Task { @MainActor in
+            dependency.viewModel?.willPushCardListView = true
+        }
     }
 }
 
 // MARK: - EnterRoomInteractorOutput
 
 extension EnterRoomPresenter: EnterRoomInteractorOutput {
-    public func outputCompletedSignIn(userId: String, userName: String, roomId: Int) {
+    public func outputSucceedToSignIn(userId: String, userName: String, roomId: Int) {
         Task { @MainActor in
             await setupUserAndRoom(userId: userId, userName: userName, roomId: roomId)
+            disableButton(false)
+            showLoader(false)
             pushCardListView()
         }
     }
 
-    @MainActor public func outputSuccess(message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
-            type: .onSuccess, text: message)
-        dependency.viewModel?.isShownBanner = true
+    public func outputSuccess(message: String) {
+        Task { @MainActor in
+            dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
+                type: .onSuccess, text: message)
+            dependency.viewModel?.isShownBanner = true
+        }
     }
 
-    @MainActor public func outputError(_ error: Error, message: String) {
-        dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
-            type: .onFailure, text: message)
-        dependency.viewModel?.isShownBanner = true
+    public func outputError(_ error: Error, message: String) {
+        Task { @MainActor in
+            dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
+                type: .onFailure, text: message)
+            dependency.viewModel?.isShownBanner = true
+        }
     }
 }
