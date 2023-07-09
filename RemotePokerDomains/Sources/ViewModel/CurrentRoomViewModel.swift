@@ -1,4 +1,4 @@
-public struct RoomViewModel {
+public struct CurrentRoomViewModel {
     public var id: Int
     public var userList: [UserViewModel]
     public var cardPackage: CardPackageViewModel

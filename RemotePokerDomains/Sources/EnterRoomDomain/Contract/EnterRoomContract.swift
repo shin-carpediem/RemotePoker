@@ -4,12 +4,6 @@ import Protocols
 import ViewModel
 
 public protocol EnterRoomPresentation: AnyObject, Presentation {
-    /// カレントユーザー
-    var currentUser: UserViewModel { get }
-
-    /// カレントルーム
-    var currentRoom: RoomViewModel { get }
-
     /// ルームに入るボタンが押された
     /// - parameter inputUserName: 入力されたユーザー名
     /// - parameter inputRoomId: 入力されたルームID
@@ -24,7 +18,7 @@ public protocol EnterRoomUseCase: AnyObject {
 
     /// ルームが存在するか確認する
     /// - parameter roomId: ルームID
-    /// - returns ルームが存在するか
+    /// - returns: ルームが存在するか
     func checkRoomExist(roomId: Int) async -> Bool
 
     /// ルームを新規作成する
@@ -33,20 +27,17 @@ public protocol EnterRoomUseCase: AnyObject {
 
     /// ルームにユーザーを追加する
     /// - parameter roomId: ルームID
-    /// - parameter user: ユーザー
-    func adduserToRoom(roomId: Int, user: UserModel) async
+    /// - parameter userId: ユーザーID
+    func adduserToRoom(roomId: Int, userId: String) async
 }
 
 public protocol EnterRoomInteractorOutput: AnyObject {
-    /// サインインの成功を出力
-    /// - parameter userId: ユーザーID
-    /// - parameter userName: ユーザー名
-    /// - parameter roomId: ルームID
+    /// サインインの成功を出力する
     func outputSucceedToSignIn(userId: String, userName: String, roomId: Int)
 
-    /// データ処理の成功を出力
+    /// データ処理の成功を出力する
     func outputSuccess(message: String)
 
-    /// エラーを出力
+    /// エラーを出力する
     func outputError(_ error: Error, message: String)
 }

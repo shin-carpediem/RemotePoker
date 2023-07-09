@@ -2,22 +2,21 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 public struct FirestoreRefs {
-    public var roomId: Int
-
-    public init(roomId: Int) {
+    public init(userId: String,roomId: String) {
+        self.userId = userId
         self.roomId = roomId
     }
-
+    
     // MARK: - CollectionReference
-
-    /// rooms / { roomId } / users
+    
+    /// users
     public var usersCollection: CollectionReference {
-        roomsCollection.document(String(roomId)).collection("users")
+        firestore.collection("users")
     }
-
+    
     /// rooms / { roomId } / cardPackages
     public var cardPackagesCollection: CollectionReference {
-        roomsCollection.document(String(roomId)).collection("cardPackages")
+        roomsCollection.document(roomId).collection("cardPackages")
     }
 
     /// rooms / { roomId } / cardPackages / { cardPackageId } / cards
@@ -27,19 +26,19 @@ public struct FirestoreRefs {
 
     // MARK: - DocumentReference
 
+    /// users / { userId }
+    public var userDocument: DocumentReference {
+        usersCollection.document(userId)
+    }
+    
     /// rooms / { roomId }
     public var roomDocument: DocumentReference {
-        roomsCollection.document(String(roomId))
+        roomsCollection.document(roomId)
     }
 
     /// rooms / { roomId } / cardPackages / { cardPackageId }
     public func cardPackageDocument(cardPackageId: String) -> DocumentReference {
         cardPackagesCollection.document(cardPackageId)
-    }
-
-    /// rooms /  {roomId } / users / { userId }
-    public func userDocument(userId: String) -> DocumentReference {
-        usersCollection.document(userId)
     }
 
     /// rooms / { roomId } / cardPackages / { cardPackageId } / cards / { cardId }
@@ -49,29 +48,43 @@ public struct FirestoreRefs {
 
     // MARK: - DocumentSnapshot
 
+    /// users / { userId }
+    public func userSnapshot() async -> DocumentSnapshot? {
+        try? await roomDocument.getDocument()
+    }
+    
     /// rooms / { roomId }
     public func roomSnapshot() async -> DocumentSnapshot? {
         try? await roomDocument.getDocument()
     }
 
     // MARK: - Query
+    
+    /// users / { roomId の userIdList }
+    public func userListQuery() async -> Query {
+        guard let roomSnapshot: DocumentSnapshot = await roomSnapshot() else {
+            Log.main.error("usersListQuery: roomSnapshotを取得できません。")
+            fatalError()
+        }
+        let userIdList: [String] = roomSnapshot.get("userIdList") as? [String] ?? [String]()
+        return usersCollection.whereField("id", in: userIdList)
+    }
+    
+    /// rooms / { roomId }
+    public var roomQuery: Query {
+        guard let roomId = Int(roomId) else {
+            Log.main.error("roomQuery: roomIdをIntに変換できません。")
+            fatalError()
+        }
+        return roomsCollection.whereField("id", isEqualTo: roomId)
+    }
 
     /// rooms / { roomId } / cardPackages / *
     public var cardPackagesQuery: Query {
         cardPackagesCollection.whereField("id", isNotEqualTo: "")
     }
 
-    /// rooms / { roomId } / users / *
-    public var usersQuery: Query {
-        usersCollection.whereField("id", isNotEqualTo: "")
-    }
-
     // MARK: - QueryDocumentSnapshot
-
-    /// rooms / { roomId } / users / *
-    public func usersSnapshot() async -> [QueryDocumentSnapshot]? {
-        try? await usersCollection.getDocuments().documents
-    }
 
     /// rooms / { roomId } / cardPackages / *
     public func cardPackagesSnapshot() async -> [QueryDocumentSnapshot]? {
@@ -84,14 +97,17 @@ public struct FirestoreRefs {
     }
 
     // MARK: - Private
-
+    
+    private var userId: String
+    private var roomId: String
+    
     private var firestore: Firestore {
         guard let app = FirebaseEnvironment.shared.app else {
             fatalError("Could not retrieve app.")
         }
         return Firestore.firestore(app: app)
     }
-
+    
     /// rooms
     private var roomsCollection: CollectionReference {
         firestore.collection("rooms")

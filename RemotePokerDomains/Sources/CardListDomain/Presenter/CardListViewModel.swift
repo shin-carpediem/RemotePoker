@@ -6,8 +6,8 @@ import ViewModel
 public class CardListViewModel: ObservableObject, ViewModel {
     public init() {}
 
-    @Published public var room = RoomViewModel(
-        id: 0, userList: [],
+    @Published public var room = CurrentRoomViewModel(
+        id: 0, userList: [UserViewModel](),
         cardPackage: CardPackageModelToCardPackageViewModelTranslator().translate(
             .defaultCardPackage))
 

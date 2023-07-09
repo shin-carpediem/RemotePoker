@@ -13,6 +13,7 @@ let package = Package(
         .library(name: "RemotePokerTranslator", targets: ["Translator"]),
         .library(name: "EnterRoomDomain", targets: ["EnterRoomDomain"]),
         .library(name: "CardListDomain", targets: ["CardListDomain"]),
+        .library(name: "Shared", targets: ["Shared"]),
         .library(name: "SettingDomain", targets: ["SettingDomain"]),
         .library(name: "SelectThemeColorDomain", targets: ["SelectThemeColorDomain"]),
     ],
@@ -56,6 +57,7 @@ let package = Package(
                 "Model",
                 "ViewModel",
                 "Protocols",
+                "Shared",
                 "Translator",
             ]),
         .target(
@@ -66,6 +68,11 @@ let package = Package(
                 "ViewModel",
                 "Protocols",
                 "Translator",
+            ]),
+        .target(
+            name: "Shared",
+            dependencies: [
+               "Model",
             ]),
         .target(
             name: "SettingDomain",

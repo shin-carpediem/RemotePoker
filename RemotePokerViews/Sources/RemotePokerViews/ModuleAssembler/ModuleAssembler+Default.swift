@@ -2,6 +2,7 @@ import CardListDomain
 import EnterRoomDomain
 import RemotePokerData
 import RemotePokerDomains
+import Shared
 import SelectThemeColorDomain
 import SettingDomain
 
@@ -19,9 +20,7 @@ extension ModuleAssembler {
         return view
     }
 
-    public func assembleCardListModule(
-        roomId: Int, currentUserId: String, currentUserName: String, cardPackageId: String,
-        isExisingUser: Bool
+    public func assembleCardListModule(cardPackageId: String, isExisingUser: Bool
     ) -> CardListView {
         let viewModel = CardListViewModel()
         let presenter = CardListPresenter()
@@ -30,27 +29,22 @@ extension ModuleAssembler {
         presenter.inject(
             .init(
                 useCase: interactor,
-                roomId: roomId,
-                currentUserId: currentUserId,
-                currentUserName: currentUserName,
                 isExisingUser: isExisingUser,
                 viewModel: viewModel))
         interactor.inject(
             .init(
                 enterRoomRepository: EnterRoomDataStore(),
-                roomRepository: RoomDataStore(roomId: roomId), output: presenter))
+                roomRepository: RoomDataStore(userId: appConfig.currentUser.id, roomId: String(appConfig.currentRoom.id)), output: presenter))
         let view = CardListView(
             dependency: CardListView.Dependency(
                 presenter: presenter,
-                roomId: roomId,
-                currentUserId: currentUserId,
                 cardPackageId: cardPackageId),
             viewModel: viewModel)
 
         return view
     }
 
-    public func assembleSettingModule(roomId: Int, currentUserId: String, cardPackageId: String)
+    public func assembleSettingModule(cardPackageId: String)
         -> SettingView
     {
         let viewModel = SettingViewModel()
@@ -60,20 +54,18 @@ extension ModuleAssembler {
         presenter.inject(.init(useCase: interactor, viewModel: viewModel))
         interactor.inject(
             .init(
-                repository: RoomDataStore(roomId: roomId),
-                output: presenter,
-                currentUserId: currentUserId))
+                repository: RoomDataStore(userId: appConfig.currentUser.id, roomId: String(appConfig.currentRoom.id)),
+                output: presenter))
         let view = SettingView(
             dependency: SettingView.Dependency(
                 presenter: presenter,
-                roomId: roomId,
                 cardPackageId: cardPackageId),
             viewModel: viewModel)
 
         return view
     }
 
-    public func assembleSelectThemeColorModule(roomId: Int, cardPackageId: String)
+    public func assembleSelectThemeColorModule(cardPackageId: String)
         -> SelectThemeColorView
     {
         let viewModel = SelectThemeColorViewModel()
@@ -81,12 +73,21 @@ extension ModuleAssembler {
 
         presenter.inject(
             .init(
-                repository: RoomDataStore(roomId: roomId),
+                repository: RoomDataStore(userId: appConfig.currentUser.id, roomId: String(appConfig.currentRoom.id)),
                 viewModel: viewModel,
                 cardPackageId: cardPackageId))
         let view = SelectThemeColorView(
             dependency: SelectThemeColorView.Dependency(presenter: presenter), viewModel: viewModel)
 
         return view
+    }
+    
+    // MARK: - Private
+    
+    private var appConfig: AppConfig {
+        guard let appConfig = AppConfigManager.appConfig else {
+            fatalError()
+        }
+        return appConfig
     }
 }

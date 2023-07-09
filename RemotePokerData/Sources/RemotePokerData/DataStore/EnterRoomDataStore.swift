@@ -6,11 +6,29 @@ public final class EnterRoomDataStore: EnterRoomRepository {
     public init() {}
 
     // MARK: - EnterRoomRepository
+    
+    public func createUser(_ user: UserEntity) async -> Result<Void, FirebaseError> {
+        do {
+            let userId: String = user.id
+            let userDocument: DocumentReference = firestore.collection("users").document(String(userId))
+            try await userDocument.setData([
+                "id": userId,
+                "name": user.name,
+                "selectedCardId": user.selectedCardId,
+                "createdAt": Timestamp(),
+                "updatedAt": Date(),
+            ])
+            return .success(())
+        } catch (_) {
+            Log.main.error("failedToCreateUser")
+            return .failure(.failedToCreateUser)
+        }
+    }
 
-    public func checkRoomExist(roomId: Int) async -> Bool {
+    public func checkRoomExist(roomId: String) async -> Bool {
         let roomDocument: DocumentReference =
             firestore.collection("rooms").document(
-                String(roomId))
+                roomId)
         guard let document: DocumentSnapshot = try? await roomDocument.getDocument() else {
             return false
         }
@@ -19,30 +37,19 @@ public final class EnterRoomDataStore: EnterRoomRepository {
 
     public func createRoom(_ room: RoomEntity) async -> Result<Void, FirebaseError> {
         do {
+            let timestamp = Timestamp()
+            let date = Date()
+            
             // ルーム追加
             let roomId: Int = room.id
             let roomDocument: DocumentReference = firestore.collection("rooms")
                 .document(String(roomId))
             try await roomDocument.setData([
                 "id": roomId,
-                "createdAt": Timestamp(),
-                "updatedAt": Date(),
+                "userIdList": [String](),
+                "createdAt": timestamp,
+                "updatedAt": date,
             ])
-
-            // ユーザー追加
-            room.userList.forEach { user in
-                let userId: String = user.id
-                let userDocument: DocumentReference = roomDocument.collection("users").document(
-                    userId)
-                userDocument.setData([
-                    "id": userId,
-                    "name": user.name,
-                    "currentRoomId": roomId,
-                    "selectedCardId": user.selectedCardId,
-                    "createdAt": Timestamp(),
-                    "updatedAt": Date(),
-                ])
-            }
 
             // カードパッケージ追加
             let cardPackageId: String = room.cardPackage.id
@@ -52,8 +59,8 @@ public final class EnterRoomDataStore: EnterRoomRepository {
             try await cardPackageDocument.setData([
                 "id": cardPackageId,
                 "themeColor": room.cardPackage.themeColor,
-                "createdAt": Timestamp(),
-                "updatedAt": Date(),
+                "createdAt": timestamp,
+                "updatedAt": date,
             ])
 
             // カード一覧追加
@@ -63,10 +70,10 @@ public final class EnterRoomDataStore: EnterRoomRepository {
                     .document(cardId)
                 cardDocument.setData([
                     "id": cardId,
-                    "point": card.point,
+                    "estimatePoint": card.estimatePoint,
                     "index": card.index,
-                    "createdAt": Timestamp(),
-                    "updatedAt": Date(),
+                    "createdAt": timestamp,
+                    "updatedAt": date,
                 ])
             }
             return .success(())

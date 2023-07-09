@@ -29,12 +29,7 @@ import SwiftUI
                 let isUserSignedIn: Bool = !(currentRoomId == 0)
                 if isUserSignedIn {
                     // サインイン中(currentUserName、cardPackageIdは後で取得)
-                    assembleCardListModule(
-                        roomId: currentRoomId,
-                        currentUserId: LocalStorage.shared.currentUserId,
-                        currentUserName: "",
-                        cardPackageId: "",
-                        isExisingUser: true)
+                    assembleCardListModule(cardPackageId: "", isExisingUser: true)
                 } else {
                     // サインインしていない
                     assmebleEnterRoomModule()

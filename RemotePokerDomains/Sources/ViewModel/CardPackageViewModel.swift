@@ -7,15 +7,15 @@ public struct CardPackageViewModel: Identifiable {
 
     public struct Card: Identifiable {
         public var id: String
-        public var point: String
+        public var estimatePoint: String
         public var index: Int
         public var fontColor: Color
         public var backgroundColor: Color
 
-        public init(id: String, point: String, index: Int, fontColor: Color, backgroundColor: Color)
+        public init(id: String, estimatePoint: String, index: Int, fontColor: Color, backgroundColor: Color)
         {
             self.id = id
-            self.point = point
+            self.estimatePoint = estimatePoint
             self.index = index
             self.fontColor = fontColor
             self.backgroundColor = backgroundColor

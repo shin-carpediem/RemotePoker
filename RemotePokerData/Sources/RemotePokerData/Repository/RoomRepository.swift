@@ -3,13 +3,13 @@ import Combine
 public protocol RoomRepository: AnyObject {
     /// ユーザーリスト
     var userList: PassthroughSubject<[UserEntity], Never> { get }
-
-    /// カードパッケージ
-    var cardPackage: PassthroughSubject<CardPackageEntity, Never> { get }
+    
+    /// ルーム
+    var room: PassthroughSubject<RoomEntity, Never> { get }
 
     /// ルームにユーザーを追加する
-    /// - parameter user: ユーザー
-    func addUserToRoom(user: UserEntity) async -> Result<Void, FirebaseError>
+    /// - parameter userId: ユーザーID
+    func addUserToRoom(userId: String) async -> Result<Void, FirebaseError>
 
     /// ルームからユーザーを削除する
     /// - parameter userId: ユーザーID
@@ -29,9 +29,6 @@ public protocol RoomRepository: AnyObject {
     /// - parameter themeColor: テーマカラー
     func updateThemeColor(cardPackageId: String, themeColor: String)
 
-    /// ユーザーの購読を解除する
-    func unsubscribeUser()
-
-    /// カードパッケージの購読を解除する
-    func unsubscribeCardPackage()
+    /// ルームの購読を解除する
+    func unsubscribeRoom()
 }

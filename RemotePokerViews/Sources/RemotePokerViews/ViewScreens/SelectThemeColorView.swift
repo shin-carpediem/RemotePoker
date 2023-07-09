@@ -14,14 +14,12 @@ public struct SelectThemeColorView: View {
     init(dependency: Dependency, viewModel: SelectThemeColorViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
-
         self.dependency.presenter.viewDidLoad()
     }
 
     // MARK: - Private
 
     private var dependency: Dependency
-
     @ObservedObject private var viewModel: SelectThemeColorViewModel
 
     // MARK: - View
@@ -89,6 +87,5 @@ struct SelectThemeColorView_Previews: PreviewProvider {
             dependency: .init(presenter: SelectThemeColorPresenter()),
             viewModel: .init()
         )
-        .previewDisplayName("テーマカラー選択画面")
     }
 }

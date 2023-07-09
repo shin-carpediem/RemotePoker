@@ -25,9 +25,7 @@ public final class EnterRoomInteractor: DependencyInjectable {
     // MARK: - Private
 
     private var dependency: Dependency!
-
     private var repository: RoomRepository?
-
     private var cancellables = Set<AnyCancellable>()
 }
 
@@ -36,30 +34,34 @@ public final class EnterRoomInteractor: DependencyInjectable {
 extension EnterRoomInteractor: EnterRoomUseCase {
     public func signIn(userName: String, roomId: Int) async {
         AuthDataStore.shared.signIn()
-            .sink { [weak self] userId in
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .failure(let error):
+                    self?.dependency.output?.outputError(error, message: "サインインできませんでした")
+                    
+                case .finished:
+                    ()
+                }
+            }, receiveValue: { [weak self] userId in
                 self?.dependency.output?.outputSucceedToSignIn(
                     userId: userId, userName: userName, roomId: roomId)
-            }
+            })
             .store(in: &cancellables)
     }
 
     public func checkRoomExist(roomId: Int) async -> Bool {
-        await dependency.repository.checkRoomExist(roomId: roomId)
+        await dependency.repository.checkRoomExist(roomId: String(roomId))
     }
 
     public func createRoom(room: RoomModel) async {
         let entity = RoomEntity(
             id: room.id,
-            userList: room.userList.map {
-                UserEntity(
-                    id: $0.id, name: $0.name, currentRoomId: $0.currentRoomId,
-                    selectedCardId: $0.selectedCardId)
-            },
+            userIdList: room.userIdList,
             cardPackage: CardPackageEntity(
                 id: room.cardPackage.id,
                 themeColor: room.cardPackage.themeColor,
                 cardList: room.cardPackage.cardList.map {
-                    CardPackageEntity.Card(id: $0.id, point: $0.point, index: $0.index)
+                    CardPackageEntity.Card(id: $0.id, estimatePoint: $0.estimatePoint, index: $0.index)
                 }))
         let result: Result<Void, FirebaseError> = await dependency.repository.createRoom(entity)
         switch result {
@@ -71,15 +73,10 @@ extension EnterRoomInteractor: EnterRoomUseCase {
         }
     }
 
-    public func adduserToRoom(roomId: Int, user: UserModel) async {
-        repository = RoomDataStore(roomId: roomId)
+    public func adduserToRoom(roomId: Int, userId: String) async {
+        repository = RoomDataStore(userId: userId, roomId: String(roomId))
         guard let repository = repository else { return }
-        let entity = UserEntity(
-            id: user.id,
-            name: user.name,
-            currentRoomId: user.currentRoomId,
-            selectedCardId: user.selectedCardId)
-        let result: Result<Void, FirebaseError> = await repository.addUserToRoom(user: entity)
+        let result: Result<Void, FirebaseError> = await repository.addUserToRoom(userId: userId)
         switch result {
         case .success:
             dependency.output?.outputSuccess(message: "ルームに追加されました")

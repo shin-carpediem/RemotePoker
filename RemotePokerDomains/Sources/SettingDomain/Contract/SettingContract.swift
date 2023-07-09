@@ -6,7 +6,7 @@ public protocol SettingPresentation: AnyObject, Presentation {
     func didTapSelectThemeColorButton()
 
     /// ルームから退室するボタンがタップされた
-    func didTapLeaveRoomButton()
+    func didTapLeaveRoomButton() async
 }
 
 public protocol SettingUseCase: AnyObject {
@@ -15,9 +15,9 @@ public protocol SettingUseCase: AnyObject {
 }
 
 public protocol SettingInteractorOutput: AnyObject {
-    /// データ処理の成功を出力
+    /// データ処理の成功を出力する
     func outputSuccess(message: String)
 
-    /// エラーを出力
+    /// エラーを出力する
     func outputError(_ error: Error, message: String)
 }

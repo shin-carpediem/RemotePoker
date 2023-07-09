@@ -1,8 +1,9 @@
 import EnterRoomDomain
 import Neumorphic
+import Shared
 import SwiftUI
 
-public struct EnterRoomView: View, ModuleAssembler {
+public struct EnterRoomView: View {
     // MARK: - Dependency
 
     struct Dependency {
@@ -18,9 +19,15 @@ public struct EnterRoomView: View, ModuleAssembler {
     // MARK: - Private
 
     private var dependency: Dependency!
-
     @ObservedObject private var viewModel: EnterRoomViewModel
 
+    private var appConfig: AppConfig {
+        guard let appConfig = AppConfigManager.appConfig else {
+            fatalError()
+        }
+        return appConfig
+    }
+    
     // MARK: - View
 
     public var body: some View {
@@ -55,8 +62,8 @@ public struct EnterRoomView: View, ModuleAssembler {
     /// 入力フォーム
     private var inputField: some View {
         HStack(spacing: 14) {
-            InputText(placeholder: "名前", text: $viewModel.inputName)
-            InputText(placeholder: "ルームID", text: $viewModel.inputRoomId)
+            InputText(text: $viewModel.inputName, placeholder: "名前")
+            InputText(text: $viewModel.inputRoomId, placeholder: "ルームID")
         }
     }
 
@@ -83,9 +90,11 @@ public struct EnterRoomView: View, ModuleAssembler {
     private var notificationBanner: NotificationBanner {
         .init(isShown: $viewModel.isShownBanner, viewModel: viewModel.bannerMessgage)
     }
+}
 
-    // MARK: - Router
+// MARK: - ModuleAssembler
 
+extension EnterRoomView: ModuleAssembler {
     /// カード一覧画面に遷移させるナビゲーション
     private var navigationForCardListView: some View {
         NavigationLink(
@@ -95,10 +104,7 @@ public struct EnterRoomView: View, ModuleAssembler {
                 // willPushCardListView が評価されるタイミングで値を見るようにする
                 if viewModel.willPushCardListView {
                     assembleCardListModule(
-                        roomId: dependency.presenter.currentRoom.id,
-                        currentUserId: dependency.presenter.currentUser.id,
-                        currentUserName: dependency.presenter.currentUser.name,
-                        cardPackageId: dependency.presenter.currentRoom.cardPackage.id,
+                        cardPackageId: appConfig.currentRoom.cardPackage.id,
                         isExisingUser: false)
                 } else {
                     EmptyView()
@@ -113,6 +119,5 @@ public struct EnterRoomView: View, ModuleAssembler {
 struct EnterRoomView_Previews: PreviewProvider {
     static var previews: some View {
         EnterRoomView(dependency: .init(presenter: EnterRoomPresenter()), viewModel: .init())
-            .previewDisplayName("ルーム入室画面")
     }
 }

@@ -30,26 +30,6 @@ public final class SelectThemeColorPresenter: DependencyInjectable {
     // MARK: - Private
 
     private var dependency: Dependency!
-
-    private func showColorList() {
-        Task { @MainActor in
-            dependency.viewModel?.themeColorList = CardPackageThemeColor.allCases
-        }
-    }
-
-    private func applySelectedThemeColor(_ themeColor: CardPackageThemeColor) {
-        Task { @MainActor in
-            dependency.viewModel?.selectedThemeColor = themeColor
-        }
-    }
-
-    private func showSuccess(message: String) {
-        Task { @MainActor in
-            dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
-                type: .onSuccess, text: message)
-            dependency.viewModel?.isShownBanner = true
-        }
-    }
 }
 
 // MARK: - SelectThemeColorPresentation
@@ -77,4 +57,28 @@ extension SelectThemeColorPresenter: SelectThemeColorPresentation {
     }
 
     public func viewDidSuspend() {}
+}
+
+// MARK: - Private
+
+extension SelectThemeColorPresenter {
+    private func showColorList() {
+        Task { @MainActor in
+            dependency.viewModel?.themeColorList = CardPackageThemeColor.allCases
+        }
+    }
+
+    private func applySelectedThemeColor(_ themeColor: CardPackageThemeColor) {
+        Task { @MainActor in
+            dependency.viewModel?.selectedThemeColor = themeColor
+        }
+    }
+
+    private func showSuccess(message: String) {
+        Task { @MainActor in
+            dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
+                type: .onSuccess, text: message)
+            dependency.viewModel?.isShownBanner = true
+        }
+    }
 }

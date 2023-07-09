@@ -16,7 +16,7 @@ public struct CardPackageModelToCardPackageViewModelTranslator: Translator {
         let cardList: [CardPackageViewModel.Card] = input.cardList.map { card in
             CardPackageViewModel.Card(
                 id: card.id,
-                point: card.point,
+                estimatePoint: card.estimatePoint,
                 index: card.index,
                 fontColor: applyFontColor(toIndex: card.index),
                 backgroundColor: applyBackgroundColor(

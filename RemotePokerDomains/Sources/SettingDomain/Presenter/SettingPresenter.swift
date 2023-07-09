@@ -24,26 +24,6 @@ public final class SettingPresenter: DependencyInjectable {
     // MARK: - Private
 
     private var dependency: Dependency!
-
-    private func disableButton(_ disabled: Bool) {
-        Task { @MainActor in
-            dependency.viewModel?.isButtonEnabled = !disabled
-        }
-    }
-
-    private func showLoader(_ show: Bool) {
-        Task { @MainActor in
-            dependency.viewModel?.isShownLoader = show
-        }
-    }
-
-    // MARK: - Router
-
-    private func pushSelectThemeColorView() {
-        Task { @MainActor in
-            dependency.viewModel?.willPushSelectThemeColorView = true
-        }
-    }
 }
 
 // MARK: - SettingPresentation
@@ -53,14 +33,12 @@ extension SettingPresenter: SettingPresentation {
         pushSelectThemeColorView()
     }
 
-    public func didTapLeaveRoomButton() {
+    public func didTapLeaveRoomButton() async {
         disableButton(true)
         showLoader(true)
-        Task {
-            await dependency.useCase.leaveRoom()
-            disableButton(false)
-            showLoader(false)
-        }
+        await dependency.useCase.leaveRoom()
+        disableButton(false)
+        showLoader(false)
     }
 
     // MARK: - Presentation
@@ -88,6 +66,28 @@ extension SettingPresenter: SettingInteractorOutput {
             dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
                 type: .onFailure, text: message)
             dependency.viewModel?.isShownBanner = true
+        }
+    }
+}
+
+// MARK: - Private
+
+extension SettingPresenter {
+    private func disableButton(_ disabled: Bool) {
+        Task { @MainActor in
+            dependency.viewModel?.isButtonEnabled = !disabled
+        }
+    }
+
+    private func showLoader(_ show: Bool) {
+        Task { @MainActor in
+            dependency.viewModel?.isShownLoader = show
+        }
+    }
+    
+    private func pushSelectThemeColorView() {
+        Task { @MainActor in
+            dependency.viewModel?.willPushSelectThemeColorView = true
         }
     }
 }

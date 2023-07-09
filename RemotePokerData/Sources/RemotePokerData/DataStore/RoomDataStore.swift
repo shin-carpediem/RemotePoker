@@ -3,7 +3,8 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 public final class RoomDataStore: RoomRepository {
-    public init(roomId: Int) {
+    public init(userId: String, roomId: String) {
+        self.userId = userId
         self.roomId = roomId
     }
 
@@ -11,43 +12,52 @@ public final class RoomDataStore: RoomRepository {
 
     public lazy var userList: PassthroughSubject<[UserEntity], Never> = {
         let subject = PassthroughSubject<[UserEntity], Never>()
-        firestoreRef.usersQuery.addSnapshotListener { snapshot, error in
-            if let error = error { return }
-            guard let snapshot = snapshot else { return }
-            let userList: [UserEntity] = snapshot.documents.map { doc in
-                Self.userEntity(from: doc)
+        Task {
+            let userListQuery: Query = await firestoreRef.userListQuery()
+            userListQuery.addSnapshotListener { snapshot, error in
+                if let error = error { return }
+                guard let snapshot = snapshot else { return }
+                let userList: [UserEntity] = snapshot.documents.map { doc in
+                    Self.userEntity(from: doc)
+                }
             }
-            subject.send(userList)
         }
         return subject
     }()
-
-    public lazy var cardPackage: PassthroughSubject<CardPackageEntity, Never> = {
-        let subject = PassthroughSubject<CardPackageEntity, Never>()
-        firestoreRef.cardPackagesQuery.addSnapshotListener { snapshot, error in
+    
+    public lazy var room: PassthroughSubject<RoomEntity, Never> = {
+        let subject = PassthroughSubject<RoomEntity, Never>()
+        firestoreRef.roomQuery.addSnapshotListener { snapshot, error in
             if let error = error { return }
             guard let snapshot = snapshot else { return }
             guard let document = snapshot.documents.first else { return }
             Task { [weak self] in
                 guard let self = self else { return }
-                let cardPackage: CardPackageEntity = await self.cardPackageEntity(from: document)
-                subject.send(cardPackage)
+                let room: RoomEntity = await self.roomEntity(from: document)
+                subject.send(room)
             }
         }
         return subject
     }()
 
-    public func addUserToRoom(user: UserEntity) async -> Result<Void, FirebaseError> {
+    public func addUserToRoom(userId: String) async -> Result<Void, FirebaseError> {
         do {
-            let userDocument: DocumentReference = firestoreRef.usersCollection.document(user.id)
-            try await userDocument.setData([
-                "id": user.id,
-                "name": user.name,
-                "currentRoomId": user.currentRoomId,
-                "selectedCardId": user.selectedCardId,
-                "createdAt": Timestamp(),
-                "updatedAt": Date(),
+            let date = Date()
+            
+            let userDocument: DocumentReference = firestoreRef.userDocument
+            try await userDocument.updateData([
+                "currentRoomId": roomId,
+                "updatedAt": date,
             ])
+            
+            let roomDocument: DocumentReference = firestoreRef.roomDocument
+            // TODO: この配列の値を正しくする
+            let userIdListAfterThisUserJoined: [String] = []
+             try await roomDocument.updateData([
+                "userIdList": userIdListAfterThisUserJoined,
+                "updatedAt": date,
+            ])
+            
             return .success(())
         } catch (_) {
             Log.main.error("failedToAddUserToRoom")
@@ -57,7 +67,22 @@ public final class RoomDataStore: RoomRepository {
 
     public func removeUserFromRoom(userId: String) async -> Result<Void, FirebaseError> {
         do {
-            try await firestoreRef.userDocument(userId: userId).delete()
+            let date = Date()
+            
+            let userDocument: DocumentReference = firestoreRef.userDocument
+            try await userDocument.updateData([
+                "selectedCardId": "",
+                "updatedAt": date,
+            ])
+            
+            let roomDocument: DocumentReference = firestoreRef.roomDocument
+            // TODO: この配列の値を正しくする
+            let userIdListAfterThisUserFeft: [String] = []
+             try await roomDocument.updateData([
+                "userIdList": userIdListAfterThisUserFeft,
+                "updatedAt": date,
+            ])
+            
             return .success(())
         } catch (_) {
             Log.main.error("failedToRemoveUserFromRoom")
@@ -67,7 +92,7 @@ public final class RoomDataStore: RoomRepository {
 
     public func fetchUser(byId id: String) -> Future<UserEntity, Never> {
         Future<UserEntity, Never> { [unowned self] promise in
-            let userDocument: DocumentReference = self.firestoreRef.userDocument(userId: id)
+            let userDocument: DocumentReference = firestoreRef.userDocument
             userDocument.getDocument { snapshot, _ in
                 guard let snapshot = snapshot else { return }
                 let user: UserEntity = Self.userEntity(from: snapshot)
@@ -78,7 +103,7 @@ public final class RoomDataStore: RoomRepository {
 
     public func updateSelectedCardId(selectedCardDictionary: [String: String]) {
         selectedCardDictionary.forEach { userId, selectedCardId in
-            let userDocument: DocumentReference = firestoreRef.userDocument(userId: userId)
+            let userDocument: DocumentReference = firestoreRef.userDocument
             userDocument.updateData([
                 "selectedCardId": selectedCardId,
                 "updatedAt": Date(),
@@ -95,58 +120,69 @@ public final class RoomDataStore: RoomRepository {
         ])
     }
 
-    public func unsubscribeUser() {
-        userList.send(completion: .finished)
-    }
-
-    public func unsubscribeCardPackage() {
-        cardPackage.send(completion: .finished)
+    public func unsubscribeRoom() {
+        room.send(completion: .finished)
     }
 
     // MARK: - Private
 
-    private let roomId: Int
+    private let userId: String
+    private let roomId: String
 
     /// Firestoreのリファレンス一覧
     private var firestoreRef: FirestoreRefs {
-        FirestoreRefs(roomId: roomId)
+        FirestoreRefs(userId: userId, roomId: roomId)
     }
 
     private static func userEntity(from doc: DocumentSnapshot) -> UserEntity {
         guard let id = doc.get("id") as? String else {
+            Log.main.error("failedToTranslateUserEntityFromDoc")
             fatalError()
         }
         return UserEntity(
             id: id,
             name: doc.get("name") as? String ?? "",
-            currentRoomId: doc.get("currentRoomId") as? Int ?? 0,
             selectedCardId: doc.get("selectedCardId") as? String ?? "")
     }
-
-    private func cardPackageEntity(from doc: DocumentSnapshot) async -> CardPackageEntity {
-        guard let id = doc.get("id") as? String else {
+    
+    private func roomEntity(from doc: DocumentSnapshot) async -> RoomEntity {
+        guard let roomId = doc.get("id") as? Int else {
+            Log.main.error("failedToTranslateRoomEntityFromDoc")
             fatalError()
         }
-        let themeColor = doc.get("themeColor") as? String ?? ""
 
         // カード一覧取得
-        let cardsSnapshot = await firestoreRef.cardsSnapshot(cardPackageId: id)
-        guard let cardsSnapshot = cardsSnapshot else {
+        let cardPackageSnapshot = await firestoreRef.cardPackagesSnapshot()?.first
+        guard let cardPackageSnapshot = cardPackageSnapshot else {
+            Log.main.error("failedToTranslateRoomEntityFromDoc")
             fatalError()
         }
+
+        let cardPackageId: String = cardPackageSnapshot.documentID
+        let cardsSnapshot = await firestoreRef.cardsSnapshot(cardPackageId: cardPackageId)
+        guard let cardsSnapshot = cardsSnapshot else {
+            Log.main.error("failedToTranslateRoomEntityFromDoc")
+            fatalError()
+        }
+
         let cardList: [CardPackageEntity.Card] = cardsSnapshot.map { doc in
             guard let cardId = doc.get("id") as? String else {
+                Log.main.error("failedToTranslateRoomEntityFromDoc")
                 fatalError()
             }
             return CardPackageEntity.Card(
                 id: cardId,
-                point: doc.get("point") as? String ?? "",
+                estimatePoint: doc.get("estimatePoint") as? String ?? "",
                 index: doc.get("index") as? Int ?? 0)
         }.sorted { $0.index < $1.index }
 
-        return CardPackageEntity(
-            id: id,
-            themeColor: themeColor,
+        let cardPackage = CardPackageEntity(
+            id: cardPackageId,
+            themeColor: doc.get("themeColor") as? String ?? "",
             cardList: cardList)
+        
+        return RoomEntity(id: roomId,
+                          userIdList: doc.get("userIdList") as? [String] ?? [],
+                          cardPackage: cardPackage)
     }
 }

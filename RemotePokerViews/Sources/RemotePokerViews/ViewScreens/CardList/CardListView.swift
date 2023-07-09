@@ -1,35 +1,39 @@
 import CardListDomain
 import Neumorphic
 import RemotePokerData
+import Shared
 import SwiftUI
 import Translator
 import ViewModel
 
-public struct CardListView: View, ModuleAssembler {
+public struct CardListView: View {
     @Environment(\.presentationMode) var presentation
 
     // MARK: - Dependency
 
     struct Dependency {
         var presenter: CardListPresentation
-        var roomId: Int
-        var currentUserId: String
         var cardPackageId: String
     }
 
     init(dependency: Dependency, viewModel: CardListViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
-
         self.dependency.presenter.viewDidLoad()
     }
 
     // MARK: - Private
 
     private var dependency: Dependency
-
     @ObservedObject private var viewModel: CardListViewModel
 
+    private var appConfig: AppConfig {
+        guard let appConfig = AppConfigManager.appConfig else {
+            fatalError()
+        }
+        return appConfig
+    }
+    
     // MARK: - View
 
     public var body: some View {
@@ -82,13 +86,13 @@ public struct CardListView: View, ModuleAssembler {
 
     /// カード一覧
     private var cardListView: some View {
-        let cardList = viewModel.room.cardPackage.cardList
+        let cardList: [CardPackageViewModel.Card] = viewModel.room.cardPackage.cardList
         return LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
             ForEach(cardList) { card in
                 let isSelected: Bool =
                     (card.id
                         == viewModel.userSelectStatusList.first(where: {
-                            $0.user.id == dependency.currentUserId
+                        $0.user.id == appConfig.currentUser.id
                         })?.selectedCard?.id)
                 CardView(
                     card: card,
@@ -115,10 +119,10 @@ public struct CardListView: View, ModuleAssembler {
     private var selectedCardPointView: some View {
         let currentUserSelectStatus: UserSelectStatusViewModel? = viewModel.userSelectStatusList
             .first(where: {
-                $0.user.id == dependency.currentUserId
+                $0.user.id == appConfig.currentUser.id
             })
-        let point: String = currentUserSelectStatus?.selectedCard?.point ?? ""
-        return Text(point)
+        let estimatePoint: String = currentUserSelectStatus?.selectedCard?.estimatePoint ?? ""
+        return Text(estimatePoint)
             .foregroundColor(.gray)
             .font(.title)
     }
@@ -149,21 +153,20 @@ public struct CardListView: View, ModuleAssembler {
     private var notificationBanner: NotificationBanner {
         .init(isShown: $viewModel.isShownBanner, viewModel: viewModel.bannerMessgage)
     }
+}
 
-    // MARK: - Router
+// MARK: - ModuleAssembler
 
+extension CardListView: ModuleAssembler {
     /// 設定画面へ遷移させるナビゲーション
     private var navigationForSettingView: some View {
         NavigationLink(
             isActive: $viewModel.willPushSettingView,
             destination: {
-                assembleSettingModule(
-                    roomId: dependency.roomId,
-                    currentUserId: dependency.currentUserId,
-                    cardPackageId: dependency.cardPackageId
+                assembleSettingModule(cardPackageId: dependency.cardPackageId
                 )
                 .onDisappear {
-                    let isUserLoggedOut =
+                    let isUserLoggedOut: Bool =
                         (LocalStorage.shared.currentRoomId == 0
                             && LocalStorage.shared.currentUserId == "")
                     if isUserLoggedOut {
@@ -196,31 +199,23 @@ struct CardListView_Previews: PreviewProvider {
         viewModel.isShownSelectedCardList = true
         return viewModel
     }()
-
     static let me: UserViewModel = .init(
         id: "1",
         name: "ロイド フォージャ",
-        currentRoomId: 0,
         selectedCardId: "")
-
     static let user1: UserViewModel = .init(
         id: "2",
         name: "ヨル フォージャ",
-        currentRoomId: 0,
         selectedCardId: "")
-
     static let user2: UserViewModel = .init(
         id: "3",
         name: "アーニャ フォージャ",
-        currentRoomId: 0,
         selectedCardId: "")
-
-    static let room1: RoomViewModel = .init(
+    static let room1: CurrentRoomViewModel = .init(
         id: 1,
         userList: [me],
         cardPackage: trasnlator.translate(.defaultCardPackage))
-
-    static let room2: RoomViewModel = .init(
+    static let room2: CurrentRoomViewModel = .init(
         id: 2,
         userList: [me, user1],
         cardPackage: trasnlator.translate(.defaultCardPackage))
@@ -232,8 +227,6 @@ struct CardListView_Previews: PreviewProvider {
             CardListView(
                 dependency: .init(
                     presenter: CardListPresenter(),
-                    roomId: 1,
-                    currentUserId: "1",
                     cardPackageId: "1"),
                 viewModel: .init()
             )
@@ -242,8 +235,6 @@ struct CardListView_Previews: PreviewProvider {
             CardListView(
                 dependency: .init(
                     presenter: CardListPresenter(),
-                    roomId: 1,
-                    currentUserId: "1",
                     cardPackageId: "1"),
                 viewModel: .init()
             )
@@ -252,8 +243,6 @@ struct CardListView_Previews: PreviewProvider {
             CardListView(
                 dependency: .init(
                     presenter: CardListPresenter(),
-                    roomId: 1,
-                    currentUserId: "1",
                     cardPackageId: "1"),
                 viewModel: selectedCardListView
             )

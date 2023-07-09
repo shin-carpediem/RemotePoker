@@ -32,7 +32,7 @@ struct OpenCardView: View {
 
     /// 選択されたカードビュー
     private var selectedCardView: some View {
-        Text(selectedCard!.point)
+        Text(selectedCard!.estimatePoint)
             .frame(width: 150, height: 100)
             .font(.largeTitle)
             .foregroundColor(selectedCard!.fontColor)
@@ -55,7 +55,8 @@ struct OpenCardView: View {
 
 struct OpenCardView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
+        VStack {
+            Text("選択されたカード")
             OpenCardView(
                 userSelectStatus: .init(
                     id: "0",
@@ -63,8 +64,8 @@ struct OpenCardView_Previews: PreviewProvider {
                     themeColor: .buttercup,
                     selectedCard: CardView_Previews.card2)
             )
-            .previewDisplayName("選択されたカード")
 
+            Text("カード未選択")
             OpenCardView(
                 userSelectStatus: .init(
                     id: "0",
@@ -72,9 +73,7 @@ struct OpenCardView_Previews: PreviewProvider {
                     themeColor: .buttercup,
                     selectedCard: nil)
             )
-            .previewDisplayName("カード未選択")
         }
         .padding()
-        .previewLayout(.sizeThatFits)
     }
 }

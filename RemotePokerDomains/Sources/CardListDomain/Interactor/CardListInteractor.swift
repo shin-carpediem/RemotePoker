@@ -30,42 +30,30 @@ public final class CardListInteractor: DependencyInjectable {
     // MARK: - Private
 
     private var dependency: Dependency!
-
-    private var cancellablesForSubscription = Set<AnyCancellable>()
-    private var cancellablesForAction = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
 }
 
 // MARK: - CardListUseCase
 
 extension CardListInteractor: CardListUseCase {
     public func checkRoomExist(roomId: Int) async -> Bool {
-        await dependency.enterRoomRepository.checkRoomExist(roomId: roomId)
+        await dependency.enterRoomRepository.checkRoomExist(roomId: String(roomId))
     }
 
-    public func subscribeUsers() {
-        dependency.roomRepository.userList
-            .sink { [weak self] userList in
-                let model: [UserModel] = userList.map {
-                    UserModel(
-                        id: $0.id, name: $0.name, currentRoomId: $0.currentRoomId,
-                        selectedCardId: $0.selectedCardId)
+    public func subscribeCurrentRoom() {
+        dependency.roomRepository.room
+            .combineLatest(dependency.roomRepository.userList)
+            .sink { [weak self] roomEntity, userListEntity in
+                let cardPackage: CardPackageEntity = roomEntity.cardPackage
+                let cardList: [CardPackageModel.Card] = cardPackage.cardList.map { CardPackageModel.Card(id: $0.id, estimatePoint: $0.estimatePoint, index: $0.index) }
+                let userList: [UserModel] = userListEntity.map {
+                    UserModel(id: $0.id, name: $0.name, selectedCardId: $0.selectedCardId)
                 }
-                self?.dependency.output?.outputUserList(model)
-            }
-            .store(in: &cancellablesForSubscription)
-    }
+                let model = CurrentRoomModel(id: roomEntity.id, userList: userList, cardPackage: .init(id: cardPackage.id, themeColor: cardPackage.themeColor, cardList: cardList))
 
-    public func subscribeCardPackages() {
-        dependency.roomRepository.cardPackage
-            .sink { [weak self] cardPackage in
-                let model = CardPackageModel(
-                    id: cardPackage.id, themeColor: cardPackage.themeColor,
-                    cardList: cardPackage.cardList.map {
-                        CardPackageModel.Card(id: $0.id, point: $0.point, index: $0.index)
-                    })
-                self?.dependency.output?.outputCardPackage(model)
+                self?.dependency.output?.outputRoom(model)
             }
-            .store(in: &cancellablesForSubscription)
+            .store(in: &cancellables)
     }
 
     public func updateSelectedCardId(selectedCardDictionary: [String: String]) {
@@ -75,12 +63,12 @@ extension CardListInteractor: CardListUseCase {
 
     public func requestUser(userId: String) async {
         dependency.roomRepository.fetchUser(byId: userId)
-            .sink { [weak self] user in
+            .sink { [weak self] in
                 let model = UserModel(
-                    id: user.id, name: user.name, currentRoomId: user.currentRoomId,
-                    selectedCardId: user.selectedCardId)
+                    id: $0.id, name: $0.name,
+                    selectedCardId: $0.selectedCardId)
                 self?.dependency.output?.outputCurrentUser(model)
             }
-            .store(in: &cancellablesForAction)
+            .store(in: &cancellables)
     }
 }
