@@ -17,10 +17,10 @@ struct OpenCardView: View {
     var body: some View {
         VStack {
             userName
-            if selectedCard != nil {
-                selectedCardView
-            } else {
+            if selectedCard == nil {
                 userNotSelectedView
+            } else {
+                selectedCardView
             }
         }
     }

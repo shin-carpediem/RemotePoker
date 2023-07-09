@@ -22,6 +22,8 @@ extension ModuleAssembler {
 
     public func assembleCardListModule(cardPackageId: String, isExisingUser: Bool
     ) -> CardListView {
+        AppConfigManager.appConfig?.currentRoom.id = LocalStorage.shared.currentRoomId
+        
         let viewModel = CardListViewModel()
         let presenter = CardListPresenter()
         let interactor = CardListInteractor()
