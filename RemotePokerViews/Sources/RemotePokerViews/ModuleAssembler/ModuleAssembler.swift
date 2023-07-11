@@ -3,17 +3,13 @@ public protocol ModuleAssembler {
     func assmebleEnterRoomModule() -> EnterRoomView
 
     /// カードリスト画面をアセンブルする
-    /// - parameter cardPackageId: カードパッケージID
     /// - parameter isExisingUser: 既存ユーザーか
-    func assembleCardListModule(cardPackageId: String, isExisingUser: Bool
-    ) -> CardListView
+    func assembleCardListModule(isExisingUser: Bool) -> CardListView
 
     /// 設定画面をアセンブルする
-    /// - parameter cardPackageId: カードパッケージID
-    func assembleSettingModule(cardPackageId: String)
+    func assembleSettingModule()
         -> SettingView
 
     /// テーマカラー選択画面をアセンブルする
-    /// - parameter cardPackageId: カードパッケージID
-    func assembleSelectThemeColorModule(cardPackageId: String) -> SelectThemeColorView
+    func assembleSelectThemeColorModule() -> SelectThemeColorView
 }

@@ -36,11 +36,7 @@ extension SettingInteractor: SettingUseCase {
         resetLocalStorage()
         unsubscribeCurrentRoom()
 
-        guard let appConfig = AppConfigManager.appConfig else {
-            fatalError()
-        }
-        let result: Result<Void, FirebaseError> = await dependency.repository.removeUserFromRoom(
-            userId: appConfig.currentUser.id)
+        let result: Result<Void, FirebaseError> = await dependency.repository.removeUserFromRoom()
         switch result {
         case .success:
             let signoutResult: Result<Void, FirebaseError> = AuthDataStore.shared.signOut()

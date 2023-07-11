@@ -10,25 +10,26 @@ public final class RoomDataStore: RoomRepository {
 
     // MARK: - RoomRepository
 
-    public lazy var userList: PassthroughSubject<[UserEntity], Never> = {
+    public var userList: PassthroughSubject<[UserEntity], Never> {
         let subject = PassthroughSubject<[UserEntity], Never>()
         Task {
             let userListQuery: Query = await firestoreRef.userListQuery()
             userListQuery.addSnapshotListener { snapshot, error in
-                if let error = error { return }
+                if error != nil { return }
                 guard let snapshot = snapshot else { return }
                 let userList: [UserEntity] = snapshot.documents.map { doc in
                     Self.userEntity(from: doc)
                 }
+                subject.send(userList)
             }
         }
         return subject
-    }()
+    }
     
-    public lazy var room: PassthroughSubject<RoomEntity, Never> = {
+    public var room: PassthroughSubject<RoomEntity, Never> {
         let subject = PassthroughSubject<RoomEntity, Never>()
         firestoreRef.roomQuery.addSnapshotListener { snapshot, error in
-            if let error = error { return }
+            if error != nil { return }
             guard let snapshot = snapshot else { return }
             guard let document = snapshot.documents.first else { return }
             Task { [weak self] in
@@ -38,24 +39,23 @@ public final class RoomDataStore: RoomRepository {
             }
         }
         return subject
-    }()
+    }
 
-    public func addUserToRoom(userId: String) async -> Result<Void, FirebaseError> {
+    public func addUserToRoom() async -> Result<Void, FirebaseError> {
         do {
-            let date = Date()
-            
-            let userDocument: DocumentReference = firestoreRef.userDocument
-            try await userDocument.updateData([
-                "currentRoomId": roomId,
-                "updatedAt": date,
-            ])
+            guard let roomSnapshot: DocumentSnapshot = await firestoreRef.roomSnapshot() else {
+                Log.main.error("failedToAddUserToRoom")
+                return .failure(.failedToAddUserToRoom)
+            }
+            guard var userIdList: [String] = roomSnapshot.get("userIdList") as? [String] else {
+                Log.main.error("failedToAddUserToRoom")
+                return .failure(.failedToAddUserToRoom)
+            }
             
             let roomDocument: DocumentReference = firestoreRef.roomDocument
-            // TODO: この配列の値を正しくする
-            let userIdListAfterThisUserJoined: [String] = []
-             try await roomDocument.updateData([
-                "userIdList": userIdListAfterThisUserJoined,
-                "updatedAt": date,
+            try await roomDocument.updateData([
+                "userIdList": userIdList.append(userId),
+                "updatedAt": Date(),
             ])
             
             return .success(())
@@ -65,22 +65,21 @@ public final class RoomDataStore: RoomRepository {
         }
     }
 
-    public func removeUserFromRoom(userId: String) async -> Result<Void, FirebaseError> {
+    public func removeUserFromRoom() async -> Result<Void, FirebaseError> {
         do {
-            let date = Date()
-            
-            let userDocument: DocumentReference = firestoreRef.userDocument
-            try await userDocument.updateData([
-                "selectedCardId": "",
-                "updatedAt": date,
-            ])
+            guard let roomSnapshot: DocumentSnapshot = await firestoreRef.roomSnapshot() else {
+                Log.main.error("failedToRemoveUserFromRoom")
+                return .failure(.failedToRemoveUserFromRoom)
+            }
+            guard let userIdList: [String] = roomSnapshot.get("userIdList") as? [String] else {
+                Log.main.error("failedToRemoveUserFromRoom")
+                return .failure(.failedToRemoveUserFromRoom)
+            }
             
             let roomDocument: DocumentReference = firestoreRef.roomDocument
-            // TODO: この配列の値を正しくする
-            let userIdListAfterThisUserFeft: [String] = []
-             try await roomDocument.updateData([
-                "userIdList": userIdListAfterThisUserFeft,
-                "updatedAt": date,
+            try await roomDocument.updateData([
+                "userIdList": userIdList.filter { $0 != userId },
+                "updatedAt": Date(),
             ])
             
             return .success(())
@@ -90,11 +89,16 @@ public final class RoomDataStore: RoomRepository {
         }
     }
 
-    public func fetchUser(byId id: String) -> Future<UserEntity, Never> {
-        Future<UserEntity, Never> { [unowned self] promise in
+    public func fetchUser() -> Future<UserEntity, FirebaseError> {
+        Future<UserEntity, FirebaseError> { [unowned self] promise in
             let userDocument: DocumentReference = firestoreRef.userDocument
-            userDocument.getDocument { snapshot, _ in
-                guard let snapshot = snapshot else { return }
+            userDocument.getDocument { snapshot, error in
+                if error != nil {
+                    promise(.failure(.failedToFetchUser))
+                }
+                guard let snapshot = snapshot else {
+                    return promise(.failure(.failedToFetchUser))
+                }
                 let user: UserEntity = Self.userEntity(from: snapshot)
                 promise(.success(user))
             }
@@ -151,7 +155,6 @@ public final class RoomDataStore: RoomRepository {
             fatalError()
         }
 
-        // カード一覧取得
         let cardPackageSnapshot = await firestoreRef.cardPackagesSnapshot()?.first
         guard let cardPackageSnapshot = cardPackageSnapshot else {
             Log.main.error("failedToTranslateRoomEntityFromDoc")
@@ -182,7 +185,7 @@ public final class RoomDataStore: RoomRepository {
             cardList: cardList)
         
         return RoomEntity(id: roomId,
-                          userIdList: doc.get("userIdList") as? [String] ?? [],
+                          userIdList: doc.get("userIdList") as? [String] ?? [String](),
                           cardPackage: cardPackage)
     }
 }

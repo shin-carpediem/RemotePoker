@@ -8,17 +8,14 @@ public protocol RoomRepository: AnyObject {
     var room: PassthroughSubject<RoomEntity, Never> { get }
 
     /// ルームにユーザーを追加する
-    /// - parameter userId: ユーザーID
-    func addUserToRoom(userId: String) async -> Result<Void, FirebaseError>
+    func addUserToRoom() async -> Result<Void, FirebaseError>
 
     /// ルームからユーザーを削除する
-    /// - parameter userId: ユーザーID
-    func removeUserFromRoom(userId: String) async -> Result<Void, FirebaseError>
+    func removeUserFromRoom() async -> Result<Void, FirebaseError>
 
-    /// 指定IDのユーザーを取得する
-    /// - parameter byId: ユーザーID
-    /// - returns: ユーザーを返却
-    func fetchUser(byId id: String) -> Future<UserEntity, Never>
+    /// ユーザーを取得する
+    /// - returns: ユーザー
+    func fetchUser() -> Future<UserEntity, FirebaseError>
 
     /// ユーザーの選択済みカードを更新する
     /// - parameter selectedCardDictionary: ユーザーIDと選択されたカードIDの辞書

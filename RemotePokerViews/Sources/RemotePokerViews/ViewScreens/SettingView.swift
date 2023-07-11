@@ -94,7 +94,7 @@ extension SettingView: ModuleAssembler {
         NavigationLink(
             isActive: $viewModel.willPushSelectThemeColorView,
             destination: {
-                assembleSelectThemeColorModule(cardPackageId: dependency.cardPackageId)
+                assembleSelectThemeColorModule()
             }
         ) { EmptyView() }
     }

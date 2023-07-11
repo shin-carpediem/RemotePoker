@@ -31,8 +31,7 @@ public protocol CardListUseCase: AnyObject {
     func updateSelectedCardId(selectedCardDictionary: [String: String])
 
     /// ユーザーを要求する
-    /// - parameter userId:　ユーザーID
-    func requestUser(userId: String) async
+    func requestUser() async
 }
 
 public protocol CardListInteractorOutput: AnyObject {

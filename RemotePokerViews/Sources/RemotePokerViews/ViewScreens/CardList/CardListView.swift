@@ -163,8 +163,7 @@ extension CardListView: ModuleAssembler {
         NavigationLink(
             isActive: $viewModel.willPushSettingView,
             destination: {
-                assembleSettingModule(cardPackageId: dependency.cardPackageId
-                )
+                assembleSettingModule()
                 .onDisappear {
                     let isUserLoggedOut: Bool =
                         (LocalStorage.shared.currentRoomId == 0

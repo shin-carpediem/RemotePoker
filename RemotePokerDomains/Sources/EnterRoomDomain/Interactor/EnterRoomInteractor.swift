@@ -76,7 +76,7 @@ extension EnterRoomInteractor: EnterRoomUseCase {
     public func adduserToRoom(roomId: Int, userId: String) async {
         repository = RoomDataStore(userId: userId, roomId: String(roomId))
         guard let repository = repository else { return }
-        let result: Result<Void, FirebaseError> = await repository.addUserToRoom(userId: userId)
+        let result: Result<Void, FirebaseError> = await repository.addUserToRoom()
         switch result {
         case .success:
             dependency.output?.outputSuccess(message: "ルームに追加されました")

@@ -18,6 +18,5 @@ public final class LocalStorage {
     private init() {}
 
     private let currentUserIdKey = "currentUserId"
-    
     private let currentRoomIdKey = "currentRoomId"
 }

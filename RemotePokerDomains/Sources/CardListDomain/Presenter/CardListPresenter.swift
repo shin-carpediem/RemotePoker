@@ -76,17 +76,14 @@ extension CardListPresenter: CardListPresentation {
         Task {
             if dependency.isExisingUser {
                 // 既存ユーザー（この画面が初期画面）
-                let userId: String = try await signIn().value
+                _ = try await signIn().value
                 // ユーザーのカレントルームがFirestore上に存在するか確認する
                 if await checkUserInCurrentRoom() {
-                    await subscribeCurrentRoom(
-                        userId: userId, shouldFetchData: dependency.isExisingUser)
+                    await subscribeCurrentRoom(shouldFetchData: dependency.isExisingUser)
                 }
             } else {
                 // 新規ユーザー（EnterRoom画面が初期画面）
-                await subscribeCurrentRoom(
-                    userId: appConfig.currentUser.id, shouldFetchData: dependency.isExisingUser
-                )
+                await subscribeCurrentRoom(shouldFetchData: dependency.isExisingUser)
             }
         }
     }
@@ -164,10 +161,10 @@ extension CardListPresenter {
     }
 
     /// カレントルームを購読しセットアップする
-    private func subscribeCurrentRoom(userId: String, shouldFetchData: Bool) async {
+    private func subscribeCurrentRoom(shouldFetchData: Bool) async {
         dependency.useCase.subscribeCurrentRoom()
         if shouldFetchData {
-            await dependency.useCase.requestUser(userId: userId)
+            await dependency.useCase.requestUser()
         }
     }
 

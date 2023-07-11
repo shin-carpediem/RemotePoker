@@ -61,14 +61,22 @@ extension CardListInteractor: CardListUseCase {
             selectedCardDictionary: selectedCardDictionary)
     }
 
-    public func requestUser(userId: String) async {
-        dependency.roomRepository.fetchUser(byId: userId)
-            .sink { [weak self] in
+    public func requestUser() async {
+        dependency.roomRepository.fetchUser()
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .failure(let error):
+                    self?.dependency.output?.outputError(error, message: "ユーザーを取得できませんでした")
+                    
+                case .finished:
+                    ()
+                }
+            }, receiveValue: { [weak self] in
                 let model = UserModel(
                     id: $0.id, name: $0.name,
                     selectedCardId: $0.selectedCardId)
                 self?.dependency.output?.outputCurrentUser(model)
-            }
+            })
             .store(in: &cancellables)
     }
 }

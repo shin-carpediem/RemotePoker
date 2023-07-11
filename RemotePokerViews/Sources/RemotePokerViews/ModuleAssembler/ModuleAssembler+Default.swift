@@ -20,14 +20,24 @@ extension ModuleAssembler {
         return view
     }
 
-    public func assembleCardListModule(cardPackageId: String, isExisingUser: Bool
+    public func assembleCardListModule(isExisingUser: Bool
     ) -> CardListView {
-        AppConfigManager.appConfig?.currentRoom.id = LocalStorage.shared.currentRoomId
+        AppConfigManager.appConfig = .init(
+            currentUser: .init(id: "0", name: "", selectedCardId: ""),
+            currentRoom: .init(id: LocalStorage.shared.currentRoomId, userList: [], cardPackage: .defaultCardPackage)
+        )
         
         let viewModel = CardListViewModel()
         let presenter = CardListPresenter()
         let interactor = CardListInteractor()
 
+        var appConfig: AppConfig {
+            guard let appConfig = AppConfigManager.appConfig else {
+                fatalError()
+            }
+            return appConfig
+        }
+        
         presenter.inject(
             .init(
                 useCase: interactor,
@@ -40,18 +50,25 @@ extension ModuleAssembler {
         let view = CardListView(
             dependency: CardListView.Dependency(
                 presenter: presenter,
-                cardPackageId: cardPackageId),
+                cardPackageId: appConfig.currentRoom.cardPackage.id),
             viewModel: viewModel)
 
         return view
     }
 
-    public func assembleSettingModule(cardPackageId: String)
+    public func assembleSettingModule()
         -> SettingView
     {
         let viewModel = SettingViewModel()
         let presenter = SettingPresenter()
         let interactor = SettingInteractor()
+
+        var appConfig: AppConfig {
+            guard let appConfig = AppConfigManager.appConfig else {
+                fatalError()
+            }
+            return appConfig
+        }
 
         presenter.inject(.init(useCase: interactor, viewModel: viewModel))
         interactor.inject(
@@ -61,35 +78,33 @@ extension ModuleAssembler {
         let view = SettingView(
             dependency: SettingView.Dependency(
                 presenter: presenter,
-                cardPackageId: cardPackageId),
+                cardPackageId: appConfig.currentRoom.cardPackage.id),
             viewModel: viewModel)
 
         return view
     }
 
-    public func assembleSelectThemeColorModule(cardPackageId: String)
+    public func assembleSelectThemeColorModule()
         -> SelectThemeColorView
     {
         let viewModel = SelectThemeColorViewModel()
         let presenter = SelectThemeColorPresenter()
 
+        var appConfig: AppConfig {
+            guard let appConfig = AppConfigManager.appConfig else {
+                fatalError()
+            }
+            return appConfig
+        }
+
         presenter.inject(
             .init(
                 repository: RoomDataStore(userId: appConfig.currentUser.id, roomId: String(appConfig.currentRoom.id)),
                 viewModel: viewModel,
-                cardPackageId: cardPackageId))
+                cardPackageId: appConfig.currentRoom.cardPackage.id))
         let view = SelectThemeColorView(
             dependency: SelectThemeColorView.Dependency(presenter: presenter), viewModel: viewModel)
 
         return view
-    }
-    
-    // MARK: - Private
-    
-    private var appConfig: AppConfig {
-        guard let appConfig = AppConfigManager.appConfig else {
-            fatalError()
-        }
-        return appConfig
     }
 }

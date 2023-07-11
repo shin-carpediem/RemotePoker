@@ -103,9 +103,7 @@ extension EnterRoomView: ModuleAssembler {
                 // Viewの表示時に、以下の存在しないルームIDも以下に代入されてクラッシュするのを防ぐため、
                 // willPushCardListView が評価されるタイミングで値を見るようにする
                 if viewModel.willPushCardListView {
-                    assembleCardListModule(
-                        cardPackageId: appConfig.currentRoom.cardPackage.id,
-                        isExisingUser: false)
+                    assembleCardListModule(isExisingUser: false)
                 } else {
                     EmptyView()
                 }

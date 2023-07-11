@@ -25,11 +25,10 @@ import SwiftUI
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                let currentRoomId: Int = LocalStorage.shared.currentRoomId
-                let isUserSignedIn: Bool = !(currentRoomId == 0)
+                let isUserSignedIn: Bool = !(LocalStorage.shared.currentRoomId == 0)
                 if isUserSignedIn {
                     // サインイン中(currentUserName、cardPackageIdは後で取得)
-                    assembleCardListModule(cardPackageId: "", isExisingUser: true)
+                    assembleCardListModule(isExisingUser: true)
                 } else {
                     // サインインしていない
                     assmebleEnterRoomModule()
