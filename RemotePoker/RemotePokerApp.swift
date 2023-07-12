@@ -18,6 +18,17 @@ import SwiftUI
             return true
         }
     }
+    
+    // MARK: - Private
+    
+    private func checkUserSignedIn() async -> Bool {
+        do {
+            let userId: String = try await AuthDataStore.shared.signIn().value
+            return LocalStorage.shared.currentUserId == userId
+        } catch (_) {
+            return false
+        }
+    }
 
     // MARK: - View
 
@@ -25,12 +36,10 @@ import SwiftUI
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                let isUserSignedIn: Bool = !(LocalStorage.shared.currentRoomId == 0)
-                if isUserSignedIn {
-                    // サインイン中(currentUserName、cardPackageIdは後で取得)
+                if await checkUserSignedIn() {
+                    // currentUserName、cardPackageIdは後で取得する
                     assembleCardListModule(isExisingUser: true)
                 } else {
-                    // サインインしていない
                     assmebleEnterRoomModule()
                 }
             }

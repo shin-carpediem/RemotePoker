@@ -73,7 +73,11 @@ public struct CardListView: View {
             }
         }
     }
+}
 
+// MARK: - View Components
+
+extension CardListView {
     /// 設定ボタン
     private var settingButton: some View {
         Button(action: {
@@ -165,11 +169,11 @@ extension CardListView: ModuleAssembler {
             destination: {
                 assembleSettingModule()
                 .onDisappear {
-                    let isUserLoggedOut: Bool =
+                    let isUserSignedOut: Bool =
                         (LocalStorage.shared.currentRoomId == 0
                             && LocalStorage.shared.currentUserId == "")
-                    if isUserLoggedOut {
-                        // ログアウトしている場合、ルート(=ひとつ前の画面)に遷移する
+                    if isUserSignedOut {
+                        // サインアウトしている場合、ルート(=ひとつ前の画面)に遷移する
                         presentation.wrappedValue.dismiss()
                     }
                 }

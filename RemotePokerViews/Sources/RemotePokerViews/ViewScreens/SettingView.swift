@@ -48,7 +48,11 @@ public struct SettingView: View {
             .listStyle(.insetGrouped)
         }
     }
+}
 
+// MARK: - View Components
+
+extension SettingView {
     /// テーマカラー選択ボタン
     private var selecteThemeColorButton: some View {
         Button(action: {

@@ -45,7 +45,11 @@ public struct SelectThemeColorView: View {
             .listStyle(.insetGrouped)
         }
     }
+}
 
+// MARK: - View Components
+
+extension SelectThemeColorView {
     /// カラーセル
     private func colorCell(_ color: CardPackageThemeColor) -> some View {
         let isThemeColor: Bool = (color == viewModel.selectedThemeColor)

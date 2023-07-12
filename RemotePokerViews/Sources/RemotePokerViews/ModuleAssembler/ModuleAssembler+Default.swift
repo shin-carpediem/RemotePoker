@@ -2,9 +2,9 @@ import CardListDomain
 import EnterRoomDomain
 import RemotePokerData
 import RemotePokerDomains
-import Shared
 import SelectThemeColorDomain
 import SettingDomain
+import Shared
 
 extension ModuleAssembler {
     public func assmebleEnterRoomModule() -> EnterRoomView {

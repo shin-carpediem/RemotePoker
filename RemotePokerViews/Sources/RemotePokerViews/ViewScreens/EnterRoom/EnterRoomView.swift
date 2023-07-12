@@ -58,7 +58,11 @@ public struct EnterRoomView: View {
         }
         .padding(.horizontal, 40)
     }
+}
 
+// MARK: - View Components
+
+extension EnterRoomView {
     /// 入力フォーム
     private var inputField: some View {
         HStack(spacing: 14) {
