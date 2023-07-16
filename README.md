@@ -2,6 +2,8 @@
 
 ## App for Planning Poker
 
+Planning Poker enables online with remote scrum member
+
 ### Architecture
 
 ![VIPER_SwiftUI](https://user-images.githubusercontent.com/71208265/233385069-cff77d9a-4014-49a3-a307-6d43453a8bb5.png)
