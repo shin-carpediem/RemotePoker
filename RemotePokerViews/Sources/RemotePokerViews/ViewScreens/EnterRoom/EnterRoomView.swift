@@ -73,8 +73,9 @@ extension EnterRoomView {
 
     /// 入力フォーム内容が有効か評価されて表示されるメッセージ
     private var validatedMessage: some View {
+        let text = viewModel.isInputFormValid ? "数字が新しければ新しいルームが作られます" : "6文字以下の名前と4桁の数字が必要です"
         let textColor: Color = viewModel.isInputFormValid ? .green : .red
-        return Text(viewModel.inputFormvalidatedMessage)
+        return Text(text)
             .foregroundColor(textColor.opacity(0.7))
     }
 
@@ -104,13 +105,7 @@ extension EnterRoomView: ModuleAssembler {
         NavigationLink(
             isActive: $viewModel.willPushCardListView,
             destination: {
-                // Viewの表示時に、以下の存在しないルームIDも以下に代入されてクラッシュするのを防ぐため、
-                // willPushCardListView が評価されるタイミングで値を見るようにする
-                if viewModel.willPushCardListView {
-                    assembleCardListModule(isExisingUser: false)
-                } else {
-                    EmptyView()
-                }
+                assembleCardListModule()
             }
         ) { EmptyView() }
     }

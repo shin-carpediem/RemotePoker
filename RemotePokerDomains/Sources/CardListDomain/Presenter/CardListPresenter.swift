@@ -14,14 +14,10 @@ public final class CardListPresenter: DependencyInjectable {
 
     public struct Dependency {
         public var useCase: CardListUseCase
-        public var isExisingUser: Bool
         public weak var viewModel: CardListViewModel?
 
-        public init(
-            useCase: CardListUseCase, isExisingUser: Bool, viewModel: CardListViewModel?
-        ) {
+        public init(useCase: CardListUseCase, viewModel: CardListViewModel?) {
             self.useCase = useCase
-            self.isExisingUser = isExisingUser
             self.viewModel = viewModel
         }
     }
@@ -30,17 +26,8 @@ public final class CardListPresenter: DependencyInjectable {
         self.dependency = dependency
     }
 
-    // MARK: - Private
-
     private var dependency: Dependency!
     private var cancellables = Set<AnyCancellable>()
-    
-    private var appConfig: AppConfig {
-        guard let appConfig = AppConfigManager.appConfig else {
-            fatalError()
-        }
-        return appConfig
-    }
 }
 
 // MARK: - CardListPresentation
@@ -85,21 +72,13 @@ extension CardListPresenter: CardListPresentation {
         updateLoader(isShown: true)
         
         Task {
-            if dependency.isExisingUser {
-                // 既存ユーザー（この画面が初期画面）
-                _ = try await signIn().value
-                // ユーザーのカレントルームがFirestore上に存在するか確認する
-                if await checkUserInCurrentRoom() {
-                    await subscribeCurrentRoom(shouldFetchData: true)
-                }
-            } else {
-                // 新規ユーザー（EnterRoom画面が初期画面）
-                await subscribeCurrentRoom(shouldFetchData: false)
+            if await checkUserInCurrentRoom() {
+                await dependency.useCase.requestUser()
+                dependency.useCase.subscribeCurrentRoom()
             }
+            updateButtons(isEnabled: true)
+            updateLoader(isShown: false)
         }
-        
-        updateButtons(isEnabled: true)
-        updateLoader(isShown: false)
     }
 
     public func viewDidResume() {}
@@ -149,6 +128,13 @@ extension CardListPresenter: CardListInteractorOutput {
 // MARK: - Private
 
 extension CardListPresenter {
+    private var appConfig: AppConfig {
+        guard let appConfig = AppConfigManager.appConfig else {
+            fatalError()
+        }
+        return appConfig
+    }
+    
     /// サインイン(匿名ログイン)する(ユーザーIDを返却)
     private func signIn() -> Future<String, Error> {
         Future<String, Error> { [unowned self] promise in
@@ -165,14 +151,6 @@ extension CardListPresenter {
                     promise(.success(userId))
                 })
                 .store(in: &cancellables)
-        }
-    }
-
-    /// カレントルームを購読しセットアップする
-    private func subscribeCurrentRoom(shouldFetchData: Bool) async {
-        dependency.useCase.subscribeCurrentRoom()
-        if shouldFetchData {
-            await dependency.useCase.requestUser()
         }
     }
 
@@ -217,7 +195,7 @@ extension CardListPresenter {
     
     private func updateSelectedCardList(isShown: Bool) {
         Task { @MainActor in
-            dependency.viewModel?.isShownSelectedCardList = isShown
+            dependency.viewModel?.isSelectedCardListShown = isShown
         }
     }
 

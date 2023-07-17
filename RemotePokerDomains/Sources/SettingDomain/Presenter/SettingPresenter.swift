@@ -21,8 +21,6 @@ public final class SettingPresenter: DependencyInjectable {
         self.dependency = dependency
     }
 
-    // MARK: - Private
-
     private var dependency: Dependency!
 }
 

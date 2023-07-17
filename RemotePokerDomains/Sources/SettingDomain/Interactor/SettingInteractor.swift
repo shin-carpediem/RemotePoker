@@ -24,8 +24,6 @@ public final class SettingInteractor: DependencyInjectable {
         self.dependency = dependency
     }
 
-    // MARK: - Private
-
     private var dependency: Dependency!
 }
 

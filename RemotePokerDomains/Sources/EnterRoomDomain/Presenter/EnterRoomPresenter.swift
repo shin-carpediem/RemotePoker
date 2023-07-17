@@ -26,8 +26,6 @@ public final class EnterRoomPresenter: DependencyInjectable
         self.dependency = dependency
     }
 
-    // MARK: - Private
-
     private var dependency: Dependency!
 
     private static let CFBundleShortVersionString = "CFBundleShortVersionString"

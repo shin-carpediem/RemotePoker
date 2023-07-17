@@ -3,8 +3,7 @@ public protocol ModuleAssembler {
     func assmebleEnterRoomModule() -> EnterRoomView
 
     /// カードリスト画面をアセンブルする
-    /// - parameter isExisingUser: 既存ユーザーか
-    func assembleCardListModule(isExisingUser: Bool) -> CardListView
+    func assembleCardListModule() -> CardListView
 
     /// 設定画面をアセンブルする
     func assembleSettingModule()

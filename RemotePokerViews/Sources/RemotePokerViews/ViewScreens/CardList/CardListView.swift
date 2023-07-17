@@ -13,7 +13,6 @@ public struct CardListView: View {
 
     struct Dependency {
         var presenter: CardListPresentation
-        var cardPackageId: String
     }
 
     init(dependency: Dependency, viewModel: CardListViewModel) {
@@ -55,7 +54,7 @@ public struct CardListView: View {
     private var contentView: some View {
         VStack {
             ScrollView {
-                if viewModel.isShownSelectedCardList {
+                if viewModel.isSelectedCardListShown {
                     selectedCardListView
                         .padding()
                 } else {
@@ -90,9 +89,8 @@ extension CardListView {
 
     /// カード一覧
     private var cardListView: some View {
-        let cardList: [CardPackageViewModel.Card] = viewModel.room.cardPackage.cardList
-        return LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
-            ForEach(cardList) { card in
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
+            ForEach(viewModel.room.cardPackage.cardList) { card in
                 let isSelected: Bool =
                     (card.id
                         == viewModel.userSelectStatusList.first(where: {
@@ -113,8 +111,8 @@ extension CardListView {
     /// 選択されたカード一覧
     private var selectedCardListView: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
-            ForEach(viewModel.userSelectStatusList) { userSelectStatus in
-                OpenCardView(userSelectStatus: userSelectStatus)
+            ForEach(viewModel.userSelectStatusList) {
+                OpenCardView(userSelectStatus: $0)
             }
         }
     }
@@ -133,21 +131,36 @@ extension CardListView {
 
     /// ボタンの説明テキスト
     private var buttonText: some View {
-        Text(viewModel.buttonText)
+        Text(viewModel.isSelectedCardListShown ? "カード選択画面に戻る" : "全員の選択されたカードを見る")
             .foregroundColor(.gray)
             .font(.subheadline)
     }
 
     /// フローティングアクションボタン
     private var floatingActionButton: some View {
-        Button {
-            if viewModel.isShownSelectedCardList {
+        let selectedCardCount: Int = viewModel.userSelectStatusList.map { $0.selectedCard }.count
+        let sfImageName: String = {
+            if viewModel.isSelectedCardListShown {
+                return "gobackward"
+            } else {
+                if selectedCardCount >= 3 {
+                    return "person.3.sequence"
+                } else if selectedCardCount == 2 {
+                    return "person.2"
+                } else {
+                    return "person"
+                }
+            }
+        }()
+        
+        return Button {
+            if viewModel.isSelectedCardListShown {
                 dependency.presenter.didTapBackButton()
             } else {
                 dependency.presenter.didTapOpenSelectedCardListButton()
             }
         } label: {
-            Image(systemName: viewModel.fabIconName).foregroundColor(.gray)
+            Image(systemName: sfImageName).foregroundColor(.gray)
         }
         .softButtonStyle(Circle())
         .padding(16)
@@ -199,7 +212,7 @@ struct CardListView_Previews: PreviewProvider {
                 themeColor: .indigo,
                 selectedCard: CardView_Previews.card2),
         ]
-        viewModel.isShownSelectedCardList = true
+        viewModel.isSelectedCardListShown = true
         return viewModel
     }()
     static let me: UserViewModel = .init(
@@ -229,24 +242,21 @@ struct CardListView_Previews: PreviewProvider {
         Group {
             CardListView(
                 dependency: .init(
-                    presenter: CardListPresenter(),
-                    cardPackageId: "1"),
+                    presenter: CardListPresenter()),
                 viewModel: .init()
             )
             .previewDisplayName("カード一覧画面/ユーザーが自分のみ")
 
             CardListView(
                 dependency: .init(
-                    presenter: CardListPresenter(),
-                    cardPackageId: "1"),
+                    presenter: CardListPresenter()),
                 viewModel: .init()
             )
             .previewDisplayName("カード一覧画面/ユーザーが2名以上")
 
             CardListView(
                 dependency: .init(
-                    presenter: CardListPresenter(),
-                    cardPackageId: "1"),
+                    presenter: CardListPresenter()),
                 viewModel: selectedCardListView
             )
             .previewDisplayName("選択済みカード一覧画面")

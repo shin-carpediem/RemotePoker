@@ -8,7 +8,6 @@ public struct SettingView: View {
 
     struct Dependency {
         var presenter: SettingPresentation
-        var cardPackageId: String
     }
 
     init(dependency: Dependency, viewModel: SettingViewModel) {
@@ -39,10 +38,11 @@ public struct SettingView: View {
     private var contentView: some View {
         VStack(alignment: .leading) {
             List {
-                selecteThemeColorButton
-                    .disabled(!viewModel.isButtonsEnabled)
-                leaveButton
-                    .disabled(!viewModel.isButtonsEnabled)
+                Group {
+                    selecteThemeColorButton
+                    leaveButton
+                }
+                .disabled(!viewModel.isButtonsEnabled)
             }
             .listBackground(Colors.background)
             .listStyle(.insetGrouped)
@@ -109,7 +109,7 @@ extension SettingView: ModuleAssembler {
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
         SettingView(
-            dependency: .init(presenter: SettingPresenter(), cardPackageId: "1"),
+            dependency: .init(presenter: SettingPresenter()),
             viewModel: .init()
         )
     }

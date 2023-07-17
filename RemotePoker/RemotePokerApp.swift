@@ -1,6 +1,8 @@
+import Model
 import RemotePokerData
 import RemotePokerDomains
 import RemotePokerViews
+import Shared
 import SwiftUI
 
 @main struct RemotePokerApp: App, ModuleAssembler {
@@ -17,6 +19,15 @@ import SwiftUI
             FirebaseEnvironment.shared.setup()
             Task { @MainActor in
                 await isUserSignedIn = checkUserSignedIn()
+                let currentUser = UserModel(
+                    id: LocalStorage.shared.currentUserId, name: "",
+                    selectedCardId: ""
+                )
+                // TODO: ここを通るより先に、viewの内部の処理が走ってしまう。
+                AppConfigManager.appConfig = .init(
+                    currentUser: currentUser,
+                    currentRoom: .init(id: LocalStorage.shared.currentRoomId, userList: [currentUser], cardPackage: .defaultCardPackage)
+                )
                 return true
             }
             // ここを通ることはない。
@@ -37,7 +48,7 @@ import SwiftUI
     
     // MARK: - Private
     
-    private static var isUserSignedIn: Bool = false
+    private static var isUserSignedIn = false
 
     // MARK: - View
 
@@ -46,8 +57,7 @@ import SwiftUI
         WindowGroup {
             NavigationView {
                 if Self.isUserSignedIn {
-                    // currentUserName、cardPackageIdは後で取得する
-                    assembleCardListModule(isExisingUser: true)
+                    assembleCardListModule()
                 } else {
                     assmebleEnterRoomModule()
                 }

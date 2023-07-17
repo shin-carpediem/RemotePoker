@@ -1,6 +1,7 @@
 import Foundation
 import Protocols
 import RemotePokerData
+import Shared
 import ViewModel
 
 public final class SelectThemeColorPresenter: DependencyInjectable {
@@ -11,23 +12,18 @@ public final class SelectThemeColorPresenter: DependencyInjectable {
     public struct Dependency {
         public var repository: CurrentRoomRepository
         public weak var viewModel: SelectThemeColorViewModel?
-        public var cardPackageId: String
 
         public init(
-            repository: CurrentRoomRepository, viewModel: SelectThemeColorViewModel?,
-            cardPackageId: String
+            repository: CurrentRoomRepository, viewModel: SelectThemeColorViewModel?
         ) {
             self.repository = repository
             self.viewModel = viewModel
-            self.cardPackageId = cardPackageId
         }
     }
 
     public func inject(_ dependency: Dependency) {
         self.dependency = dependency
     }
-
-    // MARK: - Private
 
     private var dependency: Dependency!
 }
@@ -37,8 +33,11 @@ public final class SelectThemeColorPresenter: DependencyInjectable {
 extension SelectThemeColorPresenter: SelectThemeColorPresentation {
     public func didTapColor(color: CardPackageThemeColor) {
         Task { @MainActor in
+            guard let appConfig = AppConfigManager.appConfig else {
+                fatalError()
+            }
             dependency.repository.updateThemeColor(
-                cardPackageId: dependency.cardPackageId,
+                cardPackageId: appConfig.currentRoom.cardPackage.id,
                 themeColor: color.rawValue)
 
             applySelectedThemeColor(color)

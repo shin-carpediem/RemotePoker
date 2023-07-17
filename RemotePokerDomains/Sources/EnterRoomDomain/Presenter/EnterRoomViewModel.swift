@@ -13,10 +13,6 @@ public final class EnterRoomViewModel: ObservableObject, ViewModel {
 
     @Published public private(set) var isInputFormValid = true
 
-    public var inputFormvalidatedMessage: String {
-        isInputFormValid ? "数字が新しければ新しいルームが作られます" : "6文字以下の名前と4桁の数字が必要です"
-    }
-
     @Published public var willPushCardListView = false
 
     // MARK: - ViewModel

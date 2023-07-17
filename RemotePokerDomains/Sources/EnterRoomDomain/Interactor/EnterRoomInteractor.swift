@@ -22,8 +22,6 @@ public final class EnterRoomInteractor: DependencyInjectable {
         self.dependency = dependency
     }
 
-    // MARK: - Private
-
     private var dependency: Dependency!
     private var cancellables = Set<AnyCancellable>()
 }

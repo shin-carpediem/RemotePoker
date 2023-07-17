@@ -14,11 +14,11 @@ public final class CardListInteractor: DependencyInjectable {
         public weak var output: CardListInteractorOutput?
 
         public init(
-            enterRoomRepository: EnterRoomRepository, roomRepository: CurrentRoomRepository,
+            enterRoomRepository: EnterRoomRepository, currentRoomRepository: CurrentRoomRepository,
             output: CardListInteractorOutput?
         ) {
             self.enterRoomRepository = enterRoomRepository
-            self.currentRoomRepository = roomRepository
+            self.currentRoomRepository = currentRoomRepository
             self.output = output
         }
     }
@@ -27,8 +27,6 @@ public final class CardListInteractor: DependencyInjectable {
         self.dependency = dependency
     }
 
-    // MARK: - Private
-
     private var dependency: Dependency!
     private var cancellables = Set<AnyCancellable>()
 }
@@ -36,6 +34,7 @@ public final class CardListInteractor: DependencyInjectable {
 // MARK: - CardListUseCase
 
 extension CardListInteractor: CardListUseCase {
+    // TODO: 本来、特定のモジュールに依存したクラス内で、初期画面の表示ロジックを処理すべきではない。
     public func checkRoomExist(roomId: Int) async -> Bool {
         await dependency.enterRoomRepository.checkRoomExist(roomId: String(roomId))
     }

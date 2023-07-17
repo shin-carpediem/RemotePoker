@@ -15,18 +15,12 @@ extension ModuleAssembler {
         presenter.inject(.init(useCase: interactor, viewModel: viewModel))
         interactor.inject(.init(repository: EnterRoomDataStore(), output: presenter))
         let view = EnterRoomView(
-            dependency: EnterRoomView.Dependency(presenter: presenter), viewModel: viewModel)
+            dependency: .init(presenter: presenter), viewModel: viewModel)
 
         return view
     }
 
-    public func assembleCardListModule(isExisingUser: Bool
-    ) -> CardListView {
-        AppConfigManager.appConfig = .init(
-            currentUser: .init(id: "0", name: "", selectedCardId: ""),
-            currentRoom: .init(id: LocalStorage.shared.currentRoomId, userList: [], cardPackage: .defaultCardPackage)
-        )
-        
+    public func assembleCardListModule() -> CardListView {
         let viewModel = CardListViewModel()
         let presenter = CardListPresenter()
         let interactor = CardListInteractor()
@@ -39,18 +33,13 @@ extension ModuleAssembler {
         }
         
         presenter.inject(
-            .init(
-                useCase: interactor,
-                isExisingUser: isExisingUser,
-                viewModel: viewModel))
+            .init(useCase: interactor, viewModel: viewModel))
         interactor.inject(
             .init(
                 enterRoomRepository: EnterRoomDataStore(),
-                roomRepository: CurrentRoomDataStore(userId: appConfig.currentUser.id, roomId: String(appConfig.currentRoom.id)), output: presenter))
+                currentRoomRepository: CurrentRoomDataStore(userId: appConfig.currentUser.id, roomId: String(appConfig.currentRoom.id)), output: presenter))
         let view = CardListView(
-            dependency: CardListView.Dependency(
-                presenter: presenter,
-                cardPackageId: appConfig.currentRoom.cardPackage.id),
+            dependency: .init(presenter: presenter),
             viewModel: viewModel)
 
         return view
@@ -76,9 +65,7 @@ extension ModuleAssembler {
                 repository: CurrentRoomDataStore(userId: appConfig.currentUser.id, roomId: String(appConfig.currentRoom.id)),
                 output: presenter))
         let view = SettingView(
-            dependency: SettingView.Dependency(
-                presenter: presenter,
-                cardPackageId: appConfig.currentRoom.cardPackage.id),
+            dependency: .init(presenter: presenter),
             viewModel: viewModel)
 
         return view
@@ -100,10 +87,9 @@ extension ModuleAssembler {
         presenter.inject(
             .init(
                 repository: CurrentRoomDataStore(userId: appConfig.currentUser.id, roomId: String(appConfig.currentRoom.id)),
-                viewModel: viewModel,
-                cardPackageId: appConfig.currentRoom.cardPackage.id))
+                viewModel: viewModel))
         let view = SelectThemeColorView(
-            dependency: SelectThemeColorView.Dependency(presenter: presenter), viewModel: viewModel)
+            dependency: .init(presenter: presenter), viewModel: viewModel)
 
         return view
     }
