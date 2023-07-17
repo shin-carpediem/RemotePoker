@@ -47,20 +47,31 @@ public final class CardListPresenter: DependencyInjectable {
 
 extension CardListPresenter: CardListPresentation {
     public func didSelectCard(cardId: String) {
-        disableButton(true)
+        updateButtons(isEnabled: false)
+
         dependency.useCase.updateSelectedCardId(selectedCardDictionary: [appConfig.currentUser.id: cardId])
+
+        updateButtons(isEnabled: false)
     }
 
     public func didTapOpenSelectedCardListButton() {
-        disableButton(true)
-        showLoader(true)
-        showSelectedCardList()
+        updateButtons(isEnabled: false)
+        updateLoader(isShown: true)
+
+        updateSelectedCardList(isShown: true)
+
+        updateButtons(isEnabled: true)
+        updateLoader(isShown: false)
     }
 
     public func didTapBackButton() {
-        disableButton(true)
-        showLoader(true)
-        hideSelectedCardList()
+        updateButtons(isEnabled: false)
+        updateLoader(isShown: true)
+
+        updateSelectedCardList(isShown: false)
+
+        updateButtons(isEnabled: true)
+        updateLoader(isShown: false)
     }
 
     public func didTapSettingButton() {
@@ -70,8 +81,8 @@ extension CardListPresenter: CardListPresentation {
     // MARK: - Presentation
 
     public func viewDidLoad() {
-        disableButton(true)
-        showLoader(true)
+        updateButtons(isEnabled: false)
+        updateLoader(isShown: true)
         
         Task {
             if dependency.isExisingUser {
@@ -79,13 +90,16 @@ extension CardListPresenter: CardListPresentation {
                 _ = try await signIn().value
                 // ユーザーのカレントルームがFirestore上に存在するか確認する
                 if await checkUserInCurrentRoom() {
-                    await subscribeCurrentRoom(shouldFetchData: dependency.isExisingUser)
+                    await subscribeCurrentRoom(shouldFetchData: true)
                 }
             } else {
                 // 新規ユーザー（EnterRoom画面が初期画面）
-                await subscribeCurrentRoom(shouldFetchData: dependency.isExisingUser)
+                await subscribeCurrentRoom(shouldFetchData: false)
             }
         }
+        
+        updateButtons(isEnabled: true)
+        updateLoader(isShown: false)
     }
 
     public func viewDidResume() {}
@@ -99,9 +113,6 @@ extension CardListPresenter: CardListInteractorOutput {
     public func outputCurrentUser(_ user: UserModel) {
         AppConfigManager.appConfig?.currentUser.id = user.id
         AppConfigManager.appConfig?.currentUser.name = user.name
-        
-        disableButton(false)
-        showLoader(false)
     }
 
     public func outputRoom(_ room: CurrentRoomModel) {
@@ -109,23 +120,20 @@ extension CardListPresenter: CardListInteractorOutput {
             let userList: [UserViewModel] = room.userList.map {
                 UserViewModel(id: $0.id, name: $0.name, selectedCardId: $0.selectedCardId)
             }
-            let cardPackage: CardPackageViewModel = CardPackageModelToCardPackageViewModelTranslator()
+            let cardPackage: CardPackageViewModel = CardPackageModelToViewModelTranslator()
                 .translate(room.cardPackage)
             dependency.viewModel?.room = CurrentRoomViewModel(id: room.id, userList: userList, cardPackage: cardPackage)
             
             showTitle(userList: userList)
             updateUserSelectStatusList(userList: userList)
         }
-
-        disableButton(false)
-        showLoader(false)
     }
 
     public func outputSuccess(message: String) {
         Task { @MainActor in
             dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
                 type: .onSuccess, text: message)
-            dependency.viewModel?.isShownBanner = true
+            dependency.viewModel?.isBannerShown = true
         }
     }
 
@@ -133,7 +141,7 @@ extension CardListPresenter: CardListInteractorOutput {
         Task { @MainActor in
             dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
                 type: .onFailure, text: message)
-            dependency.viewModel?.isShownBanner = true
+            dependency.viewModel?.isBannerShown = true
         }
     }
 }
@@ -206,32 +214,22 @@ extension CardListPresenter {
             dependency.viewModel?.userSelectStatusList = userSelectStatusList
         }
     }
-
-    private func showSelectedCardList() {
+    
+    private func updateSelectedCardList(isShown: Bool) {
         Task { @MainActor in
-            dependency.viewModel?.isShownSelectedCardList = true
-        }
-        disableButton(false)
-        showLoader(false)
-    }
-
-    private func hideSelectedCardList() {
-        Task { @MainActor in
-            dependency.viewModel?.isShownSelectedCardList = false
-        }
-        disableButton(false)
-        showLoader(false)
-    }
-
-    private func disableButton(_ disabled: Bool) {
-        Task { @MainActor in
-            dependency.viewModel?.isButtonEnabled = !disabled
+            dependency.viewModel?.isShownSelectedCardList = isShown
         }
     }
 
-    private func showLoader(_ show: Bool) {
+    private func updateButtons(isEnabled: Bool) {
         Task { @MainActor in
-            dependency.viewModel?.isShownLoader = show
+            dependency.viewModel?.isButtonsEnabled = isEnabled
+        }
+    }
+
+    private func updateLoader(isShown: Bool) {
+        Task { @MainActor in
+            dependency.viewModel?.isLoaderShown = isShown
         }
     }
 

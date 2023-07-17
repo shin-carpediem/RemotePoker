@@ -15,20 +15,29 @@ import SwiftUI
                 nil
         ) -> Bool {
             FirebaseEnvironment.shared.setup()
-            return true
+            Task { @MainActor in
+                await isUserSignedIn = checkUserSignedIn()
+                return true
+            }
+            // ここを通ることはない。
+            return false
+        }
+        
+        // MARK: - Private
+        
+        private func checkUserSignedIn() async -> Bool {
+            do {
+                let userId: String = try await AuthDataStore.shared.signIn().value
+                return LocalStorage.shared.currentUserId == userId
+            } catch (_) {
+                return false
+            }
         }
     }
     
     // MARK: - Private
     
-    private func checkUserSignedIn() async -> Bool {
-        do {
-            let userId: String = try await AuthDataStore.shared.signIn().value
-            return LocalStorage.shared.currentUserId == userId
-        } catch (_) {
-            return false
-        }
-    }
+    private static var isUserSignedIn: Bool = false
 
     // MARK: - View
 
@@ -36,7 +45,7 @@ import SwiftUI
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                if await checkUserSignedIn() {
+                if Self.isUserSignedIn {
                     // currentUserName、cardPackageIdは後で取得する
                     assembleCardListModule(isExisingUser: true)
                 } else {

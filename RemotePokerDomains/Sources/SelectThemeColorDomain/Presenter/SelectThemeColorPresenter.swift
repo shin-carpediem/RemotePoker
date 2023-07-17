@@ -9,12 +9,12 @@ public final class SelectThemeColorPresenter: DependencyInjectable {
     // MARK: - DependencyInjectable
 
     public struct Dependency {
-        public var repository: RoomRepository
+        public var repository: CurrentRoomRepository
         public weak var viewModel: SelectThemeColorViewModel?
         public var cardPackageId: String
 
         public init(
-            repository: RoomRepository, viewModel: SelectThemeColorViewModel?,
+            repository: CurrentRoomRepository, viewModel: SelectThemeColorViewModel?,
             cardPackageId: String
         ) {
             self.repository = repository
@@ -78,7 +78,7 @@ extension SelectThemeColorPresenter {
         Task { @MainActor in
             dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
                 type: .onSuccess, text: message)
-            dependency.viewModel?.isShownBanner = true
+            dependency.viewModel?.isBannerShown = true
         }
     }
 }

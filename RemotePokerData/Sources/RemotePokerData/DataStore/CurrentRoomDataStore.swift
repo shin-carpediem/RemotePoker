@@ -2,7 +2,7 @@ import Combine
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-public final class RoomDataStore: RoomRepository {
+public final class CurrentRoomDataStore: CurrentRoomRepository {
     public init(userId: String, roomId: String) {
         self.userId = userId
         self.roomId = roomId
@@ -17,8 +17,7 @@ public final class RoomDataStore: RoomRepository {
             userListQuery.addSnapshotListener { snapshot, error in
                 if error != nil { return }
                 guard let snapshot = snapshot else { return }
-                let userList: [UserEntity] = snapshot.documents.map { doc in
-                    Self.userEntity(from: doc)
+                let userList: [UserEntity] = snapshot.documents.map {  Self.userEntity(from: $0)
                 }
                 subject.send(userList)
             }
@@ -43,21 +42,10 @@ public final class RoomDataStore: RoomRepository {
 
     public func addUserToRoom() async -> Result<Void, FirebaseError> {
         do {
-            guard let roomSnapshot: DocumentSnapshot = await firestoreRef.roomSnapshot() else {
-                Log.main.error("failedToAddUserToRoom")
-                return .failure(.failedToAddUserToRoom)
-            }
-            guard var userIdList: [String] = roomSnapshot.get("userIdList") as? [String] else {
-                Log.main.error("failedToAddUserToRoom")
-                return .failure(.failedToAddUserToRoom)
-            }
-            
-            let roomDocument: DocumentReference = firestoreRef.roomDocument
-            try await roomDocument.updateData([
-                "userIdList": userIdList.append(userId),
+            try await firestoreRef.roomDocument.updateData([
+                "userIdList": FieldValue.arrayUnion([userId]),
                 "updatedAt": Date(),
             ])
-            
             return .success(())
         } catch (_) {
             Log.main.error("failedToAddUserToRoom")
@@ -67,21 +55,10 @@ public final class RoomDataStore: RoomRepository {
 
     public func removeUserFromRoom() async -> Result<Void, FirebaseError> {
         do {
-            guard let roomSnapshot: DocumentSnapshot = await firestoreRef.roomSnapshot() else {
-                Log.main.error("failedToRemoveUserFromRoom")
-                return .failure(.failedToRemoveUserFromRoom)
-            }
-            guard let userIdList: [String] = roomSnapshot.get("userIdList") as? [String] else {
-                Log.main.error("failedToRemoveUserFromRoom")
-                return .failure(.failedToRemoveUserFromRoom)
-            }
-            
-            let roomDocument: DocumentReference = firestoreRef.roomDocument
-            try await roomDocument.updateData([
-                "userIdList": userIdList.filter { $0 != userId },
+            try await firestoreRef.roomDocument.updateData([
+                "userIdList": FieldValue.arrayRemove([userId]),
                 "updatedAt": Date(),
             ])
-            
             return .success(())
         } catch (_) {
             Log.main.error("failedToRemoveUserFromRoom")
@@ -91,24 +68,19 @@ public final class RoomDataStore: RoomRepository {
 
     public func fetchUser() -> Future<UserEntity, FirebaseError> {
         Future<UserEntity, FirebaseError> { [unowned self] promise in
-            let userDocument: DocumentReference = firestoreRef.userDocument
-            userDocument.getDocument { snapshot, error in
-                if error != nil {
+            firestoreRef.userDocument.getDocument { snapshot, _ in
+                if let snapshot {
+                    promise(.success(Self.userEntity(from: snapshot)))
+                } else {
                     promise(.failure(.failedToFetchUser))
                 }
-                guard let snapshot = snapshot else {
-                    return promise(.failure(.failedToFetchUser))
-                }
-                let user: UserEntity = Self.userEntity(from: snapshot)
-                promise(.success(user))
             }
         }
     }
 
     public func updateSelectedCardId(selectedCardDictionary: [String: String]) {
-        selectedCardDictionary.forEach { userId, selectedCardId in
-            let userDocument: DocumentReference = firestoreRef.userDocument
-            userDocument.updateData([
+        selectedCardDictionary.forEach { _, selectedCardId in
+            firestoreRef.userDocument.updateData([
                 "selectedCardId": selectedCardId,
                 "updatedAt": Date(),
             ])
@@ -116,9 +88,7 @@ public final class RoomDataStore: RoomRepository {
     }
 
     public func updateThemeColor(cardPackageId: String, themeColor: String) {
-        let cardPackageDocument: DocumentReference = firestoreRef.cardPackageDocument(
-            cardPackageId: cardPackageId)
-        cardPackageDocument.updateData([
+        firestoreRef.cardPackageDocument(cardPackageId: cardPackageId).updateData([
             "themeColor": themeColor,
             "updatedAt": Date(),
         ])
@@ -162,7 +132,7 @@ public final class RoomDataStore: RoomRepository {
         }
 
         let cardPackageId: String = cardPackageSnapshot.documentID
-        let cardsSnapshot = await firestoreRef.cardsSnapshot(cardPackageId: cardPackageId)
+        let cardsSnapshot = await firestoreRef.cardsSnapshot(cardPackageId: cardPackageSnapshot.documentID)
         guard let cardsSnapshot = cardsSnapshot else {
             Log.main.error("failedToTranslateRoomEntityFromDoc")
             fatalError()

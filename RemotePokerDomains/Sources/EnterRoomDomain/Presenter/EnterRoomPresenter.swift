@@ -32,7 +32,7 @@ public final class EnterRoomPresenter: DependencyInjectable
 
     private static let CFBundleShortVersionString = "CFBundleShortVersionString"
 
-    private let translator = CardPackageModelToCardPackageViewModelTranslator()
+    private let translator = CardPackageModelToViewModelTranslator()
 }
 
 // MARK: - EnterRoomPresentation
@@ -42,8 +42,8 @@ extension EnterRoomPresenter: EnterRoomPresentation {
         if let viewModel: EnterRoomViewModel = dependency.viewModel,
             viewModel.isInputFormValid
         {
-            disableButton(true)
-            showLoader(true)
+            updateButtons(isEnabled: false)
+            updateLoader(isShown: true)
 
             Task {
                 guard let roomId = Int(inputRoomId) else {
@@ -69,8 +69,8 @@ extension EnterRoomPresenter: EnterRoomInteractorOutput {
     public func outputSucceedToSignIn(userId: String, userName: String, roomId: Int) {
         Task { @MainActor in
             await setupUserAndRoom(userId: userId, userName: userName, roomId: roomId)
-            disableButton(false)
-            showLoader(false)
+            updateButtons(isEnabled: true)
+            updateLoader(isShown: false)
             pushCardListView()
         }
     }
@@ -79,7 +79,7 @@ extension EnterRoomPresenter: EnterRoomInteractorOutput {
         Task { @MainActor in
             dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
                 type: .onSuccess, text: message)
-            dependency.viewModel?.isShownBanner = true
+            dependency.viewModel?.isBannerShown = true
         }
     }
 
@@ -87,7 +87,7 @@ extension EnterRoomPresenter: EnterRoomInteractorOutput {
         Task { @MainActor in
             dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
                 type: .onFailure, text: message)
-            dependency.viewModel?.isShownBanner = true
+            dependency.viewModel?.isBannerShown = true
         }
     }
 }
@@ -113,8 +113,7 @@ extension EnterRoomPresenter {
         LocalStorage.shared.currentRoomId = roomId
         
         // 入力ルームIDに合致する既存ルームが存在するか確認
-        let roomExist: Bool = await dependency.useCase.checkRoomExist(roomId: roomId)
-        if roomExist {
+        if await dependency.useCase.checkRoomExist(roomId: roomId) {
             // 既存ルーム
             AppConfigManager.appConfig?.currentRoom.id = roomId
             await dependency.useCase.adduserToRoom(roomId: roomId, userId: userId)
@@ -139,15 +138,15 @@ extension EnterRoomPresenter {
         }
     }
 
-    private func disableButton(_ disabled: Bool) {
+    private func updateButtons(isEnabled: Bool) {
         Task { @MainActor in
-            dependency.viewModel?.isButtonEnabled = !disabled
+            dependency.viewModel?.isButtonsEnabled = isEnabled
         }
     }
 
-    private func showLoader(_ show: Bool) {
+    private func updateLoader(isShown: Bool) {
         Task { @MainActor in
-            dependency.viewModel?.isShownLoader = show
+            dependency.viewModel?.isLoaderShown = isShown
         }
     }
 

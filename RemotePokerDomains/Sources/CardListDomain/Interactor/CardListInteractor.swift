@@ -10,15 +10,15 @@ public final class CardListInteractor: DependencyInjectable {
 
     public struct Dependency {
         public var enterRoomRepository: EnterRoomRepository
-        public var roomRepository: RoomRepository
+        public var currentRoomRepository: CurrentRoomRepository
         public weak var output: CardListInteractorOutput?
 
         public init(
-            enterRoomRepository: EnterRoomRepository, roomRepository: RoomRepository,
+            enterRoomRepository: EnterRoomRepository, roomRepository: CurrentRoomRepository,
             output: CardListInteractorOutput?
         ) {
             self.enterRoomRepository = enterRoomRepository
-            self.roomRepository = roomRepository
+            self.currentRoomRepository = roomRepository
             self.output = output
         }
     }
@@ -41,12 +41,12 @@ extension CardListInteractor: CardListUseCase {
     }
 
     public func subscribeCurrentRoom() {
-        dependency.roomRepository.room
-            .combineLatest(dependency.roomRepository.userList)
-            .sink { [weak self] roomEntity, userListEntity in
+        dependency.currentRoomRepository.room
+            .combineLatest(dependency.currentRoomRepository.userList)
+            .sink { [weak self] roomEntity, userEntityList in
                 let cardPackage: CardPackageEntity = roomEntity.cardPackage
                 let cardList: [CardPackageModel.Card] = cardPackage.cardList.map { CardPackageModel.Card(id: $0.id, estimatePoint: $0.estimatePoint, index: $0.index) }
-                let userList: [UserModel] = userListEntity.map {
+                let userList: [UserModel] = userEntityList.map {
                     UserModel(id: $0.id, name: $0.name, selectedCardId: $0.selectedCardId)
                 }
                 let model = CurrentRoomModel(id: roomEntity.id, userList: userList, cardPackage: .init(id: cardPackage.id, themeColor: cardPackage.themeColor, cardList: cardList))
@@ -57,12 +57,12 @@ extension CardListInteractor: CardListUseCase {
     }
 
     public func updateSelectedCardId(selectedCardDictionary: [String: String]) {
-        dependency.roomRepository.updateSelectedCardId(
+        dependency.currentRoomRepository.updateSelectedCardId(
             selectedCardDictionary: selectedCardDictionary)
     }
 
     public func requestUser() async {
-        dependency.roomRepository.fetchUser()
+        dependency.currentRoomRepository.fetchUser()
             .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
                 case .failure(let error):

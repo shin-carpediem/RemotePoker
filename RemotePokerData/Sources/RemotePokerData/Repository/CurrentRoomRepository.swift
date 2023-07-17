@@ -1,6 +1,6 @@
 import Combine
 
-public protocol RoomRepository: AnyObject {
+public protocol CurrentRoomRepository: AnyObject {
     /// ユーザーリスト
     var userList: PassthroughSubject<[UserEntity], Never> { get }
     

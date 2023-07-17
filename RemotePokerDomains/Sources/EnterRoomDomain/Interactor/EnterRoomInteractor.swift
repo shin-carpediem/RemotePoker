@@ -25,7 +25,6 @@ public final class EnterRoomInteractor: DependencyInjectable {
     // MARK: - Private
 
     private var dependency: Dependency!
-    private var repository: RoomRepository?
     private var cancellables = Set<AnyCancellable>()
 }
 
@@ -63,8 +62,7 @@ extension EnterRoomInteractor: EnterRoomUseCase {
                 cardList: room.cardPackage.cardList.map {
                     CardPackageEntity.Card(id: $0.id, estimatePoint: $0.estimatePoint, index: $0.index)
                 }))
-        let result: Result<Void, FirebaseError> = await dependency.repository.createRoom(entity)
-        switch result {
+        switch await dependency.repository.createRoom(entity) {
         case .success:
             dependency.output?.outputSuccess(message: "新しいルームを作りました")
 
@@ -74,10 +72,7 @@ extension EnterRoomInteractor: EnterRoomUseCase {
     }
 
     public func adduserToRoom(roomId: Int, userId: String) async {
-        repository = RoomDataStore(userId: userId, roomId: String(roomId))
-        guard let repository = repository else { return }
-        let result: Result<Void, FirebaseError> = await repository.addUserToRoom()
-        switch result {
+        switch await CurrentRoomDataStore(userId: userId, roomId: String(roomId)).addUserToRoom() {
         case .success:
             dependency.output?.outputSuccess(message: "ルームに追加されました")
 

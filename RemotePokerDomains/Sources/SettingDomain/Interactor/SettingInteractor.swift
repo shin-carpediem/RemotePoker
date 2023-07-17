@@ -9,11 +9,11 @@ public final class SettingInteractor: DependencyInjectable {
     // MARK: - DependencyInjectable
 
     public struct Dependency {
-        public var repository: RoomRepository
+        public var repository: CurrentRoomRepository
         public weak var output: SettingInteractorOutput?
 
         public init(
-            repository: RoomRepository, output: SettingInteractorOutput?
+            repository: CurrentRoomRepository, output: SettingInteractorOutput?
         ) {
             self.repository = repository
             self.output = output

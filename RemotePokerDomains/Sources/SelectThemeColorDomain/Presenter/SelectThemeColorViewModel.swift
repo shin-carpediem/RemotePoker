@@ -11,8 +11,8 @@ public class SelectThemeColorViewModel: ObservableObject, ViewModel {
 
     // MARK: - ViewModel
 
-    @Published public var isButtonEnabled = true
-    @Published public var isShownLoader = false
-    @Published public var isShownBanner = false
+    @Published public var isButtonsEnabled = true
+    @Published public var isLoaderShown = false
+    @Published public var isBannerShown = false
     @Published public var bannerMessgage = NotificationBannerViewModel(type: .onSuccess, text: "")
 }

@@ -36,14 +36,14 @@ public struct EnterRoomView: View {
                 Colors.background.ignoresSafeArea()
                 contentView
                 navigationForCardListView
-                if viewModel.isShownLoader { ProgressView() }
+                if viewModel.isLoaderShown { ProgressView() }
             }
         }
         // NavigationViewを使用した際にiPadでは、Master-Detail(Split view)の挙動になっている。
         // そしてMasterとなるViewが配置されていない為、空白のViewが表示されてしまう。
         // iPadはサポート外なので、iPhoneでもiPadでも同じ見た目に固定する。
         .navigationViewStyle(.stack)
-        .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
+        .modifier(Overlay(isShown: $viewModel.isBannerShown, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
@@ -53,7 +53,7 @@ public struct EnterRoomView: View {
             inputField
             validatedMessage
             sendButton
-                .disabled(!viewModel.isButtonEnabled)
+                .disabled(!viewModel.isButtonsEnabled)
                 .padding()
         }
         .padding(.horizontal, 40)
@@ -92,7 +92,7 @@ extension EnterRoomView {
 
     /// 通知バナー
     private var notificationBanner: NotificationBanner {
-        .init(isShown: $viewModel.isShownBanner, viewModel: viewModel.bannerMessgage)
+        .init(isShown: $viewModel.isBannerShown, viewModel: viewModel.bannerMessgage)
     }
 }
 

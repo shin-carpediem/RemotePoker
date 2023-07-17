@@ -8,7 +8,7 @@ public class CardListViewModel: ObservableObject, ViewModel {
 
     @Published public var room = CurrentRoomViewModel(
         id: 0, userList: [UserViewModel](),
-        cardPackage: CardPackageModelToCardPackageViewModelTranslator().translate(
+        cardPackage: CardPackageModelToViewModelTranslator().translate(
             .defaultCardPackage))
 
     @Published public var title = ""
@@ -45,8 +45,8 @@ public class CardListViewModel: ObservableObject, ViewModel {
 
     // MARK: - ViewModel
 
-    @Published public var isButtonEnabled = true
-    @Published public var isShownLoader = false
-    @Published public var isShownBanner = false
+    @Published public var isButtonsEnabled = true
+    @Published public var isLoaderShown = false
+    @Published public var isBannerShown = false
     @Published public var bannerMessgage = NotificationBannerViewModel(type: .onSuccess, text: "")
 }

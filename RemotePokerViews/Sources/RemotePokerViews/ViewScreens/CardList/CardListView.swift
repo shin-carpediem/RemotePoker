@@ -41,13 +41,13 @@ public struct CardListView: View {
             Colors.background.ignoresSafeArea()
             contentView
             navigationForSettingView
-            if viewModel.isShownLoader { ProgressView() }
+            if viewModel.isLoaderShown { ProgressView() }
         }
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(trailing: settingButton)
-        .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
+        .modifier(Overlay(isShown: $viewModel.isBannerShown, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
@@ -69,7 +69,7 @@ public struct CardListView: View {
                 Spacer()
                 buttonText
                 floatingActionButton
-                    .disabled(!viewModel.isButtonEnabled)
+                    .disabled(!viewModel.isButtonsEnabled)
             }
         }
     }
@@ -101,7 +101,7 @@ extension CardListView {
                 CardView(
                     card: card,
                     themeColor: viewModel.room.cardPackage.themeColor,
-                    isEnabled: viewModel.isButtonEnabled,
+                    isEnabled: viewModel.isButtonsEnabled,
                     isSelected: isSelected
                 ) { selectedCard in
                     dependency.presenter.didSelectCard(cardId: selectedCard.id)
@@ -155,7 +155,7 @@ extension CardListView {
 
     /// 通知バナー
     private var notificationBanner: NotificationBanner {
-        .init(isShown: $viewModel.isShownBanner, viewModel: viewModel.bannerMessgage)
+        .init(isShown: $viewModel.isBannerShown, viewModel: viewModel.bannerMessgage)
     }
 }
 
@@ -223,7 +223,7 @@ struct CardListView_Previews: PreviewProvider {
         userList: [me, user1],
         cardPackage: trasnlator.translate(.defaultCardPackage))
 
-    static let trasnlator = CardPackageModelToCardPackageViewModelTranslator()
+    static let trasnlator = CardPackageModelToViewModelTranslator()
 
     static var previews: some View {
         Group {

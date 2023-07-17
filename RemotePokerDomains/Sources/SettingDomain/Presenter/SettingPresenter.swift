@@ -34,11 +34,13 @@ extension SettingPresenter: SettingPresentation {
     }
 
     public func didTapLeaveRoomButton() async {
-        disableButton(true)
-        showLoader(true)
+        updateButtons(isEnabled: false)
+        updateLoader(isShown: true)
+
         await dependency.useCase.leaveRoom()
-        disableButton(false)
-        showLoader(false)
+
+        updateButtons(isEnabled: true)
+        updateLoader(isShown: false)
     }
 
     // MARK: - Presentation
@@ -57,7 +59,7 @@ extension SettingPresenter: SettingInteractorOutput {
         Task { @MainActor in
             dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
                 type: .onSuccess, text: message)
-            dependency.viewModel?.isShownBanner = true
+            dependency.viewModel?.isBannerShown = true
         }
     }
 
@@ -65,7 +67,7 @@ extension SettingPresenter: SettingInteractorOutput {
         Task { @MainActor in
             dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
                 type: .onFailure, text: message)
-            dependency.viewModel?.isShownBanner = true
+            dependency.viewModel?.isBannerShown = true
         }
     }
 }
@@ -73,15 +75,15 @@ extension SettingPresenter: SettingInteractorOutput {
 // MARK: - Private
 
 extension SettingPresenter {
-    private func disableButton(_ disabled: Bool) {
+    private func updateButtons(isEnabled: Bool) {
         Task { @MainActor in
-            dependency.viewModel?.isButtonEnabled = !disabled
+            dependency.viewModel?.isButtonsEnabled = isEnabled
         }
     }
 
-    private func showLoader(_ show: Bool) {
+    private func updateLoader(isShown: Bool) {
         Task { @MainActor in
-            dependency.viewModel?.isShownLoader = show
+            dependency.viewModel?.isLoaderShown = isShown
         }
     }
     

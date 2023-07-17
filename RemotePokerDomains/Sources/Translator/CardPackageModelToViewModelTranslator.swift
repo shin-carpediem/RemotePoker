@@ -3,7 +3,7 @@ import Protocols
 import SwiftUI
 import ViewModel
 
-public struct CardPackageModelToCardPackageViewModelTranslator: Translator {
+public struct CardPackageModelToViewModelTranslator: Translator {
     public init() {}
 
     // MARK: - Translator
@@ -13,14 +13,14 @@ public struct CardPackageModelToCardPackageViewModelTranslator: Translator {
 
     public func translate(_ input: Input) -> Output {
         let themeColor = CardPackageThemeColor(rawValue: input.themeColor) ?? .oxblood
-        let cardList: [CardPackageViewModel.Card] = input.cardList.map { card in
+        let cardList: [CardPackageViewModel.Card] = input.cardList.map {
             CardPackageViewModel.Card(
-                id: card.id,
-                estimatePoint: card.estimatePoint,
-                index: card.index,
-                fontColor: applyFontColor(toIndex: card.index),
+                id: $0.id,
+                estimatePoint: $0.estimatePoint,
+                index: $0.index,
+                fontColor: applyFontColor(toIndex: $0.index),
                 backgroundColor: applyBackgroundColor(
-                    toIndex: card.index,
+                    toIndex: $0.index,
                     with: themeColor))
         }
         return CardPackageViewModel(

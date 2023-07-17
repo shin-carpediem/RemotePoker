@@ -46,7 +46,7 @@ extension ModuleAssembler {
         interactor.inject(
             .init(
                 enterRoomRepository: EnterRoomDataStore(),
-                roomRepository: RoomDataStore(userId: appConfig.currentUser.id, roomId: String(appConfig.currentRoom.id)), output: presenter))
+                roomRepository: CurrentRoomDataStore(userId: appConfig.currentUser.id, roomId: String(appConfig.currentRoom.id)), output: presenter))
         let view = CardListView(
             dependency: CardListView.Dependency(
                 presenter: presenter,
@@ -73,7 +73,7 @@ extension ModuleAssembler {
         presenter.inject(.init(useCase: interactor, viewModel: viewModel))
         interactor.inject(
             .init(
-                repository: RoomDataStore(userId: appConfig.currentUser.id, roomId: String(appConfig.currentRoom.id)),
+                repository: CurrentRoomDataStore(userId: appConfig.currentUser.id, roomId: String(appConfig.currentRoom.id)),
                 output: presenter))
         let view = SettingView(
             dependency: SettingView.Dependency(
@@ -99,7 +99,7 @@ extension ModuleAssembler {
 
         presenter.inject(
             .init(
-                repository: RoomDataStore(userId: appConfig.currentUser.id, roomId: String(appConfig.currentRoom.id)),
+                repository: CurrentRoomDataStore(userId: appConfig.currentUser.id, roomId: String(appConfig.currentRoom.id)),
                 viewModel: viewModel,
                 cardPackageId: appConfig.currentRoom.cardPackage.id))
         let view = SelectThemeColorView(

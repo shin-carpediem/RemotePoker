@@ -27,10 +27,10 @@ public struct SelectThemeColorView: View {
     public var body: some View {
         ZStack {
             contentView
-            if viewModel.isShownLoader { ProgressView() }
+            if viewModel.isLoaderShown { ProgressView() }
         }
         .navigationTitle("テーマカラー")
-        .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
+        .modifier(Overlay(isShown: $viewModel.isBannerShown, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
@@ -39,7 +39,7 @@ public struct SelectThemeColorView: View {
         VStack(alignment: .leading) {
             List(viewModel.themeColorList, id: \.self) { color in
                 colorCell(color)
-                    .disabled(!viewModel.isButtonEnabled)
+                    .disabled(!viewModel.isButtonsEnabled)
             }
             .listBackground(Colors.background)
             .listStyle(.insetGrouped)
@@ -79,7 +79,7 @@ extension SelectThemeColorView {
 
     /// 通知バナー
     private var notificationBanner: NotificationBanner {
-        .init(isShown: $viewModel.isShownBanner, viewModel: viewModel.bannerMessgage)
+        .init(isShown: $viewModel.isBannerShown, viewModel: viewModel.bannerMessgage)
     }
 }
 

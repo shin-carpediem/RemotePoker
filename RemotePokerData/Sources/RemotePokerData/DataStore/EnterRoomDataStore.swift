@@ -9,10 +9,8 @@ public final class EnterRoomDataStore: EnterRoomRepository {
     
     public func createUser(_ user: UserEntity) async -> Result<Void, FirebaseError> {
         do {
-            let userId: String = user.id
-            let userDocument: DocumentReference = firestore.collection("users").document(String(userId))
-            try await userDocument.setData([
-                "id": userId,
+            try await firestore.collection("users").document(String(user.id)).setData([
+                "id": user.id,
                 "name": user.name,
                 "selectedCardId": user.selectedCardId,
                 "createdAt": Timestamp(),
@@ -26,10 +24,8 @@ public final class EnterRoomDataStore: EnterRoomRepository {
     }
 
     public func checkRoomExist(roomId: String) async -> Bool {
-        let roomDocument: DocumentReference =
-            firestore.collection("rooms").document(
-                roomId)
-        guard let document: DocumentSnapshot = try? await roomDocument.getDocument() else {
+        guard let document: DocumentSnapshot = try? await firestore.collection("rooms").document(
+            roomId).getDocument() else {
             return false
         }
         return document.exists
@@ -41,37 +37,32 @@ public final class EnterRoomDataStore: EnterRoomRepository {
             let date = Date()
             
             // ルーム追加
-            let roomId: Int = room.id
             let roomDocument: DocumentReference = firestore.collection("rooms")
-                .document(String(roomId))
+                .document(String(room.id))
             try await roomDocument.setData([
-                "id": roomId,
-                "userIdList": [String](),
+                "id": room.id,
+                "userIdList": room.userIdList,
                 "createdAt": timestamp,
                 "updatedAt": date,
             ])
 
             // カードパッケージ追加
-            let cardPackageId: String = room.cardPackage.id
             let cardPackageDocument: DocumentReference = roomDocument.collection("cardPackages")
                 .document(
-                    cardPackageId)
+                    room.cardPackage.id)
             try await cardPackageDocument.setData([
-                "id": cardPackageId,
+                "id": room.cardPackage.id,
                 "themeColor": room.cardPackage.themeColor,
                 "createdAt": timestamp,
                 "updatedAt": date,
             ])
 
             // カード一覧追加
-            room.cardPackage.cardList.forEach { card in
-                let cardId: String = card.id
-                let cardDocument: DocumentReference = cardPackageDocument.collection("cards")
-                    .document(cardId)
-                cardDocument.setData([
-                    "id": cardId,
-                    "estimatePoint": card.estimatePoint,
-                    "index": card.index,
+            room.cardPackage.cardList.forEach {
+                cardPackageDocument.collection("cards").document($0.id).setData([
+                    "id": $0.id,
+                    "estimatePoint": $0.estimatePoint,
+                    "index": $0.index,
                     "createdAt": timestamp,
                     "updatedAt": date,
                 ])

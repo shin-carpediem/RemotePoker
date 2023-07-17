@@ -28,10 +28,10 @@ public struct SettingView: View {
         ZStack {
             contentView
             navigationForSelectThemeColorView
-            if viewModel.isShownLoader { ProgressView() }
+            if viewModel.isLoaderShown { ProgressView() }
         }
         .navigationTitle("設定")
-        .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
+        .modifier(Overlay(isShown: $viewModel.isBannerShown, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
@@ -40,9 +40,9 @@ public struct SettingView: View {
         VStack(alignment: .leading) {
             List {
                 selecteThemeColorButton
-                    .disabled(!viewModel.isButtonEnabled)
+                    .disabled(!viewModel.isButtonsEnabled)
                 leaveButton
-                    .disabled(!viewModel.isButtonEnabled)
+                    .disabled(!viewModel.isButtonsEnabled)
             }
             .listBackground(Colors.background)
             .listStyle(.insetGrouped)
@@ -86,7 +86,7 @@ extension SettingView {
 
     /// 通知バナー
     private var notificationBanner: NotificationBanner {
-        .init(isShown: $viewModel.isShownBanner, viewModel: viewModel.bannerMessgage)
+        .init(isShown: $viewModel.isBannerShown, viewModel: viewModel.bannerMessgage)
     }
 }
 
