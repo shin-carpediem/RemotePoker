@@ -93,6 +93,7 @@ extension EnterRoomPresenter: EnterRoomInteractorOutput {
 // MARK: - Private
 
 extension EnterRoomPresenter {
+    // TODO: やってる事が多すぎるので、整理する
     private func setupUserAndRoom(
         userId: String, userName: String, roomId: Int
     ) async {
@@ -100,18 +101,22 @@ extension EnterRoomPresenter {
             id: userId,
             name: userName,
             selectedCardId: "")
+        await dependency.useCase.createUser(currentUser)
+        
         let currentRoom = CurrentRoomModel(
             id: roomId,
             userList: [currentUser],
             cardPackage: .defaultCardPackage)
+
         AppConfigManager.appConfig = .init(
             currentUser: currentUser,
             currentRoom: currentRoom)
+
         LocalStorage.shared.currentUserId = userId
         LocalStorage.shared.currentRoomId = roomId
         
         // 入力ルームIDに合致する既存ルームが存在するか確認
-        if await dependency.useCase.checkRoomExist(roomId: roomId) {
+        if await dependency.useCase.checkRoomExist(by: roomId) {
             // 既存ルーム
             AppConfigManager.appConfig?.currentRoom.id = roomId
             await dependency.useCase.adduserToRoom(roomId: roomId, userId: userId)
@@ -119,7 +124,7 @@ extension EnterRoomPresenter {
             // 新規ルーム
             AppConfigManager.appConfig?.currentRoom = CurrentRoomModel(
                 id: roomId,
-                userList: [.init(id: userId, name: userName, selectedCardId: "")],
+                userList: [currentUser],
                 cardPackage: .defaultCardPackage)
 
             let currentRoomModel = RoomModel(
@@ -132,7 +137,7 @@ extension EnterRoomPresenter {
                         CardPackageModel.Card(id: $0.id, estimatePoint: $0.estimatePoint, index: $0.index)
                     }))
 
-            await dependency.useCase.createRoom(room: currentRoomModel)
+            await dependency.useCase.createRoom(currentRoomModel)
         }
     }
 

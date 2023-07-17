@@ -12,7 +12,9 @@ public struct CardPackageModelToViewModelTranslator: Translator {
     public typealias Output = CardPackageViewModel
 
     public func translate(_ input: Input) -> Output {
-        let themeColor = CardPackageThemeColor(rawValue: input.themeColor) ?? .oxblood
+        guard let themeColor = CardPackageThemeColor(rawValue: input.themeColor) else {
+            fatalError()
+        }
         let cardList: [CardPackageViewModel.Card] = input.cardList.map {
             CardPackageViewModel.Card(
                 id: $0.id,

@@ -45,12 +45,25 @@ extension EnterRoomInteractor: EnterRoomUseCase {
             })
             .store(in: &cancellables)
     }
+    
+    public func createUser(_ user: UserModel) async {
+        let entity = UserEntity(id: user.id,
+                                name: user.name,
+                                selectedCardId: user.selectedCardId)
+        switch await dependency.repository.createUser(entity) {
+        case .success:
+            dependency.output?.outputSuccess(message: "ユーザー登録しました")
+            
+        case .failure(let error):
+            dependency.output?.outputError(error, message: "ユーザー登録できませんでした")
+        }
+    }
 
-    public func checkRoomExist(roomId: Int) async -> Bool {
+    public func checkRoomExist(by roomId: Int) async -> Bool {
         await dependency.repository.checkRoomExist(roomId: String(roomId))
     }
 
-    public func createRoom(room: RoomModel) async {
+    public func createRoom(_ room: RoomModel) async {
         let entity = RoomEntity(
             id: room.id,
             userIdList: room.userIdList,

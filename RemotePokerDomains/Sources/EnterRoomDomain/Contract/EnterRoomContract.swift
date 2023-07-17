@@ -15,15 +15,19 @@ public protocol EnterRoomUseCase: AnyObject {
     /// - parameter userName: ユーザー名
     /// - parameter roomId: ルームID
     func signIn(userName: String, roomId: Int) async
+    
+    /// ユーザーを新規作成する
+    /// - parameter user: ユーザー
+    func createUser(_ user: UserModel) async
 
     /// ルームが存在するか確認する
     /// - parameter roomId: ルームID
     /// - returns: ルームが存在するか
-    func checkRoomExist(roomId: Int) async -> Bool
+    func checkRoomExist(by roomId: Int) async -> Bool
 
     /// ルームを新規作成する
     /// - parameter room: ルーム
-    func createRoom(room: RoomModel) async
+    func createRoom(_ room: RoomModel) async
 
     /// ルームにユーザーを追加する
     /// - parameter roomId: ルームID

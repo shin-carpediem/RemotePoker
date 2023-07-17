@@ -7,7 +7,7 @@ public class SelectThemeColorViewModel: ObservableObject, ViewModel {
 
     @Published public var themeColorList = [CardPackageThemeColor]()
 
-    @Published public var selectedThemeColor: CardPackageThemeColor?
+    @Published public var selectedThemeColor: CardPackageThemeColor = .oxblood
 
     // MARK: - ViewModel
 

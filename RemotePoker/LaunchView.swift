@@ -1,10 +1,14 @@
+import RemotePokerViews
 import SwiftUI
 
 struct LaunchView: View {
     // MARK: - View
     
     var body: some View {
-        ProgressView()
+        ZStack {
+            Colors.background.ignoresSafeArea()
+            ProgressView()
+        }
     }
 }
 

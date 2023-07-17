@@ -35,30 +35,16 @@ public final class CardListPresenter: DependencyInjectable {
 extension CardListPresenter: CardListPresentation {
     public func didSelectCard(cardId: String) {
         updateButtons(isEnabled: false)
-
         dependency.useCase.updateSelectedCardId(selectedCardDictionary: [appConfig.currentUser.id: cardId])
-
-        updateButtons(isEnabled: false)
+        updateButtons(isEnabled: true)
     }
 
     public func didTapOpenSelectedCardListButton() {
-        updateButtons(isEnabled: false)
-        updateLoader(isShown: true)
-
         updateSelectedCardList(isShown: true)
-
-        updateButtons(isEnabled: true)
-        updateLoader(isShown: false)
     }
 
     public func didTapBackButton() {
-        updateButtons(isEnabled: false)
-        updateLoader(isShown: true)
-
         updateSelectedCardList(isShown: false)
-
-        updateButtons(isEnabled: true)
-        updateLoader(isShown: false)
     }
 
     public func didTapSettingButton() {
@@ -67,22 +53,20 @@ extension CardListPresenter: CardListPresentation {
 
     // MARK: - Presentation
 
-    public func viewDidLoad() {}
-
-    public func viewDidResume() {
+    public func viewDidLoad() {
         updateButtons(isEnabled: false)
         updateLoader(isShown: true)
-        
         Task {
             if await checkUserInCurrentRoom() {
                 await dependency.useCase.requestUser()
                 dependency.useCase.subscribeCurrentRoom()
             }
-
             updateButtons(isEnabled: true)
             updateLoader(isShown: false)
         }
     }
+
+    public func viewDidResume() {}
 
     public func viewDidSuspend() {}
 }
