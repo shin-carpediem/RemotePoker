@@ -18,16 +18,18 @@ import SwiftUI
         ) -> Bool {
             FirebaseEnvironment.shared.setup()
             Task { @MainActor in
-                await isUserSignedIn = checkUserSignedIn()
+                isUserSignedIn = await checkUserSignedIn()
+
                 let currentUser = UserModel(
-                    id: LocalStorage.shared.currentUserId, name: "",
+                    id: LocalStorage.shared.currentUserId,
+                    name: "",
                     selectedCardId: ""
                 )
-                // TODO: ここを通るより先に、viewの内部の処理が走ってしまう。
                 AppConfigManager.appConfig = .init(
                     currentUser: currentUser,
                     currentRoom: .init(id: LocalStorage.shared.currentRoomId, userList: [currentUser], cardPackage: .defaultCardPackage)
                 )
+                
                 return true
             }
             // ここを通ることはない。
@@ -48,7 +50,14 @@ import SwiftUI
     
     // MARK: - Private
     
-    private static var isUserSignedIn = false
+    private static var isUserSignedIn: Bool? {
+        didSet {
+            guard let isUserSignedIn else { return }
+            Self.viewModel.launchScreen = isUserSignedIn ? .cardListView : .enterRoomView
+        }
+    }
+    
+    private static var viewModel = LaunchAppViewModel()
 
     // MARK: - View
 
@@ -56,11 +65,7 @@ import SwiftUI
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                if Self.isUserSignedIn {
-                    assembleCardListModule()
-                } else {
-                    assmebleEnterRoomModule()
-                }
+                LaunchApp(viewModel: Self.viewModel)
             }
             // NavigationViewを使用した際にiPadでは、Master-Detail(Split view)の挙動になっている。
             // そしてMasterとなるViewが配置されていない為、空白のViewが表示されてしまう。

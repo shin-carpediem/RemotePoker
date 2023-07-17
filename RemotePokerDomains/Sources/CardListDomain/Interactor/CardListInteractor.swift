@@ -34,7 +34,6 @@ public final class CardListInteractor: DependencyInjectable {
 // MARK: - CardListUseCase
 
 extension CardListInteractor: CardListUseCase {
-    // TODO: 本来、特定のモジュールに依存したクラス内で、初期画面の表示ロジックを処理すべきではない。
     public func checkRoomExist(roomId: Int) async -> Bool {
         await dependency.enterRoomRepository.checkRoomExist(roomId: String(roomId))
     }

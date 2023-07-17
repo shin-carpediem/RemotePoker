@@ -67,7 +67,9 @@ extension CardListPresenter: CardListPresentation {
 
     // MARK: - Presentation
 
-    public func viewDidLoad() {
+    public func viewDidLoad() {}
+
+    public func viewDidResume() {
         updateButtons(isEnabled: false)
         updateLoader(isShown: true)
         
@@ -76,12 +78,11 @@ extension CardListPresenter: CardListPresentation {
                 await dependency.useCase.requestUser()
                 dependency.useCase.subscribeCurrentRoom()
             }
+
             updateButtons(isEnabled: true)
             updateLoader(isShown: false)
         }
     }
-
-    public func viewDidResume() {}
 
     public func viewDidSuspend() {}
 }
@@ -90,8 +91,7 @@ extension CardListPresenter: CardListPresentation {
 
 extension CardListPresenter: CardListInteractorOutput {
     public func outputCurrentUser(_ user: UserModel) {
-        AppConfigManager.appConfig?.currentUser.id = user.id
-        AppConfigManager.appConfig?.currentUser.name = user.name
+        AppConfigManager.appConfig?.currentUser = user
     }
 
     public func outputRoom(_ room: CurrentRoomModel) {
@@ -156,11 +156,7 @@ extension CardListPresenter {
 
     /// ユーザーに、存在するカレントルームがあるか確認する
     private func checkUserInCurrentRoom() async -> Bool {
-        if appConfig.currentRoom.id == 0 {
-            return false
-        } else {
-            return await dependency.useCase.checkRoomExist(roomId: appConfig.currentRoom.id)
-        }
+        await dependency.useCase.checkRoomExist(roomId: appConfig.currentRoom.id)
     }
 
     private func showTitle(userList: [UserViewModel]) {

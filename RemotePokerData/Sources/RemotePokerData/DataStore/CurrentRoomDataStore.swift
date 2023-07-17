@@ -13,8 +13,7 @@ public final class CurrentRoomDataStore: CurrentRoomRepository {
     public var userList: PassthroughSubject<[UserEntity], Never> {
         let subject = PassthroughSubject<[UserEntity], Never>()
         Task {
-            let userListQuery: Query = await firestoreRef.userListQuery()
-            userListQuery.addSnapshotListener { snapshot, error in
+            await firestoreRef.userListQuery().addSnapshotListener { snapshot, error in
                 if error != nil { return }
                 guard let snapshot = snapshot else { return }
                 let userList: [UserEntity] = snapshot.documents.map {  Self.userEntity(from: $0)

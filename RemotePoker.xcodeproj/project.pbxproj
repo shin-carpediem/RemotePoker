@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F516285D2A651B5E0098E078 /* LaunchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F516285C2A651B5E0098E078 /* LaunchApp.swift */; };
+		F51628602A651DE50098E078 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F516285F2A651DE50098E078 /* LaunchView.swift */; };
 		F539F02829E6DE4300C5C9C0 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F539F02729E6DE4300C5C9C0 /* FirebaseAnalytics */; };
 		F539F02A29E6DE4400C5C9C0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = F539F02929E6DE4300C5C9C0 /* FirebaseAnalyticsOnDeviceConversion */; };
 		F539F02C29E6DE4400C5C9C0 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F539F02B29E6DE4400C5C9C0 /* FirebaseAnalyticsSwift */; };
@@ -48,6 +50,8 @@
 
 /* Begin PBXFileReference section */
 		F503D9712A4FD363003D3779 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F516285C2A651B5E0098E078 /* LaunchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchApp.swift; sourceTree = "<group>"; };
+		F516285F2A651DE50098E078 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		F558B9F429EB898100B7ADD9 /* RemotePokerDomains */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RemotePokerDomains; sourceTree = "<group>"; };
 		F571FA672896D137003531CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
@@ -159,6 +163,8 @@
 			children = (
 				F503D9712A4FD363003D3779 /* Info.plist */,
 				F5E917CA287114DC00AE8421 /* RemotePokerApp.swift */,
+				F516285C2A651B5E0098E078 /* LaunchApp.swift */,
+				F516285F2A651DE50098E078 /* LaunchView.swift */,
 				F5DD230929EAD44F0091B84C /* Assets.xcassets */,
 				F571FA672896D137003531CE /* GoogleService-Info.plist */,
 				F57A44B929D09F9900A077DD /* GoogleService-Info-Dev.plist */,
@@ -358,7 +364,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F516285D2A651B5E0098E078 /* LaunchApp.swift in Sources */,
 				F5E917CB287114DC00AE8421 /* RemotePokerApp.swift in Sources */,
+				F51628602A651DE50098E078 /* LaunchView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
