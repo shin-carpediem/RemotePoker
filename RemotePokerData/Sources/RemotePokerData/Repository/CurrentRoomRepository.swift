@@ -1,7 +1,7 @@
 import Combine
 
 public protocol CurrentRoomRepository: AnyObject {
-    /// ユーザーリスト
+    /// ユーザー一覧
     var userList: PassthroughSubject<[UserEntity], Never> { get }
     
     /// ルーム
@@ -26,6 +26,9 @@ public protocol CurrentRoomRepository: AnyObject {
     /// - parameter themeColor: テーマカラー
     func updateThemeColor(cardPackageId: String, themeColor: String)
 
-    /// ルームの購読を解除する
+    /// ユーザー一覧の購読を中止する
+    func unsubscribeUserList()
+    
+    /// ルームの購読を中止する
     func unsubscribeRoom()
 }

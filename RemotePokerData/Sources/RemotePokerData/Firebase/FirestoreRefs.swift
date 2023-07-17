@@ -67,6 +67,10 @@ public struct FirestoreRefs {
             fatalError()
         }
         guard let userIdList: [String] = roomSnapshot.get("userIdList") as? [String] else {
+            Log.main.error("usersListQuery: userIdListを取得できません。")
+            fatalError()
+        }
+        if userIdList.isEmpty {
             Log.main.error("usersListQuery: userIdListが空です。")
             fatalError()
         }

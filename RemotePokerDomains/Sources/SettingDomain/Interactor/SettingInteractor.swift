@@ -32,13 +32,13 @@ public final class SettingInteractor: DependencyInjectable {
 extension SettingInteractor: SettingUseCase {
     public func leaveRoom() async {
         resetLocalStorage()
-        unsubscribeCurrentRoom()
+        
+        dependency.repository.unsubscribeUserList()
+        dependency.repository.unsubscribeRoom()
 
-        let result: Result<Void, FirebaseError> = await dependency.repository.removeUserFromRoom()
-        switch result {
+        switch await dependency.repository.removeUserFromRoom() {
         case .success:
-            let signoutResult: Result<Void, FirebaseError> = AuthDataStore.shared.signOut()
-            switch signoutResult {
+            switch AuthDataStore.shared.signOut() {
             case .success:
                 dependency.output?.outputSuccess(message: "ルームから退出しました")
 
@@ -58,9 +58,5 @@ extension SettingInteractor {
     private func resetLocalStorage() {
         LocalStorage.shared.currentRoomId = 0
         LocalStorage.shared.currentUserId = ""
-    }
-
-    private func unsubscribeCurrentRoom() {
-        dependency.repository.unsubscribeRoom()
     }
 }

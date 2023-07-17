@@ -7,7 +7,6 @@ public final class EnterRoomDataStore: EnterRoomRepository {
 
     // MARK: - EnterRoomRepository
     
-    // TODO: これが一切呼ばれてない
     public func createUser(_ user: UserEntity) async -> Result<Void, FirebaseError> {
         do {
             try await firestore.collection("users").document(String(user.id)).setData([

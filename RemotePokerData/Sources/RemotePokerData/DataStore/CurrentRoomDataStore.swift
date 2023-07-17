@@ -92,6 +92,10 @@ public final class CurrentRoomDataStore: CurrentRoomRepository {
             "updatedAt": Date(),
         ])
     }
+    
+    public func unsubscribeUserList() {
+        userList.send(completion: .finished)
+    }
 
     public func unsubscribeRoom() {
         room.send(completion: .finished)
