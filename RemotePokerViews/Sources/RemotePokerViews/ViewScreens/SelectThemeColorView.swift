@@ -37,8 +37,8 @@ public struct SelectThemeColorView: View {
 
     private var contentView: some View {
         VStack(alignment: .leading) {
-            List(viewModel.themeColorList, id: \.self) { color in
-                colorCell(color)
+            List(viewModel.themeColorList, id: \.self) {
+                colorCell($0)
                     .disabled(!viewModel.isButtonsEnabled)
             }
             .listBackground(Colors.background)
@@ -52,11 +52,10 @@ public struct SelectThemeColorView: View {
 extension SelectThemeColorView {
     /// カラーセル
     private func colorCell(_ color: CardPackageThemeColor) -> some View {
-        let isThemeColor: Bool = (color == viewModel.selectedThemeColor)
-        return Button {
+        Button {
             dependency.presenter.didTapColor(color: color)
         } label: {
-            if isThemeColor {
+            if color == viewModel.selectedThemeColor {
                 themeLabel(color)
             } else {
                 label(color)

@@ -35,13 +35,13 @@ struct CardView: View {
 // MARK: - Preview
 
 struct CardView_Previews: PreviewProvider {
-    static let defaultCardList = CardPackageModelToViewModelTranslator().translate(
+    private static let defaultCardList = CardPackageModelToViewModelTranslator().translate(
         .defaultCardPackage
     ).cardList
-    static let card1: CardPackageViewModel.Card = defaultCardList.first!
-    static let card2: CardPackageViewModel.Card = defaultCardList[
+    static let card1 = defaultCardList.first!
+    static let card2 = defaultCardList[
         Int(floor(CGFloat((card1.index + card3.index)) / 2))]
-    static let card3: CardPackageViewModel.Card = defaultCardList.last!
+    static let card3 = defaultCardList.last!
 
     static var previews: some View {
         VStack {

@@ -59,10 +59,11 @@ extension SettingView {
             dependency.presenter.didTapSelectThemeColorButton()
         }) {
             HStack {
-                Image(systemName: "heart")
-                    .foregroundColor(.gray)
-                Text("テーマカラーの変更")
-                    .foregroundColor(.gray)
+                Group {
+                    Image(systemName: "heart")
+                    Text("テーマカラーの変更")
+                }
+                .foregroundColor(.gray)
             }
         }
     }
@@ -76,10 +77,11 @@ extension SettingView {
             }
         }) {
             HStack {
-                Image(systemName: "rectangle.portrait.and.arrow.forward")
-                    .foregroundColor(.gray)
-                Text("ルームから退出")
-                    .foregroundColor(.gray)
+                Group {
+                    Image(systemName: "rectangle.portrait.and.arrow.forward")
+                    Text("ルームから退出")
+                }
+                .foregroundColor(.gray)
             }
         }
     }

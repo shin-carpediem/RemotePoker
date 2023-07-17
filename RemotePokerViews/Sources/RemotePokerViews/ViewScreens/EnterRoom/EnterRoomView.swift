@@ -73,9 +73,8 @@ extension EnterRoomView {
 
     /// 入力フォーム内容が有効か評価されて表示されるメッセージ
     private var validatedMessage: some View {
-        let text = viewModel.isInputFormValid ? "数字が新しければ新しいルームが作られます" : "6文字以下の名前と4桁の数字が必要です"
         let textColor: Color = viewModel.isInputFormValid ? .green : .red
-        return Text(text)
+        return Text(viewModel.isInputFormValid ? "数字が新しければ新しいルームが作られます" : "6文字以下の名前と4桁の数字が必要です")
             .foregroundColor(textColor.opacity(0.7))
     }
 

@@ -13,6 +13,7 @@ public struct CardPackageModelToViewModelTranslator: Translator {
 
     public func translate(_ input: Input) -> Output {
         guard let themeColor = CardPackageThemeColor(rawValue: input.themeColor) else {
+            // TODO: 選択したカラーが変更されない問題がある。それを解決しようと、ここを通ったらエラーになるようにしている。現状、ここを通ってしまう。
             fatalError()
         }
         let cardList: [CardPackageViewModel.Card] = input.cardList.map {

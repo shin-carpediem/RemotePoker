@@ -3,7 +3,6 @@ import Model
 import Protocols
 import RemotePokerData
 import Shared
-import Translator
 import ViewModel
 
 public final class EnterRoomPresenter: DependencyInjectable
@@ -27,10 +26,6 @@ public final class EnterRoomPresenter: DependencyInjectable
     }
 
     private var dependency: Dependency!
-
-    private static let CFBundleShortVersionString = "CFBundleShortVersionString"
-
-    private let translator = CardPackageModelToViewModelTranslator()
 }
 
 // MARK: - EnterRoomPresentation

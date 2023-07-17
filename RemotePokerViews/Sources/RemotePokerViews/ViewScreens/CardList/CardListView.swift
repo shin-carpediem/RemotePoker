@@ -230,13 +230,11 @@ struct CardListView_Previews: PreviewProvider {
     static let room1: CurrentRoomViewModel = .init(
         id: 1,
         userList: [me],
-        cardPackage: trasnlator.translate(.defaultCardPackage))
+        cardPackage: CardPackageModelToViewModelTranslator().translate(.defaultCardPackage))
     static let room2: CurrentRoomViewModel = .init(
         id: 2,
         userList: [me, user1],
-        cardPackage: trasnlator.translate(.defaultCardPackage))
-
-    static let trasnlator = CardPackageModelToViewModelTranslator()
+        cardPackage: CardPackageModelToViewModelTranslator().translate(.defaultCardPackage))
 
     static var previews: some View {
         Group {

@@ -2,9 +2,7 @@ import Neumorphic
 import SwiftUI
 
 struct InputText: View {
-    /// テキスト
     var text: Binding<String>
-    /// プレースホルダー
     var placeholder: String
 
     // MARK: - View
