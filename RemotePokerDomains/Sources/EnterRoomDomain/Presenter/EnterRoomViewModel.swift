@@ -15,14 +15,14 @@ public final class EnterRoomViewModel: ObservableObject, ViewModel {
 
     @Published public var willPushCardListView = false
 
-    // MARK: - ViewModel
+    // MARK: ViewModel
 
     @Published public var isButtonsEnabled = true
     @Published public var isLoaderShown = false
     @Published public var isBannerShown = false
     @Published public var bannerMessgage = NotificationBannerViewModel(type: .onSuccess, text: "")
 
-    // MARK: - Private
+    // MARK: Private
 
     private var cancellables = Set<AnyCancellable>()
 

@@ -8,7 +8,7 @@ public final class CurrentRoomDataStore: CurrentRoomRepository {
         self.roomId = roomId
     }
 
-    // MARK: - RoomRepository
+    // MARK: RoomRepository
 
     public var userList: PassthroughSubject<[UserEntity], Never> {
         let subject = PassthroughSubject<[UserEntity], Never>()
@@ -77,7 +77,7 @@ public final class CurrentRoomDataStore: CurrentRoomRepository {
         }
     }
 
-    public func updateSelectedCardId(selectedCardDictionary: [String: String]) {
+    public func updateSelectedCardId(selectedCardDictionary: [String: Int]) {
         selectedCardDictionary.forEach { _, selectedCardId in
             firestoreRef.userDocument.updateData([
                 "selectedCardId": selectedCardId,
@@ -101,7 +101,7 @@ public final class CurrentRoomDataStore: CurrentRoomRepository {
         room.send(completion: .finished)
     }
 
-    // MARK: - Private
+    // MARK: Private
 
     private let userId: String
     private let roomId: String
@@ -119,7 +119,7 @@ public final class CurrentRoomDataStore: CurrentRoomRepository {
         return UserEntity(
             id: id,
             name: doc.get("name") as? String ?? "",
-            selectedCardId: doc.get("selectedCardId") as? String ?? "")
+            selectedCardId: doc.get("selectedCardId") as? Int ?? 0)
     }
     
     private func roomEntity(from doc: DocumentSnapshot) async -> RoomEntity {
@@ -135,14 +135,14 @@ public final class CurrentRoomDataStore: CurrentRoomRepository {
         }
 
         let cardPackageId: String = cardPackageSnapshot.documentID
-        let cardsSnapshot = await firestoreRef.cardsSnapshot(cardPackageId: cardPackageSnapshot.documentID)
+        let cardsSnapshot = await firestoreRef.cardsSnapshot(cardPackageId: cardPackageId)
         guard let cardsSnapshot = cardsSnapshot else {
             Log.main.error("failedToTranslateRoomEntityFromDoc")
             fatalError()
         }
 
         let cardList: [CardPackageEntity.Card] = cardsSnapshot.map { doc in
-            guard let cardId = doc.get("id") as? String else {
+            guard let cardId = doc.get("id") as? Int else {
                 Log.main.error("failedToTranslateRoomEntityFromDoc")
                 fatalError()
             }
@@ -153,7 +153,7 @@ public final class CurrentRoomDataStore: CurrentRoomRepository {
         }.sorted { $0.index < $1.index }
 
         let cardPackage = CardPackageEntity(
-            id: cardPackageId,
+            id: Int(cardPackageId) ?? 0,
             themeColor: doc.get("themeColor") as? String ?? "",
             cardList: cardList)
         

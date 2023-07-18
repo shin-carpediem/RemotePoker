@@ -10,7 +10,7 @@ import ViewModel
 public final class CardListPresenter: DependencyInjectable {
     public init() {}
 
-    // MARK: - DependencyInjectable
+    // MARK: DependencyInjectable
 
     public struct Dependency {
         public var useCase: CardListUseCase
@@ -30,10 +30,10 @@ public final class CardListPresenter: DependencyInjectable {
     private var cancellables = Set<AnyCancellable>()
 }
 
-// MARK: - CardListPresentation
+// MARK: CardListPresentation
 
 extension CardListPresenter: CardListPresentation {
-    public func didSelectCard(cardId: String) {
+    public func didSelectCard(cardId: Int) {
         updateButtons(isEnabled: false)
         dependency.useCase.updateSelectedCardId(selectedCardDictionary: [appConfig.currentUser.id: cardId])
         updateButtons(isEnabled: true)
@@ -51,7 +51,7 @@ extension CardListPresenter: CardListPresentation {
         pushSettingView()
     }
 
-    // MARK: - Presentation
+    // MARK: Presentation
 
     public func viewDidLoad() {
         updateButtons(isEnabled: false)
@@ -71,7 +71,7 @@ extension CardListPresenter: CardListPresentation {
     public func viewDidSuspend() {}
 }
 
-// MARK: - CardListInteractorOutput
+// MARK: CardListInteractorOutput
 
 extension CardListPresenter: CardListInteractorOutput {
     public func outputCurrentUser(_ user: UserModel) {
@@ -107,7 +107,7 @@ extension CardListPresenter: CardListInteractorOutput {
     }
 }
 
-// MARK: - Private
+// MARK: Private
 
 extension CardListPresenter {
     private var appConfig: AppConfig {
@@ -159,7 +159,7 @@ extension CardListPresenter {
                 $0.id == user.selectedCardId
             })
             return UserSelectStatusViewModel(
-                id: UUID().uuidString,
+                id: Int.random(in: 0...9999),
                 user: user,
                 themeColor: cardPackage.themeColor,
                 selectedCard: selectedCard)

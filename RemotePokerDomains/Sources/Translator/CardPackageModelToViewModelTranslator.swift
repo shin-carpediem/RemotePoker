@@ -6,7 +6,7 @@ import ViewModel
 public struct CardPackageModelToViewModelTranslator: Translator {
     public init() {}
 
-    // MARK: - Translator
+    // MARK: Translator
 
     public typealias Input = CardPackageModel
     public typealias Output = CardPackageViewModel
@@ -32,7 +32,7 @@ public struct CardPackageModelToViewModelTranslator: Translator {
             cardList: cardList)
     }
 
-    // MARK: - Private
+    // MARK: Private
 
     /// 文字色を指定する
     private func applyFontColor(toIndex index: Int) -> Color {

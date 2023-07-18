@@ -6,10 +6,10 @@ import Shared
 import SwiftUI
 
 @main struct RemotePokerApp: App, ModuleAssembler {
-    // MARK: - App
+    // MARK: App
 
     class AppDelegate: NSObject, UIApplicationDelegate {
-        // MARK: - UIApplicationDelegate
+        // MARK: UIApplicationDelegate
 
         func application(
             _ application: UIApplication,
@@ -23,7 +23,7 @@ import SwiftUI
                 let currentUser = UserModel(
                     id: LocalStorage.shared.currentUserId,
                     name: "",
-                    selectedCardId: ""
+                    selectedCardId: nil
                 )
                 AppConfigManager.appConfig = .init(
                     currentUser: currentUser,
@@ -36,7 +36,7 @@ import SwiftUI
             return false
         }
         
-        // MARK: - Private
+        // MARK: Private
         
         private func checkUserSignedIn() async -> Bool {
             do {
@@ -48,7 +48,7 @@ import SwiftUI
         }
     }
     
-    // MARK: - Private
+    // MARK: Private
     
     private static var isUserSignedIn: Bool? {
         didSet {
@@ -59,7 +59,7 @@ import SwiftUI
     
     private static var viewModel = LaunchAppViewModel()
 
-    // MARK: - View
+    // MARK: View
 
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {

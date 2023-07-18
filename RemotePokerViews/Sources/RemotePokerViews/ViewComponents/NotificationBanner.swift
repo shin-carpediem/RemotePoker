@@ -10,7 +10,7 @@ public struct NotificationBanner: View {
         self.viewModel = viewModel
     }
 
-    // MARK: - Private
+    // MARK: Private
 
     @MainActor private func hideBanner() {
         isShown = false
@@ -24,7 +24,7 @@ public struct NotificationBanner: View {
         }
     }
 
-    // MARK: - View
+    // MARK: View
 
     public var body: some View {
         VStack {
@@ -38,7 +38,6 @@ public struct NotificationBanner: View {
         }
     }
 
-    /// バナーView
     private var banner: some View {
         HStack {
             Image(systemName: viewModel.iconName)
@@ -52,7 +51,7 @@ public struct NotificationBanner: View {
     }
 }
 
-// MARK: - Preview
+// MARK: Preview
 
 struct NotificationBanner_Previews: PreviewProvider {
     static var previews: some View {

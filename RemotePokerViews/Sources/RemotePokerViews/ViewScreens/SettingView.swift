@@ -4,7 +4,7 @@ import SwiftUI
 public struct SettingView: View {
     @Environment(\.presentationMode) var presentation
 
-    // MARK: - Dependency
+    // MARK: Dependency
 
     struct Dependency {
         var presenter: SettingPresentation
@@ -16,12 +16,12 @@ public struct SettingView: View {
         self.dependency.presenter.viewDidLoad()
     }
 
-    // MARK: - Private
+    // MARK: Private
 
     private var dependency: Dependency
     @ObservedObject private var viewModel: SettingViewModel
 
-    // MARK: - View
+    // MARK: View
 
     public var body: some View {
         ZStack {
@@ -50,7 +50,7 @@ public struct SettingView: View {
     }
 }
 
-// MARK: - View Components
+// MARK: View Components
 
 extension SettingView {
     /// テーマカラー選択ボタン
@@ -92,10 +92,9 @@ extension SettingView {
     }
 }
 
-// MARK: - ModuleAssembler
+// MARK: ModuleAssembler
 
 extension SettingView: ModuleAssembler {
-    /// テーマカラー選択画面へ遷移させるナビゲーション
     private var navigationForSelectThemeColorView: some View {
         NavigationLink(
             isActive: $viewModel.willPushSelectThemeColorView,
@@ -106,7 +105,7 @@ extension SettingView: ModuleAssembler {
     }
 }
 
-// MARK: - Preview
+// MARK: Preview
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {

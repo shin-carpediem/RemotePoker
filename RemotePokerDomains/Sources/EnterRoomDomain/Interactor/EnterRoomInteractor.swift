@@ -6,7 +6,7 @@ import RemotePokerData
 public final class EnterRoomInteractor: DependencyInjectable {
     public init() {}
 
-    // MARK: - DependencyInjectable
+    // MARK: DependencyInjectable
 
     public struct Dependency {
         public var repository: EnterRoomRepository
@@ -26,7 +26,7 @@ public final class EnterRoomInteractor: DependencyInjectable {
     private var cancellables = Set<AnyCancellable>()
 }
 
-// MARK: - EnterRoomUseCase
+// MARK: EnterRoomUseCase
 
 extension EnterRoomInteractor: EnterRoomUseCase {
     public func signIn(userName: String, roomId: Int) async {

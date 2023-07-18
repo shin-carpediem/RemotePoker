@@ -4,7 +4,7 @@ import Shared
 import SwiftUI
 
 public struct EnterRoomView: View {
-    // MARK: - Dependency
+    // MARK: Dependency
 
     struct Dependency {
         var presenter: EnterRoomPresentation
@@ -16,7 +16,7 @@ public struct EnterRoomView: View {
         self.dependency.presenter.viewDidLoad()
     }
 
-    // MARK: - Private
+    // MARK: Private
 
     private var dependency: Dependency!
     @ObservedObject private var viewModel: EnterRoomViewModel
@@ -28,7 +28,7 @@ public struct EnterRoomView: View {
         return appConfig
     }
     
-    // MARK: - View
+    // MARK: View
 
     public var body: some View {
         NavigationView {
@@ -60,7 +60,7 @@ public struct EnterRoomView: View {
     }
 }
 
-// MARK: - View Components
+// MARK: View Components
 
 extension EnterRoomView {
     /// 入力フォーム
@@ -96,7 +96,7 @@ extension EnterRoomView {
     }
 }
 
-// MARK: - ModuleAssembler
+// MARK: ModuleAssembler
 
 extension EnterRoomView: ModuleAssembler {
     /// カード一覧画面に遷移させるナビゲーション
@@ -110,7 +110,7 @@ extension EnterRoomView: ModuleAssembler {
     }
 }
 
-// MARK: - Preview
+// MARK: Preview
 
 struct EnterRoomView_Previews: PreviewProvider {
     static var previews: some View {

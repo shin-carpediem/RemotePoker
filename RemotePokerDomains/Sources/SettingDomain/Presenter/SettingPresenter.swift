@@ -5,7 +5,7 @@ import ViewModel
 public final class SettingPresenter: DependencyInjectable {
     public init() {}
 
-    // MARK: - DependencyInjectable
+    // MARK: DependencyInjectable
 
     public struct Dependency {
         public var useCase: SettingUseCase
@@ -24,7 +24,7 @@ public final class SettingPresenter: DependencyInjectable {
     private var dependency: Dependency!
 }
 
-// MARK: - SettingPresentation
+// MARK: SettingPresentation
 
 extension SettingPresenter: SettingPresentation {
     public func didTapSelectThemeColorButton() {
@@ -41,7 +41,7 @@ extension SettingPresenter: SettingPresentation {
         updateLoader(isShown: false)
     }
 
-    // MARK: - Presentation
+    // MARK: Presentation
 
     public func viewDidLoad() {}
 
@@ -50,7 +50,7 @@ extension SettingPresenter: SettingPresentation {
     public func viewDidSuspend() {}
 }
 
-// MARK: - SettingInteractorOutput
+// MARK: SettingInteractorOutput
 
 extension SettingPresenter: SettingInteractorOutput {
     public func outputSuccess(message: String) {
@@ -70,7 +70,7 @@ extension SettingPresenter: SettingInteractorOutput {
     }
 }
 
-// MARK: - Private
+// MARK: Private
 
 extension SettingPresenter {
     private func updateButtons(isEnabled: Bool) {

@@ -5,14 +5,14 @@ import Foundation
 public final class EnterRoomDataStore: EnterRoomRepository {
     public init() {}
 
-    // MARK: - EnterRoomRepository
+    // MARK: EnterRoomRepository
     
     public func createUser(_ user: UserEntity) async -> Result<Void, FirebaseError> {
         do {
             try await firestore.collection("users").document(String(user.id)).setData([
                 "id": user.id,
                 "name": user.name,
-                "selectedCardId": user.selectedCardId,
+                "selectedCardId": user.selectedCardId ?? 999,
                 "createdAt": Timestamp(),
                 "updatedAt": Date(),
             ])
@@ -48,8 +48,7 @@ public final class EnterRoomDataStore: EnterRoomRepository {
 
             // カードパッケージ追加
             let cardPackageDocument: DocumentReference = roomDocument.collection("cardPackages")
-                .document(
-                    room.cardPackage.id)
+                .document(String(room.cardPackage.id))
             try await cardPackageDocument.setData([
                 "id": room.cardPackage.id,
                 "themeColor": room.cardPackage.themeColor,
@@ -59,7 +58,7 @@ public final class EnterRoomDataStore: EnterRoomRepository {
 
             // カード一覧追加
             room.cardPackage.cardList.forEach {
-                cardPackageDocument.collection("cards").document($0.id).setData([
+                cardPackageDocument.collection("cards").document(String($0.id)).setData([
                     "id": $0.id,
                     "estimatePoint": $0.estimatePoint,
                     "index": $0.index,
@@ -74,7 +73,7 @@ public final class EnterRoomDataStore: EnterRoomRepository {
         }
     }
 
-    // MARK: - Private
+    // MARK: Private
 
     private var firestore: Firestore {
         guard let app = FirebaseEnvironment.shared.app else {

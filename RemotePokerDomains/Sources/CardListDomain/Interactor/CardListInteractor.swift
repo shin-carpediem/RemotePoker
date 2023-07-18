@@ -6,7 +6,7 @@ import RemotePokerData
 public final class CardListInteractor: DependencyInjectable {
     public init() {}
 
-    // MARK: - DependencyInjectable
+    // MARK: DependencyInjectable
 
     public struct Dependency {
         public var enterRoomRepository: EnterRoomRepository
@@ -31,7 +31,7 @@ public final class CardListInteractor: DependencyInjectable {
     private var cancellables = Set<AnyCancellable>()
 }
 
-// MARK: - CardListUseCase
+// MARK: CardListUseCase
 
 extension CardListInteractor: CardListUseCase {
     public func checkRoomExist(roomId: Int) async -> Bool {
@@ -54,7 +54,7 @@ extension CardListInteractor: CardListUseCase {
             .store(in: &cancellables)
     }
 
-    public func updateSelectedCardId(selectedCardDictionary: [String: String]) {
+    public func updateSelectedCardId(selectedCardDictionary: [String: Int]) {
         dependency.currentRoomRepository.updateSelectedCardId(
             selectedCardDictionary: selectedCardDictionary)
     }

@@ -6,7 +6,7 @@ import Shared
 public final class SettingInteractor: DependencyInjectable {
     public init() {}
 
-    // MARK: - DependencyInjectable
+    // MARK: DependencyInjectable
 
     public struct Dependency {
         public var repository: CurrentRoomRepository
@@ -27,7 +27,7 @@ public final class SettingInteractor: DependencyInjectable {
     private var dependency: Dependency!
 }
 
-// MARK: - SettingUseCase
+// MARK: SettingUseCase
 
 extension SettingInteractor: SettingUseCase {
     public func leaveRoom() async {
@@ -52,7 +52,7 @@ extension SettingInteractor: SettingUseCase {
     }
 }
 
-// MARK: - Private
+// MARK: Private
 
 extension SettingInteractor {
     private func resetLocalStorage() {

@@ -4,7 +4,7 @@ import FirebaseAuth
 public final class AuthDataStore: AuthRepository {
     public static let shared = AuthDataStore()
 
-    // MARK: - RoomAuthRepository
+    // MARK: RoomAuthRepository
 
     public func signIn() -> Future<String, FirebaseError> {
         Future<String, FirebaseError> { promise in
@@ -29,7 +29,7 @@ public final class AuthDataStore: AuthRepository {
         }
     }
 
-    // MARK: - Private
+    // MARK: Private
 
     private init() {}
 }

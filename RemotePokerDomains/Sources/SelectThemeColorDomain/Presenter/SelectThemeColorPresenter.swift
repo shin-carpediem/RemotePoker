@@ -7,7 +7,7 @@ import ViewModel
 public final class SelectThemeColorPresenter: DependencyInjectable {
     public init() {}
 
-    // MARK: - DependencyInjectable
+    // MARK: DependencyInjectable
 
     public struct Dependency {
         public var repository: CurrentRoomRepository
@@ -28,7 +28,7 @@ public final class SelectThemeColorPresenter: DependencyInjectable {
     private var dependency: Dependency!
 }
 
-// MARK: - SelectThemeColorPresentation
+// MARK: SelectThemeColorPresentation
 
 extension SelectThemeColorPresenter: SelectThemeColorPresentation {
     public func didTapColor(color: CardPackageThemeColor) {
@@ -37,28 +37,25 @@ extension SelectThemeColorPresenter: SelectThemeColorPresentation {
                 fatalError()
             }
             dependency.repository.updateThemeColor(
-                cardPackageId: appConfig.currentRoom.cardPackage.id,
+                cardPackageId: String(appConfig.currentRoom.cardPackage.id),
                 themeColor: color.rawValue)
-
             applySelectedThemeColor(color)
             showSuccess(message: "テーマカラーを\(color)に変更しました")
         }
     }
 
-    // MARK: - Presentation
+    // MARK: Presentation
 
     public func viewDidLoad() {
         showColorList()
     }
 
-    public func viewDidResume() {
-        showColorList()
-    }
+    public func viewDidResume() {}
 
     public func viewDidSuspend() {}
 }
 
-// MARK: - Private
+// MARK: Private
 
 extension SelectThemeColorPresenter {
     private func showColorList() {

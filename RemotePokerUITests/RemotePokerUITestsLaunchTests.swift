@@ -1,8 +1,6 @@
 import XCTest
 
 final class RemotePokerUITestsLaunchTests: XCTestCase {
-    // MARK: - Override
-
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }
@@ -10,8 +8,6 @@ final class RemotePokerUITestsLaunchTests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
-
-    // MARK: - Test
 
     func testLaunch() throws {
         let app = XCUIApplication()

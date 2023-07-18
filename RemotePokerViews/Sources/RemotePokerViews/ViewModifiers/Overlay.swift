@@ -11,7 +11,7 @@ public struct Overlay<T: View>: ViewModifier {
         self.overlayView = overlayView
     }
 
-    // MARK: - ViewModifier
+    // MARK: ViewModifier
 
     public func body(content: Content) -> some View {
         ZStack {

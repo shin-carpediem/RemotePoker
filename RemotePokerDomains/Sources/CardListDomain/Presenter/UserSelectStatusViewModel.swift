@@ -1,13 +1,13 @@
 import ViewModel
 
 public struct UserSelectStatusViewModel: Identifiable {
-    public var id: String
+    public var id: Int
     public var user: UserViewModel
     public var themeColor: CardPackageThemeColor
     public var selectedCard: CardPackageViewModel.Card?
 
     public init(
-        id: String, user: UserViewModel, themeColor: CardPackageThemeColor,
+        id: Int, user: UserViewModel, themeColor: CardPackageThemeColor,
         selectedCard: CardPackageViewModel.Card?
     ) {
         self.id = id

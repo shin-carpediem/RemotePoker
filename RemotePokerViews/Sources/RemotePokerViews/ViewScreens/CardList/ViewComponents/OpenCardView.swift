@@ -3,16 +3,15 @@ import SwiftUI
 import ViewModel
 
 struct OpenCardView: View {
-    /// ユーザーのカード選択状況
     var userSelectStatus: UserSelectStatusViewModel
 
-    // MARK: - Private
+    // MARK: Private
 
     private var selectedCard: CardPackageViewModel.Card? {
         userSelectStatus.selectedCard
     }
 
-    // MARK: - View
+    // MARK: View
 
     var body: some View {
         VStack {
@@ -51,7 +50,7 @@ struct OpenCardView: View {
     }
 }
 
-// MARK: - Preview
+// MARK: Preview
 
 struct OpenCardView_Previews: PreviewProvider {
     static var previews: some View {
@@ -59,7 +58,7 @@ struct OpenCardView_Previews: PreviewProvider {
             Text("選択されたカード")
             OpenCardView(
                 userSelectStatus: .init(
-                    id: "0",
+                    id: 0,
                     user: CardListView_Previews.me,
                     themeColor: .buttercup,
                     selectedCard: CardView_Previews.card2)
@@ -68,7 +67,7 @@ struct OpenCardView_Previews: PreviewProvider {
             Text("カード未選択")
             OpenCardView(
                 userSelectStatus: .init(
-                    id: "0",
+                    id: 0,
                     user: CardListView_Previews.me,
                     themeColor: .buttercup,
                     selectedCard: nil)

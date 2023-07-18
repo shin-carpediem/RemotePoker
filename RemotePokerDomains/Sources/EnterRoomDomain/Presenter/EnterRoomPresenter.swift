@@ -9,7 +9,7 @@ public final class EnterRoomPresenter: DependencyInjectable
 {
     public init() {}
 
-    // MARK: - DependencyInjectable
+    // MARK: DependencyInjectable
 
     public struct Dependency {
         public var useCase: EnterRoomUseCase
@@ -28,7 +28,7 @@ public final class EnterRoomPresenter: DependencyInjectable
     private var dependency: Dependency!
 }
 
-// MARK: - EnterRoomPresentation
+// MARK: EnterRoomPresentation
 
 extension EnterRoomPresenter: EnterRoomPresentation {
     public func didTapEnterRoomButton(inputUserName: String, inputRoomId: String) {
@@ -47,7 +47,7 @@ extension EnterRoomPresenter: EnterRoomPresentation {
         }
     }
 
-    // MARK: - Presentation
+    // MARK: Presentation
 
     public func viewDidLoad() {}
 
@@ -56,7 +56,7 @@ extension EnterRoomPresenter: EnterRoomPresentation {
     public func viewDidSuspend() {}
 }
 
-// MARK: - EnterRoomInteractorOutput
+// MARK: EnterRoomInteractorOutput
 
 extension EnterRoomPresenter: EnterRoomInteractorOutput {
     public func outputSucceedToSignIn(userId: String, userName: String, roomId: Int) {
@@ -85,7 +85,7 @@ extension EnterRoomPresenter: EnterRoomInteractorOutput {
     }
 }
 
-// MARK: - Private
+// MARK: Private
 
 extension EnterRoomPresenter {
     // TODO: やってる事が多すぎるので、整理する
@@ -95,7 +95,7 @@ extension EnterRoomPresenter {
         let currentUser = UserModel(
             id: userId,
             name: userName,
-            selectedCardId: "")
+            selectedCardId: nil)
         await dependency.useCase.createUser(currentUser)
         
         let currentRoom = CurrentRoomModel(

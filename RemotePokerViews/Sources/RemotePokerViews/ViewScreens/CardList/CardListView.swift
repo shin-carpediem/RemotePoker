@@ -9,7 +9,7 @@ import ViewModel
 public struct CardListView: View {
     @Environment(\.presentationMode) var presentation
 
-    // MARK: - Dependency
+    // MARK: Dependency
 
     struct Dependency {
         var presenter: CardListPresentation
@@ -21,7 +21,7 @@ public struct CardListView: View {
         self.dependency.presenter.viewDidLoad()
     }
 
-    // MARK: - Private
+    // MARK: Private
 
     private var dependency: Dependency
     @ObservedObject private var viewModel: CardListViewModel
@@ -33,7 +33,7 @@ public struct CardListView: View {
         return appConfig
     }
     
-    // MARK: - View
+    // MARK: View
 
     public var body: some View {
         ZStack {
@@ -74,7 +74,7 @@ public struct CardListView: View {
     }
 }
 
-// MARK: - View Components
+// MARK: View Components
 
 extension CardListView {
     /// 設定ボタン
@@ -172,7 +172,7 @@ extension CardListView {
     }
 }
 
-// MARK: - ModuleAssembler
+// MARK: ModuleAssembler
 
 extension CardListView: ModuleAssembler {
     /// 設定画面へ遷移させるナビゲーション
@@ -195,19 +195,19 @@ extension CardListView: ModuleAssembler {
     }
 }
 
-// MARK: - Preview
+// MARK: Preview
 
 struct CardListView_Previews: PreviewProvider {
     static let selectedCardListView: CardListViewModel = {
         let viewModel = CardListViewModel()
         viewModel.userSelectStatusList = [
             .init(
-                id: "1",
+                id: 0,
                 user: CardListView_Previews.me,
                 themeColor: .navy,
                 selectedCard: CardView_Previews.card1),
             .init(
-                id: "2",
+                id: 1,
                 user: CardListView_Previews.user1,
                 themeColor: .indigo,
                 selectedCard: CardView_Previews.card2),
@@ -218,15 +218,15 @@ struct CardListView_Previews: PreviewProvider {
     static let me: UserViewModel = .init(
         id: "1",
         name: "ロイド フォージャ",
-        selectedCardId: "")
+        selectedCardId: nil)
     static let user1: UserViewModel = .init(
         id: "2",
         name: "ヨル フォージャ",
-        selectedCardId: "")
+        selectedCardId: nil)
     static let user2: UserViewModel = .init(
         id: "3",
         name: "アーニャ フォージャ",
-        selectedCardId: "")
+        selectedCardId: nil)
     static let room1: CurrentRoomViewModel = .init(
         id: 1,
         userList: [me],

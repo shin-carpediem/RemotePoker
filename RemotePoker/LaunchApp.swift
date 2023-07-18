@@ -19,11 +19,11 @@ struct LaunchApp: View, ModuleAssembler {
         self.viewModel = viewModel
     }
     
-    // MARK: - Private
+    // MARK: Private
     
     @ObservedObject private var viewModel: LaunchAppViewModel
     
-    // MARK: - View
+    // MARK: View
     
     var body: some View {
         switch viewModel.launchScreen {
@@ -39,7 +39,7 @@ struct LaunchApp: View, ModuleAssembler {
     }
 }
 
-// MARK: - Preview
+// MARK: Preview
 
 struct LaunchApp_Previews: PreviewProvider {
     static var previews: some View {

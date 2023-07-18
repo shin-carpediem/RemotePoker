@@ -11,7 +11,7 @@ struct CardView: View {
     var isSelected: Bool
     var selectCardHandler: ((CardPackageViewModel.Card) -> Void)?
 
-    // MARK: - View
+    // MARK: View
 
     var body: some View {
         Button(action: {
@@ -32,7 +32,7 @@ struct CardView: View {
     }
 }
 
-// MARK: - Preview
+// MARK: Preview
 
 struct CardView_Previews: PreviewProvider {
     private static let defaultCardList = CardPackageModelToViewModelTranslator().translate(
