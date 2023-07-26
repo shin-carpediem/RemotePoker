@@ -45,7 +45,8 @@ public struct CardListView: View {
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(trailing: settingButton)
+        // TODO: 不具合が解消されたら、復帰させる。
+        // .navigationBarItems(trailing: settingButton)
         .modifier(Overlay(isShown: $viewModel.isBannerShown, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
