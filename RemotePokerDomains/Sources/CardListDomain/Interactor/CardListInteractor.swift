@@ -42,14 +42,9 @@ extension CardListInteractor: CardListUseCase {
         dependency.currentRoomRepository.room
             .combineLatest(dependency.currentRoomRepository.userList)
             .sink { [weak self] roomEntity, userEntityList in
-                let cardPackage: CardPackageEntity = roomEntity.cardPackage
-                let cardList: [CardPackageModel.Card] = cardPackage.cardList.map { CardPackageModel.Card(id: $0.id, estimatePoint: $0.estimatePoint, index: $0.index) }
-                let userList: [UserModel] = userEntityList.map {
-                    UserModel(id: $0.id, name: $0.name, selectedCardId: $0.selectedCardId)
-                }
-                let model = CurrentRoomModel(id: roomEntity.id, userList: userList, cardPackage: .init(id: cardPackage.id, themeColor: cardPackage.themeColor, cardList: cardList))
-
-                self?.dependency.output?.outputRoom(model)
+                self?.dependency.output?.outputRoom(.init(id: roomEntity.id,
+                                                          userList: userEntityList.map { UserModel(id: $0.id, name: $0.name, selectedCardId: $0.selectedCardId) },
+                                                          cardPackage: .init(id: roomEntity.cardPackage.id, themeColor: roomEntity.cardPackage.themeColor, cardList: roomEntity.cardPackage.cardList.map { CardPackageModel.Card(id: $0.id, estimatePoint: $0.estimatePoint, index: $0.index) })))
             }
             .store(in: &cancellables)
     }
@@ -70,10 +65,7 @@ extension CardListInteractor: CardListUseCase {
                     ()
                 }
             }, receiveValue: { [weak self] in
-                let model = UserModel(
-                    id: $0.id, name: $0.name,
-                    selectedCardId: $0.selectedCardId)
-                self?.dependency.output?.outputCurrentUser(model)
+                self?.dependency.output?.outputCurrentUser(.init(id: $0.id, name: $0.name, selectedCardId: $0.selectedCardId))
             })
             .store(in: &cancellables)
     }

@@ -123,8 +123,7 @@ extension CardListView {
             .first(where: {
                 $0.user.id == appConfig.currentUser.id
             })
-        let estimatePoint: String = currentUserSelectStatus?.selectedCard?.estimatePoint ?? ""
-        return Text(estimatePoint)
+        return Text(currentUserSelectStatus?.selectedCard?.estimatePoint ?? "")
             .foregroundColor(.gray)
             .font(.title)
     }
@@ -192,72 +191,5 @@ extension CardListView: ModuleAssembler {
                 }
             }
         ) { EmptyView() }
-    }
-}
-
-// MARK: Preview
-
-struct CardListView_Previews: PreviewProvider {
-    static let selectedCardListView: CardListViewModel = {
-        let viewModel = CardListViewModel()
-        viewModel.userSelectStatusList = [
-            .init(
-                id: 0,
-                user: CardListView_Previews.me,
-                themeColor: .navy,
-                selectedCard: CardView_Previews.card1),
-            .init(
-                id: 1,
-                user: CardListView_Previews.user1,
-                themeColor: .indigo,
-                selectedCard: CardView_Previews.card2),
-        ]
-        viewModel.isSelectedCardListShown = true
-        return viewModel
-    }()
-    static let me: UserViewModel = .init(
-        id: "1",
-        name: "ロイド フォージャ",
-        selectedCardId: nil)
-    static let user1: UserViewModel = .init(
-        id: "2",
-        name: "ヨル フォージャ",
-        selectedCardId: nil)
-    static let user2: UserViewModel = .init(
-        id: "3",
-        name: "アーニャ フォージャ",
-        selectedCardId: nil)
-    static let room1: CurrentRoomViewModel = .init(
-        id: 1,
-        userList: [me],
-        cardPackage: CardPackageModelToViewModelTranslator().translate(.defaultCardPackage))
-    static let room2: CurrentRoomViewModel = .init(
-        id: 2,
-        userList: [me, user1],
-        cardPackage: CardPackageModelToViewModelTranslator().translate(.defaultCardPackage))
-
-    static var previews: some View {
-        Group {
-            CardListView(
-                dependency: .init(
-                    presenter: CardListPresenter()),
-                viewModel: .init()
-            )
-            .previewDisplayName("カード一覧画面/ユーザーが自分のみ")
-
-            CardListView(
-                dependency: .init(
-                    presenter: CardListPresenter()),
-                viewModel: .init()
-            )
-            .previewDisplayName("カード一覧画面/ユーザーが2名以上")
-
-            CardListView(
-                dependency: .init(
-                    presenter: CardListPresenter()),
-                viewModel: selectedCardListView
-            )
-            .previewDisplayName("選択済みカード一覧画面")
-        }
     }
 }

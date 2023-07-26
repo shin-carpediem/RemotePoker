@@ -9,7 +9,7 @@ public class CardListViewModel: ObservableObject, ViewModel {
     @Published public var room = CurrentRoomViewModel(
         id: 0, userList: [UserViewModel](),
         cardPackage: CardPackageModelToViewModelTranslator().translate(
-            .defaultCardPackage))
+            from: .defaultCardPackage))
 
     @Published public var title = ""
 

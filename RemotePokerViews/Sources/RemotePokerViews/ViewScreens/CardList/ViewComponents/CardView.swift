@@ -36,7 +36,7 @@ struct CardView: View {
 
 struct CardView_Previews: PreviewProvider {
     private static let defaultCardList = CardPackageModelToViewModelTranslator().translate(
-        .defaultCardPackage
+        from: .defaultCardPackage
     ).cardList
     static let card1 = defaultCardList.first!
     static let card2 = defaultCardList[

@@ -39,11 +39,11 @@ struct OpenCardView: View {
             .cornerRadius(10)
     }
 
-    /// ユーザーが未選択時のビュー
+    /// カード未選択時のカードビュー
     private var userNotSelectedView: some View {
         Text("Not Selected Yet")
             .frame(width: 150, height: 100)
-            .font(.system(size: 16))
+            .font(.body)
             .foregroundColor(.black)
             .background(.gray)
             .cornerRadius(10)

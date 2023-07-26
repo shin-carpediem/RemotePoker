@@ -6,5 +6,5 @@ public protocol Translator {
 
     /// 型変換する
     /// - parameter input: 入力する型
-    func translate(_ input: Input) -> Output
+    func translate(from input: Input) -> Output
 }

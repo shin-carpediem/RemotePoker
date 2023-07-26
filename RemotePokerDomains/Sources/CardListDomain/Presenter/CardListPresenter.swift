@@ -83,7 +83,7 @@ extension CardListPresenter: CardListInteractorOutput {
             let userList: [UserViewModel] = room.userList.map {
                 UserViewModel(id: $0.id, name: $0.name, selectedCardId: $0.selectedCardId)
             }
-            dependency.viewModel?.room = CurrentRoomViewModel(id: room.id, userList: userList, cardPackage: CardPackageModelToViewModelTranslator().translate(room.cardPackage))
+            dependency.viewModel?.room = CurrentRoomViewModel(id: room.id, userList: userList, cardPackage: CardPackageModelToViewModelTranslator().translate(from: room.cardPackage))
             
             showTitle(userList: userList)
             updateUserSelectStatusList(userList: userList)
@@ -143,7 +143,6 @@ extension CardListPresenter {
 
     private func showTitle(userList: [UserViewModel]) {
         let otherUsersCount: Int = userList.count - 1
-        
         Task { @MainActor in
             dependency.viewModel?.title = "\(appConfig.currentUser.name) \(otherUsersCount >= 1 ? "と \(String(otherUsersCount))名" : "")が ルームID\(appConfig.currentRoom.id) に入室中"
         }
@@ -155,14 +154,13 @@ extension CardListPresenter {
             else {
                 fatalError()
             }
-            let selectedCard: CardPackageViewModel.Card? = cardPackage.cardList.first(where: {
-                $0.id == user.selectedCardId
-            })
             return UserSelectStatusViewModel(
                 id: Int.random(in: 0...9999),
                 user: user,
                 themeColor: cardPackage.themeColor,
-                selectedCard: selectedCard)
+                selectedCard: cardPackage.cardList.first(where: {
+                    $0.id == user.selectedCardId
+                }))
         }
 
         Task { @MainActor in
