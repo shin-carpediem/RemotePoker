@@ -5,7 +5,7 @@ import ViewModel
 public final class SettingPresenter: DependencyInjectable {
     public init() {}
 
-    // MARK: DependencyInjectable
+    // MARK: - DependencyInjectable
 
     public struct Dependency {
         public var useCase: SettingUseCase
@@ -41,7 +41,7 @@ extension SettingPresenter: SettingPresentation {
         updateLoader(isShown: false)
     }
 
-    // MARK: Presentation
+    // MARK: - Presentation
 
     public func viewDidLoad() {}
 

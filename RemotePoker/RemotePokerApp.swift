@@ -6,7 +6,7 @@ import Shared
 import SwiftUI
 
 @main struct RemotePokerApp: App, ModuleAssembler {
-    // MARK: App
+    // MARK: - App
 
     class AppDelegate: NSObject, UIApplicationDelegate {
         // MARK: UIApplicationDelegate
@@ -48,7 +48,7 @@ import SwiftUI
         }
     }
     
-    // MARK: Private
+    // MARK: - Private
     
     private static var isUserSignedIn: Bool? {
         didSet {
@@ -59,7 +59,7 @@ import SwiftUI
     
     private static var viewModel = LaunchAppViewModel()
 
-    // MARK: View
+    // MARK: - View
 
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {

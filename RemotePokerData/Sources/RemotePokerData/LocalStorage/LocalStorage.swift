@@ -13,7 +13,7 @@ public final class LocalStorage {
         set { UserDefaults.standard.set(newValue, forKey: currentRoomIdKey) }
     }
     
-    // MARK: Private
+    // MARK: - Private
 
     private init() {}
 

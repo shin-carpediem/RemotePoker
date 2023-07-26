@@ -4,7 +4,7 @@ import Shared
 import SwiftUI
 
 public struct EnterRoomView: View {
-    // MARK: Dependency
+    // MARK: - Dependency
 
     struct Dependency {
         var presenter: EnterRoomPresentation
@@ -16,7 +16,7 @@ public struct EnterRoomView: View {
         self.dependency.presenter.viewDidLoad()
     }
 
-    // MARK: Private
+    // MARK: - Private
 
     private var dependency: Dependency!
     @ObservedObject private var viewModel: EnterRoomViewModel
@@ -28,7 +28,7 @@ public struct EnterRoomView: View {
         return appConfig
     }
     
-    // MARK: View
+    // MARK: - View
 
     public var body: some View {
         NavigationView {

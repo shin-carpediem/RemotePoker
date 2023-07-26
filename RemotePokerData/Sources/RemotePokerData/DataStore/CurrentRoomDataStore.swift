@@ -8,7 +8,7 @@ public final class CurrentRoomDataStore: CurrentRoomRepository {
         self.roomId = roomId
     }
 
-    // MARK: RoomRepository
+    // MARK: - RoomRepository
 
     public var userList: PassthroughSubject<[UserEntity], Never> {
         let subject = PassthroughSubject<[UserEntity], Never>()
@@ -101,7 +101,7 @@ public final class CurrentRoomDataStore: CurrentRoomRepository {
         room.send(completion: .finished)
     }
 
-    // MARK: Private
+    // MARK: - Private
 
     private let userId: String
     private let roomId: String

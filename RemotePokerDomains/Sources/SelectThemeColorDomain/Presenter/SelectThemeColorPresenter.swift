@@ -7,7 +7,7 @@ import ViewModel
 public final class SelectThemeColorPresenter: DependencyInjectable {
     public init() {}
 
-    // MARK: DependencyInjectable
+    // MARK: - DependencyInjectable
 
     public struct Dependency {
         public var repository: CurrentRoomRepository
@@ -44,7 +44,7 @@ extension SelectThemeColorPresenter: SelectThemeColorPresentation {
         }
     }
 
-    // MARK: Presentation
+    // MARK: - Presentation
 
     public func viewDidLoad() {
         showColorList()

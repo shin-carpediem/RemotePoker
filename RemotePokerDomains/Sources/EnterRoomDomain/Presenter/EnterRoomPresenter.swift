@@ -9,7 +9,7 @@ public final class EnterRoomPresenter: DependencyInjectable
 {
     public init() {}
 
-    // MARK: DependencyInjectable
+    // MARK: - DependencyInjectable
 
     public struct Dependency {
         public var useCase: EnterRoomUseCase
@@ -47,7 +47,7 @@ extension EnterRoomPresenter: EnterRoomPresentation {
         }
     }
 
-    // MARK: Presentation
+    // MARK: - Presentation
 
     public func viewDidLoad() {}
 

@@ -7,7 +7,7 @@ public class SettingViewModel: ObservableObject, ViewModel {
 
     @Published public var willPushSelectThemeColorView = false
 
-    // MARK: ViewModel
+    // MARK: - ViewModel
 
     @Published public var isButtonsEnabled = true
     @Published public var isLoaderShown = false

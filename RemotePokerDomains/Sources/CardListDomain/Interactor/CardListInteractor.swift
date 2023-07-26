@@ -6,7 +6,7 @@ import RemotePokerData
 public final class CardListInteractor: DependencyInjectable {
     public init() {}
 
-    // MARK: DependencyInjectable
+    // MARK: - DependencyInjectable
 
     public struct Dependency {
         public var enterRoomRepository: EnterRoomRepository

@@ -31,7 +31,7 @@ public final class FirebaseEnvironment {
         }
     }
 
-    // MARK: Private
+    // MARK: - Private
 
     private enum Environment {
         /// 開発環境

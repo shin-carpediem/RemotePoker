@@ -19,7 +19,7 @@ public class CardListViewModel: ObservableObject, ViewModel {
 
     @Published public var willPushSettingView = false
 
-    // MARK: ViewModel
+    // MARK: - ViewModel
 
     @Published public var isButtonsEnabled = true
     @Published public var isLoaderShown = false

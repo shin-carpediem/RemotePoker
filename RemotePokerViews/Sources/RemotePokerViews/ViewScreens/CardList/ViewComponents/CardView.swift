@@ -11,7 +11,7 @@ struct CardView: View {
     var isSelected: Bool
     var selectCardHandler: ((CardPackageViewModel.Card) -> Void)?
 
-    // MARK: View
+    // MARK: - View
 
     var body: some View {
         Button(action: {

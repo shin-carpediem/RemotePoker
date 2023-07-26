@@ -7,7 +7,7 @@ public struct FirestoreRefs {
         self.roomId = roomId
     }
     
-    // MARK: CollectionReference
+    // MARK: - CollectionReference
     
     /// users
     public var usersCollection: CollectionReference {
@@ -24,7 +24,7 @@ public struct FirestoreRefs {
         cardPackagesCollection.document(cardPackageId).collection("cards")
     }
 
-    // MARK: DocumentReference
+    // MARK: - DocumentReference
 
     /// users / { userId }
     public var userDocument: DocumentReference {
@@ -46,7 +46,7 @@ public struct FirestoreRefs {
         cardsCollection(cardPackageId: cardPackageId).document(cardId)
     }
 
-    // MARK: DocumentSnapshot
+    // MARK: - DocumentSnapshot
 
     /// users / { userId }
     public func userSnapshot() async -> DocumentSnapshot? {
@@ -58,7 +58,7 @@ public struct FirestoreRefs {
         try? await roomDocument.getDocument()
     }
 
-    // MARK: Query
+    // MARK: - Query
     
     /// users / { roomId の userIdList }
     public func userListQuery() async -> Query {
@@ -91,7 +91,7 @@ public struct FirestoreRefs {
         cardPackagesCollection.whereField("id", isNotEqualTo: "")
     }
 
-    // MARK: QueryDocumentSnapshot
+    // MARK: - QueryDocumentSnapshot
 
     /// rooms / { roomId } / cardPackages / *
     public func cardPackagesSnapshot() async -> [QueryDocumentSnapshot]? {
@@ -103,7 +103,7 @@ public struct FirestoreRefs {
         try? await cardsCollection(cardPackageId: cardPackageId).getDocuments().documents
     }
 
-    // MARK: Private
+    // MARK: - Private
     
     private var userId: String
     private var roomId: String

@@ -5,13 +5,13 @@ import ViewModel
 struct OpenCardView: View {
     var userSelectStatus: UserSelectStatusViewModel
 
-    // MARK: Private
+    // MARK: - Private
 
     private var selectedCard: CardPackageViewModel.Card? {
         userSelectStatus.selectedCard
     }
 
-    // MARK: View
+    // MARK: - View
 
     var body: some View {
         VStack {

@@ -9,7 +9,7 @@ import ViewModel
 public struct CardListView: View {
     @Environment(\.presentationMode) var presentation
 
-    // MARK: Dependency
+    // MARK: - Dependency
 
     struct Dependency {
         var presenter: CardListPresentation
@@ -21,7 +21,7 @@ public struct CardListView: View {
         self.dependency.presenter.viewDidLoad()
     }
 
-    // MARK: Private
+    // MARK: - Private
 
     private var dependency: Dependency
     @ObservedObject private var viewModel: CardListViewModel
@@ -33,7 +33,7 @@ public struct CardListView: View {
         return appConfig
     }
     
-    // MARK: View
+    // MARK: - View
 
     public var body: some View {
         ZStack {

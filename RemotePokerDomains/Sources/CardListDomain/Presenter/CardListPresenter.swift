@@ -10,7 +10,7 @@ import ViewModel
 public final class CardListPresenter: DependencyInjectable {
     public init() {}
 
-    // MARK: DependencyInjectable
+    // MARK: - DependencyInjectable
 
     public struct Dependency {
         public var useCase: CardListUseCase
@@ -51,7 +51,7 @@ extension CardListPresenter: CardListPresentation {
         pushSettingView()
     }
 
-    // MARK: Presentation
+    // MARK: - Presentation
 
     public func viewDidLoad() {
         updateButtons(isEnabled: false)

@@ -5,7 +5,7 @@ import ViewModel
 public struct SelectThemeColorView: View {
     @Environment(\.presentationMode) var presentation
 
-    // MARK: Dependency
+    // MARK: - Dependency
 
     struct Dependency {
         var presenter: SelectThemeColorPresentation
@@ -17,12 +17,12 @@ public struct SelectThemeColorView: View {
         self.dependency.presenter.viewDidLoad()
     }
 
-    // MARK: Private
+    // MARK: - Private
 
     private var dependency: Dependency
     @ObservedObject private var viewModel: SelectThemeColorViewModel
 
-    // MARK: View
+    // MARK: - View
 
     public var body: some View {
         ZStack {

@@ -9,7 +9,7 @@ public class SelectThemeColorViewModel: ObservableObject, ViewModel {
 
     @Published public var selectedThemeColor: CardPackageThemeColor = .oxblood
 
-    // MARK: ViewModel
+    // MARK: - ViewModel
 
     @Published public var isButtonsEnabled = true
     @Published public var isLoaderShown = false

@@ -5,7 +5,7 @@ import Foundation
 public final class EnterRoomDataStore: EnterRoomRepository {
     public init() {}
 
-    // MARK: EnterRoomRepository
+    // MARK: - EnterRoomRepository
     
     public func createUser(_ user: UserEntity) async -> Result<Void, FirebaseError> {
         do {
@@ -73,7 +73,7 @@ public final class EnterRoomDataStore: EnterRoomRepository {
         }
     }
 
-    // MARK: Private
+    // MARK: - Private
 
     private var firestore: Firestore {
         guard let app = FirebaseEnvironment.shared.app else {

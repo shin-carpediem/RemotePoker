@@ -4,7 +4,7 @@ import os.log
 struct Log {
     static let main = Logger(subsystem: Bundle.main.bundleIdentifier ?? "", category: "main")
     
-    // MARK: Private
+    // MARK: - Private
     
     private init() {}
 }

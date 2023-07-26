@@ -2,7 +2,7 @@ import RemotePokerViews
 import SwiftUI
 
 struct LaunchView: View {
-    // MARK: View
+    // MARK: - View
     
     var body: some View {
         ZStack {

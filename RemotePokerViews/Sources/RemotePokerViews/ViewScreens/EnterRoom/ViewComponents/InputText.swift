@@ -5,7 +5,7 @@ struct InputText: View {
     var text: Binding<String>
     var placeholder: String
 
-    // MARK: View
+    // MARK: - View
 
     var body: some View {
         TextField(placeholder, text: text)

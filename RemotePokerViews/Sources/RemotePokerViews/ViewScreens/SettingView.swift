@@ -4,7 +4,7 @@ import SwiftUI
 public struct SettingView: View {
     @Environment(\.presentationMode) var presentation
 
-    // MARK: Dependency
+    // MARK: - Dependency
 
     struct Dependency {
         var presenter: SettingPresentation
@@ -16,12 +16,12 @@ public struct SettingView: View {
         self.dependency.presenter.viewDidLoad()
     }
 
-    // MARK: Private
+    // MARK: - Private
 
     private var dependency: Dependency
     @ObservedObject private var viewModel: SettingViewModel
 
-    // MARK: View
+    // MARK: - View
 
     public var body: some View {
         ZStack {

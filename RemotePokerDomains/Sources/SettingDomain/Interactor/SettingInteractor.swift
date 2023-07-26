@@ -6,7 +6,7 @@ import Shared
 public final class SettingInteractor: DependencyInjectable {
     public init() {}
 
-    // MARK: DependencyInjectable
+    // MARK: - DependencyInjectable
 
     public struct Dependency {
         public var repository: CurrentRoomRepository
