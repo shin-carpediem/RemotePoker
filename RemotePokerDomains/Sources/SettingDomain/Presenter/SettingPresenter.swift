@@ -21,29 +21,7 @@ public final class SettingPresenter: DependencyInjectable {
         self.dependency = dependency
     }
 
-    // MARK: - Private
-
     private var dependency: Dependency!
-
-    private func disableButton(_ disabled: Bool) {
-        Task { @MainActor in
-            dependency.viewModel?.isButtonEnabled = !disabled
-        }
-    }
-
-    private func showLoader(_ show: Bool) {
-        Task { @MainActor in
-            dependency.viewModel?.isShownLoader = show
-        }
-    }
-
-    // MARK: - Router
-
-    private func pushSelectThemeColorView() {
-        Task { @MainActor in
-            dependency.viewModel?.willPushSelectThemeColorView = true
-        }
-    }
 }
 
 // MARK: - SettingPresentation
@@ -53,14 +31,14 @@ extension SettingPresenter: SettingPresentation {
         pushSelectThemeColorView()
     }
 
-    public func didTapLeaveRoomButton() {
-        disableButton(true)
-        showLoader(true)
-        Task {
-            await dependency.useCase.leaveRoom()
-            disableButton(false)
-            showLoader(false)
-        }
+    public func didTapLeaveRoomButton() async {
+        updateButtons(isEnabled: false)
+        updateLoader(isShown: true)
+
+        await dependency.useCase.leaveRoom()
+
+        updateButtons(isEnabled: true)
+        updateLoader(isShown: false)
     }
 
     // MARK: - Presentation
@@ -79,7 +57,7 @@ extension SettingPresenter: SettingInteractorOutput {
         Task { @MainActor in
             dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
                 type: .onSuccess, text: message)
-            dependency.viewModel?.isShownBanner = true
+            dependency.viewModel?.isBannerShown = true
         }
     }
 
@@ -87,7 +65,29 @@ extension SettingPresenter: SettingInteractorOutput {
         Task { @MainActor in
             dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
                 type: .onFailure, text: message)
-            dependency.viewModel?.isShownBanner = true
+            dependency.viewModel?.isBannerShown = true
+        }
+    }
+}
+
+// MARK: - Private
+
+extension SettingPresenter {
+    private func updateButtons(isEnabled: Bool) {
+        Task { @MainActor in
+            dependency.viewModel?.isButtonsEnabled = isEnabled
+        }
+    }
+
+    private func updateLoader(isShown: Bool) {
+        Task { @MainActor in
+            dependency.viewModel?.isLoaderShown = isShown
+        }
+    }
+    
+    private func pushSelectThemeColorView() {
+        Task { @MainActor in
+            dependency.viewModel?.willPushSelectThemeColorView = true
         }
     }
 }

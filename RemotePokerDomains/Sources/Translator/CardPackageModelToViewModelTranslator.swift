@@ -3,7 +3,7 @@ import Protocols
 import SwiftUI
 import ViewModel
 
-public struct CardPackageModelToCardPackageViewModelTranslator: Translator {
+public struct CardPackageModelToViewModelTranslator: Translator {
     public init() {}
 
     // MARK: - Translator
@@ -11,22 +11,24 @@ public struct CardPackageModelToCardPackageViewModelTranslator: Translator {
     public typealias Input = CardPackageModel
     public typealias Output = CardPackageViewModel
 
-    public func translate(_ input: Input) -> Output {
-        let themeColor = CardPackageThemeColor(rawValue: input.themeColor) ?? .oxblood
-        let cardList: [CardPackageViewModel.Card] = input.cardList.map { card in
-            CardPackageViewModel.Card(
-                id: card.id,
-                point: card.point,
-                index: card.index,
-                fontColor: applyFontColor(toIndex: card.index),
-                backgroundColor: applyBackgroundColor(
-                    toIndex: card.index,
-                    with: themeColor))
+    public func translate(from input: Input) -> Output {
+        guard let themeColor = CardPackageThemeColor(rawValue: input.themeColor) else {
+            // TODO: 選択したカラーが変更されない問題がある。それを解決しようと、ここを通ったらエラーになるようにしている。現状、ここを通ってしまう。
+            fatalError()
         }
         return CardPackageViewModel(
             id: input.id,
             themeColor: themeColor,
-            cardList: cardList)
+            cardList: input.cardList.map {
+                CardPackageViewModel.Card(
+                    id: $0.id,
+                    estimatePoint: $0.estimatePoint,
+                    index: $0.index,
+                    fontColor: applyFontColor(toIndex: $0.index),
+                    backgroundColor: applyBackgroundColor(
+                        toIndex: $0.index,
+                        with: themeColor))
+            })
     }
 
     // MARK: - Private

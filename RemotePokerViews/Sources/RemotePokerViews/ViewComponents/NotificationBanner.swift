@@ -2,9 +2,7 @@ import SwiftUI
 import ViewModel
 
 public struct NotificationBanner: View {
-    /// バナーを表示するか
     @Binding public var isShown: Bool
-
     public let viewModel: NotificationBannerViewModel
 
     public init(isShown: Binding<Bool>, viewModel: NotificationBannerViewModel) {
@@ -14,7 +12,6 @@ public struct NotificationBanner: View {
 
     // MARK: - Private
 
-    /// バナーを非表示にする
     @MainActor private func hideBanner() {
         isShown = false
     }
@@ -41,7 +38,6 @@ public struct NotificationBanner: View {
         }
     }
 
-    /// バナーView
     private var banner: some View {
         HStack {
             Image(systemName: viewModel.iconName)

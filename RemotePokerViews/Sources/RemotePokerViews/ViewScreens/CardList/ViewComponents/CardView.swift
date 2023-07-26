@@ -6,13 +6,9 @@ import ViewModel
 
 struct CardView: View {
     var card: CardPackageViewModel.Card
-
     var themeColor: CardPackageThemeColor
-
     var isEnabled: Bool
-
     var isSelected: Bool
-
     var selectCardHandler: ((CardPackageViewModel.Card) -> Void)?
 
     // MARK: - View
@@ -21,7 +17,7 @@ struct CardView: View {
         Button(action: {
             selectCardHandler?(card)
         }) {
-            Text(card.point)
+            Text(card.estimatePoint)
                 .frame(width: 150, height: 100)
                 .font(.largeTitle)
                 .foregroundColor(card.fontColor)
@@ -39,52 +35,48 @@ struct CardView: View {
 // MARK: - Preview
 
 struct CardView_Previews: PreviewProvider {
-    static let defaultCardList = CardPackageModelToCardPackageViewModelTranslator().translate(
-        .defaultCardPackage
+    private static let defaultCardList = CardPackageModelToViewModelTranslator().translate(
+        from: .defaultCardPackage
     ).cardList
-
-    static let card1: CardPackageViewModel.Card = defaultCardList.first!
-
-    static let card2: CardPackageViewModel.Card = defaultCardList[
+    static let card1 = defaultCardList.first!
+    static let card2 = defaultCardList[
         Int(floor(CGFloat((card1.index + card3.index)) / 2))]
-
-    static let card3: CardPackageViewModel.Card = defaultCardList.last!
+    static let card3 = defaultCardList.last!
 
     static var previews: some View {
-        Group {
+        VStack {
+            Text("薄い色")
             CardView(
                 card: card1,
                 themeColor: .bubblegum,
                 isEnabled: true,
                 isSelected: false
             )
-            .previewDisplayName("色/薄い")
 
+            Text("中間の色")
             CardView(
                 card: card2,
                 themeColor: .bubblegum,
                 isEnabled: true,
                 isSelected: false
             )
-            .previewDisplayName("色/中間")
 
+            Text("濃い色")
             CardView(
                 card: card3,
                 themeColor: .bubblegum,
                 isEnabled: true,
                 isSelected: false
             )
-            .previewDisplayName("色/濃い")
 
+            Text("選択されている")
             CardView(
                 card: card1,
                 themeColor: .bubblegum,
                 isEnabled: true,
                 isSelected: true
             )
-            .previewDisplayName("選択されている")
         }
         .padding()
-        .previewLayout(.sizeThatFits)
     }
 }

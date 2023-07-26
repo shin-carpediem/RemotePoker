@@ -2,11 +2,8 @@ import Neumorphic
 import SwiftUI
 
 struct InputText: View {
-    /// プレースホルダー
-    var placeholder: String
-
-    /// テキスト
     var text: Binding<String>
+    var placeholder: String
 
     // MARK: - View
 
@@ -32,10 +29,12 @@ struct InputText: View {
 
 struct InputText_Previews: PreviewProvider {
     static var previews: some View {
-        InputText(placeholder: "Name", text: .constant(""))
-            .previewDisplayName("入力フォームテキスト/入力なし")
-
-        InputText(placeholder: "Name", text: .constant("This is input Name"))
-            .previewDisplayName("入力フォームテキスト/入力あり")
+        VStack {
+            Text("入力なし")
+            InputText(text: .constant(""), placeholder: "Name")
+            
+            Text("入力あり")
+            InputText(text: .constant("This is input Name"), placeholder: "Name")
+        }
     }
 }

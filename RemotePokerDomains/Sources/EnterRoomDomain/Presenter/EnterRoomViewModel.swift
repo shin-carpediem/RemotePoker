@@ -13,17 +13,13 @@ public final class EnterRoomViewModel: ObservableObject, ViewModel {
 
     @Published public private(set) var isInputFormValid = true
 
-    public var inputFormvalidatedMessage: String {
-        isInputFormValid ? "数字が新しければ新しいルームが作られます" : "6文字以下の名前と4桁の数字が必要です"
-    }
-
     @Published public var willPushCardListView = false
 
     // MARK: - ViewModel
 
-    @Published public var isButtonEnabled = true
-    @Published public var isShownLoader = false
-    @Published public var isShownBanner = false
+    @Published public var isButtonsEnabled = true
+    @Published public var isLoaderShown = false
+    @Published public var isBannerShown = false
     @Published public var bannerMessgage = NotificationBannerViewModel(type: .onSuccess, text: "")
 
     // MARK: - Private

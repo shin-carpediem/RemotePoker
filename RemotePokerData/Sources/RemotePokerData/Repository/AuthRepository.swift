@@ -1,10 +1,10 @@
 import Combine
 
 public protocol AuthRepository: AnyObject {
-    /// ログインする
+    /// サインインする
     /// - returns: ユーザーID
-    func signIn() -> Future<String, Never>
+    func signIn() -> Future<String, FirebaseError>
 
-    /// ログアウトする
+    /// サインアウトする
     func signOut() -> Result<Void, FirebaseError>
 }

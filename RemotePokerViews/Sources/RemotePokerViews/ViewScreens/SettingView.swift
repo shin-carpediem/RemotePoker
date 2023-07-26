@@ -1,28 +1,24 @@
 import SettingDomain
 import SwiftUI
 
-public struct SettingView: View, ModuleAssembler {
+public struct SettingView: View {
     @Environment(\.presentationMode) var presentation
 
     // MARK: - Dependency
 
     struct Dependency {
         var presenter: SettingPresentation
-        var roomId: Int
-        var cardPackageId: String
     }
 
     init(dependency: Dependency, viewModel: SettingViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
-
         self.dependency.presenter.viewDidLoad()
     }
 
     // MARK: - Private
 
     private var dependency: Dependency
-
     @ObservedObject private var viewModel: SettingViewModel
 
     // MARK: - View
@@ -31,10 +27,10 @@ public struct SettingView: View, ModuleAssembler {
         ZStack {
             contentView
             navigationForSelectThemeColorView
-            if viewModel.isShownLoader { ProgressView() }
+            if viewModel.isLoaderShown { ProgressView() }
         }
         .navigationTitle("設定")
-        .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
+        .modifier(Overlay(isShown: $viewModel.isBannerShown, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
@@ -42,26 +38,33 @@ public struct SettingView: View, ModuleAssembler {
     private var contentView: some View {
         VStack(alignment: .leading) {
             List {
-                selecteThemeColorButton
-                    .disabled(!viewModel.isButtonEnabled)
-                leaveButton
-                    .disabled(!viewModel.isButtonEnabled)
+                Group {
+                    // TODO: 不具合が解消されたら、復帰させる。
+//                    selecteThemeColorButton
+                    leaveButton
+                }
+                .disabled(!viewModel.isButtonsEnabled)
             }
             .listBackground(Colors.background)
             .listStyle(.insetGrouped)
         }
     }
+}
 
+// MARK: - View Components
+
+extension SettingView {
     /// テーマカラー選択ボタン
     private var selecteThemeColorButton: some View {
         Button(action: {
             dependency.presenter.didTapSelectThemeColorButton()
         }) {
             HStack {
-                Image(systemName: "heart")
-                    .foregroundColor(.gray)
-                Text("テーマカラーの変更")
-                    .foregroundColor(.gray)
+                Group {
+                    Image(systemName: "heart")
+                    Text("テーマカラーの変更")
+                }
+                .foregroundColor(.gray)
             }
         }
     }
@@ -69,33 +72,35 @@ public struct SettingView: View, ModuleAssembler {
     /// 退出ボタン
     private var leaveButton: some View {
         Button(action: {
-            dependency.presenter.didTapLeaveRoomButton()
-            presentation.wrappedValue.dismiss()
+            Task {
+                await dependency.presenter.didTapLeaveRoomButton()
+                presentation.wrappedValue.dismiss()
+            }
         }) {
             HStack {
-                Image(systemName: "rectangle.portrait.and.arrow.forward")
-                    .foregroundColor(.gray)
-                Text("ルームから退出")
-                    .foregroundColor(.gray)
+                Group {
+                    Image(systemName: "rectangle.portrait.and.arrow.forward")
+                    Text("ルームから退出")
+                }
+                .foregroundColor(.gray)
             }
         }
     }
 
     /// 通知バナー
     private var notificationBanner: NotificationBanner {
-        .init(isShown: $viewModel.isShownBanner, viewModel: viewModel.bannerMessgage)
+        .init(isShown: $viewModel.isBannerShown, viewModel: viewModel.bannerMessgage)
     }
+}
 
-    // MARK: - Router
+// MARK: - ModuleAssembler
 
-    /// テーマカラー選択画面へ遷移させるナビゲーション
+extension SettingView: ModuleAssembler {
     private var navigationForSelectThemeColorView: some View {
         NavigationLink(
             isActive: $viewModel.willPushSelectThemeColorView,
             destination: {
-                assembleSelectThemeColorModule(
-                    roomId: dependency.roomId,
-                    cardPackageId: dependency.cardPackageId)
+                assembleSelectThemeColorModule()
             }
         ) { EmptyView() }
     }
@@ -106,9 +111,8 @@ public struct SettingView: View, ModuleAssembler {
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
         SettingView(
-            dependency: .init(presenter: SettingPresenter(), roomId: 1, cardPackageId: "1"),
+            dependency: .init(presenter: SettingPresenter()),
             viewModel: .init()
         )
-        .previewDisplayName("設定画面")
     }
 }

@@ -3,7 +3,6 @@ import SwiftUI
 import ViewModel
 
 struct OpenCardView: View {
-    /// ユーザーのカード選択状況
     var userSelectStatus: UserSelectStatusViewModel
 
     // MARK: - Private
@@ -17,10 +16,10 @@ struct OpenCardView: View {
     var body: some View {
         VStack {
             userName
-            if selectedCard != nil {
-                selectedCardView
-            } else {
+            if selectedCard == nil {
                 userNotSelectedView
+            } else {
+                selectedCardView
             }
         }
     }
@@ -32,7 +31,7 @@ struct OpenCardView: View {
 
     /// 選択されたカードビュー
     private var selectedCardView: some View {
-        Text(selectedCard!.point)
+        Text(selectedCard!.estimatePoint)
             .frame(width: 150, height: 100)
             .font(.largeTitle)
             .foregroundColor(selectedCard!.fontColor)
@@ -40,11 +39,11 @@ struct OpenCardView: View {
             .cornerRadius(10)
     }
 
-    /// ユーザーが未選択時のビュー
+    /// カード未選択時のカードビュー
     private var userNotSelectedView: some View {
         Text("Not Selected Yet")
             .frame(width: 150, height: 100)
-            .font(.system(size: 16))
+            .font(.body)
             .foregroundColor(.black)
             .background(.gray)
             .cornerRadius(10)
@@ -55,26 +54,25 @@ struct OpenCardView: View {
 
 struct OpenCardView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
+        VStack {
+            Text("選択されたカード")
             OpenCardView(
                 userSelectStatus: .init(
-                    id: "0",
-                    user: CardListView_Previews.me,
+                    id: 0,
+                    user: .init(id: "0", name: "ユーザー1", selectedCardId: CardView_Previews.card2.id),
                     themeColor: .buttercup,
                     selectedCard: CardView_Previews.card2)
             )
-            .previewDisplayName("選択されたカード")
 
+            Text("カード未選択")
             OpenCardView(
                 userSelectStatus: .init(
-                    id: "0",
-                    user: CardListView_Previews.me,
+                    id: 0,
+                    user: .init(id: "0", name: "ユーザー1", selectedCardId: nil),
                     themeColor: .buttercup,
                     selectedCard: nil)
             )
-            .previewDisplayName("カード未選択")
         }
         .padding()
-        .previewLayout(.sizeThatFits)
     }
 }

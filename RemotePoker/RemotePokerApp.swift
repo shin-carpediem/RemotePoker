@@ -1,13 +1,15 @@
+import Model
 import RemotePokerData
 import RemotePokerDomains
 import RemotePokerViews
+import Shared
 import SwiftUI
 
 @main struct RemotePokerApp: App, ModuleAssembler {
     // MARK: - App
 
     class AppDelegate: NSObject, UIApplicationDelegate {
-        // MARK: - UIApplicationDelegate
+        // MARK: UIApplicationDelegate
 
         func application(
             _ application: UIApplication,
@@ -15,9 +17,47 @@ import SwiftUI
                 nil
         ) -> Bool {
             FirebaseEnvironment.shared.setup()
-            return true
+            Task { @MainActor in
+                isUserSignedIn = await checkUserSignedIn()
+
+                let currentUser = UserModel(
+                    id: LocalStorage.shared.currentUserId,
+                    name: "",
+                    selectedCardId: nil
+                )
+                AppConfigManager.appConfig = .init(
+                    currentUser: currentUser,
+                    currentRoom: .init(id: LocalStorage.shared.currentRoomId, userList: [currentUser], cardPackage: .defaultCardPackage)
+                )
+                
+                return true
+            }
+            // ここを通ることはない。
+            return false
+        }
+        
+        // MARK: Private
+        
+        private func checkUserSignedIn() async -> Bool {
+            do {
+                let userId: String = try await AuthDataStore.shared.signIn().value
+                return LocalStorage.shared.currentUserId == userId
+            } catch (_) {
+                return false
+            }
         }
     }
+    
+    // MARK: - Private
+    
+    private static var isUserSignedIn: Bool? {
+        didSet {
+            guard let isUserSignedIn else { return }
+            Self.viewModel.launchScreen = isUserSignedIn ? .cardListView : .enterRoomView
+        }
+    }
+    
+    private static var viewModel = LaunchAppViewModel()
 
     // MARK: - View
 
@@ -25,20 +65,7 @@ import SwiftUI
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                let currentRoomId: Int = LocalStorage.shared.currentRoomId
-                let isUserSignedIn: Bool = !(currentRoomId == 0)
-                if isUserSignedIn {
-                    // サインイン中(currentUserName、cardPackageIdは後で取得)
-                    assembleCardListModule(
-                        roomId: currentRoomId,
-                        currentUserId: LocalStorage.shared.currentUserId,
-                        currentUserName: "",
-                        cardPackageId: "",
-                        isExisingUser: true)
-                } else {
-                    // サインインしていない
-                    assmebleEnterRoomModule()
-                }
+                LaunchApp(viewModel: Self.viewModel)
             }
             // NavigationViewを使用した際にiPadでは、Master-Detail(Split view)の挙動になっている。
             // そしてMasterとなるViewが配置されていない為、空白のViewが表示されてしまう。

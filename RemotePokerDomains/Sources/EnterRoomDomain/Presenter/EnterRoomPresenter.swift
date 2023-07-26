@@ -2,11 +2,10 @@ import Foundation
 import Model
 import Protocols
 import RemotePokerData
-import Translator
+import Shared
 import ViewModel
 
-public final class EnterRoomPresenter: EnterRoomPresentation,
-    DependencyInjectable
+public final class EnterRoomPresenter: DependencyInjectable
 {
     public init() {}
 
@@ -26,23 +25,18 @@ public final class EnterRoomPresenter: EnterRoomPresentation,
         self.dependency = dependency
     }
 
-    // MARK: - EnterRoomPresentation
+    private var dependency: Dependency!
+}
 
-    public var currentUser = UserViewModel(
-        id: "",
-        name: "",
-        currentRoomId: 0,
-        selectedCardId: "")
+// MARK: - EnterRoomPresentation
 
-    public lazy var currentRoom = RoomViewModel(
-        id: 0, userList: [], cardPackage: translator.translate(.defaultCardPackage))
-
+extension EnterRoomPresenter: EnterRoomPresentation {
     public func didTapEnterRoomButton(inputUserName: String, inputRoomId: String) {
         if let viewModel: EnterRoomViewModel = dependency.viewModel,
             viewModel.isInputFormValid
         {
-            disableButton(true)
-            showLoader(true)
+            updateButtons(isEnabled: false)
+            updateLoader(isShown: true)
 
             Task {
                 guard let roomId = Int(inputRoomId) else {
@@ -60,79 +54,6 @@ public final class EnterRoomPresenter: EnterRoomPresentation,
     public func viewDidResume() {}
 
     public func viewDidSuspend() {}
-
-    // MARK: - Private
-
-    private var dependency: Dependency!
-
-    private static let CFBundleShortVersionString = "CFBundleShortVersionString"
-
-    private let translator = CardPackageModelToCardPackageViewModelTranslator()
-
-    private func setupUserAndRoom(
-        userId: String, userName: String, roomId: Int
-    ) async {
-        currentUser = UserViewModel(
-            id: userId,
-            name: userName,
-            currentRoomId: roomId,
-            selectedCardId: "")
-        LocalStorage.shared.currentRoomId = roomId
-        LocalStorage.shared.currentUserId = userId
-
-        let currentUserModel = UserModel(
-            id: currentUser.id, name: currentUser.name, currentRoomId: currentUser.currentRoomId,
-            selectedCardId: currentUser.selectedCardId)
-        // 入力ルームIDに合致する既存ルームが存在するか確認
-        let roomExist: Bool = await dependency.useCase.checkRoomExist(roomId: roomId)
-        if roomExist {
-            // 既存ルーム
-            currentRoom.id = roomId
-            await dependency.useCase.adduserToRoom(roomId: roomId, user: currentUserModel)
-        } else {
-            // 新規ルーム
-            currentRoom = RoomViewModel(
-                id: roomId,
-                userList: [currentUser],
-                cardPackage: translator.translate(.defaultCardPackage))
-
-            let currentRoomModel = RoomModel(
-                id: currentRoom.id,
-                userList: currentRoom.userList.map {
-                    UserModel(
-                        id: $0.id, name: $0.name, currentRoomId: $0.currentRoomId,
-                        selectedCardId: $0.selectedCardId)
-                },
-                cardPackage: CardPackageModel(
-                    id: currentRoom.cardPackage.id,
-                    themeColor: currentRoom.cardPackage.themeColor.rawValue,
-                    cardList: currentRoom.cardPackage.cardList.map {
-                        CardPackageModel.Card(id: $0.id, point: $0.point, index: $0.index)
-                    }))
-
-            await dependency.useCase.createRoom(room: currentRoomModel)
-        }
-    }
-
-    private func disableButton(_ disabled: Bool) {
-        Task { @MainActor in
-            dependency.viewModel?.isButtonEnabled = !disabled
-        }
-    }
-
-    private func showLoader(_ show: Bool) {
-        Task { @MainActor in
-            dependency.viewModel?.isShownLoader = show
-        }
-    }
-
-    // MARK: - Router
-
-    private func pushCardListView() {
-        Task { @MainActor in
-            dependency.viewModel?.willPushCardListView = true
-        }
-    }
 }
 
 // MARK: - EnterRoomInteractorOutput
@@ -141,8 +62,8 @@ extension EnterRoomPresenter: EnterRoomInteractorOutput {
     public func outputSucceedToSignIn(userId: String, userName: String, roomId: Int) {
         Task { @MainActor in
             await setupUserAndRoom(userId: userId, userName: userName, roomId: roomId)
-            disableButton(false)
-            showLoader(false)
+            updateButtons(isEnabled: true)
+            updateLoader(isShown: false)
             pushCardListView()
         }
     }
@@ -151,7 +72,7 @@ extension EnterRoomPresenter: EnterRoomInteractorOutput {
         Task { @MainActor in
             dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
                 type: .onSuccess, text: message)
-            dependency.viewModel?.isShownBanner = true
+            dependency.viewModel?.isBannerShown = true
         }
     }
 
@@ -159,7 +80,77 @@ extension EnterRoomPresenter: EnterRoomInteractorOutput {
         Task { @MainActor in
             dependency.viewModel?.bannerMessgage = NotificationBannerViewModel(
                 type: .onFailure, text: message)
-            dependency.viewModel?.isShownBanner = true
+            dependency.viewModel?.isBannerShown = true
+        }
+    }
+}
+
+// MARK: - Private
+
+extension EnterRoomPresenter {
+    // TODO: やってる事が多すぎるので、整理する
+    private func setupUserAndRoom(
+        userId: String, userName: String, roomId: Int
+    ) async {
+        let currentUser = UserModel(
+            id: userId,
+            name: userName,
+            selectedCardId: nil)
+        await dependency.useCase.createUser(currentUser)
+        
+        let currentRoom = CurrentRoomModel(
+            id: roomId,
+            userList: [currentUser],
+            cardPackage: .defaultCardPackage)
+
+        AppConfigManager.appConfig = .init(
+            currentUser: currentUser,
+            currentRoom: currentRoom)
+
+        LocalStorage.shared.currentUserId = userId
+        LocalStorage.shared.currentRoomId = roomId
+        
+        // 入力ルームIDに合致する既存ルームが存在するか確認
+        if await dependency.useCase.checkRoomExist(by: roomId) {
+            // 既存ルーム
+            AppConfigManager.appConfig?.currentRoom.id = roomId
+            await dependency.useCase.adduserToRoom(roomId: roomId, userId: userId)
+        } else {
+            // 新規ルーム
+            AppConfigManager.appConfig?.currentRoom = CurrentRoomModel(
+                id: roomId,
+                userList: [currentUser],
+                cardPackage: .defaultCardPackage)
+
+            let currentRoomModel = RoomModel(
+                id: currentRoom.id,
+                userIdList: [userId],
+                cardPackage: CardPackageModel(
+                    id: currentRoom.cardPackage.id,
+                    themeColor: currentRoom.cardPackage.themeColor,
+                    cardList: currentRoom.cardPackage.cardList.map {
+                        CardPackageModel.Card(id: $0.id, estimatePoint: $0.estimatePoint, index: $0.index)
+                    }))
+
+            await dependency.useCase.createRoom(currentRoomModel)
+        }
+    }
+
+    private func updateButtons(isEnabled: Bool) {
+        Task { @MainActor in
+            dependency.viewModel?.isButtonsEnabled = isEnabled
+        }
+    }
+
+    private func updateLoader(isShown: Bool) {
+        Task { @MainActor in
+            dependency.viewModel?.isLoaderShown = isShown
+        }
+    }
+
+    private func pushCardListView() {
+        Task { @MainActor in
+            dependency.viewModel?.willPushCardListView = true
         }
     }
 }

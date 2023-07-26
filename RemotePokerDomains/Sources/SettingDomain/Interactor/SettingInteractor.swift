@@ -1,6 +1,7 @@
 import Foundation
 import Protocols
 import RemotePokerData
+import Shared
 
 public final class SettingInteractor: DependencyInjectable {
     public init() {}
@@ -8,17 +9,14 @@ public final class SettingInteractor: DependencyInjectable {
     // MARK: - DependencyInjectable
 
     public struct Dependency {
-        public var repository: RoomRepository
+        public var repository: CurrentRoomRepository
         public weak var output: SettingInteractorOutput?
-        public var currentUserId: String
 
         public init(
-            repository: RoomRepository, output: SettingInteractorOutput?,
-            currentUserId: String
+            repository: CurrentRoomRepository, output: SettingInteractorOutput?
         ) {
             self.repository = repository
             self.output = output
-            self.currentUserId = currentUserId
         }
     }
 
@@ -26,22 +24,7 @@ public final class SettingInteractor: DependencyInjectable {
         self.dependency = dependency
     }
 
-    // MARK: - Private
-
     private var dependency: Dependency!
-
-    private func resetLocalStorage() {
-        LocalStorage.shared.currentRoomId = 0
-        LocalStorage.shared.currentUserId = ""
-    }
-
-    private func unsubscribeUser() {
-        dependency.repository.unsubscribeUser()
-    }
-
-    private func unsubscribeCardPackages() {
-        dependency.repository.unsubscribeCardPackage()
-    }
 }
 
 // MARK: - SettingUseCase
@@ -49,15 +32,13 @@ public final class SettingInteractor: DependencyInjectable {
 extension SettingInteractor: SettingUseCase {
     public func leaveRoom() async {
         resetLocalStorage()
-        unsubscribeUser()
-        unsubscribeCardPackages()
+        
+        dependency.repository.unsubscribeUserList()
+        dependency.repository.unsubscribeRoom()
 
-        let result: Result<Void, FirebaseError> = await dependency.repository.removeUserFromRoom(
-            userId: dependency.currentUserId)
-        switch result {
+        switch await dependency.repository.removeUserFromRoom() {
         case .success:
-            let signoutResult: Result<Void, FirebaseError> = AuthDataStore.shared.signOut()
-            switch signoutResult {
+            switch AuthDataStore.shared.signOut() {
             case .success:
                 dependency.output?.outputSuccess(message: "ルームから退出しました")
 
@@ -68,5 +49,14 @@ extension SettingInteractor: SettingUseCase {
         case .failure(let error):
             dependency.output?.outputError(error, message: "ルームから退出できませんでした")
         }
+    }
+}
+
+// MARK: - Private
+
+extension SettingInteractor {
+    private func resetLocalStorage() {
+        LocalStorage.shared.currentRoomId = 0
+        LocalStorage.shared.currentUserId = ""
     }
 }

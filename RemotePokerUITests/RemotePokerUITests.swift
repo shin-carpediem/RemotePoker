@@ -1,15 +1,11 @@
 import XCTest
 
 final class RemotePokerUITests: XCTestCase {
-    // MARK: - Override
-
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
 
     override func tearDownWithError() throws {}
-
-    // MARK: - Test
 
     func testExample() throws {
         let app = XCUIApplication()

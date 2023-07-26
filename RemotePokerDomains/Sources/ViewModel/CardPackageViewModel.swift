@@ -1,28 +1,28 @@
 import SwiftUI
 
 public struct CardPackageViewModel: Identifiable {
-    public var id: String
+    public var id: Int
     public var themeColor: CardPackageThemeColor
     public var cardList: [Card]
 
     public struct Card: Identifiable {
-        public var id: String
-        public var point: String
+        public var id: Int
+        public var estimatePoint: String
         public var index: Int
         public var fontColor: Color
         public var backgroundColor: Color
 
-        public init(id: String, point: String, index: Int, fontColor: Color, backgroundColor: Color)
+        public init(id: Int, estimatePoint: String, index: Int, fontColor: Color, backgroundColor: Color)
         {
             self.id = id
-            self.point = point
+            self.estimatePoint = estimatePoint
             self.index = index
             self.fontColor = fontColor
             self.backgroundColor = backgroundColor
         }
     }
 
-    public init(id: String, themeColor: CardPackageThemeColor, cardList: [Card]) {
+    public init(id: Int, themeColor: CardPackageThemeColor, cardList: [Card]) {
         self.id = id
         self.themeColor = themeColor
         self.cardList = cardList

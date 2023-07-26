@@ -10,15 +10,15 @@ public final class CardListInteractor: DependencyInjectable {
 
     public struct Dependency {
         public var enterRoomRepository: EnterRoomRepository
-        public var roomRepository: RoomRepository
+        public var currentRoomRepository: CurrentRoomRepository
         public weak var output: CardListInteractorOutput?
 
         public init(
-            enterRoomRepository: EnterRoomRepository, roomRepository: RoomRepository,
+            enterRoomRepository: EnterRoomRepository, currentRoomRepository: CurrentRoomRepository,
             output: CardListInteractorOutput?
         ) {
             self.enterRoomRepository = enterRoomRepository
-            self.roomRepository = roomRepository
+            self.currentRoomRepository = currentRoomRepository
             self.output = output
         }
     }
@@ -27,60 +27,46 @@ public final class CardListInteractor: DependencyInjectable {
         self.dependency = dependency
     }
 
-    // MARK: - Private
-
     private var dependency: Dependency!
-
-    private var cancellablesForSubscription = Set<AnyCancellable>()
-    private var cancellablesForAction = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
 }
 
 // MARK: - CardListUseCase
 
 extension CardListInteractor: CardListUseCase {
     public func checkRoomExist(roomId: Int) async -> Bool {
-        await dependency.enterRoomRepository.checkRoomExist(roomId: roomId)
+        await dependency.enterRoomRepository.checkRoomExist(roomId: String(roomId))
     }
 
-    public func subscribeUsers() {
-        dependency.roomRepository.userList
-            .sink { [weak self] userList in
-                let model: [UserModel] = userList.map {
-                    UserModel(
-                        id: $0.id, name: $0.name, currentRoomId: $0.currentRoomId,
-                        selectedCardId: $0.selectedCardId)
-                }
-                self?.dependency.output?.outputUserList(model)
+    public func subscribeCurrentRoom() {
+        dependency.currentRoomRepository.room
+            .combineLatest(dependency.currentRoomRepository.userList)
+            .sink { [weak self] roomEntity, userEntityList in
+                self?.dependency.output?.outputRoom(.init(id: roomEntity.id,
+                                                          userList: userEntityList.map { UserModel(id: $0.id, name: $0.name, selectedCardId: $0.selectedCardId) },
+                                                          cardPackage: .init(id: roomEntity.cardPackage.id, themeColor: roomEntity.cardPackage.themeColor, cardList: roomEntity.cardPackage.cardList.map { CardPackageModel.Card(id: $0.id, estimatePoint: $0.estimatePoint, index: $0.index) })))
             }
-            .store(in: &cancellablesForSubscription)
+            .store(in: &cancellables)
     }
 
-    public func subscribeCardPackages() {
-        dependency.roomRepository.cardPackage
-            .sink { [weak self] cardPackage in
-                let model = CardPackageModel(
-                    id: cardPackage.id, themeColor: cardPackage.themeColor,
-                    cardList: cardPackage.cardList.map {
-                        CardPackageModel.Card(id: $0.id, point: $0.point, index: $0.index)
-                    })
-                self?.dependency.output?.outputCardPackage(model)
-            }
-            .store(in: &cancellablesForSubscription)
-    }
-
-    public func updateSelectedCardId(selectedCardDictionary: [String: String]) {
-        dependency.roomRepository.updateSelectedCardId(
+    public func updateSelectedCardId(selectedCardDictionary: [String: Int]) {
+        dependency.currentRoomRepository.updateSelectedCardId(
             selectedCardDictionary: selectedCardDictionary)
     }
 
-    public func requestUser(userId: String) async {
-        dependency.roomRepository.fetchUser(byId: userId)
-            .sink { [weak self] user in
-                let model = UserModel(
-                    id: user.id, name: user.name, currentRoomId: user.currentRoomId,
-                    selectedCardId: user.selectedCardId)
-                self?.dependency.output?.outputCurrentUser(model)
-            }
-            .store(in: &cancellablesForAction)
+    public func requestUser() async {
+        dependency.currentRoomRepository.fetchUser()
+            .sink(receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .failure(let error):
+                    self?.dependency.output?.outputError(error, message: "ユーザーを取得できませんでした")
+                    
+                case .finished:
+                    ()
+                }
+            }, receiveValue: { [weak self] in
+                self?.dependency.output?.outputCurrentUser(.init(id: $0.id, name: $0.name, selectedCardId: $0.selectedCardId))
+            })
+            .store(in: &cancellables)
     }
 }

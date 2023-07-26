@@ -6,16 +6,15 @@ public final class AuthDataStore: AuthRepository {
 
     // MARK: - RoomAuthRepository
 
-    public func signIn() -> Future<String, Never> {
-        Future<String, Never> { promise in
-            Auth.auth().signInAnonymously { authResult, error in
-                if error != nil {
-                    fatalError()
+    public func signIn() -> Future<String, FirebaseError> {
+        Future<String, FirebaseError> { promise in
+            Auth.auth().signInAnonymously { authResult, _ in
+                if let userId: String = authResult?.user.uid {
+                    promise(.success(userId))
+                } else {
+                    Log.main.error("failedToSignin")
+                    promise(.failure(.failedToSignin))
                 }
-                guard let userId: String = authResult?.user.uid else {
-                    fatalError()
-                }
-                promise(.success(userId))
             }
         }
     }

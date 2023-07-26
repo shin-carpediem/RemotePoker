@@ -1,8 +1,9 @@
 import EnterRoomDomain
 import Neumorphic
+import Shared
 import SwiftUI
 
-public struct EnterRoomView: View, ModuleAssembler {
+public struct EnterRoomView: View {
     // MARK: - Dependency
 
     struct Dependency {
@@ -18,9 +19,15 @@ public struct EnterRoomView: View, ModuleAssembler {
     // MARK: - Private
 
     private var dependency: Dependency!
-
     @ObservedObject private var viewModel: EnterRoomViewModel
 
+    private var appConfig: AppConfig {
+        guard let appConfig = AppConfigManager.appConfig else {
+            fatalError()
+        }
+        return appConfig
+    }
+    
     // MARK: - View
 
     public var body: some View {
@@ -29,14 +36,14 @@ public struct EnterRoomView: View, ModuleAssembler {
                 Colors.background.ignoresSafeArea()
                 contentView
                 navigationForCardListView
-                if viewModel.isShownLoader { ProgressView() }
+                if viewModel.isLoaderShown { ProgressView() }
             }
         }
         // NavigationViewを使用した際にiPadでは、Master-Detail(Split view)の挙動になっている。
         // そしてMasterとなるViewが配置されていない為、空白のViewが表示されてしまう。
         // iPadはサポート外なので、iPhoneでもiPadでも同じ見た目に固定する。
         .navigationViewStyle(.stack)
-        .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
+        .modifier(Overlay(isShown: $viewModel.isBannerShown, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
@@ -46,24 +53,28 @@ public struct EnterRoomView: View, ModuleAssembler {
             inputField
             validatedMessage
             sendButton
-                .disabled(!viewModel.isButtonEnabled)
+                .disabled(!viewModel.isButtonsEnabled)
                 .padding()
         }
         .padding(.horizontal, 40)
     }
+}
 
+// MARK: - View Components
+
+extension EnterRoomView {
     /// 入力フォーム
     private var inputField: some View {
         HStack(spacing: 14) {
-            InputText(placeholder: "名前", text: $viewModel.inputName)
-            InputText(placeholder: "ルームID", text: $viewModel.inputRoomId)
+            InputText(text: $viewModel.inputName, placeholder: "名前")
+            InputText(text: $viewModel.inputRoomId, placeholder: "ルームID")
         }
     }
 
     /// 入力フォーム内容が有効か評価されて表示されるメッセージ
     private var validatedMessage: some View {
         let textColor: Color = viewModel.isInputFormValid ? .green : .red
-        return Text(viewModel.inputFormvalidatedMessage)
+        return Text(viewModel.isInputFormValid ? "数字が新しければ新しいルームが作られます" : "6文字以下の名前と4桁の数字が必要です")
             .foregroundColor(textColor.opacity(0.7))
     }
 
@@ -81,28 +92,19 @@ public struct EnterRoomView: View, ModuleAssembler {
 
     /// 通知バナー
     private var notificationBanner: NotificationBanner {
-        .init(isShown: $viewModel.isShownBanner, viewModel: viewModel.bannerMessgage)
+        .init(isShown: $viewModel.isBannerShown, viewModel: viewModel.bannerMessgage)
     }
+}
 
-    // MARK: - Router
+// MARK: - ModuleAssembler
 
+extension EnterRoomView: ModuleAssembler {
     /// カード一覧画面に遷移させるナビゲーション
     private var navigationForCardListView: some View {
         NavigationLink(
             isActive: $viewModel.willPushCardListView,
             destination: {
-                // Viewの表示時に、以下の存在しないルームIDも以下に代入されてクラッシュするのを防ぐため、
-                // willPushCardListView が評価されるタイミングで値を見るようにする
-                if viewModel.willPushCardListView {
-                    assembleCardListModule(
-                        roomId: dependency.presenter.currentRoom.id,
-                        currentUserId: dependency.presenter.currentUser.id,
-                        currentUserName: dependency.presenter.currentUser.name,
-                        cardPackageId: dependency.presenter.currentRoom.cardPackage.id,
-                        isExisingUser: false)
-                } else {
-                    EmptyView()
-                }
+                assembleCardListModule()
             }
         ) { EmptyView() }
     }
@@ -113,6 +115,5 @@ public struct EnterRoomView: View, ModuleAssembler {
 struct EnterRoomView_Previews: PreviewProvider {
     static var previews: some View {
         EnterRoomView(dependency: .init(presenter: EnterRoomPresenter()), viewModel: .init())
-            .previewDisplayName("ルーム入室画面")
     }
 }

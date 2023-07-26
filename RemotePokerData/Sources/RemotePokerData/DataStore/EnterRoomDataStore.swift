@@ -6,12 +6,26 @@ public final class EnterRoomDataStore: EnterRoomRepository {
     public init() {}
 
     // MARK: - EnterRoomRepository
+    
+    public func createUser(_ user: UserEntity) async -> Result<Void, FirebaseError> {
+        do {
+            try await firestore.collection("users").document(String(user.id)).setData([
+                "id": user.id,
+                "name": user.name,
+                "selectedCardId": user.selectedCardId ?? 999,
+                "createdAt": Timestamp(),
+                "updatedAt": Date(),
+            ])
+            return .success(())
+        } catch (_) {
+            Log.main.error("failedToCreateUser")
+            return .failure(.failedToCreateUser)
+        }
+    }
 
-    public func checkRoomExist(roomId: Int) async -> Bool {
-        let roomDocument: DocumentReference =
-            firestore.collection("rooms").document(
-                String(roomId))
-        guard let document: DocumentSnapshot = try? await roomDocument.getDocument() else {
+    public func checkRoomExist(roomId: String) async -> Bool {
+        guard let document: DocumentSnapshot = try? await firestore.collection("rooms").document(
+            roomId).getDocument() else {
             return false
         }
         return document.exists
@@ -19,54 +33,37 @@ public final class EnterRoomDataStore: EnterRoomRepository {
 
     public func createRoom(_ room: RoomEntity) async -> Result<Void, FirebaseError> {
         do {
+            let timestamp = Timestamp()
+            let date = Date()
+            
             // ルーム追加
-            let roomId: Int = room.id
             let roomDocument: DocumentReference = firestore.collection("rooms")
-                .document(String(roomId))
+                .document(String(room.id))
             try await roomDocument.setData([
-                "id": roomId,
-                "createdAt": Timestamp(),
-                "updatedAt": Date(),
+                "id": room.id,
+                "userIdList": room.userIdList,
+                "createdAt": timestamp,
+                "updatedAt": date,
             ])
 
-            // ユーザー追加
-            room.userList.forEach { user in
-                let userId: String = user.id
-                let userDocument: DocumentReference = roomDocument.collection("users").document(
-                    userId)
-                userDocument.setData([
-                    "id": userId,
-                    "name": user.name,
-                    "currentRoomId": roomId,
-                    "selectedCardId": user.selectedCardId,
-                    "createdAt": Timestamp(),
-                    "updatedAt": Date(),
-                ])
-            }
-
             // カードパッケージ追加
-            let cardPackageId: String = room.cardPackage.id
             let cardPackageDocument: DocumentReference = roomDocument.collection("cardPackages")
-                .document(
-                    cardPackageId)
+                .document(String(room.cardPackage.id))
             try await cardPackageDocument.setData([
-                "id": cardPackageId,
+                "id": room.cardPackage.id,
                 "themeColor": room.cardPackage.themeColor,
-                "createdAt": Timestamp(),
-                "updatedAt": Date(),
+                "createdAt": timestamp,
+                "updatedAt": date,
             ])
 
             // カード一覧追加
-            room.cardPackage.cardList.forEach { card in
-                let cardId: String = card.id
-                let cardDocument: DocumentReference = cardPackageDocument.collection("cards")
-                    .document(cardId)
-                cardDocument.setData([
-                    "id": cardId,
-                    "point": card.point,
-                    "index": card.index,
-                    "createdAt": Timestamp(),
-                    "updatedAt": Date(),
+            room.cardPackage.cardList.forEach {
+                cardPackageDocument.collection("cards").document(String($0.id)).setData([
+                    "id": $0.id,
+                    "estimatePoint": $0.estimatePoint,
+                    "index": $0.index,
+                    "createdAt": timestamp,
+                    "updatedAt": date,
                 ])
             }
             return .success(())

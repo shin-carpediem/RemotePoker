@@ -15,7 +15,5 @@ struct FirebaseTestHelper {
         }
     }
 
-    // MARK: - Private
-
     private init() {}
 }

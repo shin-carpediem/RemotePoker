@@ -14,14 +14,12 @@ public struct SelectThemeColorView: View {
     init(dependency: Dependency, viewModel: SelectThemeColorViewModel) {
         self.dependency = dependency
         self.viewModel = viewModel
-
         self.dependency.presenter.viewDidLoad()
     }
 
     // MARK: - Private
 
     private var dependency: Dependency
-
     @ObservedObject private var viewModel: SelectThemeColorViewModel
 
     // MARK: - View
@@ -29,32 +27,35 @@ public struct SelectThemeColorView: View {
     public var body: some View {
         ZStack {
             contentView
-            if viewModel.isShownLoader { ProgressView() }
+            if viewModel.isLoaderShown { ProgressView() }
         }
         .navigationTitle("テーマカラー")
-        .modifier(Overlay(isShown: $viewModel.isShownBanner, overlayView: notificationBanner))
+        .modifier(Overlay(isShown: $viewModel.isBannerShown, overlayView: notificationBanner))
         .onAppear { dependency.presenter.viewDidResume() }
         .onDisappear { dependency.presenter.viewDidSuspend() }
     }
 
     private var contentView: some View {
         VStack(alignment: .leading) {
-            List(viewModel.themeColorList, id: \.self) { color in
-                colorCell(color)
-                    .disabled(!viewModel.isButtonEnabled)
+            List(viewModel.themeColorList, id: \.self) {
+                colorCell($0)
+                    .disabled(!viewModel.isButtonsEnabled)
             }
             .listBackground(Colors.background)
             .listStyle(.insetGrouped)
         }
     }
+}
 
+// MARK: - View Components
+
+extension SelectThemeColorView {
     /// カラーセル
     private func colorCell(_ color: CardPackageThemeColor) -> some View {
-        let isThemeColor: Bool = (color == viewModel.selectedThemeColor)
-        return Button {
+        Button {
             dependency.presenter.didTapColor(color: color)
         } label: {
-            if isThemeColor {
+            if color == viewModel.selectedThemeColor {
                 themeLabel(color)
             } else {
                 label(color)
@@ -77,7 +78,7 @@ public struct SelectThemeColorView: View {
 
     /// 通知バナー
     private var notificationBanner: NotificationBanner {
-        .init(isShown: $viewModel.isShownBanner, viewModel: viewModel.bannerMessgage)
+        .init(isShown: $viewModel.isBannerShown, viewModel: viewModel.bannerMessgage)
     }
 }
 
@@ -89,6 +90,5 @@ struct SelectThemeColorView_Previews: PreviewProvider {
             dependency: .init(presenter: SelectThemeColorPresenter()),
             viewModel: .init()
         )
-        .previewDisplayName("テーマカラー選択画面")
     }
 }

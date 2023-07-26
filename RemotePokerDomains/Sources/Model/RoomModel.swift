@@ -1,11 +1,11 @@
 public struct RoomModel {
     public var id: Int
-    public var userList: [UserModel]
+    public var userIdList: [String]
     public var cardPackage: CardPackageModel
 
-    public init(id: Int, userList: [UserModel], cardPackage: CardPackageModel) {
+    public init(id: Int, userIdList: [String], cardPackage: CardPackageModel) {
         self.id = id
-        self.userList = userList
+        self.userIdList = userIdList
         self.cardPackage = cardPackage
     }
 }
