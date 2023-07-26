@@ -60,7 +60,7 @@ public struct EnterRoomView: View {
     }
 }
 
-// MARK: View Components
+// MARK: - View Components
 
 extension EnterRoomView {
     /// 入力フォーム
@@ -96,7 +96,7 @@ extension EnterRoomView {
     }
 }
 
-// MARK: ModuleAssembler
+// MARK: - ModuleAssembler
 
 extension EnterRoomView: ModuleAssembler {
     /// カード一覧画面に遷移させるナビゲーション
@@ -110,7 +110,7 @@ extension EnterRoomView: ModuleAssembler {
     }
 }
 
-// MARK: Preview
+// MARK: - Preview
 
 struct EnterRoomView_Previews: PreviewProvider {
     static var previews: some View {

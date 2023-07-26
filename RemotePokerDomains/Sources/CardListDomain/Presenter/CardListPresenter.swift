@@ -30,7 +30,7 @@ public final class CardListPresenter: DependencyInjectable {
     private var cancellables = Set<AnyCancellable>()
 }
 
-// MARK: CardListPresentation
+// MARK: - CardListPresentation
 
 extension CardListPresenter: CardListPresentation {
     public func didSelectCard(cardId: Int) {
@@ -71,7 +71,7 @@ extension CardListPresenter: CardListPresentation {
     public func viewDidSuspend() {}
 }
 
-// MARK: CardListInteractorOutput
+// MARK: - CardListInteractorOutput
 
 extension CardListPresenter: CardListInteractorOutput {
     public func outputCurrentUser(_ user: UserModel) {
@@ -107,7 +107,7 @@ extension CardListPresenter: CardListInteractorOutput {
     }
 }
 
-// MARK: Private
+// MARK: - Private
 
 extension CardListPresenter {
     private var appConfig: AppConfig {

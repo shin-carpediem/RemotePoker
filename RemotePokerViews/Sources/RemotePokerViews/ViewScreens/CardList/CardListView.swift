@@ -74,7 +74,7 @@ public struct CardListView: View {
     }
 }
 
-// MARK: View Components
+// MARK: - View Components
 
 extension CardListView {
     /// 設定ボタン
@@ -171,7 +171,7 @@ extension CardListView {
     }
 }
 
-// MARK: ModuleAssembler
+// MARK: - ModuleAssembler
 
 extension CardListView: ModuleAssembler {
     /// 設定画面へ遷移させるナビゲーション

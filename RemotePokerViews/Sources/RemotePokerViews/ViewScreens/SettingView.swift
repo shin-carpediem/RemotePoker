@@ -50,7 +50,7 @@ public struct SettingView: View {
     }
 }
 
-// MARK: View Components
+// MARK: - View Components
 
 extension SettingView {
     /// テーマカラー選択ボタン
@@ -92,7 +92,7 @@ extension SettingView {
     }
 }
 
-// MARK: ModuleAssembler
+// MARK: - ModuleAssembler
 
 extension SettingView: ModuleAssembler {
     private var navigationForSelectThemeColorView: some View {
@@ -105,7 +105,7 @@ extension SettingView: ModuleAssembler {
     }
 }
 
-// MARK: Preview
+// MARK: - Preview
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {

@@ -31,7 +31,7 @@ public final class CardListInteractor: DependencyInjectable {
     private var cancellables = Set<AnyCancellable>()
 }
 
-// MARK: CardListUseCase
+// MARK: - CardListUseCase
 
 extension CardListInteractor: CardListUseCase {
     public func checkRoomExist(roomId: Int) async -> Bool {

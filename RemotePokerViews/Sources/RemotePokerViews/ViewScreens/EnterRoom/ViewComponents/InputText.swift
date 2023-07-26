@@ -25,7 +25,7 @@ struct InputText: View {
     }
 }
 
-// MARK: Preview
+// MARK: - Preview
 
 struct InputText_Previews: PreviewProvider {
     static var previews: some View {

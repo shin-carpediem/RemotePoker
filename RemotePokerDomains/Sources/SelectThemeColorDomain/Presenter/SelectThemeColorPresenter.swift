@@ -28,7 +28,7 @@ public final class SelectThemeColorPresenter: DependencyInjectable {
     private var dependency: Dependency!
 }
 
-// MARK: SelectThemeColorPresentation
+// MARK: - SelectThemeColorPresentation
 
 extension SelectThemeColorPresenter: SelectThemeColorPresentation {
     public func didTapColor(color: CardPackageThemeColor) {
@@ -55,7 +55,7 @@ extension SelectThemeColorPresenter: SelectThemeColorPresentation {
     public func viewDidSuspend() {}
 }
 
-// MARK: Private
+// MARK: - Private
 
 extension SelectThemeColorPresenter {
     private func showColorList() {

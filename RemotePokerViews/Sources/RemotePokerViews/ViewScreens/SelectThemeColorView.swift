@@ -47,7 +47,7 @@ public struct SelectThemeColorView: View {
     }
 }
 
-// MARK: View Components
+// MARK: - View Components
 
 extension SelectThemeColorView {
     /// カラーセル
@@ -82,7 +82,7 @@ extension SelectThemeColorView {
     }
 }
 
-// MARK: Preview
+// MARK: - Preview
 
 struct SelectThemeColorView_Previews: PreviewProvider {
     static var previews: some View {

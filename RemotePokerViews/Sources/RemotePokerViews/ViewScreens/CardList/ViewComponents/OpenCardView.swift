@@ -50,7 +50,7 @@ struct OpenCardView: View {
     }
 }
 
-// MARK: Preview
+// MARK: - Preview
 
 struct OpenCardView_Previews: PreviewProvider {
     static var previews: some View {
@@ -59,7 +59,7 @@ struct OpenCardView_Previews: PreviewProvider {
             OpenCardView(
                 userSelectStatus: .init(
                     id: 0,
-                    user: CardListView_Previews.me,
+                    user: .init(id: "0", name: "ユーザー1", selectedCardId: CardView_Previews.card2.id),
                     themeColor: .buttercup,
                     selectedCard: CardView_Previews.card2)
             )
@@ -68,7 +68,7 @@ struct OpenCardView_Previews: PreviewProvider {
             OpenCardView(
                 userSelectStatus: .init(
                     id: 0,
-                    user: CardListView_Previews.me,
+                    user: .init(id: "0", name: "ユーザー1", selectedCardId: nil),
                     themeColor: .buttercup,
                     selectedCard: nil)
             )

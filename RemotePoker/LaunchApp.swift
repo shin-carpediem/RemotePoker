@@ -39,7 +39,7 @@ struct LaunchApp: View, ModuleAssembler {
     }
 }
 
-// MARK: Preview
+// MARK: - Preview
 
 struct LaunchApp_Previews: PreviewProvider {
     static var previews: some View {

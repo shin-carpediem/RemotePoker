@@ -26,7 +26,7 @@ public final class EnterRoomInteractor: DependencyInjectable {
     private var cancellables = Set<AnyCancellable>()
 }
 
-// MARK: EnterRoomUseCase
+// MARK: - EnterRoomUseCase
 
 extension EnterRoomInteractor: EnterRoomUseCase {
     public func signIn(userName: String, roomId: Int) async {

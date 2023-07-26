@@ -51,7 +51,7 @@ public struct NotificationBanner: View {
     }
 }
 
-// MARK: Preview
+// MARK: - Preview
 
 struct NotificationBanner_Previews: PreviewProvider {
     static var previews: some View {
