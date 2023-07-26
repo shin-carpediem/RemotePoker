@@ -39,7 +39,8 @@ public struct SettingView: View {
         VStack(alignment: .leading) {
             List {
                 Group {
-                    selecteThemeColorButton
+                    // TODO: 不具合が解消されたら、復帰させる。
+//                    selecteThemeColorButton
                     leaveButton
                 }
                 .disabled(!viewModel.isButtonsEnabled)

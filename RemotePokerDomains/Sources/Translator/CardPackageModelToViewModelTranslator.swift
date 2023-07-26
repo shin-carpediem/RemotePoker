@@ -16,20 +16,19 @@ public struct CardPackageModelToViewModelTranslator: Translator {
             // TODO: 選択したカラーが変更されない問題がある。それを解決しようと、ここを通ったらエラーになるようにしている。現状、ここを通ってしまう。
             fatalError()
         }
-        let cardList: [CardPackageViewModel.Card] = input.cardList.map {
-            CardPackageViewModel.Card(
-                id: $0.id,
-                estimatePoint: $0.estimatePoint,
-                index: $0.index,
-                fontColor: applyFontColor(toIndex: $0.index),
-                backgroundColor: applyBackgroundColor(
-                    toIndex: $0.index,
-                    with: themeColor))
-        }
         return CardPackageViewModel(
             id: input.id,
             themeColor: themeColor,
-            cardList: cardList)
+            cardList: input.cardList.map {
+                CardPackageViewModel.Card(
+                    id: $0.id,
+                    estimatePoint: $0.estimatePoint,
+                    index: $0.index,
+                    fontColor: applyFontColor(toIndex: $0.index),
+                    backgroundColor: applyBackgroundColor(
+                        toIndex: $0.index,
+                        with: themeColor))
+            })
     }
 
     // MARK: - Private
