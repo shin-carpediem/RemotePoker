@@ -66,7 +66,7 @@ public final class CurrentRoomDataStore: CurrentRoomRepository {
     }
 
     public func fetchUser() -> Future<UserEntity, FirebaseError> {
-        Future<UserEntity, FirebaseError> { [unowned self] promise in
+        Future<UserEntity, FirebaseError> { [self] promise in
             firestoreRef.userDocument.getDocument { snapshot, _ in
                 if let snapshot {
                     promise(.success(Self.userEntity(from: snapshot)))

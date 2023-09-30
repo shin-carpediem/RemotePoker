@@ -41,8 +41,6 @@ struct LaunchApp: View, ModuleAssembler {
 
 // MARK: - Preview
 
-struct LaunchApp_Previews: PreviewProvider {
-    static var previews: some View {
-        LaunchApp(viewModel: .init())
-    }
+#Preview {
+    LaunchApp(viewModel: .init())
 }
