@@ -53,18 +53,16 @@ public struct NotificationBanner: View {
 
 // MARK: - Preview
 
-struct NotificationBanner_Previews: PreviewProvider {
-    static var previews: some View {
-        NotificationBanner(
-            isShown: .constant(true),
-            viewModel: .init(type: .onSuccess, text: "成功したよ")
-        )
-        .previewDisplayName("通知バナー/成功時")
+#Preview("通知バナー/成功時") {
+    NotificationBanner(
+        isShown: .constant(true),
+        viewModel: .init(type: .onSuccess, text: "成功したよ")
+    )
+}
 
-        NotificationBanner(
-            isShown: .constant(true),
-            viewModel: .init(type: .onFailure, text: "失敗したよ")
-        )
-        .previewDisplayName("通知バナー/失敗時")
-    }
+#Preview("通知バナー/失敗時") {
+    NotificationBanner(
+        isShown: .constant(true),
+        viewModel: .init(type: .onFailure, text: "失敗したよ")
+    )
 }

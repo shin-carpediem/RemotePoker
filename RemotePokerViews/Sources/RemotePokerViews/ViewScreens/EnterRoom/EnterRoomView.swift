@@ -112,8 +112,6 @@ extension EnterRoomView: ModuleAssembler {
 
 // MARK: - Preview
 
-struct EnterRoomView_Previews: PreviewProvider {
-    static var previews: some View {
-        EnterRoomView(dependency: .init(presenter: EnterRoomPresenter()), viewModel: .init())
-    }
+#Preview {
+    EnterRoomView(dependency: .init(presenter: EnterRoomPresenter()), viewModel: .init())
 }

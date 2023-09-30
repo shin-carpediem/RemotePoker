@@ -84,11 +84,9 @@ extension SelectThemeColorView {
 
 // MARK: - Preview
 
-struct SelectThemeColorView_Previews: PreviewProvider {
-    static var previews: some View {
-        SelectThemeColorView(
-            dependency: .init(presenter: SelectThemeColorPresenter()),
-            viewModel: .init()
-        )
-    }
+#Preview {
+    SelectThemeColorView(
+        dependency: .init(presenter: SelectThemeColorPresenter()),
+        viewModel: .init()
+    )
 }
