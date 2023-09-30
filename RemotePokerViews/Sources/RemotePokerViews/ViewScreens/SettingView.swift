@@ -107,11 +107,9 @@ extension SettingView: ModuleAssembler {
 
 // MARK: - Preview
 
-struct SettingView_Previews: PreviewProvider {
-    static var previews: some View {
-        SettingView(
-            dependency: .init(presenter: SettingPresenter()),
-            viewModel: .init()
-        )
-    }
+#Preview {
+    SettingView(
+        dependency: .init(presenter: SettingPresenter()),
+        viewModel: .init()
+    )
 }

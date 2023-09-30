@@ -52,27 +52,25 @@ struct OpenCardView: View {
 
 // MARK: - Preview
 
-struct OpenCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            Text("選択されたカード")
-            OpenCardView(
-                userSelectStatus: .init(
-                    id: 0,
-                    user: .init(id: "0", name: "ユーザー1", selectedCardId: CardView_Previews.card2.id),
-                    themeColor: .buttercup,
-                    selectedCard: CardView_Previews.card2)
-            )
+#Preview {
+    VStack {
+        Text("選択されたカード")
+        OpenCardView(
+            userSelectStatus: .init(
+                id: 0,
+                user: .init(id: "0", name: "ユーザー1", selectedCardId: CardView_Previews.card2.id),
+                themeColor: .buttercup,
+                selectedCard: CardView_Previews.card2)
+        )
 
-            Text("カード未選択")
-            OpenCardView(
-                userSelectStatus: .init(
-                    id: 0,
-                    user: .init(id: "0", name: "ユーザー1", selectedCardId: nil),
-                    themeColor: .buttercup,
-                    selectedCard: nil)
-            )
-        }
-        .padding()
+        Text("カード未選択")
+        OpenCardView(
+            userSelectStatus: .init(
+                id: 0,
+                user: .init(id: "0", name: "ユーザー1", selectedCardId: nil),
+                themeColor: .buttercup,
+                selectedCard: nil)
+        )
     }
+    .padding()
 }

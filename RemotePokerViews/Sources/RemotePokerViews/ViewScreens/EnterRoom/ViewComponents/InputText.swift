@@ -27,14 +27,12 @@ struct InputText: View {
 
 // MARK: - Preview
 
-struct InputText_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            Text("入力なし")
-            InputText(text: .constant(""), placeholder: "Name")
-            
-            Text("入力あり")
-            InputText(text: .constant("This is input Name"), placeholder: "Name")
-        }
+#Preview {
+    VStack {
+        Text("入力なし")
+        InputText(text: .constant(""), placeholder: "Name")
+        
+        Text("入力あり")
+        InputText(text: .constant("This is input Name"), placeholder: "Name")
     }
 }
