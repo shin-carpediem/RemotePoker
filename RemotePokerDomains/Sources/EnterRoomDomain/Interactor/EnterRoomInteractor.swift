@@ -31,16 +31,14 @@ public final class EnterRoomInteractor: DependencyInjectable {
 extension EnterRoomInteractor: EnterRoomUseCase {
     public func signIn(userName: String, roomId: Int) async {
         AuthDataStore.shared.signIn()
-            .sink(receiveCompletion: { [weak self] completion in
+            .sink(receiveCompletion: { [self] completion in
                 switch completion {
                 case .failure(let error):
-                    self?.dependency.output?.outputError(error, message: "サインインできませんでした")
-                    
-                case .finished:
-                    ()
+                    dependency.output?.outputError(error, message: "サインインできませんでした")
+                case .finished: ()
                 }
-            }, receiveValue: { [weak self] userId in
-                self?.dependency.output?.outputSucceedToSignIn(
+            }, receiveValue: { [self] userId in
+                dependency.output?.outputSucceedToSignIn(
                     userId: userId, userName: userName, roomId: roomId)
             })
             .store(in: &cancellables)

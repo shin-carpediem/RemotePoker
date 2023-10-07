@@ -41,8 +41,8 @@ extension CardListInteractor: CardListUseCase {
     public func subscribeCurrentRoom() {
         dependency.currentRoomRepository.room
             .combineLatest(dependency.currentRoomRepository.userList)
-            .sink { [weak self] roomEntity, userEntityList in
-                self?.dependency.output?.outputRoom(.init(id: roomEntity.id,
+            .sink { [self] roomEntity, userEntityList in
+                dependency.output?.outputRoom(.init(id: roomEntity.id,
                                                           userList: userEntityList.map { UserModel(id: $0.id, name: $0.name, selectedCardId: $0.selectedCardId) },
                                                           cardPackage: .init(id: roomEntity.cardPackage.id, themeColor: roomEntity.cardPackage.themeColor, cardList: roomEntity.cardPackage.cardList.map { CardPackageModel.Card(id: $0.id, estimatePoint: $0.estimatePoint, index: $0.index) })))
             }
@@ -56,16 +56,14 @@ extension CardListInteractor: CardListUseCase {
 
     public func requestUser() async {
         dependency.currentRoomRepository.fetchUser()
-            .sink(receiveCompletion: { [weak self] completion in
+            .sink(receiveCompletion: { [self] completion in
                 switch completion {
                 case .failure(let error):
-                    self?.dependency.output?.outputError(error, message: "ユーザーを取得できませんでした")
-                    
-                case .finished:
-                    ()
+                    dependency.output?.outputError(error, message: "ユーザーを取得できませんでした")
+                case .finished: ()
                 }
-            }, receiveValue: { [weak self] in
-                self?.dependency.output?.outputCurrentUser(.init(id: $0.id, name: $0.name, selectedCardId: $0.selectedCardId))
+            }, receiveValue: { [self] in
+                dependency.output?.outputCurrentUser(.init(id: $0.id, name: $0.name, selectedCardId: $0.selectedCardId))
             })
             .store(in: &cancellables)
     }

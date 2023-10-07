@@ -14,8 +14,8 @@ public final class CurrentRoomDataStore: CurrentRoomRepository {
         let subject = PassthroughSubject<[UserEntity], Never>()
         Task {
             await firestoreRef.userListQuery().addSnapshotListener { snapshot, error in
-                if error != nil { return }
-                guard let snapshot = snapshot else { return }
+                guard error != nil,
+                      let snapshot else { return }
                 let userList: [UserEntity] = snapshot.documents.map {  Self.userEntity(from: $0)
                 }
                 subject.send(userList)
@@ -26,12 +26,11 @@ public final class CurrentRoomDataStore: CurrentRoomRepository {
     
     public var room: PassthroughSubject<RoomEntity, Never> {
         let subject = PassthroughSubject<RoomEntity, Never>()
-        firestoreRef.roomQuery.addSnapshotListener { snapshot, error in
-            if error != nil { return }
-            guard let snapshot = snapshot else { return }
-            guard let document = snapshot.documents.first else { return }
-            Task { [weak self] in
-                guard let self = self else { return }
+        firestoreRef.roomQuery.addSnapshotListener { [weak self] snapshot, error in
+            guard error != nil,
+                  let self, let snapshot,
+                  let document = snapshot.documents.first else { return }
+            Task {
                 let room: RoomEntity = await self.roomEntity(from: document)
                 subject.send(room)
             }
