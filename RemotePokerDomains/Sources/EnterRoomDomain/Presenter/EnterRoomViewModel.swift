@@ -31,12 +31,11 @@ public final class EnterRoomViewModel: ObservableObject, ViewModel {
             .combineLatest($inputRoomId)
             .receive(on: DispatchQueue.main)
             .map { [weak self] inputName, inputRoomId -> Bool in
-                if let self = self {
-                    return self.isInputNameValid(inputName)
-                        && self.isInputRoomIdValid(inputRoomId)
-                } else {
+                guard let self else {
                     return false
                 }
+                return self.isInputNameValid(inputName)
+                    && self.isInputRoomIdValid(inputRoomId)
             }
             .assign(to: \.isInputFormValid, on: self)
             .store(in: &cancellables)
@@ -47,11 +46,10 @@ public final class EnterRoomViewModel: ObservableObject, ViewModel {
     }
 
     private func isInputRoomIdValid(_ roomId: String) -> Bool {
-        let validRoomIdLength = 4
-        if let inputInt = Int(roomId) {
-            return String(inputInt).count == validRoomIdLength
-        } else {
+        guard let inputInt = Int(roomId) else {
             return false
         }
+        let validRoomIdLength = 4
+        return String(inputInt).count == validRoomIdLength
     }
 }
